@@ -1,3 +1,11 @@
+# gp3tools 1.0.0.9000
+
+## Development version
+
+- Added a public synthetic-realistic Gazepoint export dataset under `inst/extdata/gazepoint_realistic_demo_exports/`.
+- Added the reproducible generator script `data-raw/create_gazepoint_realistic_demo_exports.R`.
+- The synthetic demo mimics Gazepoint Analysis all-gaze/fixation export structure without including real participant rows.
+
 # gp3tools 1.0.0
 
 ## New features
