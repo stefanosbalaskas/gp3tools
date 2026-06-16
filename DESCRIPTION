@@ -1,9 +1,13 @@
 Package: gp3tools
 Type: Package
-Title: Import, Inspect, and Summarise Gazepoint GP3 Exports
+Title: Import, Inspect, Analyse, and Report Gazepoint GP3 Exports
 Version: 0.0.2
 Authors@R: person("Stefanos", "Balaskas", email = "s.balaskas@ac.upatras.gr", role = c("aut", "cre"))
-Description: Tools for importing, inspecting, cleaning, and summarising Gazepoint GP3 and Gazepoint Analysis CSV exports. The initial scope is offline processing of all-gaze, fixation, and AOI summary exports.
+Description: Tools for importing, inspecting, cleaning, summarising,
+    modelling, and reporting Gazepoint GP3 and Gazepoint Analysis CSV
+    exports. The package supports offline workflows for all-gaze,
+    fixation, pupil, AOI, transition, time-course, quality-audit, and
+    manuscript-reporting analyses.
 License: MIT + file LICENSE
 LazyData: true
 Encoding: UTF-8
