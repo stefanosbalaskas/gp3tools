@@ -1,0 +1,34 @@
+Package: gp3tools
+Type: Package
+Title: Import, Inspect, and Summarise Gazepoint GP3 Exports
+Version: 0.0.2
+Authors@R: person("Stefanos", "Balaskas", email = "s.balaskas@ac.upatras.gr", role = c("aut", "cre"))
+Description: Tools for importing, inspecting, cleaning, and summarising Gazepoint GP3 and Gazepoint Analysis CSV exports. The initial scope is offline processing of all-gaze, fixation, and AOI summary exports.
+License: MIT + file LICENSE
+LazyData: true
+Encoding: UTF-8
+Depends: R (>= 4.1.0)
+Roxygen: list(markdown = TRUE)
+Imports:
+    dplyr,
+    ggplot2,
+    readr,
+    rlang,
+    stringr,
+    tibble,
+    tidyr
+Suggests:
+    DHARMa,
+    emmeans,
+    eyetools,
+    glmmTMB,
+    knitr,
+    lme4,
+    magick,
+    mgcv,
+    pracma,
+    rmarkdown,
+    testthat (>= 3.0.0)
+VignetteBuilder: knitr
+Config/testthat/edition: 3
+Config/roxygen2/version: 8.0.0
