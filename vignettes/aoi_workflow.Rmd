@@ -30,11 +30,17 @@ The workflow covers:
 6. fitting AOI time-course GAMMs;
 7. running model diagnostics and reporting checks.
 
-The code uses placeholder file paths and object names. Replace them with the paths and column names used in your own study.
+The vignette chunks are not evaluated during package checks, so the file can serve as a readable workflow template.
 
-# 1. Load example data
+The first section uses built-in example data; the optional import chunk shows how to replace those objects with data from a private Gazepoint export folder.
 
-This vignette can be read as a template for private Gazepoint exports, but the package also includes lightweight synthetic example data.
+When adapting the code, replace the placeholder paths, AOI labels, time windows, and column names with those used in your own study.
+
+# 1. Load example data or import your own exports
+
+For a quick read-through, start with the lightweight synthetic example data included in the package.
+
+These objects make the later workflow easier to follow because they already use the column names expected by the examples.
 
 ```{r}
 library(gp3tools)
@@ -50,7 +56,9 @@ aoi_geometry <- gazepoint_example_aoi_geometry
 aoi_windows <- gazepoint_example_aoi_windows
 ```
 
-For a real study, you would usually start by importing a Gazepoint export folder:
+For a real study, replace the example objects above by importing a Gazepoint export folder.
+
+This optional chunk creates `all_gaze` and `all_fix`, then rebuilds `master` from the imported gaze rows:
 
 ```{r}
 export_dir <- "C:/Users/YourName/Desktop/gp3_test_exports"
@@ -69,11 +77,9 @@ all_fix <- results$all_fix
 master <- create_gazepoint_master(all_gaze)
 ```
 
-# 2. Create and validate the master table
+# 2. Validate the master table
 
 ```{r}
-master <- create_gazepoint_master(all_gaze)
-
 master_audit <- audit_gazepoint_master(master)
 
 validation <- validate_gazepoint_master(master)
@@ -83,12 +89,19 @@ validation$summary
 validation$checks
 ```
 
+Use the validation output before continuing to AOI coding, AOI-window summaries, and model fitting.
+If you imported real Gazepoint exports, this is the point where you should confirm that the expected participant, trial, time, gaze, fixation, and AOI-related columns were created correctly.
+
 # 3. AOI geometry and coding checks
 
-If AOI geometry is available, create or import a geometry table:
+The example data already includes an `aoi_geometry` object.
+
+For a real study, create or import a geometry table with one row per AOI and stimulus.
+
+A minimal geometry template looks like this:
 
 ```{r}
-aoi_geometry <- tibble::tibble(
+aoi_geometry_template <- tibble::tibble(
   media_id = c("stim1", "stim1"),
   aoi = c("logo", "product"),
   x_min = c(0.10, 0.50),
@@ -96,6 +109,8 @@ aoi_geometry <- tibble::tibble(
   x_max = c(0.30, 0.70),
   y_max = c(0.30, 0.70)
 )
+
+aoi_geometry_template
 ```
 
 Audit AOI geometry:
@@ -181,6 +196,9 @@ aoi_verification_plot
 
 # 4. AOI entries and AOI-window summaries
 
+The examples assume that each gaze sample has already been assigned to an AOI-state column called `aoi_current`.
+For your own data, check that the AOI labels used in `target_aoi_values` and `distractor_aoi_values` match your coding scheme.
+
 Create ordered AOI-entry episodes:
 
 ```{r}
@@ -232,6 +250,8 @@ dplyr::select(
 ```
 
 # 5. AOI-window GLMM
+
+Use the AOI-window GLMM for predefined confirmatory windows. Before fitting the model, check the AOI-window denominators so that sparse or imbalanced windows are visible.
 
 Audit denominator adequacy:
 
@@ -322,6 +342,8 @@ aoi_sensitivity$fixed_effects
 ```
 
 # 6. AOI, fixation, and transition features
+
+The next helpers create descriptive trial-level and sequence-level features. You do not need every feature for every study; select the summaries that match your research question.
 
 Create transition-ready AOI sequences:
 
@@ -433,6 +455,8 @@ fixation_aligned$trial_summary
 
 # 7. Advanced sequence-model preparation
 
+These preparation helpers are optional. Use them when you plan Markov-chain, semi-Markov, or HMM-style sequence analyses; otherwise, this section can be skipped.
+
 Prepare dependency-free sequence-model objects:
 
 ```{r}
@@ -524,6 +548,8 @@ aoi_gamm_plot
 AOI time-course GAMMs are complementary to AOI-window GLMMs. Use AOI-window GLMMs for predefined confirmatory windows and AOI-GAMMs when the research question concerns smooth target-looking trajectories.
 
 # 9. Diagnostics and reporting
+
+Finish by checking the fitted model and collecting reporting-ready summaries. These outputs are intended to support manuscript reporting rather than replace statistical interpretation.
 
 Run model diagnostics:
 
