@@ -1,4 +1,4 @@
-# gp3tools 0.0.2
+# gp3tools 1.0.0
 
 ## New features
 
