@@ -125,13 +125,91 @@ bool_col <- function(data, col, default = TRUE) {
   }
   as.character(x) %in% c("1", "TRUE", "true", "valid", "Valid")
 }
+
+
+first_existing_col <- function(data, candidates, fallback = NULL) {
+  hit <- candidates[candidates %in% names(data)]
+  if (length(hit) > 0) {
+    return(hit[1])
+  }
+  fallback
+}
+
+show_component <- function(x, component, n = 12, digits = 3) {
+  if (is_error(x)) {
+    tibble(status = "error", message = conditionMessage(x)) %>%
+      knitr::kable()
+  } else if (is.list(x) && component %in% names(x)) {
+    show_table(x[[component]], n = n, digits = digits)
+  } else {
+    tibble(status = "not_available", component = component) %>%
+      knitr::kable()
+  }
+}
+
+split_half_reliability <- function(data,
+                                   outcome_col,
+                                   participant_col = "subject",
+                                   unit_col = "trial_global",
+                                   condition_col = NULL,
+                                   seed = 20260616) {
+  if (!all(c(outcome_col, participant_col, unit_col) %in% names(data))) {
+    return(tibble(
+      outcome = outcome_col,
+      n_participants = NA_integer_,
+      reliability = NA_real_,
+      spearman_brown = NA_real_,
+      status = "missing_required_columns"
+    ))
+  }
+
+  set.seed(seed)
+
+  grouping_vars <- c(participant_col, condition_col)
+  grouping_vars <- grouping_vars[!is.na(grouping_vars) & nzchar(grouping_vars)]
+
+  scored <- data %>%
+    filter(!is.na(.data[[outcome_col]])) %>%
+    distinct(across(all_of(c(grouping_vars, unit_col))), .keep_all = TRUE) %>%
+    group_by(across(all_of(grouping_vars))) %>%
+    arrange(.data[[unit_col]], .by_group = TRUE) %>%
+    mutate(split_half = if_else(row_number() %% 2 == 1, "half_1", "half_2")) %>%
+    ungroup()
+
+  wide <- scored %>%
+    group_by(across(all_of(c(participant_col, "split_half")))) %>%
+    summarise(value = mean(.data[[outcome_col]], na.rm = TRUE), .groups = "drop") %>%
+    tidyr::pivot_wider(names_from = split_half, values_from = value)
+
+  if (!all(c("half_1", "half_2") %in% names(wide)) || nrow(wide) < 3) {
+    return(tibble(
+      outcome = outcome_col,
+      n_participants = nrow(wide),
+      reliability = NA_real_,
+      spearman_brown = NA_real_,
+      status = "insufficient_split_data"
+    ))
+  }
+
+  r <- suppressWarnings(cor(wide$half_1, wide$half_2, use = "complete.obs"))
+  sb <- if (is.na(r)) NA_real_ else (2 * r) / (1 + r)
+
+  tibble(
+    outcome = outcome_col,
+    n_participants = nrow(wide),
+    reliability = r,
+    spearman_brown = sb,
+    status = "ok"
+  )
+}
 ```
 
 # Abstract
 
-`gp3tools` is an R package for importing, validating, analysing, and reporting Gazepoint GP3 and Gazepoint Analysis eye-tracking exports. The package supports a reproducible workflow from raw export folders to analysis-ready tables, data-quality diagnostics, AOI summaries, pupil preprocessing, model-ready time-window summaries, transition and sequence representations, sensitivity checks, external-package adapters, and reporting-readiness outputs. This manuscript-style case study demonstrates the package using a bundled synthetic-realistic Gazepoint export dataset that mimics the structure of all-gaze, fixation, and summary CSV files without exposing private participant data. The workflow shows how researchers can check file pairing, sampling rate, tracking quality, AOI coding, pupil quality, model-preparation outputs, interoperability outputs, and automated reports. The example positions `gp3tools` as a practical bridge between Gazepoint exports and transparent statistical analysis in R.
+`gp3tools` is an R package for importing, validating, analysing, and reporting Gazepoint GP3 and Gazepoint Analysis eye-tracking exports. The package supports a reproducible workflow from raw export folders to analysis-ready tables, data-quality diagnostics, AOI summaries, pupil preprocessing, confirmatory pupil-window modelling, AOI-window modelling, transition and sequence representations, sensitivity checks, external-package adapters, and reporting-readiness outputs. This comprehensive manuscript-style case study demonstrates the package using a bundled synthetic-realistic Gazepoint export dataset that mimics the structure of all-gaze, fixation, and summary CSV files without exposing private participant data. The workflow illustrates how researchers can check file pairing, sampling rate, tracking quality, AOI coding, gaze-signal quality, pupil quality, PCHIP interpolation sensitivity, split-half reliability for pupil and AOI outcomes, drift correction, exclusion recommendations, confirmatory modelling pipelines, leave-one-unit sensitivity, interoperability outputs, and automated reports. The example positions `gp3tools` as a practical bridge between proprietary Gazepoint exports and transparent statistical analysis in R. The numerical results are not interpreted substantively because the demonstration data are synthetic; instead, the paper documents a reproducible software workflow that can be adapted to real Gazepoint studies.
 
-**Keywords:** eye tracking; Gazepoint GP3; Gazepoint Analysis; R package; AOI analysis; pupil preprocessing; reproducible research; data quality
+**Keywords:** eye tracking; Gazepoint GP3; Gazepoint Analysis; R package; AOI analysis; pupil preprocessing; linear mixed models; GLMM; PCHIP interpolation; split-half reliability; reproducible research; data quality
+
 # 1. Introduction
 
 Gazepoint GP3 and Gazepoint Analysis exports provide accessible eye-tracking data for experimental and applied research, but the exported CSV structure requires systematic handling before statistical analysis. Researchers often need to verify file pairing, sampling rates, validity percentages, AOI coverage, fixation summaries, pupil-signal quality, and reporting completeness before moving to confirmatory models.
@@ -140,13 +218,12 @@ The purpose of this case study is to demonstrate how `gp3tools` supports an end-
 
 The case study makes four practical contributions. First, it provides a public, shareable demonstration dataset for workflows that would otherwise depend on private participant exports. Second, it illustrates a complete quality-control path from file discovery to sampling, gaze-validity, pupil-validity, AOI, and reporting-readiness diagnostics. Third, it demonstrates how confirmatory and exploratory analysis objects can be prepared for AOI, pupil, fixation-aligned, transition, and model-sensitivity workflows. Fourth, it documents how the package can support transparent research reporting by producing reproducible tables, plots, diagnostic reports, and software feature inventories.
 
+`gp3tools` is organised around a staged architecture. The first layer reads Gazepoint export folders, classifies files, checks all-gaze/fixation file pairs, and creates harmonised analysis objects. The second layer performs diagnostic checks for sampling rate, tracking quality, gaze validity, pupil validity, AOI coding, design balance, and exclusion decisions. The third layer prepares analysis-ready summaries for AOI windows, pupil windows, fixation-aligned data, scanpaths, transition matrices, Markov-style objects, GAMM/GCA-style time courses, and model-sensitivity checks. The fourth layer supports reporting through diagnostic plots, HTML reports, reporting checklists, readiness gates, and interoperability adapters for related eye-tracking and pupillometry packages.
 
-# 2. Software scope and architecture
+The package is intended for researchers who need a transparent bridge between Gazepoint Analysis CSV exports and reproducible statistical analysis in R. It does not replace experimental-design software, eye-tracker calibration procedures, or substantive statistical modelling decisions. Instead, it standardises the data-management and diagnostic steps that commonly precede confirmatory analysis. This distinction is important for software-paper framing: the contribution is not a new inferential model, but a workflow framework that reduces undocumented manual steps between raw proprietary exports and reproducible statistical scripts.
 
-`gp3tools` is organised around a staged workflow. The first layer reads Gazepoint export folders, classifies files, checks all-gaze/fixation file pairs, and creates harmonised analysis objects. The second layer performs diagnostic checks for sampling rate, tracking quality, gaze validity, pupil validity, AOI coding, design balance, and exclusion decisions. The third layer prepares analysis-ready summaries for AOI windows, pupil windows, fixation-aligned data, scanpaths, transition matrices, Markov-style objects, GAMM/GCA-style time courses, and model-sensitivity checks. The fourth layer supports reporting through diagnostic plots, HTML reports, reporting checklists, readiness gates, and interoperability adapters for related eye-tracking and pupillometry packages.
 
-The package is intended for researchers who need a transparent bridge between Gazepoint Analysis CSV exports and reproducible statistical analysis in R. It does not replace experimental-design software, eye-tracker calibration procedures, or substantive statistical modelling decisions. Instead, it standardises the data-management and diagnostic steps that commonly precede confirmatory analysis.
-# 3. Demonstration data
+# 2. Demonstration data
 
 The bundled synthetic export folder is located inside the package under `inst/extdata/gazepoint_realistic_demo_exports/`. It contains all-gaze files, fixation files, and a synthetic summary export.
 
@@ -192,7 +269,7 @@ demo_file_table %>%
   kable()
 ```
 
-# 4. Workflow execution
+# 3. Workflow execution
 
 The main demonstration uses `run_gazepoint_workflow()` to process the synthetic Gazepoint-like export folder. Outputs are written to a temporary directory so this document can be rendered without modifying the package repository.
 
@@ -219,7 +296,7 @@ workflow_summary %>%
   kable()
 ```
 
-# 5. File-pair validation
+# 4. File-pair validation
 
 A basic requirement for a Gazepoint export workflow is that each all-gaze file has a corresponding fixation file. The file-pair table checks whether all expected pairs are present and whether duplicate files exist.
 
@@ -228,7 +305,7 @@ workflow_results$file_pairs %>%
   kable()
 ```
 
-# 6. Sampling-rate diagnostics
+# 5. Sampling-rate diagnostics
 
 The synthetic dataset was generated to mimic approximately 60 Hz Gazepoint GP3 sampling. The sampling table reports sample counts, duration, inter-sample intervals, and estimated sampling frequency by user file and stimulus/media.
 
@@ -259,7 +336,7 @@ if (length(sampling_plot) > 0) {
 }
 ```
 
-# 7. Tracking-quality diagnostics
+# 6. Tracking-quality diagnostics
 
 Tracking-quality summaries help identify rows requiring review before analysis. In this example, the synthetic dataset intentionally includes a small number of warning-quality cases to demonstrate the diagnostic workflow.
 
@@ -292,7 +369,7 @@ if (length(quality_plot) > 0) {
 }
 ```
 
-# 8. Analysis-ready master table
+# 7. Analysis-ready master table
 
 This section converts imported all-gaze rows into a compact analysis table with harmonised participant, stimulus, time, gaze, AOI, and pupil columns. The same logic is used only for this demonstration; real projects may keep additional columns.
 
@@ -378,7 +455,86 @@ bind_rows(
   kable()
 ```
 
-# 9. AOI summary workflow
+
+# 8. Drift correction and gaze-signal quality workflow
+
+Before AOI or pupil outcomes are interpreted, eye-tracking projects often require checks for gaze-coordinate integrity and potential calibration drift. Gazepoint exports provide the raw coordinates and validity indicators, but the analyst still needs to decide whether coordinates are plausibly on-screen, whether missingness is balanced across conditions, and whether known calibration or target-check samples suggest a systematic spatial offset. `gp3tools` handles this as an explicit audit stage rather than a hidden preprocessing decision.
+
+The synthetic demonstration includes target coordinates and a short early target-check period. These rows are used here only to illustrate the workflow. In a real experiment, the equivalent rows might come from fixation crosses, validation targets, drift-check stimuli, or known AOI anchors. The aim is not to automatically "fix" bad data, but to estimate the size and direction of possible offsets and to preserve before/after error columns for reporting.
+
+```{r gaze-signal-drift-correction}
+gaze_signal_quality <- safe_do(audit_gazepoint_gaze_signal_quality(
+  analysis_data,
+  subject_col = "subject",
+  condition_col = "condition",
+  group_cols = c("subject", "media_id", "trial_global"),
+  x_col = "x",
+  y_col = "y",
+  validity_cols = "valid",
+  pupil_col = "pupil"
+))
+
+recalibrated_gaze <- safe_do(recalibrate_gazepoint_gaze(
+  analysis_data,
+  x_col = "x",
+  y_col = "y",
+  target_x_col = "target_x",
+  target_y_col = "target_y",
+  time_col = "time",
+  grouping_cols = c("subject", "media_id"),
+  calibration_col = "is_check_target",
+  calibration_value = TRUE,
+  method = "median_shift",
+  min_valid_points = 3L,
+  max_shift = 0.25
+))
+
+bind_rows(
+  object_summary(gaze_signal_quality, "audit_gazepoint_gaze_signal_quality"),
+  object_summary(recalibrated_gaze, "recalibrate_gazepoint_gaze")
+) %>%
+  kable()
+```
+
+```{r recalibration-summary}
+if (!is_error(recalibrated_gaze) && is.data.frame(recalibrated_gaze)) {
+  recalibrated_gaze %>%
+    group_by(condition) %>%
+    summarise(
+      n_samples = n(),
+      mean_error_before = mean(gaze_error_before_recalibration, na.rm = TRUE),
+      mean_error_after = mean(gaze_error_after_recalibration, na.rm = TRUE),
+      median_shift = median(gaze_recalibration_shift, na.rm = TRUE),
+      .groups = "drop"
+    ) %>%
+    kable(digits = 4)
+} else {
+  show_table(recalibrated_gaze)
+}
+```
+
+```{r recalibration-plot, fig.cap="Before/after gaze error for synthetic drift-correction check rows."}
+if (!is_error(recalibrated_gaze) && is.data.frame(recalibrated_gaze) &&
+    all(c("gaze_error_before_recalibration", "gaze_error_after_recalibration") %in% names(recalibrated_gaze))) {
+  recalibrated_gaze %>%
+    filter(is_check_target) %>%
+    select(subject, media_id, condition,
+           gaze_error_before_recalibration,
+           gaze_error_after_recalibration) %>%
+    tidyr::pivot_longer(
+      cols = c(gaze_error_before_recalibration, gaze_error_after_recalibration),
+      names_to = "stage",
+      values_to = "target_error"
+    ) %>%
+    ggplot(aes(x = stage, y = target_error)) +
+    geom_boxplot() +
+    labs(x = "Calibration stage", y = "Distance from known target")
+}
+```
+
+The drift-correction workflow is intentionally conservative. The recalibrated coordinates can be used for sensitivity analyses, but the original coordinates remain available. This makes it possible to report whether substantive AOI or model conclusions are robust to an explicit recalibration branch.
+
+# 8. AOI summary workflow
 
 AOI summaries provide trial- or media-level indicators such as time to first fixation, sample count, viewed time, fixation count, and fixation duration. These outputs are typical inputs for confirmatory AOI analyses.
 
@@ -417,7 +573,7 @@ ggplot(
   )
 ```
 
-# 10. AOI geometry, coding, and verification
+# 9. AOI geometry, coding, and verification
 
 The synthetic dataset uses three AOIs. Geometry checks are included because AOI definitions can be a major source of analytic error in eye-tracking studies.
 
@@ -516,7 +672,7 @@ if (!is_error(aoi_verification_plot)) {
 }
 ```
 
-# 11. Pupil preprocessing and pupil-quality workflow
+# 10. Pupil preprocessing and pupil-quality workflow
 
 Pupil preprocessing usually includes artifact detection, interpolation, smoothing, baseline correction, and diagnostic plotting. The following examples use safe wrappers so that optional branches do not stop the manuscript render.
 
@@ -738,7 +894,237 @@ bind_rows(
   kable()
 ```
 
-# 12. AOI-window modelling and empirical-logit workflow
+
+## 10.1 Confirmatory pupil-window modelling and PCHIP interpolation sensitivity
+
+A common confirmatory pupil analysis does not require a full time-course GAMM. Many studies predefine one or more theoretically motivated time windows and then analyse trial-level mean pupil dilation with a linear mixed model. `gp3tools` therefore includes a dedicated confirmatory pupil-window modelling pathway. The pathway is deliberately simpler than the time-course GAMM pathway: it prepares window-level outcomes, validates the analysis rows, fits a linear mixed model, and provides a sensitivity wrapper for alternative model specifications.
+
+The following code demonstrates three related decisions. First, the raw pupil signal is summarised into predefined windows. Second, the same windows are prepared for a confirmatory LMM using `prepare_gazepoint_pupil_window_model_data()`. Third, the analysis is repeated after PCHIP interpolation to document whether the confirmatory window results depend on the interpolation method. The PCHIP branch is especially useful when the analyst wants a shape-preserving interpolation sensitivity check rather than relying only on linear interpolation.
+
+```{r pupil-interpolation-window-sensitivity}
+linear_data <- if (!is_error(pupil_linear) && is.data.frame(pupil_linear)) pupil_linear else analysis_data
+pchip_data <- if (!is_error(pupil_pchip) && is.data.frame(pupil_pchip)) pupil_pchip else analysis_data
+
+linear_pupil_col <- first_existing_col(
+  linear_data,
+  c("pupil_interpolated", "pupil_linear_interpolated", "pupil_clean", "pupil"),
+  fallback = "pupil"
+)
+
+pchip_pupil_col <- first_existing_col(
+  pchip_data,
+  c("pupil_pchip", "pupil_pchip_interpolated", "pupil_interpolated", "pupil"),
+  fallback = "pupil"
+)
+
+pupil_windows_linear <- safe_do(summarise_gazepoint_pupil_windows(
+  linear_data,
+  pupil_col = linear_pupil_col,
+  time_col = "time",
+  windows = c(0, 1000, 3000, 6000, 10000),
+  group_cols = c("subject", "media_id", "condition", "trial_global"),
+  min_valid_samples = 5
+))
+
+pupil_windows_pchip <- safe_do(summarise_gazepoint_pupil_windows(
+  pchip_data,
+  pupil_col = pchip_pupil_col,
+  time_col = "time",
+  windows = c(0, 1000, 3000, 6000, 10000),
+  group_cols = c("subject", "media_id", "condition", "trial_global"),
+  min_valid_samples = 5
+))
+
+bind_rows(
+  object_summary(pupil_windows, "raw_pupil_windows"),
+  object_summary(pupil_windows_linear, "linear_interpolation_pupil_windows"),
+  object_summary(pupil_windows_pchip, "pchip_interpolation_pupil_windows")
+) %>%
+  kable()
+```
+
+```{r pupil-window-sensitivity-comparison}
+compare_pupil_windows <- function(raw, linear, pchip) {
+  if (is_error(raw) || is_error(linear) || is_error(pchip)) {
+    return(tibble(status = "one_or_more_window_objects_failed"))
+  }
+  key_cols <- intersect(
+    c("subject", "media_id", "condition", "trial_global", "window_label"),
+    names(raw)
+  )
+  raw %>%
+    select(all_of(key_cols), raw_mean_pupil = mean_pupil) %>%
+    left_join(
+      linear %>% select(all_of(key_cols), linear_mean_pupil = mean_pupil),
+      by = key_cols
+    ) %>%
+    left_join(
+      pchip %>% select(all_of(key_cols), pchip_mean_pupil = mean_pupil),
+      by = key_cols
+    ) %>%
+    mutate(
+      linear_minus_raw = linear_mean_pupil - raw_mean_pupil,
+      pchip_minus_raw = pchip_mean_pupil - raw_mean_pupil,
+      pchip_minus_linear = pchip_mean_pupil - linear_mean_pupil
+    )
+}
+
+pupil_interpolation_sensitivity_table <- compare_pupil_windows(
+  pupil_windows,
+  pupil_windows_linear,
+  pupil_windows_pchip
+)
+
+pupil_interpolation_sensitivity_table %>%
+  group_by(window_label) %>%
+  summarise(
+    n_rows = n(),
+    mean_linear_minus_raw = mean(linear_minus_raw, na.rm = TRUE),
+    mean_pchip_minus_raw = mean(pchip_minus_raw, na.rm = TRUE),
+    mean_pchip_minus_linear = mean(pchip_minus_linear, na.rm = TRUE),
+    .groups = "drop"
+  ) %>%
+  kable(digits = 5)
+```
+
+```{r pupil-pchip-sensitivity-plot, fig.cap="Sensitivity of pupil-window means to linear and PCHIP interpolation branches."}
+if (is.data.frame(pupil_interpolation_sensitivity_table) &&
+    all(c("linear_minus_raw", "pchip_minus_raw") %in% names(pupil_interpolation_sensitivity_table))) {
+  pupil_interpolation_sensitivity_table %>%
+    select(window_label, linear_minus_raw, pchip_minus_raw) %>%
+    tidyr::pivot_longer(
+      cols = c(linear_minus_raw, pchip_minus_raw),
+      names_to = "branch",
+      values_to = "difference_from_raw"
+    ) %>%
+    ggplot(aes(x = window_label, y = difference_from_raw)) +
+    geom_boxplot() +
+    labs(x = "Pupil window", y = "Difference from raw pupil-window mean")
+}
+```
+
+The PCHIP comparison is not presented as a substantive result. It is a reproducibility device: it records whether the preprocessing branch has a meaningful effect on the model-ready outcome. If the differences are negligible, the analyst can report that the confirmatory window estimates are robust to interpolation choice. If the differences are large, the analyst should inspect missingness patterns, blink locations, and window definitions before drawing inferences.
+
+```{r pupil-baseline-and-audits}
+pupil_baseline_corrected <- safe_do(baseline_correct_gazepoint_pupil(
+  analysis_data,
+  pupil_col = "pupil",
+  time_col = "time",
+  baseline_window = c(0, 500),
+  group_cols = c("subject", "media_id"),
+  baseline_method = "mean",
+  min_baseline_samples = 3
+))
+
+pupil_baseline_audit <- if (!is_error(pupil_baseline_corrected) && is.data.frame(pupil_baseline_corrected)) {
+  safe_do(audit_gazepoint_pupil_baseline(
+    pupil_baseline_corrected,
+    group_cols = c("subject", "media_id"),
+    time_col = "time",
+    pupil_col = "pupil"
+  ))
+} else {
+  pupil_baseline_corrected
+}
+
+pupil_gap_audit <- if (!is_error(pupil_linear) && is.data.frame(pupil_linear)) {
+  safe_do(audit_gazepoint_pupil_gaps(pupil_linear, group_cols = c("subject", "media_id")))
+} else {
+  pupil_linear
+}
+
+pupil_imbalance_audit <- if (!is_error(pupil_linear) && is.data.frame(pupil_linear)) {
+  safe_do(audit_gazepoint_pupil_imbalance(
+    pupil_linear,
+    group_cols = "condition",
+    pupil_col = linear_pupil_col
+  ))
+} else {
+  pupil_linear
+}
+
+pupil_overlap_audit <- safe_do(audit_gazepoint_pupil_overlap_risk(
+  analysis_data,
+  group_cols = "subject",
+  trial_col = "trial_global",
+  time_col = "time",
+  event_time_cols = c("stimulus_onset_time", "target_onset_time", "response_time"),
+  window_start_ms = 0,
+  window_end_ms = 2000
+))
+
+pupil_drift_audit <- safe_do(audit_gazepoint_pupil_drift(
+  analysis_data %>% mutate(trial = as.integer(factor(trial_global)), excluded_trial = FALSE),
+  group_cols = "subject",
+  pupil_col = "pupil",
+  time_col = "time",
+  order_col = "trial",
+  condition_col = "condition",
+  exclude_col = "excluded_trial"
+))
+
+bind_rows(
+  object_summary(pupil_baseline_corrected, "baseline_correct_gazepoint_pupil"),
+  object_summary(pupil_baseline_audit, "audit_gazepoint_pupil_baseline"),
+  object_summary(pupil_gap_audit, "audit_gazepoint_pupil_gaps"),
+  object_summary(pupil_imbalance_audit, "audit_gazepoint_pupil_imbalance"),
+  object_summary(pupil_overlap_audit, "audit_gazepoint_pupil_overlap_risk"),
+  object_summary(pupil_drift_audit, "audit_gazepoint_pupil_drift")
+) %>%
+  kable()
+```
+
+```{r pupil-preprocessing-diagnostic-plots, fig.cap="Pupil preprocessing and status plots generated from the synthetic data."}
+pupil_preprocessing_plot <- safe_do(plot_gazepoint_pupil_preprocessing(
+  if (!is_error(pupil_baseline_corrected) && is.data.frame(pupil_baseline_corrected)) pupil_baseline_corrected else analysis_data,
+  subject_col = "subject",
+  media_col = "media_id",
+  trial_global_col = "trial_global",
+  condition_col = "condition",
+  time_col = "time",
+  raw_pupil_col = "pupil",
+  clean_pupil_col = "pupil",
+  interpolated_pupil_col = linear_pupil_col,
+  baseline_pupil_col = first_existing_col(
+    if (!is_error(pupil_baseline_corrected) && is.data.frame(pupil_baseline_corrected)) pupil_baseline_corrected else analysis_data,
+    c("pupil_baseline_corrected", "pupil_baseline", "pupil"),
+    fallback = "pupil"
+  ),
+  smoothed_pupil_col = "pupil",
+  plot_style = "faceted",
+  bin_width_ms = 100
+))
+
+if (!is_error(pupil_preprocessing_plot)) {
+  print(pupil_preprocessing_plot)
+} else {
+  show_table(pupil_preprocessing_plot)
+}
+```
+
+```{r pupil-status-plot, fig.cap="Pupil interpolation/status timeline or summary, depending on available status columns."}
+pupil_status_plot <- if (!is_error(pupil_linear) && is.data.frame(pupil_linear)) {
+  safe_do(plot_gazepoint_pupil_status(
+    pupil_linear,
+    time_col = "time",
+    pupil_col = linear_pupil_col,
+    group_cols = c("subject", "trial_global"),
+    plot_type = "summary"
+  ))
+} else {
+  pupil_linear
+}
+
+if (!is_error(pupil_status_plot)) {
+  print(pupil_status_plot)
+} else {
+  show_table(pupil_status_plot)
+}
+```
+
+Together, these objects form a standardized confirmatory pupil pipeline: audit the raw signal, flag artifacts, interpolate with at least one primary and one sensitivity method, baseline-correct within a preregistered interval, summarise the confirmatory window, fit the LMM, and report sensitivity to preprocessing choices. This is the core pupil workflow a software manuscript should emphasize because it links the package's data-management features to the statistical models commonly used in experimental eye-tracking papers.
+
+# 11. AOI-window modelling and empirical-logit workflow
 
 AOI-window summaries can be prepared for binomial GLMMs, empirical-logit LMMs, proportion models, or multiverse sensitivity checks.
 
@@ -858,7 +1244,110 @@ if (!is_error(aoi_gamm_plot)) {
 }
 ```
 
-# 13. Fixation, event-aligned, and saccade-related workflow
+
+## 11.1 Publication-ready AOI confirmatory pipeline and AOI split-half reliability
+
+AOI analyses often move from sample-level gaze labels to a small number of confirmatory outcomes, such as the proportion of valid samples in a target AOI during a prespecified window. `gp3tools` supports this by separating denominator auditing, model-data preparation, empirical-logit transformation, GLMM fitting, and model-sensitivity checks. The key design principle is that the denominator must be visible. A window with a high target proportion but very few valid samples should not be treated as equivalent to a window with the same target proportion and many valid samples.
+
+```{r aoi-denominator-audit-and-reliability}
+aoi_denominator_audit <- if (!is_error(aoi_windows) && is.data.frame(aoi_windows)) {
+  safe_do(audit_gazepoint_aoi_window_denominators(
+    aoi_windows,
+    window_col = "window_label",
+    window_start_col = "window_start_ms",
+    window_end_col = "window_end_ms",
+    denominator_col = "n_valid_denominator_samples",
+    total_col = "n_window_samples",
+    target_col = "n_target_samples",
+    condition_col = "condition",
+    group_cols = c("subject", "trial_global"),
+    min_denominator_samples = 5
+  ))
+} else {
+  aoi_windows
+}
+
+aoi_window_reliability <- if (!is_error(aoi_windows) && is.data.frame(aoi_windows)) {
+  split_half_reliability(
+    aoi_windows,
+    outcome_col = "target_sample_prop_valid",
+    participant_col = "subject",
+    unit_col = "trial_global",
+    condition_col = NULL
+  )
+} else {
+  tibble(status = "aoi_windows_unavailable")
+}
+
+bind_rows(
+  object_summary(aoi_denominator_audit, "audit_gazepoint_aoi_window_denominators"),
+  object_summary(aoi_window_reliability, "derived_aoi_split_half_reliability")
+) %>%
+  kable()
+```
+
+```{r aoi-reliability-table}
+aoi_window_reliability %>%
+  kable(digits = 3)
+```
+
+The AOI split-half calculation above is derived inside the manuscript rather than presented as a dedicated exported helper. This is deliberate: the package currently exports `audit_gazepoint_pupil_reliability()` for pupil outcomes, whereas AOI reliability can be transparently computed from the AOI-window table using study-specific choices about outcome, window, target AOI, and split unit. In a software paper, this distinction should be explicit. The package supplies the model-ready AOI table and denominator audit; the manuscript shows one reproducible way to compute AOI outcome reliability from that table.
+
+```{r publication-ready-aoi-model-tables}
+aoi_fixed_effects <- if (!is_error(aoi_glmm) && is.list(aoi_glmm)) {
+  show_component(aoi_glmm, "fixed_effects")
+} else {
+  show_table(aoi_glmm)
+}
+```
+
+```{r aoi-model-diagnostics-and-export}
+aoi_glmm_model_object <- if (!is_error(aoi_glmm) && is.list(aoi_glmm) && "model" %in% names(aoi_glmm)) {
+  aoi_glmm$model
+} else {
+  NULL
+}
+
+aoi_model_convergence <- if (!is.null(aoi_glmm_model_object)) {
+  safe_do(check_gazepoint_model_convergence(aoi_glmm_model_object, model_name = "AOI window GLMM"))
+} else {
+  safe_do(stop("AOI GLMM model object was not available."))
+}
+
+aoi_model_singularity <- if (!is.null(aoi_glmm_model_object)) {
+  safe_do(check_gazepoint_model_singularity(aoi_glmm_model_object, model_name = "AOI window GLMM"))
+} else {
+  safe_do(stop("AOI GLMM model object was not available."))
+}
+
+aoi_model_overdispersion <- if (!is.null(aoi_glmm_model_object)) {
+  safe_do(check_gazepoint_model_overdispersion(aoi_glmm_model_object, model_name = "AOI window GLMM"))
+} else {
+  safe_do(stop("AOI GLMM model object was not available."))
+}
+
+model_export_dir <- file.path(workflow_output_dir, "model_tables")
+dir.create(model_export_dir, showWarnings = FALSE, recursive = TRUE)
+
+exported_model_tables <- safe_do(export_gazepoint_model_tables(
+  model_summary = model_summary,
+  output_dir = model_export_dir,
+  prefix = "showcase_model",
+  overwrite = TRUE
+))
+
+bind_rows(
+  object_summary(aoi_model_convergence, "check_gazepoint_model_convergence"),
+  object_summary(aoi_model_singularity, "check_gazepoint_model_singularity"),
+  object_summary(aoi_model_overdispersion, "check_gazepoint_model_overdispersion"),
+  object_summary(exported_model_tables, "export_gazepoint_model_tables")
+) %>%
+  kable()
+```
+
+A publication-ready AOI pipeline should report at least five components: the target AOI definition, the denominator used for the proportion, the minimum-denominator rule, the confirmatory model family, and the sensitivity model. The demonstration uses `fit_gazepoint_aoi_window_glmm()` for the confirmatory binomial model and `fit_gazepoint_aoi_model_sensitivity()` for sensitivity checks. The empirical-logit branch provides an alternative continuous approximation that is useful for diagnostics, visualization, or LMM-style sensitivity analyses when appropriate.
+
+# 12. Fixation, event-aligned, and saccade-related workflow
 
 Fixation-level and event-aligned summaries are useful when researchers need to align samples to the first target entry, first fixation, or first saccade-like movement into a target AOI.
 
@@ -915,7 +1404,7 @@ bind_rows(
   kable()
 ```
 
-# 14. Transition, scanpath, and sequence workflow
+# 13. Transition, scanpath, and sequence workflow
 
 Transition and sequence helpers prepare AOI sequences for descriptive transition matrices, Markov-chain-style representations, hidden Markov model preparation, and semi-Markov preparation.
 
@@ -1044,7 +1533,46 @@ bind_rows(
   kable()
 ```
 
-# 15. Model checking, sensitivity, and prediction workflow
+
+## 13.1 Transition-count modelling sensitivity
+
+Transition counts can be overdispersed because some participants or stimuli generate many more AOI switches than others. For this reason, transition-count analyses often require count models rather than ordinary Gaussian models. `gp3tools` includes a negative-binomial sensitivity helper built around optional `glmmTMB` support. The helper is demonstrated here on transition counts derived from the synthetic transition events.
+
+```{r transition-count-nb-sensitivity}
+transition_count_data <- if (exists("transition_events") && is.data.frame(transition_events)) {
+  transition_events %>%
+    count(subject, condition, from_aoi, to_aoi, name = "transition_count") %>%
+    mutate(exposure = 1)
+} else {
+  tibble()
+}
+
+transition_nb_sensitivity <- if (nrow(transition_count_data) > 0) {
+  safe_do(fit_gazepoint_transition_count_nb_sensitivity(
+    transition_count_data,
+    count_col = "transition_count",
+    from_col = "from_aoi",
+    to_col = "to_aoi",
+    condition_cols = "condition",
+    random_effect_cols = "subject",
+    exposure_col = "exposure",
+    family = "nbinom2",
+    zero_inflation = FALSE
+  ))
+} else {
+  safe_do(stop("No derived transition-count data were available."))
+}
+
+bind_rows(
+  object_summary(transition_count_data, "derived_transition_count_data"),
+  object_summary(transition_nb_sensitivity, "fit_gazepoint_transition_count_nb_sensitivity")
+) %>%
+  kable()
+```
+
+The transition-count branch is included as a sensitivity tool rather than as a default analysis. In many eye-tracking studies, transition matrices are most useful descriptively. When transition counts become confirmatory outcomes, the analyst should explicitly justify the count model, exposure definition, random-effects structure, and handling of zero counts.
+
+# 14. Model checking, sensitivity, and prediction workflow
 
 This section demonstrates model-support utilities with simple models fitted to the synthetic AOI table. These examples are methodological and should not be interpreted substantively.
 
@@ -1133,7 +1661,7 @@ object_summary(divergence_point, "estimate_gazepoint_divergence_point") %>%
   kable()
 ```
 
-# 16. Multiverse and cluster-preparation utilities
+# 15. Multiverse and cluster-preparation utilities
 
 This section records the status of multiverse and cluster-oriented helpers. Full inferential use normally requires a design-specific multiverse object or permutation design, so the manuscript demonstrates preparation or object availability rather than forcing an inappropriate inferential test.
 
@@ -1158,7 +1686,57 @@ bind_rows(
   kable()
 ```
 
-# 17. Reporting checklist, exclusions, and real-data readiness gate
+
+## 15.1 Multiverse execution and preprocessing-branch sensitivity
+
+The preprocessing registry and multiverse grid make it possible to treat preprocessing decisions as explicit branches. This is especially relevant for pupil interpolation method, smoothing window, AOI denominator choice, and exclusion thresholds. A full multiverse analysis is study-specific and can become computationally expensive, so the manuscript demonstrates small synthetic branches and records their status rather than treating them as substantive evidence.
+
+```{r run-small-multiverse-branches}
+small_pupil_multiverse <- if (!is_error(preprocessing_multiverse) && is.list(preprocessing_multiverse)) {
+  safe_do(run_gazepoint_pupil_multiverse(
+    analysis_data,
+    multiverse = preprocessing_multiverse,
+    branch_ids = NULL,
+    pupil_col = "pupil",
+    time_col = "time",
+    group_cols = c("subject", "media_id", "condition", "trial_global"),
+    summarise_windows = TRUE,
+    windows = c(0, 1000, 3000),
+    keep_outputs = FALSE,
+    stop_on_error = FALSE
+  ))
+} else {
+  preprocessing_multiverse
+}
+
+small_aoi_multiverse <- if (!is_error(preprocessing_multiverse) && is.list(preprocessing_multiverse)) {
+  safe_do(run_gazepoint_aoi_multiverse(
+    analysis_data,
+    multiverse = preprocessing_multiverse,
+    windows = aoi_windows_def,
+    time_col = "time",
+    aoi_col = "aoi_current",
+    subject_col = "subject",
+    condition_col = "condition",
+    group_cols = c("subject", "media_id", "trial_global"),
+    target_aoi_values = c("AOI 0", "AOI 2"),
+    keep_outputs = FALSE,
+    stop_on_error = FALSE
+  ))
+} else {
+  preprocessing_multiverse
+}
+
+bind_rows(
+  object_summary(small_pupil_multiverse, "run_gazepoint_pupil_multiverse"),
+  object_summary(small_aoi_multiverse, "run_gazepoint_aoi_multiverse")
+) %>%
+  kable()
+```
+
+The manuscript uses the term sensitivity workflow in a broad sense. At the signal level, sensitivity refers to interpolation, smoothing, baseline, drift-correction, and exclusion decisions. At the model level, sensitivity refers to model specification, leave-one-unit refits, nested-model comparisons, and alternative distributional assumptions. The package exposes both levels so that researchers can move beyond a single hidden preprocessing path.
+
+# 16. Reporting checklist, exclusions, and real-data readiness gate
 
 A manuscript-ready pipeline should document data readiness, exclusion recommendations, design balance, quality imbalance, and reporting completeness. These helpers are designed to support transparent reporting rather than to automatically make inferential decisions.
 
@@ -1230,7 +1808,77 @@ bind_rows(
   kable()
 ```
 
-# 18. Interoperability and external-package adapters
+
+## 16.1 Exclusion-flow audit and post-exclusion balance
+
+Exclusion decisions are often one of the least transparent parts of eye-tracking analysis. `gp3tools` treats exclusions as recommendations and audit objects rather than as automatic row deletion. This design helps preserve a reproducible record of why a participant, trial, or condition cell was flagged. The analyst can then decide, according to the preregistered analysis plan, whether to exclude, retain, or inspect the flagged units.
+
+```{r exclusion-flow-audit}
+analysis_with_exclusion_status <- analysis_data %>%
+  mutate(
+    exclusion_status = if_else(!valid | is.na(pupil), "review", "ok"),
+    exclusion_reason = case_when(
+      !valid ~ "invalid_gaze_sample",
+      is.na(pupil) ~ "missing_pupil",
+      TRUE ~ "retained"
+    ),
+    excluded_trial = exclusion_status == "review"
+  )
+
+exclusion_flow <- safe_do(audit_gazepoint_exclusion_flow(
+  analysis_with_exclusion_status,
+  subject_col = "subject",
+  condition_col = "condition",
+  unit_cols = c("media_id", "trial_global"),
+  status_col = "exclusion_status",
+  reason_col = "exclusion_reason",
+  min_retained_prop = 0.7
+))
+
+post_exclusion_balance <- safe_do(audit_gazepoint_post_exclusion_balance(
+  analysis_with_exclusion_status,
+  subject_col = "subject",
+  condition_col = "condition",
+  unit_cols = c("media_id", "trial_global"),
+  status_col = "exclusion_status",
+  min_retained_units_per_condition = 1L,
+  min_retained_units_per_subject_condition = 1L,
+  require_all_conditions_per_subject = FALSE
+))
+
+analysis_decision_audit <- safe_do(create_gazepoint_analysis_decision_audit(
+  results = list(
+    readiness_gate = readiness_gate,
+    exclusion_recommendations = exclusion_recommendations,
+    exclusion_flow = exclusion_flow,
+    post_exclusion_balance = post_exclusion_balance,
+    aoi_denominator_audit = aoi_denominator_audit,
+    pupil_reliability = pupil_reliability
+  ),
+  required_confirmatory = c("readiness_gate", "exclusion_recommendations", "aoi_denominator_audit"),
+  diagnostics_required = TRUE,
+  require_clean_diagnostics = FALSE
+))
+
+bind_rows(
+  object_summary(exclusion_flow, "audit_gazepoint_exclusion_flow"),
+  object_summary(post_exclusion_balance, "audit_gazepoint_post_exclusion_balance"),
+  object_summary(analysis_decision_audit, "create_gazepoint_analysis_decision_audit")
+) %>%
+  kable()
+```
+
+```{r exclusion-recommendation-tables}
+show_component(exclusion_recommendations, "participant_recommendations", n = 12)
+```
+
+```{r trial-exclusion-recommendations}
+show_component(exclusion_recommendations, "trial_recommendations", n = 12)
+```
+
+These tables are not substitutes for preregistered exclusion rules. They are audit trails. In a real study, the manuscript should report the initial number of participants and trials, the number flagged for review, the number excluded, the reasons for exclusion, and whether post-exclusion condition balance remained acceptable.
+
+# 17. Interoperability and external-package adapters
 
 `gp3tools` includes adapters for preparing Gazepoint-derived data for related eye-tracking and pupillometry ecosystems. Some wrappers require optional external packages; therefore, this section records adapter output status without making those packages mandatory.
 
@@ -1324,7 +1972,7 @@ bind_rows(
   kable()
 ```
 
-# 19. Automated report output
+# 18. Automated report output
 
 The workflow can create a standalone HTML diagnostic report. In this document, the report is generated in a temporary directory. In applied projects, the same report can be written to a project output folder and archived with analysis results.
 
@@ -1335,7 +1983,7 @@ tibble(file = report_files) %>%
   kable()
 ```
 
-# 20. Complete software feature inventory
+# 19. Complete software feature inventory
 
 This section creates a reproducible inventory of all exported `gp3tools` functions. The inventory is useful for documentation, paper appendices, and checking whether the manuscript covers the package's major feature areas.
 
@@ -1375,16 +2023,67 @@ function_inventory %>%
   kable()
 ```
 
-# 21. Manuscript-ready interpretation
+# 20. Manuscript-ready interpretation and discussion
 
-This synthetic-realistic case study demonstrates that `gp3tools` can process a Gazepoint-like export folder from raw CSV files to diagnostic summaries, plots, report outputs, and model-ready analysis tables. The workflow detects complete all-gaze/fixation file pairs, estimates sampling rates, evaluates gaze and pupil validity, flags rows requiring review, summarises AOI-level attention metrics, prepares pupil and AOI model-ready tables, constructs fixation-aligned and transition-sequence objects, and records reporting-readiness outputs.
+This comprehensive synthetic-realistic case study demonstrates that `gp3tools` can process a Gazepoint-like export folder from raw CSV files to diagnostic summaries, plots, report outputs, model-ready analysis tables, and manuscript-supporting audit objects. The workflow detects complete all-gaze/fixation file pairs, estimates sampling rates, evaluates gaze and pupil validity, flags rows requiring review, summarises AOI-level attention metrics, prepares pupil and AOI model-ready tables, constructs fixation-aligned and transition-sequence objects, executes sensitivity branches, and records reporting-readiness outputs.
 
-The demonstration is intentionally methodological. Because the dataset is synthetic, the numerical outputs should not be interpreted as evidence about psychological, perceptual, or behavioural processes. Instead, the example shows how a researcher can document each preprocessing and diagnostic decision before moving to inferential modelling on real data.
+The central software contribution is integration. Eye-tracking analysis usually contains many small but consequential operations: matching raw and fixation files, checking sampling intervals, harmonising column names, choosing AOI denominators, deciding how to handle missing pupil samples, auditing gaze validity, documenting exclusions, aligning time series to events, and creating model-ready summaries. These operations are often performed manually or with project-specific scripts. `gp3tools` collects them into reusable functions so that the path from Gazepoint exports to statistical analysis is explicit and auditable.
 
-For a software manuscript, the case study supports the claim that `gp3tools` fills a practical gap between proprietary Gazepoint export formats and reproducible R-based analysis. Its main contribution is not a new statistical model, but an integrated workflow that makes file inspection, quality control, AOI analysis, pupil preprocessing, transition preparation, model-sensitivity support, and reporting checks explicit and auditable.
+The case study also shows why a single "cleaned data" output is not enough. A reproducible eye-tracking workflow requires diagnostic objects that explain how the cleaned table was obtained. For this reason, the package produces separate tables for file pairing, sampling rate, tracking quality, flagged rows, AOI summaries, pupil windows, model-preparation status, reliability checks, exclusion recommendations, and reporting checklists. Each object answers a different methodological question. Were all files paired correctly? Was the sampling rate plausible? Were there condition imbalances in validity? Were AOI denominators large enough? Were pupil windows supported by enough samples? Were model fits stable under sensitivity checks? These questions should be answered before substantive interpretation.
 
-Current limitations should also be reported. The package depends on the structure and naming conventions of Gazepoint exports, and some advanced workflows require design-specific choices that cannot be automated safely. Optional interoperability functions also depend on external package availability and version compatibility. Therefore, the package should be used as a transparent workflow framework rather than as a substitute for study-specific preprocessing decisions, preregistered analysis plans, or expert inspection of raw eye-tracking signals.
-# 22. Reproducibility information
+The confirmatory pupil-window workflow is one of the most important additions for applied research. Many pupil studies define analysis windows based on stimulus timing or theoretical expectations. The combination of `summarise_gazepoint_pupil_windows()`, `prepare_gazepoint_pupil_window_model_data()`, `fit_gazepoint_pupil_window_lmm()`, and `fit_gazepoint_pupil_window_sensitivity()` provides a direct route from sample-level pupil data to trial-level LMMs. The PCHIP interpolation branch adds a transparent sensitivity option, allowing researchers to evaluate whether conclusions depend on a shape-preserving interpolation method rather than a simpler linear interpolation branch.
+
+The AOI workflow provides a parallel route for categorical gaze outcomes. The workflow begins with AOI geometry and coding audits, then summarises AOI windows, audits denominators, prepares binomial GLMM data, optionally transforms proportions to empirical logits, fits confirmatory AOI-window models, and records sensitivity checks. This is useful because AOI outcomes are highly sensitive to denominator definitions. A target-looking proportion can mean different things depending on whether the denominator is all samples, valid samples, or only AOI-labelled samples. By making denominators explicit, the package encourages clearer reporting and more defensible modelling.
+
+The reliability examples illustrate another important distinction. The package provides a dedicated pupil reliability audit because pupil-window outcomes are common repeated-measure outcomes and can be split across trials or units. AOI reliability is demonstrated as a derived calculation because AOI reliability is more design-specific: the target AOI, analysis window, denominator, split unit, and condition structure may differ substantially across studies. The manuscript therefore presents AOI split-half reliability as a transparent recipe built from the AOI-window table rather than as a one-size-fits-all exported helper.
+
+The drift-correction workflow demonstrates how `gp3tools` can support calibration-sensitivity analysis without hiding the original coordinates. Offline recalibration is useful when studies include known target-check samples, fixation crosses, or validation points. However, drift correction can also introduce analytic degrees of freedom. The package therefore returns before/after error columns and status flags so that researchers can report the magnitude of the correction and decide whether to use recalibrated coordinates as a primary branch, a sensitivity branch, or only a diagnostic.
+
+The exclusion workflow is similarly conservative. `recommend_gazepoint_exclusions()` and related audit functions recommend or document exclusions but do not silently remove data. This is important for transparent reporting. Researchers can inspect participant-level and trial-level recommendations, evaluate post-exclusion balance, and document decision rules in the manuscript. The workflow supports reproducibility because the same script that creates the analytic table also creates the exclusion audit trail.
+
+The sensitivity workflow connects preprocessing decisions with model decisions. At the preprocessing level, the manuscript demonstrates raw, linear-interpolated, and PCHIP-interpolated pupil windows; drift-correction branches; denominator audits; and exclusion recommendations. At the model level, it demonstrates nested-model comparison, leave-one-unit refits, prediction plotting, divergence-point estimation, and transition-count negative-binomial sensitivity. These tools are not intended to encourage uncontrolled exploration. Instead, they allow planned sensitivity analyses to be implemented and reported reproducibly.
+
+The interoperability workflow positions `gp3tools` within the wider R eye-tracking ecosystem. The package does not attempt to replace specialised tools such as `eyetrackingR`, `gazer`, `eyetools`, or pupillometry-focused packages. Instead, it prepares Gazepoint-derived data for those ecosystems while keeping Gazepoint-specific import, validation, and reporting logic in one place. This bridge is useful because Gazepoint exports are accessible and common in applied settings, but many downstream R workflows assume different input schemas.
+
+Because the data in this case study are synthetic, the numerical outputs should not be interpreted as evidence about psychological, perceptual, marketing, educational, or behavioural processes. The value of the example is methodological. It demonstrates the structure of an auditable analysis workflow and provides a public reproducible template for researchers who need to process private Gazepoint exports. In a real study, the same pipeline would be combined with preregistered hypotheses, study-specific event timing, participant-level metadata, experimental conditions, and appropriate confirmatory models.
+
+Current limitations should also be reported. The package depends on the structure and naming conventions of Gazepoint exports, and real projects may contain columns, stimulus names, AOI labels, or timing conventions that require local inspection. Some advanced workflows require optional packages, such as mixed-model or external eye-tracking packages, and are therefore implemented with optional dependency checks and graceful failure behavior. The synthetic dataset is intentionally public and lightweight, so it cannot represent every artifact pattern, timing design, or experimental paradigm. Finally, no software package can replace expert review of raw gaze and pupil signals; `gp3tools` should be used as a transparent workflow framework rather than as an automatic guarantee of data quality.
+
+For a software manuscript, this document can be used as the empirical companion workflow. The main paper should separately report software scope, intended audience, installation, package architecture, validation strategy, comparison with related R eye-tracking tools, limitations, and availability. The present case study provides the reproducible evidence that the package can read Gazepoint-like exports, produce diagnostics, prepare analysis-ready data, run representative models, and generate reporting artifacts without exposing private participant data.
+
+
+
+## 20.1 How the case study supports a software paper
+
+The workflow demonstrated here can be translated directly into the structure of a software paper. A concise software paper would not need to reproduce every table shown in this case study. Instead, it could use the case study as a reproducible appendix or companion document and summarize the main evidence in the article text. The article would describe the motivation for the package, the package architecture, the supported Gazepoint export types, the validation strategy, and the main workflow families. The case study would then serve as a worked example that users and reviewers can run to verify the claims.
+
+A strong paper should emphasize that `gp3tools` is not limited to file import. Import is only the first step. The package also formalizes checks that are often treated as informal preprocessing notes: whether all files are paired, whether the sampling rate is plausible, whether validity differs by condition, whether AOI denominators are adequate, whether pupil interpolation changes the outcome, whether recalibration materially changes gaze coordinates, whether exclusions create imbalance, and whether model conclusions are stable under sensitivity checks. These are not cosmetic details. They determine whether an eye-tracking analysis is reproducible, interpretable, and defensible.
+
+The package's design also supports modular use. A researcher can run the high-level workflow for a quick diagnostic report, or use individual helpers for a more controlled confirmatory analysis. For example, a pupil researcher may use only the pupil artifact, interpolation, baseline, window, reliability, and LMM helpers. An AOI researcher may use only geometry audits, AOI windows, denominator checks, GLMM preparation, empirical-logit transformation, and model sensitivity. A methods-oriented user may focus on transition matrices, Markov-chain objects, HMM preparation, semi-Markov preparation, divergence-point estimation, and leave-one-unit robustness. This modularity is important because eye-tracking experiments differ substantially in design, timing, stimuli, and inferential goals.
+
+For the paper's methods section, the synthetic-realistic dataset should be described as a demonstration resource rather than as a validation benchmark for substantive theory. It mimics the structure of Gazepoint all-gaze, fixation, and summary exports and allows the package workflow to be executed publicly. It should not be described as representative of all real-world artifact distributions. The stronger claim is narrower and safer: the package can run a complete, reproducible workflow on a Gazepoint-like export folder without requiring private data, and it has also been smoke-tested on at least one private real export folder outside the repository.
+
+For the paper's results section, the reported outputs should be framed as software outputs. The important results are not that one synthetic condition has a larger pupil mean or that one synthetic AOI receives more gaze time. The important results are that the package produces the expected diagnostic objects, model-ready tables, plots, reports, and status summaries. A useful software result might state that the example workflow detected complete file pairs, produced sampling-rate estimates, identified review-required quality rows, generated AOI and pupil summaries, prepared confirmatory model data, created transition and sequence objects, executed selected sensitivity checks, and rendered a reproducible HTML report.
+
+For the paper's discussion section, the main emphasis should be transparency. The package supports a workflow in which preprocessing decisions are named, parameterized, executed in code, and stored as objects. This is especially valuable for eye-tracking data because preprocessing choices can materially influence downstream results. By making these choices explicit, `gp3tools` helps researchers report not only what model they fitted, but also how the analysis table was obtained.
+
+## 20.2 Recommended reporting language for applied studies
+
+Researchers using `gp3tools` in applied studies can adapt the following reporting logic. First, they should describe the Gazepoint hardware and export type, including sampling rate, export file families, and whether all-gaze and fixation files were available for every participant. Second, they should report file-pair validation and sampling diagnostics. Third, they should report gaze and pupil validity summaries, including any review-required participants, trials, or stimuli. Fourth, they should specify AOI definitions, AOI denominators, pupil preprocessing choices, interpolation methods, baseline windows, smoothing choices, and exclusion criteria. Fifth, they should report whether sensitivity analyses changed the substantive interpretation.
+
+For confirmatory pupil analyses, a minimal reporting paragraph should include the pupil column used, artifact thresholds, interpolation method, maximum interpolation gap, baseline window, analysis window, valid-sample threshold, model formula, random-effects structure, convergence status, and sensitivity branches. For confirmatory AOI analyses, the paragraph should include the target AOI, analysis window, denominator definition, minimum-denominator threshold, model family, link function, random-effects structure, and denominator audit status. For transition analyses, the paragraph should include the AOI state definitions, whether self-transitions were retained, how missing or non-AOI samples were handled, and whether counts or probabilities were modelled.
+
+These reporting recommendations are intentionally practical. They do not require researchers to adopt a single statistical framework. Instead, they encourage researchers to report the preprocessing and diagnostic decisions that make the statistical framework interpretable. The same package outputs can support frequentist mixed models, Bayesian hierarchical models, permutation tests, GAMMs, GCA models, descriptive AOI reports, or external package workflows.
+
+## 20.3 Future development priorities
+
+The current package already covers import, diagnostics, pupil preprocessing, AOI summaries, confirmatory pupil-window modelling, AOI-window modelling, fixation alignment, transition preparation, sensitivity checks, exclusion recommendations, readiness gates, reports, and interoperability adapters. Future development should therefore prioritize polish, examples, and paper support over adding many new analytical functions. The most valuable additions would be small, publication-facing wrappers that combine existing helpers into clearly named pipelines, such as a confirmatory pupil pipeline and a confirmatory AOI pipeline. These wrappers should remain transparent: they should return every intermediate object rather than hiding preprocessing decisions.
+
+A second future priority is documentation of design patterns. Users need to know which workflow to use for a fixation-duration analysis, which workflow to use for a target-looking proportion, which workflow to use for pupil dilation in a time window, and which workflow to use for exploratory time-course divergence. The current function inventory is comprehensive, but a software paper should convert that inventory into a conceptual map. The case study is a step in that direction because it groups functions into workflow families rather than listing them alphabetically.
+
+A third future priority is external validation across more real export folders. The private smoke test already shows that the package can process at least one real Gazepoint Analysis export folder. The next stage would be to test additional real but non-public datasets locally, record only aggregate validation results, and avoid committing private data. This would strengthen the software paper without compromising participant confidentiality.
+
+# 21. Reproducibility information
 
 ```{r session-info}
 sessionInfo()
