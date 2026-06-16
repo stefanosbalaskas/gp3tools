@@ -71,6 +71,29 @@ Use model diagnostics, model summaries, estimated marginal means, nested model c
 
 Use `check_gazepoint_real_data_readiness()`, `recommend_gazepoint_exclusions()`, and `create_gazepoint_reporting_checklist()` before final interpretation.
 
+## Function map
+
+`gp3tools` is organised around a complete Gazepoint analysis workflow:
+
+| Task | Main helpers |
+|---|---|
+| Import Gazepoint exports | `read_gazepoint()`, `read_gazepoint_folder()`, `read_gazepoint_summary()` |
+| Create and validate master data | `create_gazepoint_master()`, `as_gazepoint_master()`, `validate_gazepoint_master()`, `audit_gazepoint_master()` |
+| Run a quick end-to-end workflow | `run_gazepoint_workflow()`, `summarise_gazepoint_workflow()`, `create_gazepoint_report()` |
+| Check file pairing, sampling, and signal quality | `check_gazepoint_file_pairs()`, `check_sampling_rate()`, `summarise_tracking_quality()`, `audit_gazepoint_gaze_signal_quality()` |
+| Preprocess pupil data | `flag_gazepoint_pupil()`, `flag_gazepoint_pupil_artifacts()`, `flag_gazepoint_pupil_hampel()`, `interpolate_gazepoint_pupil()`, `smooth_gazepoint_pupil()`, `baseline_correct_gazepoint_pupil()` |
+| Audit pupil reliability and preprocessing choices | `audit_gazepoint_pupil_gaps()`, `audit_gazepoint_pupil_baseline()`, `audit_gazepoint_pupil_drift()`, `audit_gazepoint_pupil_reliability()`, `audit_gazepoint_pupil_overlap_risk()` |
+| Summarise and model pupil outcomes | `summarise_gazepoint_pupil()`, `summarise_gazepoint_pupil_windows()`, `summarise_gazepoint_pupil_trial_features()`, `fit_gazepoint_pupil_window_lmm()`, `fit_gazepoint_pupil_gamm()` |
+| Summarise AOI behaviour | `summarise_gazepoint_aoi_windows()`, `summarise_gazepoint_aoi_entries()`, `summarise_gazepoint_aoi_trial_features()`, `summarise_gazepoint_fixation_trials()` |
+| Model AOI outcomes | `prepare_gazepoint_aoi_glmm_data()`, `fit_gazepoint_aoi_window_glmm()`, `fit_gazepoint_aoi_model_sensitivity()`, `prepare_gazepoint_aoi_gamm_data()`, `fit_gazepoint_aoi_gamm()` |
+| Analyse sequences, transitions, and scanpaths | `prepare_gazepoint_aoi_sequences()`, `summarise_gazepoint_aoi_transitions()`, `compute_gazepoint_aoi_transition_matrix()`, `compute_gazepoint_time_varying_transition_matrix()` |
+| Run time-course and advanced sensitivity analyses | `fit_gazepoint_gca()`, `run_gazepoint_cluster_permutation()`, `estimate_gazepoint_divergence_point()`, `run_gazepoint_model_leave_one_out()` |
+| Prepare reporting and exclusion decisions | `check_gazepoint_real_data_readiness()`, `recommend_gazepoint_exclusions()`, `create_gazepoint_reporting_checklist()`, `create_gazepoint_analysis_decision_audit()` |
+| Export tables and outputs | `export_gazepoint_tables()`, `export_gazepoint_model_tables()`, `export_gazepoint_master_audit()`, `save_gazepoint_plots()` |
+| Prepare data for other R eye-tracking packages | `prepare_gazepoint_eyetrackingr_data()`, `prepare_gazepoint_pupillometryr_data()`, `prepare_gazepoint_gazer_data()`, `prepare_gazepoint_eyetools_data()` |
+
+Most users should start with `run_gazepoint_workflow()` for a quick folder-level pass, then move to the master-table, pupil, AOI, modelling, and reporting helpers as needed.
+
 ## Installation
 
 During development, install the package locally from the package project folder:
