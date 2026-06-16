@@ -1016,15 +1016,24 @@ pupil_baseline_corrected <- safe_do(baseline_correct_gazepoint_pupil(
   min_baseline_samples = 3
 ))
 
-pupil_baseline_audit <- if (!is_error(pupil_baseline_corrected) && is.data.frame(pupil_baseline_corrected)) {
+pupil_baseline_audit_data <- if (!is_error(pupil_baseline_corrected) && is.data.frame(pupil_baseline_corrected)) {
+  pupil_baseline_corrected %>%
+    mutate(
+      pupil_was_interpolated = if ("pupil_was_interpolated" %in% names(.)) pupil_was_interpolated else FALSE
+    )
+} else {
+  pupil_baseline_corrected
+}
+
+pupil_baseline_audit <- if (!is_error(pupil_baseline_audit_data) && is.data.frame(pupil_baseline_audit_data)) {
   safe_do(audit_gazepoint_pupil_baseline(
-    pupil_baseline_corrected,
+    pupil_baseline_audit_data,
     group_cols = c("subject", "media_id"),
     time_col = "time",
     pupil_col = "pupil"
   ))
 } else {
-  pupil_baseline_corrected
+  pupil_baseline_audit_data
 }
 
 pupil_gap_audit <- if (!is_error(pupil_linear) && is.data.frame(pupil_linear)) {
