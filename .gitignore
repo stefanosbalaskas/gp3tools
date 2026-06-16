@@ -5,3 +5,14 @@
 .httr-oauth
 .DS_Store
 .quarto
+
+# Private/local data and outputs
+private_data/
+private_outputs/
+local_real_data/
+local_real_outputs/
+real_data/
+real_outputs/
+gp3tools_real_check/
+*.rds
+*.RDS
