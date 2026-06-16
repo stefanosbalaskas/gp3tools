@@ -30,11 +30,17 @@ The workflow covers:
 6. fitting confirmatory pupil-window models;
 7. running time-course models and sensitivity checks.
 
-The code uses placeholder file paths and object names. Replace them with the paths and column names used in your own study.
+The vignette chunks are not evaluated during package checks, so the file can serve as a readable workflow template.
 
-# 1. Load example data
+The first section uses built-in example data; the optional import chunk shows how to replace those objects with data from a private Gazepoint export folder.
 
-This vignette can be read as a template for private Gazepoint exports, but the package also includes lightweight synthetic example data.
+When adapting the code, replace the placeholder paths and column names with those used in your own study.
+
+# 1. Load example data or import your own exports
+
+For a quick read-through, start with the lightweight synthetic example data included in the package.
+
+These objects make the later workflow easier to follow because they already use the column names expected by the examples.
 
 ```{r}
 library(gp3tools)
@@ -46,7 +52,9 @@ master <- gazepoint_example_master
 pupil_windows <- gazepoint_example_pupil_windows
 ```
 
-For a real study, you would usually start by importing a Gazepoint export folder:
+For a real study, replace the example objects above by importing a Gazepoint export folder.
+
+This optional chunk creates `all_gaze` and then rebuilds `master` from the imported rows:
 
 ```{r}
 export_dir <- "C:/Users/YourName/Desktop/gp3_test_exports"
@@ -64,11 +72,9 @@ all_gaze <- results$all_gaze
 master <- create_gazepoint_master(all_gaze)
 ```
 
-# 2. Create and validate the master table
+# 2. Validate the master table
 
 ```{r}
-master <- create_gazepoint_master(all_gaze)
-
 master_audit <- audit_gazepoint_master(master)
 
 validation <- validate_gazepoint_master(master)
@@ -79,6 +85,8 @@ validation$checks
 ```
 
 Use the validation output before continuing to pupil preprocessing.
+
+If you imported real Gazepoint exports, this is the point where you should confirm that the expected participant, trial, time, gaze, and pupil columns were created correctly.
 
 # 3. Light pupil preprocessing branch
 
@@ -120,7 +128,9 @@ smoothed_pupil <- smooth_gazepoint_pupil(
 )
 ```
 
-Create pupil-window summaries:
+Create pupil-window summaries.
+
+These summaries are useful for confirmatory window analyses, where the time window should be specified before testing the main condition effect.
 
 ```{r}
 pupil_windows <- summarise_gazepoint_pupil_windows(
@@ -232,6 +242,8 @@ overlap_audit$overview
 ```
 
 # 6. Reliability and sensitivity checks
+
+The checks below use the conservative pupil-window summary. In a real analysis, compare this branch with the lighter preprocessing branch to assess whether conclusions depend on preprocessing choices.
 
 ```{r}
 pupil_reliability <- audit_gazepoint_pupil_reliability(
@@ -394,6 +406,8 @@ pupil_gca_fit$comparison
 ```
 
 # 9. Cluster permutation and divergence point
+
+Cluster-permutation and divergence-point analyses are exploratory time-course tools. Use enough permutations or bootstrap samples for the final analysis, and avoid using exploratory results to define a later confirmatory window on the same data.
 
 ```{r}
 cluster_data <- prepare_gazepoint_cluster_data(
