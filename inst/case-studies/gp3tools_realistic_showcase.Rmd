@@ -1,0 +1,1391 @@
+---
+title: "gp3tools: An R package for reproducible Gazepoint GP3 eye-tracking workflows"
+author: "Stefanos Balaskas"
+date: "`r format(Sys.Date())`"
+output:
+  html_document:
+    toc: true
+    toc_depth: 3
+    number_sections: true
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  message = FALSE,
+  warning = FALSE,
+  fig.width = 7,
+  fig.height = 5
+)
+
+suppressPackageStartupMessages({
+  library(dplyr)
+  library(ggplot2)
+  library(knitr)
+  library(tibble)
+})
+
+if (file.exists("DESCRIPTION") && requireNamespace("devtools", quietly = TRUE)) {
+  devtools::load_all(".", quiet = TRUE)
+} else {
+  library(gp3tools)
+}
+
+is_error <- function(x) inherits(x, "error")
+
+safe_do <- function(expr) {
+  tryCatch(
+    eval.parent(substitute(expr)),
+    error = function(e) e
+  )
+}
+
+object_summary <- function(x, object_name = "object") {
+  if (is_error(x)) {
+    tibble(
+      object = object_name,
+      status = "error",
+      class = "error",
+      rows = NA_integer_,
+      columns = NA_integer_,
+      message = conditionMessage(x)
+    )
+  } else if (is.data.frame(x)) {
+    tibble(
+      object = object_name,
+      status = "ok",
+      class = paste(class(x), collapse = "/"),
+      rows = nrow(x),
+      columns = ncol(x),
+      message = ""
+    )
+  } else if (is.list(x)) {
+    tibble(
+      object = object_name,
+      status = "ok",
+      class = paste(class(x), collapse = "/"),
+      rows = length(x),
+      columns = NA_integer_,
+      message = paste(names(x), collapse = ", ")
+    )
+  } else {
+    tibble(
+      object = object_name,
+      status = "ok",
+      class = paste(class(x), collapse = "/"),
+      rows = length(x),
+      columns = NA_integer_,
+      message = ""
+    )
+  }
+}
+
+show_table <- function(x, n = 12, digits = 3) {
+  if (is_error(x)) {
+    tibble(status = "error", message = conditionMessage(x)) %>%
+      knitr::kable()
+  } else if (is.data.frame(x)) {
+    x %>%
+      head(n) %>%
+      knitr::kable(digits = digits)
+  } else if (is.list(x)) {
+    tibble(component = names(x)) %>%
+      knitr::kable()
+  } else {
+    tibble(value = as.character(x)) %>%
+      knitr::kable()
+  }
+}
+
+num_col <- function(data, col, default = NA_real_) {
+  if (!col %in% names(data)) {
+    return(rep(default, nrow(data)))
+  }
+  suppressWarnings(as.numeric(data[[col]]))
+}
+
+chr_col <- function(data, col, default = NA_character_) {
+  if (!col %in% names(data)) {
+    return(rep(default, nrow(data)))
+  }
+  as.character(data[[col]])
+}
+
+bool_col <- function(data, col, default = TRUE) {
+  if (!col %in% names(data)) {
+    return(rep(default, nrow(data)))
+  }
+  x <- data[[col]]
+  if (is.logical(x)) {
+    return(x)
+  }
+  if (is.numeric(x) || is.integer(x)) {
+    return(x == 1)
+  }
+  as.character(x) %in% c("1", "TRUE", "true", "valid", "Valid")
+}
+```
+
+# Abstract
+
+`gp3tools` is an R package for importing, validating, analysing, and reporting Gazepoint GP3 and Gazepoint Analysis eye-tracking exports. The package supports a reproducible workflow from raw export folders to analysis-ready tables, data-quality diagnostics, AOI summaries, pupil preprocessing, model-ready time-window summaries, transition and sequence representations, sensitivity checks, external-package adapters, and reporting-readiness outputs. This manuscript-style case study demonstrates the package using a bundled synthetic-realistic Gazepoint export dataset that mimics the structure of all-gaze, fixation, and summary CSV files without exposing private participant data. The workflow shows how researchers can check file pairing, sampling rate, tracking quality, AOI coding, pupil quality, model-preparation outputs, interoperability outputs, and automated reports. The example positions `gp3tools` as a practical bridge between Gazepoint exports and transparent statistical analysis in R.
+
+**Keywords:** eye tracking; Gazepoint GP3; Gazepoint Analysis; R package; AOI analysis; pupil preprocessing; reproducible research; data quality
+# 1. Introduction
+
+Gazepoint GP3 and Gazepoint Analysis exports provide accessible eye-tracking data for experimental and applied research, but the exported CSV structure requires systematic handling before statistical analysis. Researchers often need to verify file pairing, sampling rates, validity percentages, AOI coverage, fixation summaries, pupil-signal quality, and reporting completeness before moving to confirmatory models.
+
+The purpose of this case study is to demonstrate how `gp3tools` supports an end-to-end workflow from Gazepoint export folders to reproducible diagnostic outputs and analysis-ready tables. The example uses synthetic-realistic data, not private participant data, so that the workflow can be shared publicly.
+
+The case study makes four practical contributions. First, it provides a public, shareable demonstration dataset for workflows that would otherwise depend on private participant exports. Second, it illustrates a complete quality-control path from file discovery to sampling, gaze-validity, pupil-validity, AOI, and reporting-readiness diagnostics. Third, it demonstrates how confirmatory and exploratory analysis objects can be prepared for AOI, pupil, fixation-aligned, transition, and model-sensitivity workflows. Fourth, it documents how the package can support transparent research reporting by producing reproducible tables, plots, diagnostic reports, and software feature inventories.
+
+
+# 2. Software scope and architecture
+
+`gp3tools` is organised around a staged workflow. The first layer reads Gazepoint export folders, classifies files, checks all-gaze/fixation file pairs, and creates harmonised analysis objects. The second layer performs diagnostic checks for sampling rate, tracking quality, gaze validity, pupil validity, AOI coding, design balance, and exclusion decisions. The third layer prepares analysis-ready summaries for AOI windows, pupil windows, fixation-aligned data, scanpaths, transition matrices, Markov-style objects, GAMM/GCA-style time courses, and model-sensitivity checks. The fourth layer supports reporting through diagnostic plots, HTML reports, reporting checklists, readiness gates, and interoperability adapters for related eye-tracking and pupillometry packages.
+
+The package is intended for researchers who need a transparent bridge between Gazepoint Analysis CSV exports and reproducible statistical analysis in R. It does not replace experimental-design software, eye-tracker calibration procedures, or substantive statistical modelling decisions. Instead, it standardises the data-management and diagnostic steps that commonly precede confirmatory analysis.
+# 3. Demonstration data
+
+The bundled synthetic export folder is located inside the package under `inst/extdata/gazepoint_realistic_demo_exports/`. It contains all-gaze files, fixation files, and a synthetic summary export.
+
+```{r locate-demo-data}
+repo_demo_dir <- file.path(
+  "inst",
+  "extdata",
+  "gazepoint_realistic_demo_exports"
+)
+
+demo_dir <- if (dir.exists(repo_demo_dir)) {
+  normalizePath(repo_demo_dir, winslash = "/", mustWork = TRUE)
+} else {
+  system.file(
+    "extdata",
+    "gazepoint_realistic_demo_exports",
+    package = "gp3tools"
+  )
+}
+
+stopifnot(nzchar(demo_dir), dir.exists(demo_dir))
+
+demo_files <- list.files(demo_dir)
+
+demo_file_table <- tibble(
+  file = demo_files,
+  file_type = case_when(
+    grepl("_all_gaze\\.csv$", file, ignore.case = TRUE) ~ "all_gaze",
+    grepl("_fixations\\.csv$", file, ignore.case = TRUE) ~ "fixations",
+    grepl("^Data_Summary", file, ignore.case = TRUE) ~ "summary",
+    TRUE ~ "other"
+  )
+)
+
+demo_file_table %>%
+  count(file_type, name = "n_files") %>%
+  kable()
+```
+
+```{r demo-file-list}
+demo_file_table %>%
+  arrange(file_type, file) %>%
+  kable()
+```
+
+# 4. Workflow execution
+
+The main demonstration uses `run_gazepoint_workflow()` to process the synthetic Gazepoint-like export folder. Outputs are written to a temporary directory so this document can be rendered without modifying the package repository.
+
+```{r run-workflow}
+workflow_output_dir <- file.path(tempdir(), "gp3tools_realistic_showcase")
+
+if (!dir.exists(workflow_output_dir)) {
+  dir.create(workflow_output_dir, recursive = TRUE)
+}
+
+workflow_results <- run_gazepoint_workflow(
+  export_dir = demo_dir,
+  output_dir = workflow_output_dir,
+  prefix = "showcase",
+  overwrite = TRUE,
+  save_plots = TRUE,
+  create_report = TRUE,
+  report_title = "Synthetic realistic Gazepoint demo diagnostic report"
+)
+
+workflow_summary <- summarise_gazepoint_workflow(workflow_results)
+
+workflow_summary %>%
+  kable()
+```
+
+# 5. File-pair validation
+
+A basic requirement for a Gazepoint export workflow is that each all-gaze file has a corresponding fixation file. The file-pair table checks whether all expected pairs are present and whether duplicate files exist.
+
+```{r file-pairs}
+workflow_results$file_pairs %>%
+  kable()
+```
+
+# 6. Sampling-rate diagnostics
+
+The synthetic dataset was generated to mimic approximately 60 Hz Gazepoint GP3 sampling. The sampling table reports sample counts, duration, inter-sample intervals, and estimated sampling frequency by user file and stimulus/media.
+
+```{r sampling-table}
+workflow_results$sampling %>%
+  select(
+    USER_FILE,
+    MEDIA_ID,
+    n_samples,
+    duration_sec,
+    mean_interval_ms,
+    median_interval_ms,
+    sd_interval_ms,
+    estimated_hz
+  ) %>%
+  kable(digits = 3)
+```
+
+```{r sampling-plot, fig.cap="Sampling-rate diagnostic plot generated by gp3tools."}
+sampling_plot <- list.files(
+  workflow_output_dir,
+  pattern = "sampling_rate_plot\\.png$",
+  full.names = TRUE
+)
+
+if (length(sampling_plot) > 0) {
+  knitr::include_graphics(sampling_plot[1])
+}
+```
+
+# 7. Tracking-quality diagnostics
+
+Tracking-quality summaries help identify rows requiring review before analysis. In this example, the synthetic dataset intentionally includes a small number of warning-quality cases to demonstrate the diagnostic workflow.
+
+```{r quality-table}
+workflow_results$flagged_quality %>%
+  select(
+    USER_FILE,
+    MEDIA_ID,
+    BPOGV_valid_pct,
+    min_pupil_valid_pct_observed,
+    estimated_hz,
+    flag_low_gaze_validity,
+    flag_low_pupil_validity,
+    flag_sampling_rate,
+    flag_short_duration,
+    review_required
+  ) %>%
+  kable(digits = 2)
+```
+
+```{r quality-plot, fig.cap="Tracking-quality diagnostic plot generated by gp3tools."}
+quality_plot <- list.files(
+  workflow_output_dir,
+  pattern = "tracking_quality_plot\\.png$",
+  full.names = TRUE
+)
+
+if (length(quality_plot) > 0) {
+  knitr::include_graphics(quality_plot[1])
+}
+```
+
+# 8. Analysis-ready master table
+
+This section converts imported all-gaze rows into a compact analysis table with harmonised participant, stimulus, time, gaze, AOI, and pupil columns. The same logic is used only for this demonstration; real projects may keep additional columns.
+
+```{r prepare-analysis-data}
+raw_all <- workflow_results$all_gaze
+
+time_column <- grep("^TIME", names(raw_all), value = TRUE)[1]
+
+analysis_data <- raw_all %>%
+  mutate(
+    subject = gsub("_all_gaze\\.csv$", "", chr_col(raw_all, "USER_FILE")),
+    media_id = num_col(raw_all, "MEDIA_ID"),
+    media_name = chr_col(raw_all, "MEDIA_NAME"),
+    trial_global = paste(subject, media_id, sep = "_media_"),
+    condition = if_else(media_id == 0, "early_target", "late_target"),
+    time = num_col(raw_all, time_column) * 1000,
+    x = num_col(raw_all, "BPOGX"),
+    y = num_col(raw_all, "BPOGY"),
+    pupil_left = num_col(raw_all, "LPMM"),
+    pupil_right = num_col(raw_all, "RPMM"),
+    pupil = rowMeans(cbind(pupil_left, pupil_right), na.rm = TRUE),
+    valid = bool_col(raw_all, "BPOGV"),
+    aoi_current = if_else(is.na(chr_col(raw_all, "AOI")) | chr_col(raw_all, "AOI") == "", "non_aoi", chr_col(raw_all, "AOI")),
+    is_fixation = bool_col(raw_all, "FPOGV"),
+    is_saccade = num_col(raw_all, "SACCADE_MAG", 0) > 0.15,
+    stimulus_onset_time = 0,
+    target_onset_time = if_else(media_id == 0, 350, 6400),
+    response_time = 10000,
+    event_label = if_else(time == min(time, na.rm = TRUE), "stimulus_onset", NA_character_),
+    target_x = if_else(media_id == 0, 0.23, 0.75),
+    target_y = if_else(media_id == 0, 0.34, 0.45),
+    is_check_target = time <= 500
+  )
+
+analysis_data %>%
+  select(subject, media_id, condition, trial_global, time, x, y, pupil, valid, aoi_current) %>%
+  head(12) %>%
+  kable(digits = 3)
+```
+
+```{r create-master}
+master_table <- safe_do(
+  create_gazepoint_master(
+    gaze_data = workflow_results$all_gaze,
+    time_unit = "seconds",
+    user_col = "USER_FILE",
+    media_col = "MEDIA_ID",
+    media_name_col = "MEDIA_NAME",
+    tracker_sampling_rate = 60
+  )
+)
+
+bind_rows(
+  object_summary(master_table, "create_gazepoint_master"),
+  object_summary(analysis_data, "analysis_data")
+) %>%
+  kable()
+```
+
+```{r validate-master}
+master_audit <- safe_do(validate_gazepoint_master(
+  analysis_data,
+  require_pupil = TRUE,
+  require_aoi = TRUE,
+  fail_on_error = FALSE
+))
+
+audit_ready_master <- analysis_data %>%
+  mutate(
+    valid_sample = valid,
+    missing_gaze = is.na(x) | is.na(y),
+    missing_pupil = is.na(pupil),
+    gaze_offscreen = x < 0 | x > 1 | y < 0 | y > 1,
+    aoi_count = as.integer(!is.na(aoi_current) & aoi_current != "non_aoi")
+  )
+
+audit_master <- safe_do(audit_gazepoint_master(audit_ready_master))
+
+bind_rows(
+  object_summary(master_audit, "validate_gazepoint_master"),
+  object_summary(audit_master, "audit_gazepoint_master")
+) %>%
+  kable()
+```
+
+# 9. AOI summary workflow
+
+AOI summaries provide trial- or media-level indicators such as time to first fixation, sample count, viewed time, fixation count, and fixation duration. These outputs are typical inputs for confirmatory AOI analyses.
+
+```{r aoi-summary}
+workflow_results$aoi_table %>%
+  arrange(USER_ID, MEDIA_ID, AOI) %>%
+  kable(digits = 3)
+```
+
+```{r aoi-aggregate}
+aoi_aggregate <- workflow_results$aoi_table %>%
+  group_by(MEDIA_ID, AOI) %>%
+  summarise(
+    n_rows = n(),
+    mean_sample_ttff_sec = mean(sample_ttff_sec, na.rm = TRUE),
+    mean_sample_time_viewed_sec = mean(sample_time_viewed_sec, na.rm = TRUE),
+    mean_fixation_count = mean(fixation_count, na.rm = TRUE),
+    mean_fixation_duration_ms = mean(fixation_duration_mean_ms, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+aoi_aggregate %>%
+  kable(digits = 3)
+```
+
+```{r aoi-plot, fig.cap="Mean AOI viewed time by media and AOI in the synthetic-realistic demo dataset."}
+ggplot(
+  aoi_aggregate,
+  aes(x = AOI, y = mean_sample_time_viewed_sec)
+) +
+  geom_col() +
+  facet_wrap(~ MEDIA_ID) +
+  labs(
+    x = "AOI",
+    y = "Mean sample time viewed (seconds)"
+  )
+```
+
+# 10. AOI geometry, coding, and verification
+
+The synthetic dataset uses three AOIs. Geometry checks are included because AOI definitions can be a major source of analytic error in eye-tracking studies.
+
+```{r aoi-geometry}
+aoi_geometry <- tidyr::expand_grid(
+  MEDIA_ID = c(0, 1),
+  AOI = c("AOI 0", "AOI 1", "AOI 2")
+) %>%
+  mutate(
+    x_min = case_when(AOI == "AOI 0" ~ 0.62, AOI == "AOI 1" ~ 0.35, TRUE ~ 0.10),
+    x_max = case_when(AOI == "AOI 0" ~ 0.90, AOI == "AOI 1" ~ 0.60, TRUE ~ 0.35),
+    y_min = case_when(AOI == "AOI 0" ~ 0.30, AOI == "AOI 1" ~ 0.62, TRUE ~ 0.20),
+    y_max = case_when(AOI == "AOI 0" ~ 0.60, AOI == "AOI 1" ~ 0.88, TRUE ~ 0.48)
+  )
+
+geometry_audit <- safe_do(audit_gazepoint_aoi_geometry(
+  data = aoi_geometry,
+  aoi_col = "AOI",
+  stimulus_col = "MEDIA_ID",
+  x_min_col = "x_min",
+  y_min_col = "y_min",
+  x_max_col = "x_max",
+  y_max_col = "y_max"
+))
+
+overlap_audit <- safe_do(audit_gazepoint_aoi_overlap(
+  data = aoi_geometry,
+  aoi_col = "AOI",
+  stimulus_col = "MEDIA_ID",
+  x_min_col = "x_min",
+  y_min_col = "y_min",
+  x_max_col = "x_max",
+  y_max_col = "y_max"
+))
+
+coding_audit <- safe_do(audit_gazepoint_aoi_coding_matrix(
+  gaze_data = analysis_data,
+  aoi_geometry = aoi_geometry,
+  observed_aoi_col = "aoi_current",
+  gaze_x_col = "x",
+  gaze_y_col = "y",
+  gaze_stimulus_col = "media_id",
+  sample_id_cols = c("subject", "trial_global", "time"),
+  geometry_aoi_col = "AOI",
+  geometry_stimulus_col = "MEDIA_ID",
+  x_min_col = "x_min",
+  y_min_col = "y_min",
+  x_max_col = "x_max",
+  y_max_col = "y_max"
+))
+
+margin_audit <- safe_do(audit_gazepoint_aoi_margin_sensitivity(
+  gaze_data = analysis_data,
+  aoi_geometry = aoi_geometry,
+  gaze_x_col = "x",
+  gaze_y_col = "y",
+  gaze_stimulus_col = "media_id",
+  sample_id_cols = c("subject", "trial_global", "time"),
+  geometry_aoi_col = "AOI",
+  geometry_stimulus_col = "MEDIA_ID",
+  x_min_col = "x_min",
+  y_min_col = "y_min",
+  x_max_col = "x_max",
+  y_max_col = "y_max",
+  margins = c(-0.02, 0, 0.02)
+))
+
+bind_rows(
+  object_summary(geometry_audit, "audit_gazepoint_aoi_geometry"),
+  object_summary(overlap_audit, "audit_gazepoint_aoi_overlap"),
+  object_summary(coding_audit, "audit_gazepoint_aoi_coding_matrix"),
+  object_summary(margin_audit, "audit_gazepoint_aoi_margin_sensitivity")
+) %>%
+  kable()
+```
+
+```{r aoi-verification-plot, fig.cap="AOI verification plot using synthetic geometry and synthetic gaze samples."}
+aoi_verification_plot <- safe_do(plot_gazepoint_aoi_verification(
+  aoi_geometry = aoi_geometry,
+  gaze_data = analysis_data %>% sample_n(min(2000, nrow(.))),
+  geometry_aoi_col = "AOI",
+  geometry_stimulus_col = "MEDIA_ID",
+  x_min_col = "x_min",
+  y_min_col = "y_min",
+  x_max_col = "x_max",
+  y_max_col = "y_max",
+  gaze_x_col = "x",
+  gaze_y_col = "y",
+  gaze_stimulus_col = "media_id"
+))
+
+if (!is_error(aoi_verification_plot)) {
+  print(aoi_verification_plot)
+} else {
+  tibble(status = "error", message = conditionMessage(aoi_verification_plot)) %>% kable()
+}
+```
+
+# 11. Pupil preprocessing and pupil-quality workflow
+
+Pupil preprocessing usually includes artifact detection, interpolation, smoothing, baseline correction, and diagnostic plotting. The following examples use safe wrappers so that optional branches do not stop the manuscript render.
+
+```{r pupil-preprocessing}
+pupil_flagged <- safe_do(flag_gazepoint_pupil(
+  analysis_data,
+  pupil_col = "pupil",
+  time_col = "time",
+  group_cols = c("subject", "media_id"),
+  min_pupil = 1,
+  max_pupil = 8
+))
+
+pupil_artifacts <- safe_do(flag_gazepoint_pupil_artifacts(
+  analysis_data,
+  pupil_col = "pupil",
+  left_pupil_col = "pupil_left",
+  right_pupil_col = "pupil_right",
+  time_col = "time",
+  missing_pupil_col = NULL,
+  group_cols = c("subject", "media_id"),
+  pupil_min_mm = 1,
+  pupil_max_mm = 8
+))
+
+pupil_hampel <- safe_do(flag_gazepoint_pupil_hampel(
+  analysis_data,
+  pupil_col = "pupil",
+  time_col = "time",
+  grouping_cols = c("subject", "media_id"),
+  corrected_col = "pupil_hampel_corrected"
+))
+
+pupil_linear <- safe_do(interpolate_gazepoint_pupil(
+  analysis_data,
+  pupil_col = "pupil",
+  time_col = "time",
+  group_cols = c("subject", "media_id"),
+  max_gap_ms = 150
+))
+
+pupil_pchip <- safe_do(interpolate_gazepoint_pupil_pchip(
+  analysis_data,
+  pupil_col = "pupil",
+  time_col = "time",
+  grouping_cols = c("subject", "media_id"),
+  max_gap_ms = 150
+))
+
+pupil_smoothed <- safe_do(smooth_gazepoint_pupil(
+  analysis_data,
+  pupil_col = "pupil",
+  time_col = "time",
+  group_cols = c("subject", "media_id"),
+  window_samples = 5
+))
+
+bind_rows(
+  object_summary(pupil_flagged, "flag_gazepoint_pupil"),
+  object_summary(pupil_artifacts, "flag_gazepoint_pupil_artifacts"),
+  object_summary(pupil_hampel, "flag_gazepoint_pupil_hampel"),
+  object_summary(pupil_linear, "interpolate_gazepoint_pupil"),
+  object_summary(pupil_pchip, "interpolate_gazepoint_pupil_pchip"),
+  object_summary(pupil_smoothed, "smooth_gazepoint_pupil")
+) %>%
+  kable()
+```
+
+```{r pupil-timecourse-plot, fig.cap="Synthetic pupil time course by condition."}
+pupil_timecourse_plot <- safe_do(plot_gazepoint_pupil_timecourse(
+  analysis_data,
+  pupil_col = "pupil",
+  time_col = "time",
+  condition_col = "condition",
+  bin_width_ms = 250
+))
+
+if (!is_error(pupil_timecourse_plot)) {
+  print(pupil_timecourse_plot)
+} else {
+  tibble(status = "error", message = conditionMessage(pupil_timecourse_plot)) %>% kable()
+}
+```
+
+```{r pupil-windows}
+pupil_windows <- safe_do(summarise_gazepoint_pupil_windows(
+  analysis_data,
+  pupil_col = "pupil",
+  time_col = "time",
+  windows = c(0, 1000, 3000, 6000, 10000),
+  group_cols = c("subject", "media_id", "condition", "trial_global"),
+  min_valid_samples = 5
+))
+
+show_table(pupil_windows, n = 12, digits = 3)
+```
+
+```{r pupil-model-preparation}
+pupil_model_data <- if (!is_error(pupil_windows)) {
+  safe_do(prepare_gazepoint_pupil_window_model_data(
+    pupil_windows,
+    outcome_col = "mean_pupil",
+    subject_col = "subject",
+    condition_col = "condition",
+    window_col = "window_label",
+    trial_col = "trial_global",
+    media_col = "media_id",
+    min_valid_samples = 5,
+    min_valid_prop = 0.5
+  ))
+} else {
+  pupil_windows
+}
+
+pupil_lmm <- if (!is_error(pupil_model_data)) {
+  safe_do(fit_gazepoint_pupil_window_lmm(pupil_model_data))
+} else {
+  pupil_model_data
+}
+
+pupil_sensitivity <- if (!is_error(pupil_model_data)) {
+  safe_do(fit_gazepoint_pupil_window_sensitivity(pupil_model_data))
+} else {
+  pupil_model_data
+}
+
+bind_rows(
+  object_summary(pupil_model_data, "prepare_gazepoint_pupil_window_model_data"),
+  object_summary(pupil_lmm, "fit_gazepoint_pupil_window_lmm"),
+  object_summary(pupil_sensitivity, "fit_gazepoint_pupil_window_sensitivity")
+) %>%
+  kable()
+```
+
+```{r pupil-gamm}
+pupil_gamm_data <- safe_do(prepare_gazepoint_pupil_gamm_data(
+  analysis_data,
+  pupil_col = "pupil",
+  time_col = "time",
+  subject_col = "subject",
+  condition_col = "condition",
+  x_col = "x",
+  y_col = "y",
+  bin_width_ms = 250,
+  time_window = c(0, 10000),
+  min_valid_samples = 3
+))
+
+pupil_gamm <- if (!is_error(pupil_gamm_data)) {
+  safe_do(fit_gazepoint_pupil_gamm(
+    pupil_gamm_data,
+    pupil_col = "mean_pupil",
+    time_col = "time_bin_center_ms",
+    subject_col = "subject",
+    condition_col = "condition",
+    n_time_basis = 8
+  ))
+} else {
+  pupil_gamm_data
+}
+
+pupil_pfe_gamm <- if (!is_error(pupil_gamm_data)) {
+  safe_do(fit_gazepoint_pupil_pfe_gamm(
+    pupil_gamm_data,
+    pupil_col = "mean_pupil",
+    time_col = "time_bin_center_ms",
+    subject_col = "subject",
+    condition_col = "condition",
+    x_col = "mean_x",
+    y_col = "mean_y",
+    n_time_basis = 8,
+    n_position_basis = 6
+  ))
+} else {
+  pupil_gamm_data
+}
+
+bind_rows(
+  object_summary(pupil_gamm_data, "prepare_gazepoint_pupil_gamm_data"),
+  object_summary(pupil_gamm, "fit_gazepoint_pupil_gamm"),
+  object_summary(pupil_pfe_gamm, "fit_gazepoint_pupil_pfe_gamm")
+) %>%
+  kable()
+```
+
+```{r pupil-reliability}
+pupil_trial_features <- safe_do(summarise_gazepoint_pupil_trial_features(
+  analysis_data,
+  group_cols = c("subject", "trial_global", "condition"),
+  pupil_col = "pupil",
+  time_col = "time",
+  min_valid_samples = 5
+))
+
+candidate_pupil_outcomes <- if (!is_error(pupil_trial_features)) {
+  intersect(
+    c("mean_pupil", "early_mean_pupil", "middle_mean_pupil", "late_mean_pupil"),
+    names(pupil_trial_features)
+  )
+} else {
+  character()
+}
+
+pupil_reliability <- if (!is_error(pupil_trial_features) && length(candidate_pupil_outcomes) > 0) {
+  safe_do(audit_gazepoint_pupil_reliability(
+    pupil_trial_features,
+    outcome_cols = candidate_pupil_outcomes,
+    participant_col = "subject",
+    trial_col = "trial_global"
+  ))
+} else {
+  safe_do(stop("No suitable pupil reliability outcome columns were found."))
+}
+
+bind_rows(
+  object_summary(pupil_trial_features, "summarise_gazepoint_pupil_trial_features"),
+  object_summary(pupil_reliability, "audit_gazepoint_pupil_reliability")
+) %>%
+  kable()
+```
+
+# 12. AOI-window modelling and empirical-logit workflow
+
+AOI-window summaries can be prepared for binomial GLMMs, empirical-logit LMMs, proportion models, or multiverse sensitivity checks.
+
+```{r aoi-windows}
+aoi_windows_def <- tibble(
+  window_label = c("early", "middle", "late"),
+  window_start_ms = c(0, 1000, 3000),
+  window_end_ms = c(1000, 3000, 10000)
+)
+
+aoi_windows <- safe_do(summarise_gazepoint_aoi_windows(
+  analysis_data,
+  windows = aoi_windows_def,
+  time_col = "time",
+  aoi_col = "aoi_current",
+  subject_col = "subject",
+  condition_col = "condition",
+  group_cols = c("subject", "media_id", "trial_global"),
+  target_aoi_values = c("AOI 0", "AOI 2"),
+  non_aoi_values = c("non_aoi", "")
+))
+
+show_table(aoi_windows, n = 12, digits = 3)
+```
+
+```{r aoi-glmm-preparation}
+aoi_glmm_data <- if (!is_error(aoi_windows)) {
+  safe_do(prepare_gazepoint_aoi_glmm_data(
+    aoi_windows,
+    success_col = "n_target_samples",
+    denominator = "valid",
+    subject_col = "subject",
+    condition_col = "condition",
+    window_col = "window_label",
+    min_denominator_samples = 5
+  ))
+} else {
+  aoi_windows
+}
+
+aoi_empirical_logit <- if (!is_error(aoi_glmm_data)) {
+  safe_do(transform_gazepoint_aoi_empirical_logit(
+    aoi_glmm_data,
+    numerator_col = "aoi_glmm_success",
+    denominator_col = "aoi_glmm_denominator"
+  ))
+} else {
+  aoi_glmm_data
+}
+
+aoi_glmm <- if (!is_error(aoi_glmm_data)) {
+  safe_do(fit_gazepoint_aoi_window_glmm(aoi_glmm_data))
+} else {
+  aoi_glmm_data
+}
+
+aoi_model_sensitivity <- if (!is_error(aoi_glmm_data)) {
+  safe_do(fit_gazepoint_aoi_model_sensitivity(aoi_glmm_data))
+} else {
+  aoi_glmm_data
+}
+
+bind_rows(
+  object_summary(aoi_glmm_data, "prepare_gazepoint_aoi_glmm_data"),
+  object_summary(aoi_empirical_logit, "transform_gazepoint_aoi_empirical_logit"),
+  object_summary(aoi_glmm, "fit_gazepoint_aoi_window_glmm"),
+  object_summary(aoi_model_sensitivity, "fit_gazepoint_aoi_model_sensitivity")
+) %>%
+  kable()
+```
+
+```{r aoi-gamm-workflow}
+aoi_gamm_data <- safe_do(prepare_gazepoint_aoi_gamm_data(
+  analysis_data,
+  aoi_col = "aoi_current",
+  target_aoi_values = c("AOI 0", "AOI 2"),
+  subject_col = "subject",
+  condition_col = "condition",
+  time_col = "time",
+  trial_col = "trial_global",
+  time_window = c(0, 10000),
+  bin_size_ms = 250,
+  denominator = "valid",
+  min_denominator_samples = 3
+))
+
+aoi_gamm <- if (!is_error(aoi_gamm_data)) {
+  safe_do(fit_gazepoint_aoi_gamm(
+    aoi_gamm_data,
+    time_k = 8,
+    min_rows = 10,
+    min_subjects = 2,
+    min_time_bins = 4
+  ))
+} else {
+  aoi_gamm_data
+}
+
+bind_rows(
+  object_summary(aoi_gamm_data, "prepare_gazepoint_aoi_gamm_data"),
+  object_summary(aoi_gamm, "fit_gazepoint_aoi_gamm")
+) %>%
+  kable()
+```
+
+```{r aoi-gamm-plot, fig.cap="AOI GAMM plot when model fitting is available."}
+aoi_gamm_plot <- if (!is_error(aoi_gamm)) {
+  safe_do(plot_gazepoint_aoi_gamm(aoi_gamm))
+} else {
+  aoi_gamm
+}
+
+if (!is_error(aoi_gamm_plot)) {
+  print(aoi_gamm_plot)
+} else {
+  tibble(status = "not shown", message = conditionMessage(aoi_gamm_plot)) %>% kable()
+}
+```
+
+# 13. Fixation, event-aligned, and saccade-related workflow
+
+Fixation-level and event-aligned summaries are useful when researchers need to align samples to the first target entry, first fixation, or first saccade-like movement into a target AOI.
+
+```{r fixation-data}
+raw_fix <- workflow_results$all_fix
+fix_time_column <- grep("^TIME", names(raw_fix), value = TRUE)[1]
+
+fixation_data <- raw_fix %>%
+  mutate(
+    subject = gsub("_fixations\\.csv$", "", chr_col(raw_fix, "USER_FILE")),
+    media_id = num_col(raw_fix, "MEDIA_ID"),
+    trial_global = paste(subject, media_id, sep = "_media_"),
+    condition = if_else(media_id == 0, "early_target", "late_target"),
+    time = num_col(raw_fix, fix_time_column) * 1000,
+    x = num_col(raw_fix, "BPOGX"),
+    y = num_col(raw_fix, "BPOGY"),
+    duration = num_col(raw_fix, "FPOGD") * 1000,
+    valid = bool_col(raw_fix, "FPOGV"),
+    aoi_current = if_else(is.na(chr_col(raw_fix, "AOI")) | chr_col(raw_fix, "AOI") == "", "non_aoi", chr_col(raw_fix, "AOI"))
+  )
+
+fixation_trial_summary <- safe_do(summarise_gazepoint_fixation_trials(
+  fixation_data,
+  group_cols = c("subject", "media_id", "trial_global", "condition"),
+  start_col = "time",
+  duration_col = "duration",
+  x_col = "x",
+  y_col = "y",
+  valid_col = "valid",
+  aoi_col = "aoi_current",
+  target_aoi_values = c("AOI 0", "AOI 2")
+))
+
+aligned_data <- safe_do(prepare_gazepoint_fixation_aligned_data(
+  analysis_data,
+  time_col = "time",
+  participant_col = "subject",
+  trial_col = "trial_global",
+  aoi_col = "aoi_current",
+  target_aoi = c("AOI 0", "AOI 2"),
+  fixation_col = "is_fixation",
+  saccade_col = "is_saccade",
+  alignment_event = "first_target_entry",
+  baseline_window = c(-500, 0),
+  analysis_window = c(0, 2000),
+  keep_unaligned = TRUE
+))
+
+bind_rows(
+  object_summary(fixation_data, "fixation_data"),
+  object_summary(fixation_trial_summary, "summarise_gazepoint_fixation_trials"),
+  object_summary(aligned_data, "prepare_gazepoint_fixation_aligned_data")
+) %>%
+  kable()
+```
+
+# 14. Transition, scanpath, and sequence workflow
+
+Transition and sequence helpers prepare AOI sequences for descriptive transition matrices, Markov-chain-style representations, hidden Markov model preparation, and semi-Markov preparation.
+
+```{r transition-workflow}
+aoi_entries <- safe_do(summarise_gazepoint_aoi_entries(
+  analysis_data,
+  aoi_col = "aoi_current",
+  time_col = "time",
+  group_cols = c("subject", "media_id", "trial_global")
+))
+
+aoi_transitions <- safe_do(summarise_gazepoint_aoi_transitions(
+  analysis_data,
+  aoi_col = "aoi_current",
+  time_col = "time",
+  group_cols = c("subject", "media_id", "trial_global")
+))
+
+aoi_trial_features <- safe_do(summarise_gazepoint_aoi_trial_features(
+  analysis_data,
+  aoi_col = "aoi_current",
+  time_col = "time",
+  group_cols = c("subject", "media_id", "trial_global"),
+  target_aoi_values = c("AOI 0", "AOI 2")
+))
+
+aoi_sequences <- safe_do(prepare_gazepoint_aoi_sequences(
+  analysis_data,
+  aoi_col = "aoi_current",
+  time_col = "time",
+  group_cols = c("subject", "media_id", "trial_global")
+))
+
+transition_matrix <- safe_do(compute_gazepoint_aoi_transition_matrix(
+  analysis_data,
+  aoi_col = "aoi_current",
+  time_col = "time",
+  group_cols = c("subject", "media_id", "trial_global"),
+  by_cols = "condition"
+))
+
+markov_object <- safe_do(create_gazepoint_markovchain_object(
+  analysis_data,
+  state_col = "aoi_current",
+  participant_col = "subject",
+  trial_col = "trial_global",
+  time_col = "time"
+))
+
+hmm_data <- safe_do(prepare_gazepoint_hmm_data(
+  analysis_data,
+  state_col = "aoi_current",
+  participant_col = "subject",
+  trial_col = "trial_global",
+  time_col = "time",
+  observation_cols = c("x", "y", "pupil"),
+  covariate_cols = "condition"
+))
+
+semimarkov_data <- safe_do(prepare_gazepoint_semimarkov_data(
+  analysis_data,
+  state_col = "aoi_current",
+  participant_col = "subject",
+  trial_col = "trial_global",
+  time_col = "time",
+  covariate_cols = "condition"
+))
+
+bind_rows(
+  object_summary(aoi_entries, "summarise_gazepoint_aoi_entries"),
+  object_summary(aoi_transitions, "summarise_gazepoint_aoi_transitions"),
+  object_summary(aoi_trial_features, "summarise_gazepoint_aoi_trial_features"),
+  object_summary(aoi_sequences, "prepare_gazepoint_aoi_sequences"),
+  object_summary(transition_matrix, "compute_gazepoint_aoi_transition_matrix"),
+  object_summary(markov_object, "create_gazepoint_markovchain_object"),
+  object_summary(hmm_data, "prepare_gazepoint_hmm_data"),
+  object_summary(semimarkov_data, "prepare_gazepoint_semimarkov_data")
+) %>%
+  kable()
+```
+
+```{r transition-plot, fig.cap="AOI transition matrix plot when transition output is available."}
+transition_plot <- if (!is_error(transition_matrix)) {
+  safe_do(plot_gazepoint_aoi_transition_matrix(transition_matrix))
+} else {
+  transition_matrix
+}
+
+if (!is_error(transition_plot)) {
+  print(transition_plot)
+} else {
+  tibble(status = "not shown", message = conditionMessage(transition_plot)) %>% kable()
+}
+```
+
+```{r time-varying-transition}
+transition_events <- analysis_data %>%
+  arrange(subject, media_id, trial_global, time) %>%
+  group_by(subject, media_id, trial_global, condition) %>%
+  mutate(
+    from_aoi = aoi_current,
+    to_aoi = lead(aoi_current),
+    transition_time = time
+  ) %>%
+  ungroup() %>%
+  filter(
+    !is.na(from_aoi),
+    !is.na(to_aoi),
+    from_aoi != to_aoi
+  )
+
+time_varying_transition <- safe_do(compute_gazepoint_time_varying_transition_matrix(
+  transition_events,
+  from_col = "from_aoi",
+  to_col = "to_aoi",
+  time_col = "transition_time",
+  window_size_ms = 1000,
+  by_cols = "condition",
+  normalise = "row"
+))
+
+bind_rows(
+  object_summary(transition_events, "derived_transition_events"),
+  object_summary(time_varying_transition, "compute_gazepoint_time_varying_transition_matrix")
+) %>%
+  kable()
+```
+
+# 15. Model checking, sensitivity, and prediction workflow
+
+This section demonstrates model-support utilities with simple models fitted to the synthetic AOI table. These examples are methodological and should not be interpreted substantively.
+
+```{r model-support}
+aoi_model_table <- workflow_results$aoi_table %>%
+  mutate(
+    condition = if_else(MEDIA_ID == 0, "early_target", "late_target"),
+    subject = paste0("synthetic_user_", sprintf("%02d", USER_ID))
+  )
+
+lm_small <- lm(sample_time_viewed_sec ~ condition, data = aoi_model_table)
+lm_large <- lm(sample_time_viewed_sec ~ condition + fixation_count, data = aoi_model_table)
+
+nested_comparison <- safe_do(compare_gazepoint_nested_models(
+  models = list(lm_small, lm_large),
+  model_names = c("condition_only", "condition_plus_fixations")
+))
+
+model_summary <- safe_do(tidy_gazepoint_model_summary(
+  lm_large,
+  model_name = "AOI viewed-time linear model"
+))
+
+loo_result <- safe_do(run_gazepoint_model_leave_one_out(
+  data = aoi_model_table,
+  unit_col = "subject",
+  fit_function = function(d) lm(sample_time_viewed_sec ~ condition + fixation_count, data = d),
+  extract_function = function(model) {
+    data.frame(
+      term = names(stats::coef(model)),
+      estimate = unname(stats::coef(model)),
+      stringsAsFactors = FALSE
+    )
+  }
+))
+
+prediction_plot <- safe_do(plot_gazepoint_model_predictions(
+  data = aoi_model_table,
+  model = lm_large,
+  x_col = "fixation_count",
+  outcome_col = "sample_time_viewed_sec",
+  condition_col = "condition"
+))
+
+bind_rows(
+  object_summary(nested_comparison, "compare_gazepoint_nested_models"),
+  object_summary(model_summary, "tidy_gazepoint_model_summary"),
+  object_summary(loo_result, "run_gazepoint_model_leave_one_out"),
+  object_summary(prediction_plot, "plot_gazepoint_model_predictions")
+) %>%
+  kable()
+```
+
+```{r model-prediction-plot, fig.cap="Observed and model-implied AOI viewed time predictions."}
+if (!is_error(prediction_plot)) {
+  print(prediction_plot)
+} else {
+  tibble(status = "not shown", message = conditionMessage(prediction_plot)) %>% kable()
+}
+```
+
+```{r divergence-point}
+pupil_timecourse_for_divergence <- analysis_data %>%
+  group_by(subject, trial_global, condition, time_bin = floor(time / 250) * 250) %>%
+  summarise(
+    mean_pupil = mean(pupil, na.rm = TRUE),
+    .groups = "drop"
+  ) %>%
+  rename(time = time_bin)
+
+divergence_point <- safe_do(estimate_gazepoint_divergence_point(
+  pupil_timecourse_for_divergence,
+  outcome_col = "mean_pupil",
+  time_col = "time",
+  condition_col = "condition",
+  participant_col = "subject",
+  trial_col = "trial_global",
+  comparison = c("late_target", "early_target"),
+  n_boot = 100,
+  consecutive_points = 2,
+  seed = 20260616,
+  keep_bootstrap = FALSE
+))
+
+object_summary(divergence_point, "estimate_gazepoint_divergence_point") %>%
+  kable()
+```
+
+# 16. Multiverse and cluster-preparation utilities
+
+This section records the status of multiverse and cluster-oriented helpers. Full inferential use normally requires a design-specific multiverse object or permutation design, so the manuscript demonstrates preparation or object availability rather than forcing an inappropriate inferential test.
+
+```{r multiverse-cluster-inventory}
+preprocessing_registry <- safe_do(create_gazepoint_preprocessing_registry())
+preprocessing_multiverse <- safe_do(create_gazepoint_preprocessing_multiverse())
+
+cluster_data <- safe_do(prepare_gazepoint_cluster_data(
+  pupil_timecourse_for_divergence,
+  outcome_col = "mean_pupil",
+  subject_col = "subject",
+  condition_col = "condition",
+  time_col = "time",
+  trial_col = "trial_global"
+))
+
+bind_rows(
+  object_summary(preprocessing_registry, "create_gazepoint_preprocessing_registry"),
+  object_summary(preprocessing_multiverse, "create_gazepoint_preprocessing_multiverse"),
+  object_summary(cluster_data, "prepare_gazepoint_cluster_data")
+) %>%
+  kable()
+```
+
+# 17. Reporting checklist, exclusions, and real-data readiness gate
+
+A manuscript-ready pipeline should document data readiness, exclusion recommendations, design balance, quality imbalance, and reporting completeness. These helpers are designed to support transparent reporting rather than to automatically make inferential decisions.
+
+```{r readiness-and-reporting}
+readiness_gate <- safe_do(check_gazepoint_real_data_readiness(
+  analysis_data,
+  analysis_type = "combined",
+  participant_col = "subject",
+  trial_col = "trial_global",
+  time_col = "time",
+  condition_col = "condition",
+  stimulus_col = "media_id",
+  aoi_col = "aoi_current",
+  pupil_col = "pupil",
+  gaze_x_col = "x",
+  gaze_y_col = "y",
+  tracking_valid_col = "valid",
+  min_rows = 100,
+  min_participants = 2,
+  min_trials = 2
+))
+
+exclusion_recommendations <- safe_do(recommend_gazepoint_exclusions(
+  analysis_data,
+  participant_col = "subject",
+  trial_col = "trial_global",
+  condition_col = "condition",
+  validity_col = "valid",
+  x_col = "x",
+  y_col = "y",
+  pupil_col = "pupil",
+  min_trial_samples = 10
+))
+
+reporting_checklist <- safe_do(create_gazepoint_reporting_checklist(
+  data = analysis_data,
+  objects = list(
+    workflow_summary = workflow_summary,
+    flagged_quality = workflow_results$flagged_quality,
+    aoi_table = workflow_results$aoi_table,
+    readiness_gate = readiness_gate
+  ),
+  analysis_type = "combined",
+  study_title = "Synthetic-realistic Gazepoint workflow case study"
+))
+
+design_balance <- safe_do(audit_gazepoint_design_balance(
+  analysis_data,
+  subject_col = "subject",
+  condition_col = "condition",
+  unit_cols = c("media_id", "trial_global")
+))
+
+condition_quality_imbalance <- safe_do(audit_gazepoint_condition_quality_imbalance(
+  workflow_results$flagged_quality %>%
+    mutate(condition = if_else(MEDIA_ID == 0, "early_target", "late_target")),
+  condition_col = "condition",
+  quality_cols = c("BPOGV_valid_pct", "min_pupil_valid_pct_observed"),
+  subject_col = "USER_FILE"
+))
+
+bind_rows(
+  object_summary(readiness_gate, "check_gazepoint_real_data_readiness"),
+  object_summary(exclusion_recommendations, "recommend_gazepoint_exclusions"),
+  object_summary(reporting_checklist, "create_gazepoint_reporting_checklist"),
+  object_summary(design_balance, "audit_gazepoint_design_balance"),
+  object_summary(condition_quality_imbalance, "audit_gazepoint_condition_quality_imbalance")
+) %>%
+  kable()
+```
+
+# 18. Interoperability and external-package adapters
+
+`gp3tools` includes adapters for preparing Gazepoint-derived data for related eye-tracking and pupillometry ecosystems. Some wrappers require optional external packages; therefore, this section records adapter output status without making those packages mandatory.
+
+```{r interoperability}
+eyetools_data <- safe_do(prepare_gazepoint_eyetools_data(
+  analysis_data,
+  participant_col = "subject",
+  trial_col = "trial_global",
+  time_col = "time",
+  x_col = "x",
+  y_col = "y",
+  pupil_col = "pupil",
+  media_col = "media_id",
+  condition_col = "condition",
+  aoi_col = "aoi_current",
+  fixation_col = "is_fixation",
+  validity_cols = "valid"
+))
+
+gazer_data <- safe_do(prepare_gazepoint_gazer_data(
+  analysis_data,
+  participant_col = "subject",
+  trial_col = "trial_global",
+  time_col = "time",
+  x_col = "x",
+  y_col = "y",
+  pupil_col = "pupil",
+  media_col = "media_id",
+  condition_col = "condition",
+  aoi_col = "aoi_current",
+  fixation_col = "is_fixation",
+  validity_cols = "valid"
+))
+
+pupillometryr_data <- safe_do(prepare_gazepoint_pupillometryr_data(
+  analysis_data,
+  participant_col = "subject",
+  trial_col = "trial_global",
+  time_col = "time",
+  pupil_col = "pupil",
+  media_col = "media_id",
+  condition_col = "condition",
+  event_col = "event_label",
+  validity_cols = "valid"
+))
+
+eyetrackingr_data <- safe_do(prepare_gazepoint_eyetrackingr_data(
+  analysis_data,
+  participant_col = "subject",
+  trial_col = "trial_global",
+  time_col = "time",
+  x_col = "x",
+  y_col = "y",
+  media_col = "media_id",
+  condition_col = "condition",
+  aoi_col = "aoi_current",
+  validity_cols = "valid"
+))
+
+gazer_crosscheck <- safe_do(run_gazepoint_gazer_crosscheck(
+  analysis_data,
+  participant_col = "subject",
+  trial_col = "trial_global",
+  time_col = "time",
+  pupil_col = "pupil",
+  condition_col = "condition",
+  hz = 60
+))
+
+eyetools_detection <- safe_do(run_gazepoint_eyetools_fixation_detection(
+  analysis_data,
+  participant_col = "subject",
+  trial_col = "trial_global",
+  time_col = "time",
+  x_col = "x",
+  y_col = "y",
+  condition_col = "condition",
+  stimulus_col = "media_id",
+  method = "dispersion",
+  sample_rate = 60
+))
+
+bind_rows(
+  object_summary(eyetools_data, "prepare_gazepoint_eyetools_data"),
+  object_summary(gazer_data, "prepare_gazepoint_gazer_data"),
+  object_summary(pupillometryr_data, "prepare_gazepoint_pupillometryr_data"),
+  object_summary(eyetrackingr_data, "prepare_gazepoint_eyetrackingr_data"),
+  object_summary(gazer_crosscheck, "run_gazepoint_gazer_crosscheck"),
+  object_summary(eyetools_detection, "run_gazepoint_eyetools_fixation_detection")
+) %>%
+  kable()
+```
+
+# 19. Automated report output
+
+The workflow can create a standalone HTML diagnostic report. In this document, the report is generated in a temporary directory. In applied projects, the same report can be written to a project output folder and archived with analysis results.
+
+```{r report-files}
+report_files <- list.files(workflow_output_dir, full.names = FALSE)
+
+tibble(file = report_files) %>%
+  kable()
+```
+
+# 20. Complete software feature inventory
+
+This section creates a reproducible inventory of all exported `gp3tools` functions. The inventory is useful for documentation, paper appendices, and checking whether the manuscript covers the package's major feature areas.
+
+```{r exported-functions}
+exports <- sort(getNamespaceExports("gp3tools"))
+
+function_inventory <- tibble(
+  function_name = exports,
+  feature_area = case_when(
+    grepl("workflow|report|checklist|readiness|quality|sampling", function_name) ~
+      "Workflow, diagnostics, and reporting",
+    grepl("pupil|blink|hampel|baseline|interpolat|reliability", function_name) ~
+      "Pupil preprocessing and pupil analysis",
+    grepl("aoi|fixation|saccade", function_name) ~
+      "AOI, fixation, and saccade analysis",
+    grepl("transition|scanpath|markov|hmm|semimarkov|sequence", function_name) ~
+      "Transitions, scanpaths, and sequence preparation",
+    grepl("model|glm|lmm|gamm|prediction|nested|loo|sensitivity|divergence", function_name) ~
+      "Modeling, time-course analysis, and sensitivity checks",
+    grepl("prepare|export|adapter|eyetools|gazer|eyetrackingr|pupillometryr", function_name) ~
+      "Adapters and interoperability",
+    grepl("plot|visual", function_name) ~
+      "Visualization",
+    TRUE ~ "General utilities"
+  )
+)
+
+function_inventory %>%
+  count(feature_area, name = "n_functions") %>%
+  arrange(desc(n_functions)) %>%
+  kable()
+```
+
+```{r exported-function-appendix}
+function_inventory %>%
+  arrange(feature_area, function_name) %>%
+  kable()
+```
+
+# 21. Manuscript-ready interpretation
+
+This synthetic-realistic case study demonstrates that `gp3tools` can process a Gazepoint-like export folder from raw CSV files to diagnostic summaries, plots, report outputs, and model-ready analysis tables. The workflow detects complete all-gaze/fixation file pairs, estimates sampling rates, evaluates gaze and pupil validity, flags rows requiring review, summarises AOI-level attention metrics, prepares pupil and AOI model-ready tables, constructs fixation-aligned and transition-sequence objects, and records reporting-readiness outputs.
+
+The demonstration is intentionally methodological. Because the dataset is synthetic, the numerical outputs should not be interpreted as evidence about psychological, perceptual, or behavioural processes. Instead, the example shows how a researcher can document each preprocessing and diagnostic decision before moving to inferential modelling on real data.
+
+For a software manuscript, the case study supports the claim that `gp3tools` fills a practical gap between proprietary Gazepoint export formats and reproducible R-based analysis. Its main contribution is not a new statistical model, but an integrated workflow that makes file inspection, quality control, AOI analysis, pupil preprocessing, transition preparation, model-sensitivity support, and reporting checks explicit and auditable.
+
+Current limitations should also be reported. The package depends on the structure and naming conventions of Gazepoint exports, and some advanced workflows require design-specific choices that cannot be automated safely. Optional interoperability functions also depend on external package availability and version compatibility. Therefore, the package should be used as a transparent workflow framework rather than as a substitute for study-specific preprocessing decisions, preregistered analysis plans, or expert inspection of raw eye-tracking signals.
+# 22. Reproducibility information
+
+```{r session-info}
+sessionInfo()
+```
