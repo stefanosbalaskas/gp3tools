@@ -1,0 +1,10 @@
+synthetic_paper_exports/
+rendered_html/
+figures/
+tables/
+paper_snapshot_*/
+*.html
+*.png
+*.csv
+*.rds
+*.RData
