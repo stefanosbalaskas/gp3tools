@@ -1,5 +1,7 @@
 # gp3tools
 
+[![R-CMD-check](https://github.com/stefanosbalaskas/gp3tools/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/stefanosbalaskas/gp3tools/actions/workflows/R-CMD-check.yaml)
+
 `gp3tools` provides tools for importing, checking, summarising, exporting, visualising, preprocessing, and modelling Gazepoint GP3 / Gazepoint Analysis export files in R.
 
 The package is designed for exported Gazepoint CSV files, especially:
@@ -93,6 +95,20 @@ Use `check_gazepoint_real_data_readiness()`, `recommend_gazepoint_exclusions()`,
 | Prepare data for other R eye-tracking packages | `prepare_gazepoint_eyetrackingr_data()`, `prepare_gazepoint_pupillometryr_data()`, `prepare_gazepoint_gazer_data()`, `prepare_gazepoint_eyetools_data()` |
 
 Most users should start with `run_gazepoint_workflow()` for a quick folder-level pass, then move to the master-table, pupil, AOI, modelling, and reporting helpers as needed.
+
+## Citation
+
+If you use `gp3tools` in research, teaching, reports, or software workflows, please cite the package:
+
+```r
+citation("gp3tools")
+```
+
+Current development citation:
+
+> Balaskas, S. (2026). `gp3tools`: Import, Inspect, Analyse, and Report Gazepoint GP3 Exports. R package version 1.0.0.9000. https://github.com/stefanosbalaskas/gp3tools
+
+A formal software DOI will be added after a stable GitHub release is archived through Zenodo.
 
 ## Installation
 

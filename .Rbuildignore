@@ -4,3 +4,6 @@
 ^.*\.Rproj$
 ^data-raw$
 ^paper-showcase$
+^\.github$
+^CITATION\.cff$
+^\.RDataTmp$
