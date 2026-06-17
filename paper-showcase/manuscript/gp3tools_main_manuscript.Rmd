@@ -64,7 +64,7 @@ The fourth layer supports modelling, robustness, reporting, and interoperability
 
 ## Workflow map
 
-Table 1 provides a compact map of the main workflow families. The full exported-function inventory remains in Supplementary Material S1.
+Table 1 provides a compact map of the main workflow families. Additional function-level details are available in the package documentation and public repository.
 
 ```{r workflow-table, echo=FALSE}
 workflow_families <- data.frame(
@@ -108,7 +108,7 @@ The case study demonstrates that `gp3tools` can identify complete all-gaze/fixat
 
 ## Minimal reproducible workflow
 
-The full executable workflow is provided in Supplementary Material S1. The main manuscript reports the minimal code structure used by a typical user.
+The main manuscript reports the minimal code structure used by a typical user; the public repository provides the reproducible package materials.
 
 ```{r install-gp3tools, eval=FALSE}
 # Development version
