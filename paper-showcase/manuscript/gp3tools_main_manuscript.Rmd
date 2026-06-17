@@ -236,15 +236,6 @@ The synthetic case study shows how a workflow can be reported without exposing p
 
 Future development should focus on documentation, external validation, user-facing examples, and interoperability. Additional testing on independent Gazepoint datasets from different laboratories, tasks, stimulus types, screen configurations, and participant populations would strengthen confidence in edge-case handling. Further work could also expand export adapters, improve graphical summaries, and add examples for common applied research designs.
 
-# Supplementary material
-
-Supplementary Material S1 contains the full synthetic workflow, extended diagnostics, code, plots, model outputs, function inventory, and reproducibility information.
-
-```{r supplement-path, echo=TRUE}
-supplement_path <- "../supplement/gp3tools_full_showcase_supplement.Rmd"
-supplement_path
-```
-
 # Conclusion
 
 `gp3tools` provides a reproducible R workflow for Gazepoint GP3 / Gazepoint Analysis eye-tracking exports. It bridges the gap between vendor-specific CSV files and transparent statistical analysis by supporting import, validation, preprocessing, AOI summaries, pupil workflows, fixation and transition summaries, model-ready data preparation, diagnostic plotting, reporting checklists, and archived reproducibility materials. The package complements existing eye-tracking and pupillometry tools by focusing on Gazepoint-specific export structures and end-to-end workflow transparency. The synthetic demonstration validates package behaviour and workflow reproducibility, not substantive psychological effects. Used carefully, `gp3tools` can make Gazepoint-based eye-tracking analyses more auditable, reproducible, and publication-ready.
