@@ -91,6 +91,49 @@ The demonstration should be interpreted as software evidence, not as empirical e
 
 The high-level workflow demonstrates that `gp3tools` can identify complete all-gaze/fixation file pairs, estimate sampling rate, flag review-required recordings, create analysis-ready all-gaze and fixation tables, summarize AOI viewing behaviour, audit AOI denominators, preprocess pupil data, run interpolation and baseline-quality checks, prepare confirmatory pupil-window and AOI-window model data, fit representative model objects, construct transition and sequence summaries, create exclusion recommendations, generate reporting-readiness objects, and produce diagnostic report outputs.
 
+
+## Minimal reproducible workflow
+
+The full demonstration workflow is provided in the supplementary R Markdown file. The main manuscript reports only the minimal structure of the workflow. In a typical use case, users install and load the package, point `gp3tools` to a Gazepoint-style export folder, run the workflow, and inspect the resulting summary object.
+
+```{r install-gp3tools, eval=FALSE}
+# Development version
+remotes::install_github("stefanosbalaskas/gp3tools")
+
+# After CRAN acceptance
+# install.packages("gp3tools")
+```
+
+```{r load-gp3tools, eval=FALSE}
+library(gp3tools)
+```
+
+```{r locate-demo-exports, eval=FALSE}
+# Lightweight example exports included with the package
+demo_dir <- system.file(
+  "extdata",
+  "gazepoint_realistic_demo_exports",
+  package = "gp3tools"
+)
+
+demo_dir
+```
+
+```{r run-demo-workflow, eval=FALSE}
+workflow <- run_gazepoint_workflow(
+  input_dir = demo_dir,
+  output_dir = "gp3tools_demo_output",
+  prefix = "gp3tools_demo",
+  save_plots = TRUE,
+  create_report = TRUE
+)
+
+summary <- summarise_gazepoint_workflow(workflow)
+summary
+```
+
+These chunks are shown as reproducible workflow code rather than executed in the main manuscript. The supplement contains the fully rendered synthetic showcase with extended diagnostics and outputs.
+
 ## Demonstration outputs
 
 The paper-only synthetic showcase provides a larger reproducible example than the lightweight package datasets. In the current demonstration, the workflow processes 48 synthetic all-gaze files, 48 synthetic fixation files, and one summary file. The end-to-end run produces 115,200 all-gaze rows, 5,691 fixation rows, 192 sampling-quality rows, 1,344 AOI summary rows, and 60 review-required rows. All 48 expected file pairs are complete. These values are not interpreted as empirical findings; they demonstrate the scale and structure of the workflow outputs.
