@@ -7,3 +7,5 @@
 ^\.github$
 ^CITATION\.cff$
 ^\.RDataTmp$
+^cran-comments\.md$
+^CRAN-SUBMISSION$

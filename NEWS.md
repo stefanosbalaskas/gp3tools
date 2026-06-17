@@ -1,3 +1,11 @@
+# gp3tools 1.0.1
+
+* Prepared the package for CRAN-oriented release validation.
+* Added citation metadata through `CITATION.cff` and `inst/CITATION`.
+* Added GitHub Actions R-CMD-check workflow for Windows, macOS, Linux, and R-devel validation.
+* Added a paper-only synthetic showcase source folder outside the R package build.
+* Updated README citation and validation information.
+
 # gp3tools 1.0.0.9000
 
 ## Development version
