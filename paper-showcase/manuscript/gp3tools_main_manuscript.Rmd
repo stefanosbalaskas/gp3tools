@@ -1,100 +1,133 @@
 ---
-title: "gp3tools: An R Package for Reproducible Gazepoint GP3 Eye-Tracking Workflows"
+title: "gp3tools: Reproducible Analysis and Reporting of Gazepoint GP3 Eye-Tracking
+  Exports"
 author:
-  - name: "Stefanos Balaskas"
-    affiliation: "University of Patras, Department of Business Administration"
-abstract: |
-  Eye-tracking studies increasingly rely on reproducible software pipelines that connect device exports with transparent preprocessing, statistical analysis, visualization, and reporting. For researchers using Gazepoint GP3 and Gazepoint Analysis, exported CSV folders often contain separate all-gaze, fixation, and summary files, together with gaze coordinates, pupil measures, validity indicators, timing fields, media identifiers, and area-of-interest information. These exports are useful but require systematic validation before inferential modelling. `gp3tools` is an R package designed to support this workflow for Gazepoint GP3 / Gazepoint Analysis data. It provides functions for file discovery, file-pair validation, sampling-rate diagnostics, tracking-quality summaries, pupil preprocessing, AOI summaries, fixation and transition workflows, model-ready data preparation, diagnostic plotting, reporting checklists, exclusion recommendations, and reproducible reporting. This paper describes the motivation, design, and validation strategy of the package and demonstrates its use with a synthetic Gazepoint-style export dataset. The demonstration is intended to verify workflow reproducibility and package behaviour; it is not used to draw substantive psychological, perceptual, or marketing conclusions. `gp3tools` fills a practical gap between vendor-specific Gazepoint CSV exports and publication-ready R workflows for transparent eye-tracking analysis.
-keywords: eye tracking; Gazepoint GP3; Gazepoint Analysis; R package; pupil preprocessing; AOI analysis; fixation analysis; reproducible research; data quality; mixed models
-bibliography: references.bib
-link-citations: true
+- name: Stefanos Balaskas
+  affiliation: University of Patras, Department of Business Administration
+abstract: "Eye-tracking studies increasingly require reproducible software pipelines
+  that connect device exports with transparent preprocessing, quality control, statistical
+  analysis, visualization, and reporting. Gazepoint GP3 and Gazepoint Analysis exports
+  provide accessible gaze, fixation, pupil, timing, media, and area-of-interest data,
+  but exported CSV folders usually require systematic validation before they can support
+  defensible inference. `gp3tools` is an R package for importing, validating, preprocessing,
+  modelling, visualising, and reporting Gazepoint GP3 / Gazepoint Analysis exports.
+  The package supports file discovery, file-pair validation, sampling diagnostics,
+  tracking-quality summaries, pupil preprocessing, area-of-interest summaries, fixation
+  and transition workflows, model-ready data preparation, diagnostic plotting, exclusion
+  recommendations, reporting checklists, and reproducible report generation. This
+  paper presents the motivation, design, validation strategy, and synthetic demonstration
+  workflow of `gp3tools`. The demonstration is used to evaluate workflow reproducibility
+  and software behaviour; it is not used to draw substantive psychological, perceptual,
+  or marketing conclusions. The package fills a practical gap between vendor-specific
+  Gazepoint CSV exports and publication-ready R workflows for transparent eye-tracking
+  analysis.\n"
 output:
+  word_document:
+    toc: true
+    toc_depth: '3'
   html_document:
     toc: true
     toc_depth: 3
     number_sections: true
+    fig_caption: true
+bibliography: references.bib
+link-citations: true
+keywords: eye tracking; Gazepoint GP3; Gazepoint Analysis; R package; pupil preprocessing;
+  area of interest; reproducible research; data quality; mixed models
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
   echo = TRUE,
   message = FALSE,
-  warning = FALSE
+  warning = FALSE,
+  fig.width = 7,
+  fig.height = 4.5,
+  dpi = 300
 )
 ```
 
 # Introduction
 
-Eye-tracking data are increasingly used in psychology, marketing, human-computer interaction, education, tourism research, usability testing, and applied behavioural science. These studies often depend on complex data-processing pipelines: raw gaze and pupil samples must be exported from device software, checked for quality, aligned with trial and stimulus metadata, transformed into analysis-ready objects, summarized within theoretically meaningful time windows or areas of interest, and modelled using appropriate statistical methods. Reproducibility depends not only on the final model specification but also on the transparency of the preprocessing steps that precede it [@Wilson2014].
+Eye-tracking research increasingly depends on reproducible software pipelines that connect raw device exports with transparent preprocessing, statistical analysis, visualization, and reporting. These pipelines matter because gaze, fixation, pupil, and area-of-interest (AOI) outcomes are not raw facts extracted directly from an eye tracker. They are constructed through device export formats, calibration quality, validity flags, timing fields, preprocessing rules, AOI definitions, trial windows, model specifications, and reporting decisions. Reproducibility therefore depends not only on the final statistical model but also on the traceability of the steps that precede it [@Wilson2014].
 
-This challenge is particularly visible in studies using Gazepoint GP3 and Gazepoint Analysis exports. Gazepoint systems allow researchers to export CSV files containing sample-level gaze data, fixation data, media information, pupil-related variables, and summary statistics [@GazepointGP3; @GazepointAPI]. However, exported files are not automatically equivalent to an analysis-ready dataset. A typical project may require checking whether all-gaze and fixation files are correctly paired, whether sampling rate is plausible, whether gaze and pupil validity are adequate, whether AOI labels are consistent, whether fixation summaries are usable, and whether preprocessing and exclusion rules have been documented.
+Gazepoint GP3 and Gazepoint Analysis are used in experimental and applied eye-tracking contexts because they provide accessible export workflows for gaze, fixation, pupil, timing, media, and AOI information [@GazepointGP3; @GazepointAPI]. However, exported CSV files are not automatically equivalent to analysis-ready data. A typical project may require checking whether all-gaze and fixation files are correctly paired, whether sampling rate is plausible, whether gaze and pupil validity are adequate, whether AOI labels and denominators are consistent, whether pupil artifacts and baseline decisions have been handled transparently, and whether the final outputs are sufficiently documented for reporting.
 
-Many researchers handle these steps using ad hoc scripts. Although project-specific code can be effective, it can also make workflows difficult to audit, reuse, or compare across studies. Small changes in AOI definitions, validity thresholds, pupil interpolation rules, baseline windows, or exclusion criteria can affect downstream results. Pupil-analysis guidance stresses that pupil data are sensitive to noise, artifacts, blinks, baseline correction, and preprocessing choices [@KretSjakShie2019; @Mathot2018Baseline; @Mathot2018Pupillometry]. AOI-based analyses also depend on how areas of interest are defined, interpreted, and reported [@Orquin2016].
+These requirements are not merely technical. Preprocessing choices can affect downstream interpretation. Pupil data are sensitive to blinks, artifacts, interpolation, and baseline correction [@KretSjakShie2019; @Mathot2018Baseline; @Mathot2018Pupillometry]. AOI analyses depend on how areas of interest are defined, interpreted, and reported [@Orquin2016]. More generally, research-software practices emphasize version control, testing, documentation, provenance, and citable software releases as part of reproducible computational work [@Wilson2014; @Smith2016; @Katz2021].
 
-`gp3tools` was developed to make Gazepoint GP3 / Gazepoint Analysis workflows more explicit and reproducible in R [@RCoreTeam2026]. The package is not intended to replace experimental-design software, calibration procedures, visual inspection of raw signals, or substantive statistical judgement. Instead, it standardizes the data-management and diagnostic steps that commonly precede confirmatory or exploratory eye-tracking analyses. Its central contribution is a Gazepoint-specific bridge from exported CSV folders to analysis-ready R objects, model-ready tables, diagnostic plots, reproducible reports, and reporting-readiness summaries.
+`gp3tools` was developed to make Gazepoint GP3 / Gazepoint Analysis workflows more explicit and reproducible in R [@RCoreTeam2026]. The package does not propose a new statistical estimator, eye-tracking theory, or universal preprocessing standard. Its contribution is a Gazepoint-specific workflow layer that converts vendor-style export folders into auditable R objects, diagnostic summaries, model-ready tables, plots, reports, and reporting-readiness outputs.
 
 # Statement of need
 
-Several eye-tracking and pupillometry packages already support important parts of the analysis workflow. `eyetrackingR` provides tools for preparing, summarizing, visualizing, and analysing eye-tracking data in R [@DinkFerguson2015]. `PupillometryR` provides a pipeline for cleaning, preparing, plotting, and analysing pupillometry data [@Forbes2020]. General R packages also support reproducible documents, graphics, and statistical modelling [@Wickham2016ggplot2; @Xie2015knitr; @XieAllaireGrolemund2018; @Bates2015; @Brooks2017; @Wood2017].
+Several tools already support eye-tracking and pupillometry workflows. `eyetrackingR` provides R-based tools for preparing, summarizing, visualizing, and analysing eye-tracking data [@DinkFerguson2015]. `PupillometryR` provides a pipeline for cleaning, preparing, plotting, and analysing pupillometry data [@Forbes2020]. General R packages support reproducible documents, statistical graphics, mixed models, generalized additive models, and generalized linear mixed models [@Wickham2016ggplot2; @Xie2015knitr; @XieAllaireGrolemund2018; @Bates2015; @Brooks2017; @Wood2017].
 
-The need for `gp3tools` is therefore not that no eye-tracking software exists. The gap is narrower and more practical: Gazepoint GP3 / Gazepoint Analysis users need an export-aware workflow that starts from the concrete file and column structures produced by Gazepoint software and proceeds through validation, preprocessing, modelling, visualization, and reporting in a single R environment. Existing packages are often platform-agnostic, paradigm-specific, signal-specific, or focused on later analysis stages. `gp3tools` complements them by providing a Gazepoint-specific import and workflow layer that can also prepare interoperability outputs for related packages.
+The need for `gp3tools` is therefore specific rather than generic. Existing tools are often platform-agnostic, signal-specific, paradigm-specific, or focused on later analysis stages. Gazepoint users need an export-aware workflow that starts from the concrete structure of Gazepoint GP3 / Gazepoint Analysis CSV folders and proceeds through validation, preprocessing, modelling, visualization, and reporting in the same R environment.
 
-The package is intended for researchers who need to move from Gazepoint CSV exports to transparent statistical analysis without repeatedly rebuilding the same file-discovery, validation, quality-control, and reporting infrastructure. Its intended users include applied eye-tracking researchers, behavioural scientists, marketing researchers, HCI researchers, teaching laboratories, and methodologically oriented users who want a reproducible workflow for Gazepoint data.
+`gp3tools` addresses this gap by providing a reusable, documented, and testable workflow for Gazepoint exports. It is intended for researchers who need to process private Gazepoint recordings while sharing transparent code, synthetic demonstration data, diagnostic summaries, and reporting-ready outputs. Its intended users include applied eye-tracking researchers, behavioural scientists, marketing and consumer researchers, human-computer interaction researchers, usability laboratories, teaching laboratories, and methodologically oriented users who need auditable preprocessing before statistical modelling.
 
 # Software contribution
 
-`gp3tools` makes three software contributions. First, it provides a Gazepoint-specific import and validation layer that standardises repeated preprocessing tasks across participant-level all-gaze, fixation, and summary exports. Second, it provides audit-oriented workflows for sampling, tracking quality, pupil preprocessing, area-of-interest summaries, transition structures, and reporting readiness. Third, it provides reproducible demonstration material, including synthetic Gazepoint-style exports and R Markdown workflows, so that users can inspect the package without access to private eye-tracking data.
+`gp3tools` makes three software contributions. First, it provides a Gazepoint-specific import and validation layer for participant-level all-gaze, fixation, and summary exports. Second, it provides audit-oriented workflows for sampling, tracking quality, pupil preprocessing, AOI summaries, transition structures, modelling preparation, reporting readiness, and exclusion recommendations. Third, it provides public reproducibility material, including synthetic Gazepoint-style exports, R Markdown workflows, vignettes, tests, and a Zenodo-archived software release [@Balaskas2026gp3tools].
 
-The package is therefore best understood as workflow infrastructure. Its contribution is not a new statistical estimator and not a replacement for general modelling packages. Instead, it supports the data-engineering, validation, and reporting stages that precede statistical inference. This distinction is important because many eye-tracking conclusions depend on preprocessing decisions made before models are fitted.
-
-# Related software and workflow gap
-
-`gp3tools` is best understood as part of a wider research-software ecosystem rather than as a replacement for established tools. In R, `eyetrackingR` supports data preparation, visualization, and time-course-style workflows for eye-tracking data [@DinkFerguson2015]. `PupillometryR` supports pupil-specific cleaning, plotting, and basic analysis [@Forbes2020]. General R modelling and reporting tools provide the statistical and reproducible-document infrastructure used by many applied workflows [@Bates2015; @Brooks2017; @Wood2017; @XieAllaireGrolemund2018].
-
-The distinctive contribution of `gp3tools` is its Gazepoint export awareness and its end-to-end workflow scope. Gazepoint exports commonly include multiple CSV file types, vendor-specific column names, validity flags, media identifiers, pupil fields, AOI labels, and fixation outputs. `gp3tools` treats these structures as first-class inputs rather than requiring users to manually impose a generic schema before analysis.
-
-The package also helps formalize steps that are often described only briefly in empirical articles: whether all expected files were present, whether recordings met quality thresholds, whether pupil missingness was balanced across conditions, whether AOI denominators were adequate, whether interpolation affected pupil-window summaries, whether exclusions created imbalance, and whether model conclusions were robust to sensitivity checks. These checks do not remove the need for expert judgement, but they create auditable objects that can be preserved, inspected, and reported.
+The package is best understood as workflow infrastructure. It supports the data-engineering, validation, and reporting stages that precede statistical inference. This distinction is important because many eye-tracking results depend on preprocessing and quality-control decisions that are often described only briefly in empirical manuscripts. By making these decisions explicit and reproducible, `gp3tools` helps researchers document how raw-style Gazepoint exports become analysis-ready datasets.
 
 # Package design
 
-`gp3tools` is organized around workflow families rather than isolated utilities. The design follows a staged architecture.
+`gp3tools` is organized around workflow families rather than isolated utilities. The first layer handles file discovery, import, and harmonization. It reads Gazepoint export folders, identifies all-gaze, fixation, and summary files, checks file pairing, and creates structured sample-level and fixation-level objects. This layer reduces the risk that later analyses are based on incomplete, duplicate, or mismatched files.
 
-The first layer handles file discovery, import, and harmonization. It reads Gazepoint export folders, identifies all-gaze, fixation, and summary files, checks file pairing, and creates structured sample-level and fixation-level objects. This layer reduces the risk that later analyses are based on incomplete, duplicate, or mismatched files.
+The second layer handles diagnostics and quality control. It estimates sampling rate, summarizes tracking quality, evaluates gaze and pupil validity, flags recordings requiring review, checks master-table structure, audits AOI coding, evaluates condition-level quality imbalance, and supports gaze recalibration when known target coordinates are available. These outputs are intended to be inspectable artifacts rather than hidden preprocessing steps.
 
-The second layer handles diagnostics and quality control. It estimates sampling rate, summarizes tracking quality, evaluates gaze and pupil validity, flags recordings requiring review, checks master-table structure, audits AOI coding, evaluates condition-level quality imbalance, and supports gaze recalibration when known target coordinates are available. These functions produce explicit diagnostic tables and plots rather than silent transformations.
+The third layer prepares analysis-ready summaries. It supports AOI-window summaries, pupil-window summaries, fixation-level summaries, fixation-aligned data, event-aligned workflows, AOI transition tables, transition matrices, Markov-style objects, hidden-Markov-model-ready tables, semi-Markov-ready tables, time-course data, growth-curve-style data, and confirmatory model-ready objects for mixed-effects modelling.
 
-The third layer prepares analysis-ready summaries. It supports AOI-window summaries, pupil-window summaries, fixation-level summaries, fixation-aligned data, event-aligned workflows, AOI transition tables, transition matrices, Markov-style objects, hidden-Markov-model-ready tables, semi-Markov-ready tables, GAMM-style time-course data, growth-curve-style data, and confirmatory model-ready objects for mixed-effects modelling.
+The fourth layer supports modelling, robustness, reporting, and interoperability. It includes preparation functions or wrappers for linear mixed models, generalized linear mixed models, GAMM-style workflows, nested-model comparison, prediction plotting, residual-diagnostic workflows, leave-one-unit sensitivity, divergence-point estimation, multiverse-style preprocessing summaries, reporting checklists, exclusion recommendations, real-data readiness gates, manuscript-ready model tables, and adapters for related eye-tracking packages.
 
-The fourth layer supports modelling, robustness, reporting, and interoperability. It provides wrappers or preparation functions for linear mixed models, generalized linear mixed models, GAMM-style workflows, nested-model comparison, prediction plotting, simulation-based diagnostic workflows, leave-one-unit sensitivity, divergence-point estimation, multiverse-style preprocessing summaries, reporting checklists, exclusion recommendations, real-data readiness gates, manuscript-ready model tables, and adapters for related eye-tracking packages.
+## Workflow map
 
-This modular architecture allows researchers to use the high-level workflow for a fast diagnostic report or select individual functions for preregistered confirmatory analyses. A pupil-focused study may use only pupil interpolation, baseline correction, reliability, and pupil-window model helpers. An AOI-focused study may use AOI geometry checks, denominator audits, empirical-logit transformations, binomial GLMM preparation, and AOI time-course modelling. A sequence-oriented study may focus on transition matrices, Markov-chain objects, scanpath summaries, or hidden-Markov-model preparation.
+Table 1 provides a compact map of the main workflow families. The full exported-function inventory remains in Supplementary Material S1.
 
-## Workflow families
-
-Table 1 summarises the main workflow families supported by `gp3tools`. The table is intended as a compact reader-facing map of the package rather than a full function inventory. The complete feature inventory remains in the supplementary/source document.
-
-| Workflow family | Main purpose | Example outputs |
-|---|---|---|
-| Import and file inspection | Read Gazepoint-style exports and identify expected file types | classified files, imported all-gaze/fixation/summary tables |
-| Master-table validation | Create and inspect analysis-ready combined data | validated master tables, column diagnostics, duplicate-key checks |
-| Sampling and tracking quality | Check sampling behaviour and gaze validity | sampling-rate summaries, tracking-quality tables, review flags |
-| Pupil preprocessing | Prepare pupil data for window and time-course analysis | baseline-corrected pupil series, interpolation flags, pupil-window summaries |
-| Area-of-interest workflows | Summarise and audit gaze behaviour by AOI | AOI sample/fixation summaries, transition matrices, denominator audits |
-| Model preparation and sensitivity | Prepare model-ready datasets and check robustness | GLMM/GAMM input tables, leave-one-out summaries, divergence-point results |
-| Reporting and export | Support transparent reporting and reproducibility | reporting checklists, exclusion recommendations, exported CSV tables |
+```{r workflow-table, echo=FALSE}
+workflow_families <- data.frame(
+  `Workflow family` = c(
+    "Import and file inspection",
+    "Master-table validation",
+    "Sampling and tracking quality",
+    "Pupil preprocessing",
+    "AOI workflows",
+    "Model preparation and sensitivity",
+    "Reporting and export"
+  ),
+  `Purpose` = c(
+    "Read Gazepoint-style exports and identify expected file types.",
+    "Create and inspect analysis-ready combined data.",
+    "Check sampling behaviour, gaze validity, and review flags.",
+    "Prepare pupil data for window and time-course analysis.",
+    "Summarise and audit gaze behaviour by area of interest.",
+    "Prepare model-ready datasets and evaluate robustness.",
+    "Generate reporting checklists, exports, and reproducibility outputs."
+  ),
+  `Example outputs` = c(
+    "classified files; imported all-gaze, fixation, and summary tables",
+    "validated master tables; column diagnostics; duplicate-key checks",
+    "sampling-rate summaries; tracking-quality tables; review flags",
+    "baseline-corrected pupil series; interpolation flags; pupil-window summaries",
+    "AOI sample and fixation summaries; transition matrices; denominator audits",
+    "GLMM/GAMM input tables; leave-one-out summaries; divergence-point results",
+    "reporting checklists; exclusion recommendations; exported CSV tables"
+  ),
+  check.names = FALSE
+)
+knitr::kable(workflow_families, caption = "Main workflow families supported by gp3tools.")
+```
 
 # Demonstration case study
 
-The demonstration uses a synthetic Gazepoint-style export dataset. The purpose of the dataset is to exercise the package workflow under realistic but shareable conditions. It includes all-gaze files, fixation files, and a summary export, with multiple participants, media files, AOI states, gaze coordinates, pupil values, validity indicators, missing pupil intervals, invalid samples, and participant-level quality variation.
+The demonstration uses a synthetic Gazepoint-style export dataset. The purpose is to exercise the package under realistic but shareable conditions, not to test a substantive psychological or marketing hypothesis. The synthetic data include all-gaze files, fixation files, a summary export, media identifiers, AOI states, gaze coordinates, pupil values, validity indicators, missing pupil intervals, invalid samples, and participant-level quality variation.
 
-The demonstration should be interpreted as software evidence, not as empirical evidence about human attention. The synthetic data contain numerical patterns that allow the workflow to produce meaningful diagnostic plots, pupil trajectories, AOI summaries, transition matrices, and representative model outputs. These patterns are deliberately created to test whether the package can read, validate, transform, model, and report Gazepoint-like exports. They do not support psychological, perceptual, marketing, or behavioural claims.
-
-The high-level workflow demonstrates that `gp3tools` can identify complete all-gaze/fixation file pairs, estimate sampling rate, flag review-required recordings, create analysis-ready all-gaze and fixation tables, summarize AOI viewing behaviour, audit AOI denominators, preprocess pupil data, run interpolation and baseline-quality checks, prepare confirmatory pupil-window and AOI-window model data, fit representative model objects, construct transition and sequence summaries, create exclusion recommendations, generate reporting-readiness objects, and produce diagnostic report outputs.
-
+The case study demonstrates that `gp3tools` can identify complete all-gaze/fixation file pairs, estimate sampling rate, flag review-required recordings, create analysis-ready all-gaze and fixation tables, summarize AOI viewing behaviour, audit AOI denominators, preprocess pupil data, run interpolation and baseline-quality checks, prepare confirmatory pupil-window and AOI-window model data, construct transition and sequence summaries, create exclusion recommendations, generate reporting-readiness objects, and produce diagnostic report outputs.
 
 ## Minimal reproducible workflow
 
-The full demonstration workflow is provided in the supplementary R Markdown file. The main manuscript reports only the minimal structure of the workflow. In a typical use case, users install and load the package, point `gp3tools` to a Gazepoint-style export folder, run the workflow, and inspect the resulting summary object.
+The full executable workflow is provided in Supplementary Material S1. The main manuscript reports the minimal code structure used by a typical user.
 
 ```{r install-gp3tools, eval=FALSE}
 # Development version
@@ -104,22 +137,15 @@ remotes::install_github("stefanosbalaskas/gp3tools")
 # install.packages("gp3tools")
 ```
 
-```{r load-gp3tools, eval=FALSE}
+```{r run-workflow, eval=FALSE}
 library(gp3tools)
-```
 
-```{r locate-demo-exports, eval=FALSE}
-# Lightweight example exports included with the package
 demo_dir <- system.file(
   "extdata",
   "gazepoint_realistic_demo_exports",
   package = "gp3tools"
 )
 
-demo_dir
-```
-
-```{r run-demo-workflow, eval=FALSE}
 workflow <- run_gazepoint_workflow(
   input_dir = demo_dir,
   output_dir = "gp3tools_demo_output",
@@ -128,72 +154,110 @@ workflow <- run_gazepoint_workflow(
   create_report = TRUE
 )
 
-summary <- summarise_gazepoint_workflow(workflow)
-summary
+summarise_gazepoint_workflow(workflow)
 ```
-
-These chunks are shown as reproducible workflow code rather than executed in the main manuscript. The supplement contains the fully rendered synthetic showcase with extended diagnostics and outputs.
 
 ## Demonstration outputs
 
-The paper-only synthetic showcase provides a larger reproducible example than the lightweight package datasets. In the current demonstration, the workflow processes 48 synthetic all-gaze files, 48 synthetic fixation files, and one summary file. The end-to-end run produces 115,200 all-gaze rows, 5,691 fixation rows, 192 sampling-quality rows, 1,344 AOI summary rows, and 60 review-required rows. All 48 expected file pairs are complete. These values are not interpreted as empirical findings; they demonstrate the scale and structure of the workflow outputs.
+The larger paper-only synthetic showcase contains 48 synthetic all-gaze files, 48 synthetic fixation files, and one summary file. The end-to-end run produces 115,200 all-gaze rows, 5,691 fixation rows, 192 sampling-quality rows, 1,344 AOI summary rows, and 60 review-required rows. All 48 expected file pairs are complete. These values are software-demonstration outputs; they are not interpreted as empirical findings.
 
-| Output class | Demonstration result | Interpretation |
-|---|---:|---|
-| All-gaze rows | 115,200 | sample-level gaze/pupil observations |
-| Fixation rows | 5,691 | fixation-level observations |
-| Sampling-quality rows | 192 | participant-by-media sampling diagnostics |
-| AOI summary rows | 1,344 | area-of-interest summaries across trials/windows |
-| Review-required rows | 60 | rows flagged for quality review rather than automatic deletion |
-| Complete file pairs | 48 | all expected all-gaze/fixation pairs found |
+```{r demonstration-table, echo=FALSE}
+demo_outputs <- data.frame(
+  Output = c(
+    "All-gaze rows",
+    "Fixation rows",
+    "Sampling-quality rows",
+    "AOI summary rows",
+    "Review-required rows",
+    "Complete file pairs"
+  ),
+  Count = c(115200, 5691, 192, 1344, 60, 48),
+  Interpretation = c(
+    "sample-level gaze and pupil observations",
+    "fixation-level observations",
+    "participant-by-media sampling diagnostics",
+    "area-of-interest summaries across trials/windows",
+    "rows flagged for review rather than automatic deletion",
+    "all expected all-gaze/fixation pairs found"
+  )
+)
+knitr::kable(demo_outputs, caption = "Summary of synthetic demonstration outputs.")
+```
 
-This demonstration supports the central software claim of the paper: `gp3tools` provides an auditable route from raw-style Gazepoint exports to structured diagnostic, summary, model-ready, and reporting outputs.
+```{r demonstration-plot, echo=FALSE, fig.cap="Scale of the main synthetic demonstration outputs. Counts are shown on a log10 scale because the outputs differ by several orders of magnitude."}
+if (requireNamespace("ggplot2", quietly = TRUE)) {
+  ggplot2::ggplot(demo_outputs, ggplot2::aes(x = reorder(Output, Count), y = Count)) +
+    ggplot2::geom_col() +
+    ggplot2::coord_flip() +
+    ggplot2::scale_y_log10() +
+    ggplot2::labs(
+      x = NULL,
+      y = "Count, log10 scale",
+      title = "Synthetic demonstration output scale"
+    ) +
+    ggplot2::theme_minimal(base_size = 11)
+}
+```
 
 # Validation and software quality
 
-The validation strategy for `gp3tools` combines automated tests, reproducible examples, synthetic demonstration data, package checks, documentation, and release archiving. This strategy follows general principles of scientific computing, which recommend readable code, version control, automated testing, scripted workflows, and preserved provenance [@Wilson2014]. It also aligns with research-software citation and FAIR-oriented practices by providing public metadata, versioned releases, persistent citation information, and reusable documentation [@Smith2016; @Katz2021].
+The validation strategy combines automated tests, reproducible examples, synthetic demonstration data, package checks, documentation, and release archiving. This strategy follows general principles of scientific computing, including readable code, version control, automated testing, scripted workflows, and preserved provenance [@Wilson2014]. It also aligns with software-citation and FAIR-oriented practices through public metadata, versioned releases, persistent citation information, and reusable documentation [@Smith2016; @Katz2021].
 
-The package includes unit tests for core functions and workflow branches. The test suite checks import behaviour, validation outputs, diagnostic summaries, pupil preprocessing, AOI workflows, transition workflows, modelling preparation, reporting utilities, optional-dependency handling, and error/status reporting. Package validation was evaluated using standard R package checking tools. The exact validation output, software versions, and session information should be reported in the supplementary materials for the manuscript version.
+The package includes unit tests for core functions and workflow branches, following the standard R testing approach supported by `testthat` [@Wickham2011testthat]. The test suite checks import behaviour, validation outputs, diagnostic summaries, pupil preprocessing, AOI workflows, transition workflows, modelling preparation, reporting utilities, optional-dependency handling, and structured error/status reporting.
 
-Documentation is provided through function-level help files, README examples, vignettes, example datasets, and case-study workflows. The package also includes citation metadata through `inst/CITATION` and `CITATION.cff`, supporting both R-based citation and repository-level software citation. The public repository and archived release DOI allow users to identify the software version used in a given analysis [@Balaskas2026gp3tools].
+```{r validation-table, echo=FALSE}
+validation_evidence <- data.frame(
+  Evidence = c(
+    "Automated tests",
+    "Package checks",
+    "Cross-platform CI",
+    "Release archiving",
+    "Documentation",
+    "Synthetic demonstration"
+  ),
+  Role = c(
+    "Checks core functions, edge cases, optional-dependency paths, and workflow objects.",
+    "Confirms package installation, documentation, examples, vignettes, and R CMD check compliance.",
+    "Evaluates package behaviour across major operating systems and R-devel/release settings.",
+    "Provides a persistent versioned software citation through Zenodo.",
+    "Provides README guidance, function help, vignettes, example data, and case-study workflows.",
+    "Exercises the export-to-report workflow without exposing private participant data."
+  )
+)
+knitr::kable(validation_evidence, caption = "Software-quality evidence reported for gp3tools.")
+```
 
-The software-quality claims in this paper are intentionally narrow. The demonstration shows that the package can execute a reproducible workflow on Gazepoint-like exports and produce expected diagnostic, analysis, and reporting objects. It does not prove that all possible Gazepoint exports will require no local inspection, nor does it validate any psychological theory. It also does not independently validate vendor hardware specifications such as nominal sampling rate or accuracy. Hardware specifications should be treated as vendor documentation, while package validation concerns the behaviour of the software workflow.
+The software-quality claims in this paper are intentionally narrow. The demonstration shows that the package can execute a reproducible workflow on Gazepoint-like exports and produce expected diagnostic, analysis, and reporting objects. It does not prove that all possible Gazepoint exports will require no local inspection, nor does it validate any psychological theory. It also does not independently validate vendor hardware specifications such as nominal sampling rate or accuracy; those remain vendor specifications rather than package-level validation results.
 
 # Data and code availability
 
-The `gp3tools` source code is publicly available from the GitHub repository: `https://github.com/stefanosbalaskas/gp3tools`.
+The `gp3tools` source code is publicly available at `https://github.com/stefanosbalaskas/gp3tools`. Version 1.0.1 has been archived on Zenodo and should be cited using DOI `10.5281/zenodo.20731340` [@Balaskas2026gp3tools]. At the time of writing, the package has been submitted to CRAN and is awaiting review.
 
-A versioned software release is archived on Zenodo and should be cited using the release DOI: `https://doi.org/10.5281/zenodo.20731340` [@Balaskas2026gp3tools].
-
-The repository includes package source code, documentation, tests, example datasets, README workflow guidance, vignettes, citation metadata, and synthetic Gazepoint-style demonstration resources. The manuscript demonstration uses synthetic data so that the workflow can be reproduced publicly without redistributing private participant exports. Where larger paper-only materials are stored outside the package build, the manuscript should clearly indicate their location and whether they are included as supplementary material, repository materials, or an external archive.
-
-The synthetic demonstration data are not real participant data. They are intended to support reproducible software validation and workflow illustration. Any empirical study using private Gazepoint exports should report its own participant recruitment, ethics approval, calibration procedure, experimental design, preprocessing decisions, exclusion rules, and confirmatory model specifications.
+The repository includes source code, documentation, tests, example datasets, README workflow guidance, vignettes, citation metadata, and synthetic Gazepoint-style demonstration resources. The manuscript demonstration uses synthetic data so that the workflow can be reproduced publicly without redistributing private participant exports. Real empirical studies using private Gazepoint exports should report recruitment, ethics approval, calibration procedure, experimental design, preprocessing decisions, exclusion rules, and confirmatory model specifications.
 
 # Limitations
 
-The first limitation is scope. `gp3tools` is designed for Gazepoint GP3 / Gazepoint Analysis CSV exports. It should not be presented as a universal solution for all eye-tracking platforms, export formats, or experimental paradigms. Other devices and software ecosystems may require different import layers, timing assumptions, coordinate systems, calibration diagnostics, or event structures.
+The first limitation is scope. `gp3tools` is designed for Gazepoint GP3 / Gazepoint Analysis CSV exports and should not be presented as a universal solution for all eye-tracking platforms, export formats, or experimental paradigms. Other devices and software ecosystems may require different import layers, timing assumptions, coordinate systems, calibration diagnostics, or event structures.
 
-The second limitation concerns synthetic demonstration data. Synthetic data are useful because they make the workflow public and reproducible, but they cannot represent every real-world artifact pattern. Real Gazepoint projects may include calibration problems, participant movement, unusual timing structures, inconsistent AOI labels, missing files, duplicate files, different screen setups, stimulus-specific brightness differences, task interruptions, or nonstandard summary exports. The demonstration is therefore a reproducibility case study, not a comprehensive benchmark for all possible Gazepoint data problems.
+The second limitation concerns synthetic demonstration data. Synthetic data make the workflow public and reproducible, but they cannot represent every real-world artifact pattern. Real Gazepoint projects may include calibration problems, participant movement, unusual timing structures, inconsistent AOI labels, missing files, duplicate files, different screen setups, stimulus-specific brightness differences, task interruptions, or nonstandard summary exports. The demonstration is therefore a reproducibility case study, not a comprehensive benchmark for all possible Gazepoint data problems.
 
-The third limitation concerns statistical interpretation. `gp3tools` prepares model-ready data and provides representative workflows for LMMs, GLMMs, GAMMs, time-course models, AOI analyses, pupil-window analyses, transition summaries, and sensitivity checks. These functions do not determine the correct scientific model automatically. Researchers remain responsible for theoretical justification of AOIs and time windows, preregistration where appropriate, model specification, assumption checking, multiplicity decisions, and transparent distinction between confirmatory and exploratory analyses.
+The third limitation concerns statistical interpretation. `gp3tools` prepares model-ready data and provides representative workflows for LMMs, GLMMs, GAMMs, time-course models, AOI analyses, pupil-window analyses, transition summaries, and sensitivity checks. These functions do not determine the correct scientific model automatically. Researchers remain responsible for theoretical justification of AOIs and windows, model specification, assumption checking, multiplicity decisions, and the distinction between confirmatory and exploratory analyses.
 
-The fourth limitation is optional-dependency behaviour. Some advanced workflows rely on optional packages or study-specific information. For example, external `gazeR` or `eyetools` checks require compatible package installations and data structures. Stimulus-luminance auditing requires stimulus image files. Gaze recalibration requires known target coordinates. Negative-binomial transition-count sensitivity requires appropriate count data and modelling dependencies. The package is designed to report controlled statuses when optional components are unavailable, but users must decide which branches are appropriate for their study.
-
-Finally, no software package can replace expert review of raw gaze and pupil signals. `gp3tools` can make quality checks, preprocessing decisions, and reporting outputs more transparent, but it cannot guarantee that all data are scientifically valid or that all modelling choices are appropriate. The package should be used as a reproducible workflow framework, not as an automatic guarantee of data quality.
+Finally, some advanced workflows depend on optional packages or study-specific information. External-package checks require compatible installations and input schemas; stimulus-luminance auditing requires stimulus image files; gaze recalibration requires known target coordinates; and transition-count sensitivity requires appropriate count data and modelling dependencies. The package reports controlled statuses when optional components are unavailable, but users must decide which branches are appropriate for their study.
 
 # Discussion
 
 `gp3tools` addresses a practical reproducibility problem in Gazepoint-based eye-tracking research. Gazepoint exports provide rich CSV data, but researchers still need a transparent path from exported files to analysis-ready objects, diagnostic summaries, model-ready tables, figures, and reporting outputs. By making file validation, sampling diagnostics, tracking-quality summaries, AOI checks, pupil preprocessing, model preparation, and reporting readiness explicit, the package reduces reliance on undocumented manual steps.
 
-The package’s contribution is workflow integration. It does not introduce a new statistical model and does not claim to establish universal preprocessing standards for eye-tracking research. Instead, it provides Gazepoint-specific infrastructure that can be combined with existing R modelling packages and related eye-tracking tools. This makes it particularly useful for applied researchers who need to process private Gazepoint exports but want to share reproducible analysis code, synthetic demonstration data, and transparent diagnostic outputs.
+The contribution is workflow integration. `gp3tools` does not introduce a new statistical model and does not claim to establish universal preprocessing standards for eye-tracking research. Instead, it provides Gazepoint-specific infrastructure that can be combined with existing R modelling packages and related eye-tracking tools. This design makes it useful for applied researchers who need to process private Gazepoint exports while sharing reproducible analysis code, synthetic demonstration data, and transparent diagnostic outputs.
 
-The synthetic case study demonstrates how such a workflow can be reported without exposing private participant data. This is important for eye-tracking research because raw exports may contain sensitive experimental information, participant-specific quality patterns, or proprietary stimulus metadata. A public synthetic workflow allows package behaviour to be inspected while leaving substantive empirical analyses to study-specific datasets.
+The synthetic case study shows how a workflow can be reported without exposing private participant data. This is important because raw eye-tracking exports may contain sensitive participant-level quality patterns, proprietary stimulus information, or study-specific metadata. Public synthetic workflows allow package behaviour to be inspected while leaving substantive empirical inference to study-specific datasets.
 
-Future development should focus on documentation, additional real-data edge-case testing, user-facing examples, and interoperability. Additional validation on independent Gazepoint datasets from different laboratories, tasks, stimulus types, screen configurations, and participant populations would strengthen confidence in edge-case handling. Further work could also expand export adapters, improve graphical summaries, and add more examples for common applied research designs.
+Future development should focus on documentation, external validation, user-facing examples, and interoperability. Additional testing on independent Gazepoint datasets from different laboratories, tasks, stimulus types, screen configurations, and participant populations would strengthen confidence in edge-case handling. Further work could also expand export adapters, improve graphical summaries, and add examples for common applied research designs.
 
 # Supplementary material
 
-The full source workflow is retained as supplementary material:
+Supplementary Material S1 contains the full synthetic workflow, extended diagnostics, code, plots, model outputs, function inventory, and reproducibility information.
 
 ```{r supplement-path, echo=TRUE}
 supplement_path <- "../supplement/gp3tools_full_showcase_supplement.Rmd"
@@ -202,11 +266,7 @@ supplement_path
 
 # Conclusion
 
-`gp3tools` provides a reproducible R workflow for Gazepoint GP3 / Gazepoint Analysis eye-tracking exports. It bridges the gap between vendor-specific CSV files and transparent statistical analysis by supporting import, validation, preprocessing, AOI summaries, pupil workflows, fixation and transition summaries, model-ready data preparation, diagnostic plotting, reporting checklists, and archived reproducibility materials. The package complements existing eye-tracking and pupillometry tools by focusing on Gazepoint-specific export structures and end-to-end workflow transparency. The synthetic demonstration validates package behaviour and workflow reproducibility, not substantive psychological effects. Used carefully, `gp3tools` can help researchers make Gazepoint-based eye-tracking analyses more auditable, reproducible, and publication-ready.
-
-# Preprint status
-
-This manuscript describes research software and its reproducible demonstration workflow. It has not yet undergone journal peer review. The software release described in the manuscript has been archived through Zenodo, and the R package has been submitted to CRAN. Any arXiv version should be interpreted as a preprint of the software paper, not as a peer-reviewed validation study.
+`gp3tools` provides a reproducible R workflow for Gazepoint GP3 / Gazepoint Analysis eye-tracking exports. It bridges the gap between vendor-specific CSV files and transparent statistical analysis by supporting import, validation, preprocessing, AOI summaries, pupil workflows, fixation and transition summaries, model-ready data preparation, diagnostic plotting, reporting checklists, and archived reproducibility materials. The package complements existing eye-tracking and pupillometry tools by focusing on Gazepoint-specific export structures and end-to-end workflow transparency. The synthetic demonstration validates package behaviour and workflow reproducibility, not substantive psychological effects. Used carefully, `gp3tools` can make Gazepoint-based eye-tracking analyses more auditable, reproducible, and publication-ready.
 
 # References
 
