@@ -104,9 +104,9 @@ If you use `gp3tools` in research, teaching, reports, or software workflows, ple
 citation("gp3tools")
 ```
 
-Current development citation:
+Current citation:
 
-> Balaskas, S. (2026). `gp3tools`: Import, Inspect, Analyse, and Report Gazepoint GP3 Exports. R package version 1.0.0.9000. https://github.com/stefanosbalaskas/gp3tools
+> Balaskas, S. (2026). `gp3tools`: Import, Inspect, Analyse, and Report Gazepoint GP3 Exports. R package version 1.0.1. https://github.com/stefanosbalaskas/gp3tools
 
 A formal software DOI will be added after a stable GitHub release is archived through Zenodo.
 

@@ -1,10 +1,10 @@
 bibentry(
   bibtype = "Manual",
   title = "gp3tools: Import, Inspect, Analyse, and Report Gazepoint GP3 Exports",
-  author = personList(
-    as.person("Stefanos Balaskas")
+  author = c(
+    person(given = "Stefanos", family = "Balaskas")
   ),
   year = "2026",
-  note = "R package version 1.0.0.9000",
+  note = "R package version 1.0.1",
   url = "https://github.com/stefanosbalaskas/gp3tools"
 )
