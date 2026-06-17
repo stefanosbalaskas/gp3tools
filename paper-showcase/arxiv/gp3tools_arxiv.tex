@@ -1,0 +1,771 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\documentclass[
+]{article}
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{longtable,booktabs,array}
+\newcounter{none} % for unnumbered tables
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+% definitions for citeproc citations
+\NewDocumentCommand\citeproctext{}{}
+\NewDocumentCommand\citeproc{mm}{%
+  \begingroup\def\citeproctext{#2}\cite{#1}\endgroup}
+\makeatletter
+ % allow citations to break across lines
+ \let\@cite@ofmt\@firstofone
+ % avoid brackets around text for \cite:
+ \def\@biblabel#1{}
+ \def\@cite#1#2{{#1\if@tempswa , #2\fi}}
+\makeatother
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newenvironment{CSLReferences}[2] % #1 hanging-indent, #2 entry-spacing
+ {\begin{list}{}{%
+  \setlength{\itemindent}{0pt}
+  \setlength{\leftmargin}{0pt}
+  \setlength{\parsep}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1
+   \setlength{\leftmargin}{\cslhangindent}
+   \setlength{\itemindent}{-1\cslhangindent}
+  \fi
+  % set entry spacing
+  \setlength{\itemsep}{#2\baselineskip}}}
+ {\end{list}}
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{\hfill\break\parbox[t]{\linewidth}{\strut\ignorespaces#1\strut}}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{\strut#1\strut}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{\strut#1\strut}}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\usepackage{hyperref}
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\author{}
+\date{\vspace{-2.5em}}
+
+\begin{document}
+
+\begin{center}
+{\LARGE \textbf{gp3tools: Reproducible Analysis and Reporting of Gazepoint GP3 Eye-Tracking Exports}\\}
+\vspace{1em}
+Stefanos Balaskas\\
+Department of Business Administration, University of Patras, Patras, Greece\\
+Correspondence: \href{mailto:s.balaskas@ac.upatras.gr}{s.balaskas@ac.upatras.gr}\\
+ORCID: \href{https://orcid.org/0000-0003-2444-9796}{https://orcid.org/0000-0003-2444-9796}
+\end{center}
+
+\begin{abstract}
+Eye-tracking studies increasingly require reproducible software pipelines that connect device exports with transparent preprocessing, quality control, statistical analysis, visualization, and reporting. Gazepoint GP3 and Gazepoint Analysis exports provide accessible gaze, fixation, pupil, timing, media, and area-of-interest data, but exported CSV folders usually require systematic validation before they can support defensible inference. \texttt{gp3tools} is an R package for importing, validating, preprocessing, modelling, visualising, and reporting Gazepoint GP3 / Gazepoint Analysis exports. The package supports file discovery, file-pair validation, sampling diagnostics, tracking-quality summaries, pupil preprocessing, area-of-interest summaries, fixation and transition workflows, model-ready data preparation, diagnostic plotting, exclusion recommendations, reporting checklists, and reproducible report generation. This paper presents the motivation, design, validation strategy, and synthetic demonstration workflow of \texttt{gp3tools}. The demonstration is used to evaluate workflow reproducibility and software behaviour; it is not used to draw substantive psychological, perceptual, or marketing conclusions. The package fills a practical gap between vendor-specific Gazepoint CSV exports and publication-ready R workflows for transparent eye-tracking analysis.
+\end{abstract}
+
+\section{Introduction}\label{introduction}
+
+Eye-tracking research increasingly depends on reproducible software
+pipelines that connect raw device exports with transparent
+preprocessing, statistical analysis, visualization, and reporting. These
+pipelines matter because gaze, fixation, pupil, and area-of-interest
+(AOI) outcomes are not raw facts extracted directly from an eye tracker.
+They are constructed through device export formats, calibration quality,
+validity flags, timing fields, preprocessing rules, AOI definitions,
+trial windows, model specifications, and reporting decisions.
+Reproducibility therefore depends not only on the final statistical
+model but also on the traceability of the steps that precede it
+(\citeproc{ref-Wilson2014}{Wilson et al. 2014}).
+
+Gazepoint GP3 and Gazepoint Analysis are used in experimental and
+applied eye-tracking contexts because they provide accessible export
+workflows for gaze, fixation, pupil, timing, media, and AOI information
+(\citeproc{ref-GazepointGP3}{Gazepoint Research Inc. 2026a},
+\citeproc{ref-GazepointAPI}{2026b}). However, exported CSV files are not
+automatically equivalent to analysis-ready data. A typical project may
+require checking whether all-gaze and fixation files are correctly
+paired, whether sampling rate is plausible, whether gaze and pupil
+validity are adequate, whether AOI labels and denominators are
+consistent, whether pupil artifacts and baseline decisions have been
+handled transparently, and whether the final outputs are sufficiently
+documented for reporting.
+
+These requirements are not merely technical. Preprocessing choices can
+affect downstream interpretation. Pupil data are sensitive to blinks,
+artifacts, interpolation, and baseline correction
+(\citeproc{ref-KretSjakShie2019}{Kret and Sjak-Shie 2019};
+\citeproc{ref-Mathot2018Baseline}{Mathot et al. 2018};
+\citeproc{ref-Mathot2018Pupillometry}{Mathot 2018}). AOI analyses depend
+on how areas of interest are defined, interpreted, and reported
+(\citeproc{ref-Orquin2016}{Orquin et al. 2016}). More generally,
+research-software practices emphasize version control, testing,
+documentation, provenance, and citable software releases as part of
+reproducible computational work (\citeproc{ref-Wilson2014}{Wilson et al.
+2014}; \citeproc{ref-Smith2016}{Smith et al. 2016};
+\citeproc{ref-Katz2021}{Katz et al. 2021}).
+
+\texttt{gp3tools} was developed to make Gazepoint GP3 / Gazepoint
+Analysis workflows more explicit and reproducible in R
+(\citeproc{ref-RCoreTeam2026}{R Core Team 2026}). The package does not
+propose a new statistical estimator, eye-tracking theory, or universal
+preprocessing standard. Its contribution is a Gazepoint-specific
+workflow layer that converts vendor-style export folders into auditable
+R objects, diagnostic summaries, model-ready tables, plots, reports, and
+reporting-readiness outputs.
+
+\section{Statement of need}\label{statement-of-need}
+
+Several tools already support eye-tracking and pupillometry workflows.
+\texttt{eyetrackingR} provides R-based tools for preparing, summarizing,
+visualizing, and analysing eye-tracking data
+(\citeproc{ref-DinkFerguson2015}{Dink and Ferguson 2015}).
+\texttt{PupillometryR} provides a pipeline for cleaning, preparing,
+plotting, and analysing pupillometry data
+(\citeproc{ref-Forbes2020}{Forbes 2020}). General R packages support
+reproducible documents, statistical graphics, mixed models, generalized
+additive models, and generalized linear mixed models
+(\citeproc{ref-Wickham2016ggplot2}{Wickham 2016};
+\citeproc{ref-Xie2015knitr}{Xie 2015};
+\citeproc{ref-XieAllaireGrolemund2018}{Xie et al. 2018};
+\citeproc{ref-Bates2015}{Bates et al. 2015};
+\citeproc{ref-Brooks2017}{Brooks et al. 2017};
+\citeproc{ref-Wood2017}{Wood 2017}).
+
+The need for \texttt{gp3tools} is therefore specific rather than
+generic. Existing tools are often platform-agnostic, signal-specific,
+paradigm-specific, or focused on later analysis stages. Gazepoint users
+need an export-aware workflow that starts from the concrete structure of
+Gazepoint GP3 / Gazepoint Analysis CSV folders and proceeds through
+validation, preprocessing, modelling, visualization, and reporting in
+the same R environment.
+
+\texttt{gp3tools} addresses this gap by providing a reusable,
+documented, and testable workflow for Gazepoint exports. It is intended
+for researchers who need to process private Gazepoint recordings while
+sharing transparent code, synthetic demonstration data, diagnostic
+summaries, and reporting-ready outputs. Its intended users include
+applied eye-tracking researchers, behavioural scientists, marketing and
+consumer researchers, human-computer interaction researchers, usability
+laboratories, teaching laboratories, and methodologically oriented users
+who need auditable preprocessing before statistical modelling.
+
+\section{Software contribution}\label{software-contribution}
+
+\texttt{gp3tools} makes three software contributions. First, it provides
+a Gazepoint-specific import and validation layer for participant-level
+all-gaze, fixation, and summary exports. Second, it provides
+audit-oriented workflows for sampling, tracking quality, pupil
+preprocessing, AOI summaries, transition structures, modelling
+preparation, reporting readiness, and exclusion recommendations. Third,
+it provides public reproducibility material, including synthetic
+Gazepoint-style exports, R Markdown workflows, vignettes, tests, and a
+Zenodo-archived software release
+(\citeproc{ref-Balaskas2026gp3tools}{Balaskas 2026}).
+
+The package is best understood as workflow infrastructure. It supports
+the data-engineering, validation, and reporting stages that precede
+statistical inference. This distinction is important because many
+eye-tracking results depend on preprocessing and quality-control
+decisions that are often described only briefly in empirical
+manuscripts. By making these decisions explicit and reproducible,
+\texttt{gp3tools} helps researchers document how raw-style Gazepoint
+exports become analysis-ready datasets.
+
+\section{Package design}\label{package-design}
+
+\texttt{gp3tools} is organized around workflow families rather than
+isolated utilities. The first layer handles file discovery, import, and
+harmonization. It reads Gazepoint export folders, identifies all-gaze,
+fixation, and summary files, checks file pairing, and creates structured
+sample-level and fixation-level objects. This layer reduces the risk
+that later analyses are based on incomplete, duplicate, or mismatched
+files.
+
+The second layer handles diagnostics and quality control. It estimates
+sampling rate, summarizes tracking quality, evaluates gaze and pupil
+validity, flags recordings requiring review, checks master-table
+structure, audits AOI coding, evaluates condition-level quality
+imbalance, and supports gaze recalibration when known target coordinates
+are available. These outputs are intended to be inspectable artifacts
+rather than hidden preprocessing steps.
+
+The third layer prepares analysis-ready summaries. It supports
+AOI-window summaries, pupil-window summaries, fixation-level summaries,
+fixation-aligned data, event-aligned workflows, AOI transition tables,
+transition matrices, Markov-style objects, hidden-Markov-model-ready
+tables, semi-Markov-ready tables, time-course data, growth-curve-style
+data, and confirmatory model-ready objects for mixed-effects modelling.
+
+The fourth layer supports modelling, robustness, reporting, and
+interoperability. It includes preparation functions or wrappers for
+linear mixed models, generalized linear mixed models, GAMM-style
+workflows, nested-model comparison, prediction plotting,
+residual-diagnostic workflows, leave-one-unit sensitivity,
+divergence-point estimation, multiverse-style preprocessing summaries,
+reporting checklists, exclusion recommendations, real-data readiness
+gates, manuscript-ready model tables, and adapters for related
+eye-tracking packages.
+
+\subsection{Workflow map}\label{workflow-map}
+
+Table 1 provides a compact map of the main workflow families. The full
+exported-function inventory remains in Supplementary Material S1.
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.1889}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3833}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.4278}}@{}}
+\caption{Main workflow families supported by gp3tools.}\tabularnewline
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Workflow family
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Purpose
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Example outputs
+\end{minipage} \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Workflow family
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Purpose
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Example outputs
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Import and file inspection & Read Gazepoint-style exports and identify
+expected file types. & classified files; imported all-gaze, fixation,
+and summary tables \\
+Master-table validation & Create and inspect analysis-ready combined
+data. & validated master tables; column diagnostics; duplicate-key
+checks \\
+Sampling and tracking quality & Check sampling behaviour, gaze validity,
+and review flags. & sampling-rate summaries; tracking-quality tables;
+review flags \\
+Pupil preprocessing & Prepare pupil data for window and time-course
+analysis. & baseline-corrected pupil series; interpolation flags;
+pupil-window summaries \\
+AOI workflows & Summarise and audit gaze behaviour by area of interest.
+& AOI sample and fixation summaries; transition matrices; denominator
+audits \\
+Model preparation and sensitivity & Prepare model-ready datasets and
+evaluate robustness. & GLMM/GAMM input tables; leave-one-out summaries;
+divergence-point results \\
+Reporting and export & Generate reporting checklists, exports, and
+reproducibility outputs. & reporting checklists; exclusion
+recommendations; exported CSV tables \\
+\end{longtable}
+
+\section{Demonstration case study}\label{demonstration-case-study}
+
+The demonstration uses a synthetic Gazepoint-style export dataset. The
+purpose is to exercise the package under realistic but shareable
+conditions, not to test a substantive psychological or marketing
+hypothesis. The synthetic data include all-gaze files, fixation files, a
+summary export, media identifiers, AOI states, gaze coordinates, pupil
+values, validity indicators, missing pupil intervals, invalid samples,
+and participant-level quality variation.
+
+The case study demonstrates that \texttt{gp3tools} can identify complete
+all-gaze/fixation file pairs, estimate sampling rate, flag
+review-required recordings, create analysis-ready all-gaze and fixation
+tables, summarize AOI viewing behaviour, audit AOI denominators,
+preprocess pupil data, run interpolation and baseline-quality checks,
+prepare confirmatory pupil-window and AOI-window model data, construct
+transition and sequence summaries, create exclusion recommendations,
+generate reporting-readiness objects, and produce diagnostic report
+outputs.
+
+\subsection{Minimal reproducible
+workflow}\label{minimal-reproducible-workflow}
+
+The full executable workflow is provided in Supplementary Material S1.
+The main manuscript reports the minimal code structure used by a typical
+user.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Development version}
+\NormalTok{remotes}\SpecialCharTok{::}\FunctionTok{install\_github}\NormalTok{(}\StringTok{"stefanosbalaskas/gp3tools"}\NormalTok{)}
+
+\CommentTok{\# After CRAN acceptance}
+\CommentTok{\# install.packages("gp3tools")}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(gp3tools)}
+
+\NormalTok{demo\_dir }\OtherTok{\textless{}{-}} \FunctionTok{system.file}\NormalTok{(}
+  \StringTok{"extdata"}\NormalTok{,}
+  \StringTok{"gazepoint\_realistic\_demo\_exports"}\NormalTok{,}
+  \AttributeTok{package =} \StringTok{"gp3tools"}
+\NormalTok{)}
+
+\NormalTok{workflow }\OtherTok{\textless{}{-}} \FunctionTok{run\_gazepoint\_workflow}\NormalTok{(}
+  \AttributeTok{input\_dir =}\NormalTok{ demo\_dir,}
+  \AttributeTok{output\_dir =} \StringTok{"gp3tools\_demo\_output"}\NormalTok{,}
+  \AttributeTok{prefix =} \StringTok{"gp3tools\_demo"}\NormalTok{,}
+  \AttributeTok{save\_plots =} \ConstantTok{TRUE}\NormalTok{,}
+  \AttributeTok{create\_report =} \ConstantTok{TRUE}
+\NormalTok{)}
+
+\FunctionTok{summarise\_gazepoint\_workflow}\NormalTok{(workflow)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Demonstration outputs}\label{demonstration-outputs}
+
+The larger paper-only synthetic showcase contains 48 synthetic all-gaze
+files, 48 synthetic fixation files, and one summary file. The end-to-end
+run produces 115,200 all-gaze rows, 5,691 fixation rows, 192
+sampling-quality rows, 1,344 AOI summary rows, and 60 review-required
+rows. All 48 expected file pairs are complete. These values are
+software-demonstration outputs; they are not interpreted as empirical
+findings.
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.2619}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.0833}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.6548}}@{}}
+\caption{Summary of synthetic demonstration outputs.}\tabularnewline
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Output
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Count
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Interpretation
+\end{minipage} \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Output
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Count
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Interpretation
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+All-gaze rows & 115200 & sample-level gaze and pupil observations \\
+Fixation rows & 5691 & fixation-level observations \\
+Sampling-quality rows & 192 & participant-by-media sampling
+diagnostics \\
+AOI summary rows & 1344 & area-of-interest summaries across
+trials/windows \\
+Review-required rows & 60 & rows flagged for review rather than
+automatic deletion \\
+Complete file pairs & 48 & all expected all-gaze/fixation pairs found \\
+\end{longtable}
+
+\begin{figure}
+\centering
+\pandocbounded{\includegraphics[keepaspectratio,alt={Scale of the main synthetic demonstration outputs. Counts are shown on a log10 scale because the outputs differ by several orders of magnitude.}]{C:/Users/Stefanos-PC/Documents/Rstudio/gp3tools/paper-showcase/arxiv/gp3tools_arxiv_files/ab6d35b591c2d35ee166f65bdd72ad9506a53be3.pdf}}
+\caption{Scale of the main synthetic demonstration outputs. Counts are
+shown on a log10 scale because the outputs differ by several orders of
+magnitude.}
+\end{figure}
+
+\section{Validation and software
+quality}\label{validation-and-software-quality}
+
+The validation strategy combines automated tests, reproducible examples,
+synthetic demonstration data, package checks, documentation, and release
+archiving. This strategy follows general principles of scientific
+computing, including readable code, version control, automated testing,
+scripted workflows, and preserved provenance
+(\citeproc{ref-Wilson2014}{Wilson et al. 2014}). It also aligns with
+software-citation and FAIR-oriented practices through public metadata,
+versioned releases, persistent citation information, and reusable
+documentation (\citeproc{ref-Smith2016}{Smith et al. 2016};
+\citeproc{ref-Katz2021}{Katz et al. 2021}).
+
+The package includes unit tests for core functions and workflow
+branches, following the standard R testing approach supported by
+\texttt{testthat} (\citeproc{ref-Wickham2011testthat}{Wickham 2011}).
+The test suite checks import behaviour, validation outputs, diagnostic
+summaries, pupil preprocessing, AOI workflows, transition workflows,
+modelling preparation, reporting utilities, optional-dependency
+handling, and structured error/status reporting.
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.2017}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.7983}}@{}}
+\caption{Software-quality evidence reported for
+gp3tools.}\tabularnewline
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Evidence
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Role
+\end{minipage} \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Evidence
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Role
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Automated tests & Checks core functions, edge cases, optional-dependency
+paths, and workflow objects. \\
+Package checks & Confirms package installation, documentation, examples,
+vignettes, and R CMD check compliance. \\
+Cross-platform CI & Evaluates package behaviour across major operating
+systems and R-devel/release settings. \\
+Release archiving & Provides a persistent versioned software citation
+through Zenodo. \\
+Documentation & Provides README guidance, function help, vignettes,
+example data, and case-study workflows. \\
+Synthetic demonstration & Exercises the export-to-report workflow
+without exposing private participant data. \\
+\end{longtable}
+
+The software-quality claims in this paper are intentionally narrow. The
+demonstration shows that the package can execute a reproducible workflow
+on Gazepoint-like exports and produce expected diagnostic, analysis, and
+reporting objects. It does not prove that all possible Gazepoint exports
+will require no local inspection, nor does it validate any psychological
+theory. It also does not independently validate vendor hardware
+specifications such as nominal sampling rate or accuracy; those remain
+vendor specifications rather than package-level validation results.
+
+\section{Data and code availability}\label{data-and-code-availability}
+
+The \texttt{gp3tools} source code is publicly available at
+\texttt{https://github.com/stefanosbalaskas/gp3tools}. Version 1.0.1 has
+been archived on Zenodo and should be cited using DOI
+\texttt{10.5281/zenodo.20731340}
+(\citeproc{ref-Balaskas2026gp3tools}{Balaskas 2026}). At the time of
+writing, the package has been submitted to CRAN and is awaiting review.
+
+The repository includes source code, documentation, tests, example
+datasets, README workflow guidance, vignettes, citation metadata, and
+synthetic Gazepoint-style demonstration resources. The manuscript
+demonstration uses synthetic data so that the workflow can be reproduced
+publicly without redistributing private participant exports. Real
+empirical studies using private Gazepoint exports should report
+recruitment, ethics approval, calibration procedure, experimental
+design, preprocessing decisions, exclusion rules, and confirmatory model
+specifications.
+
+\section{Limitations}\label{limitations}
+
+The first limitation is scope. \texttt{gp3tools} is designed for
+Gazepoint GP3 / Gazepoint Analysis CSV exports and should not be
+presented as a universal solution for all eye-tracking platforms, export
+formats, or experimental paradigms. Other devices and software
+ecosystems may require different import layers, timing assumptions,
+coordinate systems, calibration diagnostics, or event structures.
+
+The second limitation concerns synthetic demonstration data. Synthetic
+data make the workflow public and reproducible, but they cannot
+represent every real-world artifact pattern. Real Gazepoint projects may
+include calibration problems, participant movement, unusual timing
+structures, inconsistent AOI labels, missing files, duplicate files,
+different screen setups, stimulus-specific brightness differences, task
+interruptions, or nonstandard summary exports. The demonstration is
+therefore a reproducibility case study, not a comprehensive benchmark
+for all possible Gazepoint data problems.
+
+The third limitation concerns statistical interpretation.
+\texttt{gp3tools} prepares model-ready data and provides representative
+workflows for LMMs, GLMMs, GAMMs, time-course models, AOI analyses,
+pupil-window analyses, transition summaries, and sensitivity checks.
+These functions do not determine the correct scientific model
+automatically. Researchers remain responsible for theoretical
+justification of AOIs and windows, model specification, assumption
+checking, multiplicity decisions, and the distinction between
+confirmatory and exploratory analyses.
+
+Finally, some advanced workflows depend on optional packages or
+study-specific information. External-package checks require compatible
+installations and input schemas; stimulus-luminance auditing requires
+stimulus image files; gaze recalibration requires known target
+coordinates; and transition-count sensitivity requires appropriate count
+data and modelling dependencies. The package reports controlled statuses
+when optional components are unavailable, but users must decide which
+branches are appropriate for their study.
+
+\section{Discussion}\label{discussion}
+
+\texttt{gp3tools} addresses a practical reproducibility problem in
+Gazepoint-based eye-tracking research. Gazepoint exports provide rich
+CSV data, but researchers still need a transparent path from exported
+files to analysis-ready objects, diagnostic summaries, model-ready
+tables, figures, and reporting outputs. By making file validation,
+sampling diagnostics, tracking-quality summaries, AOI checks, pupil
+preprocessing, model preparation, and reporting readiness explicit, the
+package reduces reliance on undocumented manual steps.
+
+The contribution is workflow integration. \texttt{gp3tools} does not
+introduce a new statistical model and does not claim to establish
+universal preprocessing standards for eye-tracking research. Instead, it
+provides Gazepoint-specific infrastructure that can be combined with
+existing R modelling packages and related eye-tracking tools. This
+design makes it useful for applied researchers who need to process
+private Gazepoint exports while sharing reproducible analysis code,
+synthetic demonstration data, and transparent diagnostic outputs.
+
+The synthetic case study shows how a workflow can be reported without
+exposing private participant data. This is important because raw
+eye-tracking exports may contain sensitive participant-level quality
+patterns, proprietary stimulus information, or study-specific metadata.
+Public synthetic workflows allow package behaviour to be inspected while
+leaving substantive empirical inference to study-specific datasets.
+
+Future development should focus on documentation, external validation,
+user-facing examples, and interoperability. Additional testing on
+independent Gazepoint datasets from different laboratories, tasks,
+stimulus types, screen configurations, and participant populations would
+strengthen confidence in edge-case handling. Further work could also
+expand export adapters, improve graphical summaries, and add examples
+for common applied research designs.
+
+\section{Supplementary material}\label{supplementary-material}
+
+Supplementary Material S1 contains the full synthetic workflow, extended
+diagnostics, code, plots, model outputs, function inventory, and
+reproducibility information. The supplementary source file is
+\texttt{paper-showcase/supplement/gp3tools\_full\_showcase\_supplement.Rmd}.
+
+\section{Conclusion}\label{conclusion}
+
+\texttt{gp3tools} provides a reproducible R workflow for Gazepoint GP3 /
+Gazepoint Analysis eye-tracking exports. It bridges the gap between
+vendor-specific CSV files and transparent statistical analysis by
+supporting import, validation, preprocessing, AOI summaries, pupil
+workflows, fixation and transition summaries, model-ready data
+preparation, diagnostic plotting, reporting checklists, and archived
+reproducibility materials. The package complements existing eye-tracking
+and pupillometry tools by focusing on Gazepoint-specific export
+structures and end-to-end workflow transparency. The synthetic
+demonstration validates package behaviour and workflow reproducibility,
+not substantive psychological effects. Used carefully, \texttt{gp3tools}
+can make Gazepoint-based eye-tracking analyses more auditable,
+reproducible, and publication-ready.
+
+\section*{References}\label{references}
+\addcontentsline{toc}{section}{References}
+
+\protect\phantomsection\label{refs}
+\begin{CSLReferences}{1}{1}
+\bibitem[\citeproctext]{ref-Balaskas2026gp3tools}
+Balaskas, Stefanos. 2026. \emph{Gp3tools: Import, Inspect, Analyse, and
+Report Gazepoint GP3 Exports}. Zenodo.
+\url{https://doi.org/10.5281/zenodo.20731340}.
+
+\bibitem[\citeproctext]{ref-Bates2015}
+Bates, Douglas, Martin Maechler, Benjamin M. Bolker, and Steve Walker.
+2015. {``Fitting Linear Mixed-Effects Models Using Lme4.''}
+\emph{Journal of Statistical Software} 67 (1): 1--48.
+\url{https://doi.org/10.18637/jss.v067.i01}.
+
+\bibitem[\citeproctext]{ref-Brooks2017}
+Brooks, Mollie E., Kasper Kristensen, Koen J. van Benthem, et al. 2017.
+{``glmmTMB Balances Speed and Flexibility Among Packages for
+Zero-Inflated Generalized Linear Mixed Modeling.''} \emph{The R Journal}
+9 (2): 378--400. \url{https://doi.org/10.32614/RJ-2017-066}.
+
+\bibitem[\citeproctext]{ref-DinkFerguson2015}
+Dink, Jacob W., and Brock Ferguson. 2015. \emph{eyetrackingR: An r
+Library for Eye-Tracking Data Analysis}.
+\url{https://www.eyetracking-r.com/}.
+
+\bibitem[\citeproctext]{ref-Forbes2020}
+Forbes, Sam H. 2020. {``PupillometryR: An r Package for Preparing and
+Analysing Pupillometry Data.''} \emph{Journal of Open Source Software} 5
+(50): 2285. \url{https://doi.org/10.21105/joss.02285}.
+
+\bibitem[\citeproctext]{ref-GazepointGP3}
+Gazepoint Research Inc. 2026a. \emph{Gazepoint GP3 Eye Tracker
+Specifications}. \url{https://www.gazept.com/}.
+
+\bibitem[\citeproctext]{ref-GazepointAPI}
+Gazepoint Research Inc. 2026b. \emph{Open Gaze API Documentation}.
+\url{https://www.gazept.com/}.
+
+\bibitem[\citeproctext]{ref-Katz2021}
+Katz, Daniel S., Morane Gruenpeter, Tom Honeyman, et al. 2021. {``A
+Fresh Look at FAIR for Research Software.''} \emph{Patterns} 2 (10):
+100222. \url{https://doi.org/10.1016/j.patter.2021.100222}.
+
+\bibitem[\citeproctext]{ref-KretSjakShie2019}
+Kret, Mariska E., and Elio E. Sjak-Shie. 2019. {``Preprocessing Pupil
+Size Data: Guidelines and Code.''} \emph{Behavior Research Methods} 51:
+1336--42. \url{https://doi.org/10.3758/s13428-018-1075-y}.
+
+\bibitem[\citeproctext]{ref-Mathot2018Pupillometry}
+Mathot, Sebastiaan. 2018. {``Pupillometry: Psychology, Physiology, and
+Function.''} \emph{Journal of Cognition} 1 (1): 16.
+\url{https://doi.org/10.5334/joc.18}.
+
+\bibitem[\citeproctext]{ref-Mathot2018Baseline}
+Mathot, Sebastiaan, Jasper Fabius, Ellen Van Heusden, and Stefan Van der
+Stigchel. 2018. {``Safe and Sensible Preprocessing and Baseline
+Correction of Pupil-Size Data.''} \emph{Behavior Research Methods} 50:
+94--106. \url{https://doi.org/10.3758/s13428-017-1007-2}.
+
+\bibitem[\citeproctext]{ref-Orquin2016}
+Orquin, Jacob Lund, Nathaniel J. S. Ashby, and Alasdair D. F. Clarke.
+2016. {``Areas of Interest as a Signal Detection Problem in Behavioral
+Eye-Tracking Research.''} \emph{Journal of Behavioral Decision Making}
+29 (2--3): 103--15. \url{https://doi.org/10.1002/bdm.1867}.
+
+\bibitem[\citeproctext]{ref-RCoreTeam2026}
+R Core Team. 2026. \emph{R: A Language and Environment for Statistical
+Computing}. R Foundation for Statistical Computing.
+\url{https://www.R-project.org/}.
+
+\bibitem[\citeproctext]{ref-Smith2016}
+Smith, Arfon M., Daniel S. Katz, Kyle E. Niemeyer, and FORCE11 Software
+Citation Working Group. 2016. {``Software Citation Principles.''}
+\emph{PeerJ Computer Science} 2: e86.
+\url{https://doi.org/10.7717/peerj-cs.86}.
+
+\bibitem[\citeproctext]{ref-Wickham2011testthat}
+Wickham, Hadley. 2011. {``Testthat: Get Started with Testing.''}
+\emph{The R Journal} 3: 5--10.
+\url{https://journal.r-project.org/articles/RJ-2011-002/}.
+
+\bibitem[\citeproctext]{ref-Wickham2016ggplot2}
+Wickham, Hadley. 2016. \emph{Ggplot2: Elegant Graphics for Data
+Analysis}. Springer. \url{https://ggplot2.tidyverse.org}.
+
+\bibitem[\citeproctext]{ref-Wilson2014}
+Wilson, Greg, D. A. Aruliah, C. Titus Brown, et al. 2014. {``Best
+Practices for Scientific Computing.''} \emph{PLOS Biology} 12 (1):
+e1001745. \url{https://doi.org/10.1371/journal.pbio.1001745}.
+
+\bibitem[\citeproctext]{ref-Wood2017}
+Wood, Simon N. 2017. \emph{Generalized Additive Models: An Introduction
+with r}. 2nd ed. Chapman; Hall/CRC.
+
+\bibitem[\citeproctext]{ref-Xie2015knitr}
+Xie, Yihui. 2015. \emph{Dynamic Documents with r and Knitr}. 2nd ed.
+Chapman; Hall/CRC.
+
+\bibitem[\citeproctext]{ref-XieAllaireGrolemund2018}
+Xie, Yihui, J. J. Allaire, and Garrett Grolemund. 2018. \emph{R
+Markdown: The Definitive Guide}. Chapman; Hall/CRC.
+\url{https://bookdown.org/yihui/rmarkdown/}.
+
+\end{CSLReferences}
+
+\end{document}

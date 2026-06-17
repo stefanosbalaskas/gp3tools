@@ -1,19 +1,14 @@
 ---
-title: "gp3tools: Reproducible Analysis and Reporting of Gazepoint GP3 Eye-Tracking Exports"
-author:
-  - name: "Stefanos Balaskas"
-    affiliation: "Department of Business Administration, University of Patras, Patras, Greece"
-abstract: |
-  Eye-tracking studies increasingly require reproducible software pipelines that connect device exports with transparent preprocessing, quality control, statistical analysis, visualization, and reporting. Gazepoint GP3 and Gazepoint Analysis exports provide accessible gaze, fixation, pupil, timing, media, and area-of-interest data, but exported CSV folders usually require systematic validation before they can support defensible inference. `gp3tools` is an R package for importing, validating, preprocessing, modelling, visualising, and reporting Gazepoint GP3 / Gazepoint Analysis exports. The package supports file discovery, file-pair validation, sampling diagnostics, tracking-quality summaries, pupil preprocessing, area-of-interest summaries, fixation and transition workflows, model-ready data preparation, diagnostic plotting, exclusion recommendations, reporting checklists, and reproducible report generation. This paper presents the motivation, design, validation strategy, and synthetic demonstration workflow of `gp3tools`. The demonstration is used to evaluate workflow reproducibility and software behaviour; it is not used to draw substantive psychological, perceptual, or marketing conclusions. The package fills a practical gap between vendor-specific Gazepoint CSV exports and publication-ready R workflows for transparent eye-tracking analysis.
-keywords: eye tracking; Gazepoint GP3; Gazepoint Analysis; R package; pupil preprocessing; area of interest; reproducible research; data quality; mixed models
 bibliography: references.bib
 link-citations: true
 output:
-  html_document:
-    toc: true
-    toc_depth: 3
-    number_sections: true
+  pdf_document:
     fig_caption: true
+    number_sections: false
+    toc: false
+    keep_tex: true
+header-includes:
+  - \usepackage{hyperref}
 ---
 
 
@@ -27,6 +22,19 @@ knitr::opts_chunk$set(
   dpi = 300
 )
 ```
+\begin{center}
+{\LARGE \textbf{gp3tools: Reproducible Analysis and Reporting of Gazepoint GP3 Eye-Tracking Exports}\\}
+\vspace{1em}
+Stefanos Balaskas\\
+Department of Business Administration, University of Patras, Patras, Greece\\
+Correspondence: \href{mailto:s.balaskas@ac.upatras.gr}{s.balaskas@ac.upatras.gr}\\
+ORCID: \href{https://orcid.org/0000-0003-2444-9796}{https://orcid.org/0000-0003-2444-9796}
+\end{center}
+
+\begin{abstract}
+Eye-tracking studies increasingly require reproducible software pipelines that connect device exports with transparent preprocessing, quality control, statistical analysis, visualization, and reporting. Gazepoint GP3 and Gazepoint Analysis exports provide accessible gaze, fixation, pupil, timing, media, and area-of-interest data, but exported CSV folders usually require systematic validation before they can support defensible inference. \texttt{gp3tools} is an R package for importing, validating, preprocessing, modelling, visualising, and reporting Gazepoint GP3 / Gazepoint Analysis exports. The package supports file discovery, file-pair validation, sampling diagnostics, tracking-quality summaries, pupil preprocessing, area-of-interest summaries, fixation and transition workflows, model-ready data preparation, diagnostic plotting, exclusion recommendations, reporting checklists, and reproducible report generation. This paper presents the motivation, design, validation strategy, and synthetic demonstration workflow of \texttt{gp3tools}. The demonstration is used to evaluate workflow reproducibility and software behaviour; it is not used to draw substantive psychological, perceptual, or marketing conclusions. The package fills a practical gap between vendor-specific Gazepoint CSV exports and publication-ready R workflows for transparent eye-tracking analysis.
+\end{abstract}
+
 
 # Introduction
 
@@ -238,12 +246,7 @@ Future development should focus on documentation, external validation, user-faci
 
 # Supplementary material
 
-Supplementary Material S1 contains the full synthetic workflow, extended diagnostics, code, plots, model outputs, function inventory, and reproducibility information.
-
-```{r supplement-path, echo=TRUE}
-supplement_path <- "../supplement/gp3tools_full_showcase_supplement.Rmd"
-supplement_path
-```
+Supplementary Material S1 contains the full synthetic workflow, extended diagnostics, code, plots, model outputs, function inventory, and reproducibility information. The supplementary source file is `paper-showcase/supplement/gp3tools_full_showcase_supplement.Rmd`.
 
 # Conclusion
 
