@@ -61,7 +61,8 @@ Baselines can be defined either by a time window, such as \code{c(-200, 0)}, or 
 a user-supplied logical baseline/pre-stimulus flag column.
 }
 \examples{
-\dontrun{
+\donttest{
+master <- gazepoint_example_master
 flagged <- flag_gazepoint_pupil(master)
 interpolated <- interpolate_gazepoint_pupil(flagged)
 

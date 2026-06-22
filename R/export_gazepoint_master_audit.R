@@ -11,7 +11,7 @@
 #' @param validation Optional validation list returned by
 #'   [validate_gazepoint_master()]. If `NULL` and `export_validation = TRUE`,
 #'   validation is created automatically.
-#' @param output_dir Directory where CSV files should be written.
+#' @param output_dir Directory where CSV files should be written. Must be supplied explicitly.
 #' @param prefix File prefix used for all exported CSV files.
 #' @param export_master Logical. If `TRUE`, exports the full master table.
 #' @param export_audit Logical. If `TRUE`, exports audit tables.
@@ -23,33 +23,40 @@
 #' @return A tibble listing the exported files, table names, and dimensions.
 #'
 #' @examples
-#' \dontrun{
-#' master <- create_gazepoint_master(
-#'   gaze_data = results$all_gaze,
-#'   screen_width_px = 1920,
-#'   screen_height_px = 1080
+#' \donttest{
+#' master <- tibble::tibble(
+#'   subject = c("P1", "P1", "P2", "P2"),
+#'   MEDIA_ID = c("M1", "M1", "M1", "M1"),
+#'   time = c(0, 16, 0, 16),
+#'   x = c(100, 120, 200, 220),
+#'   y = c(100, 130, 200, 230),
+#'   raw_x = c(0.10, 0.12, 0.20, 0.22),
+#'   raw_y = c(0.20, 0.26, 0.30, 0.34),
+#'   valid_sample = c(TRUE, TRUE, TRUE, TRUE),
+#'   missing_gaze = c(FALSE, FALSE, FALSE, FALSE),
+#'   missing_pupil = c(FALSE, FALSE, FALSE, FALSE),
+#'   gaze_offscreen = c(FALSE, FALSE, FALSE, FALSE),
+#'   mean_pupil = c(3.5, 3.6, 3.7, 3.8),
+#'   aoi_current = c("AOI 1", "AOI 1", "AOI 2", "AOI 2"),
+#'   aoi_count = c(1L, 1L, 1L, 1L),
+#'   screen_width_px = rep(1000, 4),
+#'   screen_height_px = rep(500, 4)
 #' )
-#'
-#' audit <- audit_gazepoint_master(master)
-#' validation <- validate_gazepoint_master(master)
 #'
 #' exported <- export_gazepoint_master_audit(
 #'   master = master,
-#'   audit = audit,
-#'   validation = validation,
-#'   output_dir = "gazepoint_outputs",
-#'   prefix = "study1"
+#'   output_dir = file.path(tempdir(), "gp3_master_audit"),
+#'   prefix = "example"
 #' )
 #'
 #' exported
 #' }
-#'
 #' @export
 export_gazepoint_master_audit <- function(
     master,
     audit = NULL,
     validation = NULL,
-    output_dir = ".",
+    output_dir = NULL,
     prefix = "gazepoint",
     export_master = TRUE,
     export_audit = TRUE,
@@ -61,8 +68,19 @@ export_gazepoint_master_audit <- function(
     rlang::abort("`master` must be a data frame.")
   }
 
-  if (!is.character(output_dir) || length(output_dir) != 1 || is.na(output_dir)) {
-    rlang::abort("`output_dir` must be a single character string.")
+  if (is.null(output_dir)) {
+    rlang::abort(
+      "`output_dir` must be supplied explicitly. In examples, tests, and vignettes, use `tempdir()` or `file.path(tempdir(), ...)`."
+    )
+  }
+
+  if (
+    !is.character(output_dir) ||
+    length(output_dir) != 1 ||
+    is.na(output_dir) ||
+    output_dir == ""
+  ) {
+    rlang::abort("`output_dir` must be a single non-empty character string.")
   }
 
   if (!is.character(prefix) || length(prefix) != 1 || is.na(prefix) || prefix == "") {

@@ -52,7 +52,8 @@ Leading gaps, trailing gaps, long gaps, non-finite time values, and groups
 with too few valid pupil samples are not interpolated.
 }
 \examples{
-\dontrun{
+\donttest{
+master <- gazepoint_example_master
 flagged <- flag_gazepoint_pupil(master)
 
 interpolated <- interpolate_gazepoint_pupil(flagged)

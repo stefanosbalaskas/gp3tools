@@ -58,7 +58,8 @@
 #' @return A tibble containing the original data plus pupil-artifact columns.
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
+#' master <- gazepoint_example_master
 #' registry <- create_gazepoint_preprocessing_registry()
 #'
 #' artifact_pupil <- flag_gazepoint_pupil_artifacts(

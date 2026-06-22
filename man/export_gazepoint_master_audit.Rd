@@ -8,7 +8,7 @@ export_gazepoint_master_audit(
   master,
   audit = NULL,
   validation = NULL,
-  output_dir = ".",
+  output_dir = NULL,
   prefix = "gazepoint",
   export_master = TRUE,
   export_audit = TRUE,
@@ -27,7 +27,7 @@ export_gazepoint_master_audit(
 \code{\link[=validate_gazepoint_master]{validate_gazepoint_master()}}. If \code{NULL} and \code{export_validation = TRUE},
 validation is created automatically.}
 
-\item{output_dir}{Directory where CSV files should be written.}
+\item{output_dir}{Directory where CSV files should be written. Must be supplied explicitly.}
 
 \item{prefix}{File prefix used for all exported CSV files.}
 
@@ -52,25 +52,32 @@ This function is useful after creating a master table with
 \code{\link[=as_gazepoint_master]{as_gazepoint_master()}} or \code{\link[=create_gazepoint_master]{create_gazepoint_master()}}.
 }
 \examples{
-\dontrun{
-master <- create_gazepoint_master(
-  gaze_data = results$all_gaze,
-  screen_width_px = 1920,
-  screen_height_px = 1080
+\donttest{
+master <- tibble::tibble(
+  subject = c("P1", "P1", "P2", "P2"),
+  MEDIA_ID = c("M1", "M1", "M1", "M1"),
+  time = c(0, 16, 0, 16),
+  x = c(100, 120, 200, 220),
+  y = c(100, 130, 200, 230),
+  raw_x = c(0.10, 0.12, 0.20, 0.22),
+  raw_y = c(0.20, 0.26, 0.30, 0.34),
+  valid_sample = c(TRUE, TRUE, TRUE, TRUE),
+  missing_gaze = c(FALSE, FALSE, FALSE, FALSE),
+  missing_pupil = c(FALSE, FALSE, FALSE, FALSE),
+  gaze_offscreen = c(FALSE, FALSE, FALSE, FALSE),
+  mean_pupil = c(3.5, 3.6, 3.7, 3.8),
+  aoi_current = c("AOI 1", "AOI 1", "AOI 2", "AOI 2"),
+  aoi_count = c(1L, 1L, 1L, 1L),
+  screen_width_px = rep(1000, 4),
+  screen_height_px = rep(500, 4)
 )
-
-audit <- audit_gazepoint_master(master)
-validation <- validate_gazepoint_master(master)
 
 exported <- export_gazepoint_master_audit(
   master = master,
-  audit = audit,
-  validation = validation,
-  output_dir = "gazepoint_outputs",
-  prefix = "study1"
+  output_dir = file.path(tempdir(), "gp3_master_audit"),
+  prefix = "example"
 )
 
 exported
 }
-
 }

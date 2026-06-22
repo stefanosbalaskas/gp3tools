@@ -35,7 +35,8 @@
 #'   columns.
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
+#' master <- gazepoint_example_master
 #' flagged <- flag_gazepoint_pupil(master)
 #' interpolated <- interpolate_gazepoint_pupil(flagged)
 #'

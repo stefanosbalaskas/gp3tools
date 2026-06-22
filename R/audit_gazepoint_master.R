@@ -20,14 +20,15 @@
 #' }
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
+#' master <- gazepoint_example_master
 #' results <- run_gazepoint_workflow(
-#'   export_dir = "C:/Users/YourName/Desktop/gp3_test_exports",
-#'   output_dir = "C:/Users/YourName/Desktop/gp3_outputs"
+#'   export_dir = system.file("extdata", "gazepoint_realistic_demo_exports", package = "gp3tools"),
+#'   output_dir = file.path(tempdir(), "gp3_outputs")
 #' )
 #'
 #' master <- create_gazepoint_master(
-#'   gaze_data = results$all_gaze,
+#'   gaze_data = gazepoint_example_master,
 #'   screen_width_px = 1920,
 #'   screen_height_px = 1080
 #' )

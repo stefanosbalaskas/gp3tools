@@ -27,9 +27,10 @@
 #' @return A tibble with pupil-quality and pupil-distribution summaries.
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
+#' master <- gazepoint_example_master
 #' master <- create_gazepoint_master(
-#'   gaze_data = results$all_gaze,
+#'   gaze_data = gazepoint_example_master,
 #'   screen_width_px = 1920,
 #'   screen_height_px = 1080
 #' )

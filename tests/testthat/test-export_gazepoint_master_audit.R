@@ -183,46 +183,94 @@ test_that("export_gazepoint_master_audit errors when nothing is selected for exp
   )
 })
 
-test_that("export_gazepoint_master_audit errors for invalid arguments", {
+test_that("export_gazepoint_master_audit requires output_dir explicitly", {
   master <- make_export_master()
 
   expect_error(
-    export_gazepoint_master_audit("not a data frame"),
+    export_gazepoint_master_audit(master = master),
+    "`output_dir` must be supplied explicitly"
+  )
+})
+
+test_that("export_gazepoint_master_audit errors for invalid arguments", {
+  master <- make_export_master()
+  output_dir <- tempfile("gp3_export_args_")
+
+  expect_error(
+    export_gazepoint_master_audit(
+      master = "not a data frame",
+      output_dir = output_dir
+    ),
     "`master` must be a data frame"
   )
 
   expect_error(
-    export_gazepoint_master_audit(master, output_dir = c("a", "b")),
-    "`output_dir` must be a single character string"
+    export_gazepoint_master_audit(
+      master = master,
+      output_dir = c("a", "b")
+    ),
+    "`output_dir` must be a single non-empty character string"
   )
 
   expect_error(
-    export_gazepoint_master_audit(master, prefix = ""),
+    export_gazepoint_master_audit(
+      master = master,
+      output_dir = ""
+    ),
+    "`output_dir` must be a single non-empty character string"
+  )
+
+  expect_error(
+    export_gazepoint_master_audit(
+      master = master,
+      output_dir = output_dir,
+      prefix = ""
+    ),
     "`prefix` must be a single non-empty character string"
   )
 
   expect_error(
-    export_gazepoint_master_audit(master, export_master = c(TRUE, FALSE)),
+    export_gazepoint_master_audit(
+      master = master,
+      output_dir = output_dir,
+      export_master = c(TRUE, FALSE)
+    ),
     "`export_master` must be `TRUE` or `FALSE`"
   )
 
   expect_error(
-    export_gazepoint_master_audit(master, export_audit = c(TRUE, FALSE)),
+    export_gazepoint_master_audit(
+      master = master,
+      output_dir = output_dir,
+      export_audit = c(TRUE, FALSE)
+    ),
     "`export_audit` must be `TRUE` or `FALSE`"
   )
 
   expect_error(
-    export_gazepoint_master_audit(master, export_validation = c(TRUE, FALSE)),
+    export_gazepoint_master_audit(
+      master = master,
+      output_dir = output_dir,
+      export_validation = c(TRUE, FALSE)
+    ),
     "`export_validation` must be `TRUE` or `FALSE`"
   )
 
   expect_error(
-    export_gazepoint_master_audit(master, overwrite = c(TRUE, FALSE)),
+    export_gazepoint_master_audit(
+      master = master,
+      output_dir = output_dir,
+      overwrite = c(TRUE, FALSE)
+    ),
     "`overwrite` must be `TRUE` or `FALSE`"
   )
 
   expect_error(
-    export_gazepoint_master_audit(master, na = c("", "NA")),
+    export_gazepoint_master_audit(
+      master = master,
+      output_dir = output_dir,
+      na = c("", "NA")
+    ),
     "`na` must be a single character string"
   )
 })

@@ -145,7 +145,11 @@ Data_Summary_export_*.csv
 Set the folder containing the Gazepoint exports and an output folder for results:
 
 ```r
-export_dir <- "C:/Users/YourName/Desktop/gp3_test_exports"
+export_dir <- system.file(
+  "extdata",
+  "gazepoint_realistic_demo_exports",
+  package = "gp3tools"
+)
 output_dir <- "C:/Users/YourName/Desktop/gp3_outputs"
 ```
 

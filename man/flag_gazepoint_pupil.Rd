@@ -57,7 +57,8 @@ intended as a preprocessing step before interpolation, filtering, baseline
 correction, or pupil-based modelling.
 }
 \examples{
-\dontrun{
+\donttest{
+master <- gazepoint_example_master
 flagged <- flag_gazepoint_pupil(master)
 
 dplyr::count(flagged, pupil_flag_reason)

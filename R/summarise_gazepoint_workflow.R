@@ -10,10 +10,10 @@
 #' @return A tibble with one row containing workflow-level summary counts.
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' results <- run_gazepoint_workflow(
-#'   export_dir = "C:/Users/YourName/Desktop/gp3_test_exports",
-#'   output_dir = "C:/Users/YourName/Desktop/gp3_outputs",
+#'   export_dir = system.file("extdata", "gazepoint_realistic_demo_exports", package = "gp3tools"),
+#'   output_dir = file.path(tempdir(), "gp3_outputs"),
 #'   prefix = "study1",
 #'   save_plots = TRUE,
 #'   create_report = TRUE

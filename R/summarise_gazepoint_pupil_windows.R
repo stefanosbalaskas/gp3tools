@@ -36,15 +36,24 @@
 #'   data.
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
+#' pupil_data <- tibble::tibble(
+#'   subject = rep("P1", 6),
+#'   media_id = rep("M1", 6),
+#'   time = c(0, 250, 500, 750, 1000, 1250),
+#'   pupil_smoothed = c(0.00, 0.05, 0.10, 0.08, 0.03, 0.00)
+#' )
+#'
 #' pupil_windows <- summarise_gazepoint_pupil_windows(
-#'   smoothed_pupil,
+#'   pupil_data,
 #'   pupil_col = "pupil_smoothed",
-#'   windows = c(0, 500, 1000, 2000),
+#'   time_col = "time",
+#'   windows = c(0, 500, 1000, 1500),
 #'   group_cols = c("subject", "media_id")
 #' )
-#' }
 #'
+#' pupil_windows
+#' }
 #' @importFrom rlang .data
 #'
 #' @export

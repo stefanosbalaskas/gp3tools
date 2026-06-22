@@ -397,32 +397,23 @@ diagnose_gazepoint_glmm <- function(
     return(base)
   }
 
-  had_seed <- exists(".Random.seed", envir = .GlobalEnv, inherits = FALSE)
-
-  if (had_seed) {
-    old_seed <- get(".Random.seed", envir = .GlobalEnv)
-  } else {
-    old_seed <- NULL
-  }
-
-  on.exit({
-    if (had_seed) {
-      assign(".Random.seed", old_seed, envir = .GlobalEnv)
-    }
-  }, add = TRUE)
-
-  set.seed(seed)
 
   simulate_residuals <- getExportedValue("DHARMa", "simulateResiduals")
   test_uniformity <- getExportedValue("DHARMa", "testUniformity")
   test_dispersion <- getExportedValue("DHARMa", "testDispersion")
   test_zero_inflation <- getExportedValue("DHARMa", "testZeroInflation")
 
+  simulate_args <- list(
+    fittedModel = model,
+    n = dharma_simulations
+  )
+
+  if (!is.null(seed)) {
+    simulate_args$seed <- seed
+  }
+
   sim <- tryCatch(
-    simulate_residuals(
-      fittedModel = model,
-      n = dharma_simulations
-    ),
+    do.call(simulate_residuals, simulate_args),
     error = function(e) {
       base$dharma_status <<- "error"
       base$diagnostic_status <<- "error"

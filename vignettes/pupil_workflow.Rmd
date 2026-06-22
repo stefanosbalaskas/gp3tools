@@ -57,7 +57,11 @@ For a real study, replace the example objects above by importing a Gazepoint exp
 This optional chunk creates `all_gaze` and then rebuilds `master` from the imported rows:
 
 ```{r}
-export_dir <- "C:/Users/YourName/Desktop/gp3_test_exports"
+export_dir <- system.file(
+  "extdata",
+  "gazepoint_realistic_demo_exports",
+  package = "gp3tools"
+)
 output_dir <- "C:/Users/YourName/Desktop/gp3_outputs"
 
 results <- run_gazepoint_workflow(

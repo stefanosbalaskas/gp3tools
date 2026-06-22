@@ -58,15 +58,22 @@ and optionally \code{\link[=baseline_correct_gazepoint_pupil]{baseline_correct_g
 the original pupil column and adds smoothed-output columns.
 }
 \examples{
-\dontrun{
+\donttest{
+pupil_data <- tibble::tibble(
+  subject = rep("P1", 6),
+  time = c(0, 16, 32, 48, 64, 80),
+  pupil_baseline_corrected = c(0.00, 0.10, 0.20, 0.10, 0.00, -0.10)
+)
+
 smoothed <- smooth_gazepoint_pupil(
-  baseline_corrected,
+  pupil_data,
   pupil_col = "pupil_baseline_corrected",
-  window_samples = 5,
+  time_col = "time",
+  group_cols = "subject",
+  window_samples = 3,
   method = "mean"
 )
 
-dplyr::count(smoothed, pupil_smoothing_status)
+smoothed
 }
-
 }

@@ -154,24 +154,22 @@ estimate_gazepoint_divergence_point <- function(
     time_grid = time_grid
   )
 
-  if (!is.null(seed)) {
-    old_seed <- .Random.seed
-    on.exit({
-      if (exists("old_seed", inherits = FALSE)) {
-        .Random.seed <<- old_seed
-      }
-    }, add = TRUE)
-    set.seed(seed)
+  run_bootstrap <- function() {
+    .gp3_divergence_bootstrap_differences(
+      prepared_data = prepared_data,
+      comparison = comparison,
+      time_grid = time_grid,
+      bootstrap_unit = bootstrap_unit,
+      summary_function = summary_function,
+      n_boot = n_boot
+    )
   }
 
-  boot_differences <- .gp3_divergence_bootstrap_differences(
-    prepared_data = prepared_data,
-    comparison = comparison,
-    time_grid = time_grid,
-    bootstrap_unit = bootstrap_unit,
-    summary_function = summary_function,
-    n_boot = n_boot
-  )
+  boot_differences <- if (!is.null(seed)) {
+    withr::with_seed(seed, run_bootstrap())
+  } else {
+    run_bootstrap()
+  }
 
   alpha <- 1 - ci
   lower_prob <- alpha / 2

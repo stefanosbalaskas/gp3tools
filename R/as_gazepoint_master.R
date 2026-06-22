@@ -12,7 +12,7 @@
 #' Later, experiment-level information such as condition, trial ID, response,
 #' accuracy, or reaction time can be joined to the returned table.
 #'
-#' @param data A Gazepoint all-gaze data frame, usually `results$all_gaze`.
+#' @param data A Gazepoint all-gaze data frame, usually `gazepoint_example_master`.
 #' @param screen_width_px Optional screen width in pixels. If supplied and gaze
 #' coordinates are detected as normalised 0-1 coordinates, x coordinates are
 #' converted to pixels.
@@ -33,14 +33,14 @@
 #' eye-tracking columns.
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' results <- run_gazepoint_workflow(
-#'   export_dir = "C:/Users/YourName/Desktop/gp3_test_exports",
-#'   output_dir = "C:/Users/YourName/Desktop/gp3_outputs"
+#'   export_dir = system.file("extdata", "gazepoint_realistic_demo_exports", package = "gp3tools"),
+#'   output_dir = file.path(tempdir(), "gp3_outputs")
 #' )
 #'
 #' master <- as_gazepoint_master(
-#'   results$all_gaze,
+#'   gazepoint_example_master,
 #'   screen_width_px = 1920,
 #'   screen_height_px = 1080
 #' )
