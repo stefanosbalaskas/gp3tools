@@ -14,13 +14,19 @@ knitr::opts_chunk$set(
 )
 ```
 
-
-This article is a website-only showcase of the main plotting outputs in `gp3tools`.
+This article is a website-only showcase of representative visual outputs in `gp3tools`.
 It is intended for users, reviewers, and readers who want to see the visual
-diagnostics and reporting outputs produced by the package.
+diagnostics and reporting plots produced by the package.
 
 The gallery uses only package-safe synthetic or example data.
 It should not be read as an empirical analysis of real participants.
+
+```{r gallery-data}
+library(gp3tools)
+
+master <- gp3tools::gazepoint_example_master
+aoi_geometry <- gp3tools::gazepoint_example_aoi_geometry
+```
 
 ## Plot functions covered
 
@@ -37,12 +43,90 @@ data.frame(
 )
 ```
 
-## Planned gallery sections
+## Sampling rate
 
-- Sampling and tracking-quality plots
-- Pupil preprocessing and pupil time-course plots
-- AOI geometry, verification, and transition plots
-- GCA and model-prediction plots
-- Cluster and multiverse-result plots
+The built-in demonstration data are sampled every 50 ms, corresponding to
+approximately 20 Hz. This differs from a typical 60 Hz GP3 recording, but is
+sufficient for a compact website example.
 
-We will add the rendered plots section by section, using only reproducible demonstration data.
+```{r sampling-rate-plot}
+sampling <- check_sampling_rate(
+  master,
+  group_cols = c('USER_FILE', 'MEDIA_ID'),
+  time_col = 'TIME'
+)
+
+plot_sampling_rate(
+  sampling,
+  user_col = 'USER_FILE',
+  media_col = 'MEDIA_ID',
+  expected_hz = 20,
+  hz_tolerance = 2
+)
+```
+
+## Tracking quality
+
+The tracking-quality plot summarises valid gaze percentage by participant file
+and stimulus. A simple review flag is created here for demonstration.
+
+```{r tracking-quality-plot}
+quality <- summarise_tracking_quality(
+  master,
+  group_cols = c('USER_FILE', 'MEDIA_ID')
+)
+
+quality$review_required <- quality$BPOGV_valid_pct < 70
+
+plot_tracking_quality(
+  quality,
+  metric_cols = 'BPOGV_valid_pct',
+  user_col = 'USER_FILE',
+  media_col = 'MEDIA_ID',
+  review_col = 'review_required',
+  min_valid_pct = 70
+)
+```
+
+## Pupil time course
+
+The pupil time-course plot shows condition-level pupil trajectories after
+binning the synthetic sample-level data.
+
+```{r pupil-timecourse-plot}
+plot_gazepoint_pupil_timecourse(
+  master,
+  pupil_col = 'pupil',
+  time_col = 'time',
+  condition_col = 'condition',
+  bin_width_ms = 100
+)
+```
+
+## AOI verification
+
+The AOI verification plot overlays gaze samples on the synthetic AOI geometry.
+This helps users inspect whether AOI coordinates and gaze coordinates are on
+the same scale before computing AOI summaries.
+
+```{r aoi-verification-plot}
+plot_gazepoint_aoi_verification(
+  aoi_geometry = aoi_geometry,
+  gaze_data = master,
+  geometry_aoi_col = 'aoi',
+  geometry_stimulus_col = 'media_id',
+  gaze_x_col = 'x',
+  gaze_y_col = 'y',
+  gaze_stimulus_col = 'MEDIA_ID',
+  screen_x_range = c(0, 1),
+  screen_y_range = c(0, 1),
+  facet_by_stimulus = TRUE,
+  show_labels = TRUE,
+  show_gaze = TRUE
+)
+```
+
+## Planned additions
+
+Additional sections will be added for AOI transitions, pupil preprocessing,
+GCA/model-prediction plots, cluster results, and multiverse summaries.
