@@ -2,10 +2,10 @@
 
 ### Workflows
 
-- [UNKNOWN
-  TITLE](https://stefanosbalaskas.github.io/gp3tools/articles/pupil_workflow.md):
-- [UNKNOWN
-  TITLE](https://stefanosbalaskas.github.io/gp3tools/articles/aoi_workflow.md):
+- [Pupil preprocessing and analysis
+  workflow](https://stefanosbalaskas.github.io/gp3tools/articles/pupil_workflow.md):
+- [AOI analysis
+  workflow](https://stefanosbalaskas.github.io/gp3tools/articles/aoi_workflow.md):
 
 ### Showcase
 

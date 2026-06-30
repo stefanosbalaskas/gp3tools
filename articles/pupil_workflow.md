@@ -1,9 +1,4 @@
-# 
-
-------------------------------------------------------------------------
-
-title: “Pupil preprocessing and modelling workflow” output:
-rmarkdown::html_vignette vignette: \> % % % ————————-
+# Pupil preprocessing and analysis workflow
 
 ## Overview
 

@@ -1,9 +1,4 @@
-# 
-
-------------------------------------------------------------------------
-
-title: “AOI, fixation, transition, and time-course workflow” output:
-rmarkdown::html_vignette vignette: \> % % % ————————-
+# AOI analysis workflow
 
 ## Overview
 

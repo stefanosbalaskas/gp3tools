@@ -37,8 +37,8 @@
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Workflows</h6></li>
-    <li><a class="dropdown-item" href="../articles/pupil_workflow.html">UNKNOWN TITLE</a></li>
-    <li><a class="dropdown-item" href="../articles/aoi_workflow.html">UNKNOWN TITLE</a></li>
+    <li><a class="dropdown-item" href="../articles/pupil_workflow.html">Pupil preprocessing and analysis workflow</a></li>
+    <li><a class="dropdown-item" href="../articles/aoi_workflow.html">AOI analysis workflow</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Showcase</h6></li>
     <li><a class="dropdown-item" href="../articles/plot-gallery.html">Plot gallery</a></li>
@@ -79,93 +79,21 @@ and readers who want to see the visual diagnostics and reporting plots
 produced by the package.</p>
 <p>The gallery uses only package-safe synthetic or example data. It
 should not be read as an empirical analysis of real participants.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/stefanosbalaskas/gp3tools" class="external-link">gp3tools</a></span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">master</span> <span class="op">&lt;-</span> <span class="fu">gp3tools</span><span class="fu">::</span><span class="va"><a href="../reference/gazepoint_example_master.html">gazepoint_example_master</a></span></span>
-<span><span class="va">fixations</span> <span class="op">&lt;-</span> <span class="fu">gp3tools</span><span class="fu">::</span><span class="va"><a href="../reference/gazepoint_example_fixations.html">gazepoint_example_fixations</a></span></span>
-<span><span class="va">aoi_geometry</span> <span class="op">&lt;-</span> <span class="fu">gp3tools</span><span class="fu">::</span><span class="va"><a href="../reference/gazepoint_example_aoi_geometry.html">gazepoint_example_aoi_geometry</a></span></span>
-<span><span class="va">aoi_windows</span> <span class="op">&lt;-</span> <span class="fu">gp3tools</span><span class="fu">::</span><span class="va"><a href="../reference/gazepoint_example_aoi_windows.html">gazepoint_example_aoi_windows</a></span></span>
-<span></span>
-<span><span class="va">pupil_demo</span> <span class="op">&lt;-</span> <span class="va">master</span></span>
-<span><span class="va">pupil_demo</span><span class="op">$</span><span class="va">pupil_clean</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">pupil_demo</span><span class="op">$</span><span class="va">artifact</span>, <span class="cn">NA_real_</span>, <span class="va">pupil_demo</span><span class="op">$</span><span class="va">pupil</span><span class="op">)</span></span>
-<span><span class="va">pupil_demo</span><span class="op">$</span><span class="va">pupil_interpolated</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">pupil_demo</span><span class="op">$</span><span class="va">pupil_clean</span><span class="op">)</span>,</span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/ave.html" class="external-link">ave</a></span><span class="op">(</span></span>
-<span>    <span class="va">pupil_demo</span><span class="op">$</span><span class="va">pupil</span>,</span>
-<span>    <span class="va">pupil_demo</span><span class="op">$</span><span class="va">subject</span>,</span>
-<span>    <span class="va">pupil_demo</span><span class="op">$</span><span class="va">trial_global</span>,</span>
-<span>    FUN <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">z</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">z</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span>  <span class="op">)</span>,</span>
-<span>  <span class="va">pupil_demo</span><span class="op">$</span><span class="va">pupil_clean</span></span>
-<span><span class="op">)</span></span>
-<span><span class="va">pupil_demo</span><span class="op">$</span><span class="va">pupil_was_interpolated</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">pupil_demo</span><span class="op">$</span><span class="va">pupil_clean</span><span class="op">)</span> <span class="op">&amp;</span></span>
-<span>  <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">pupil_demo</span><span class="op">$</span><span class="va">pupil_interpolated</span><span class="op">)</span></span>
-<span><span class="va">pupil_demo</span><span class="op">$</span><span class="va">pupil_interpolation_status</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span></span>
-<span>  <span class="va">pupil_demo</span><span class="op">$</span><span class="va">pupil_was_interpolated</span>,</span>
-<span>  <span class="st">'interpolated'</span>,</span>
-<span>  <span class="st">'observed'</span></span>
-<span><span class="op">)</span></span>
-<span><span class="va">pupil_demo</span><span class="op">$</span><span class="va">pupil_baseline_corrected</span> <span class="op">&lt;-</span> <span class="va">pupil_demo</span><span class="op">$</span><span class="va">pupil_interpolated</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/stats/ave.html" class="external-link">ave</a></span><span class="op">(</span></span>
-<span>  <span class="va">pupil_demo</span><span class="op">$</span><span class="va">pupil_interpolated</span>,</span>
-<span>  <span class="va">pupil_demo</span><span class="op">$</span><span class="va">subject</span>,</span>
-<span>  <span class="va">pupil_demo</span><span class="op">$</span><span class="va">trial_global</span>,</span>
-<span>  FUN <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">z</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">z</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">z</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">]</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span><span class="va">pupil_demo</span><span class="op">$</span><span class="va">pupil_smoothed</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/ave.html" class="external-link">ave</a></span><span class="op">(</span></span>
-<span>  <span class="va">pupil_demo</span><span class="op">$</span><span class="va">pupil_baseline_corrected</span>,</span>
-<span>  <span class="va">pupil_demo</span><span class="op">$</span><span class="va">subject</span>,</span>
-<span>  <span class="va">pupil_demo</span><span class="op">$</span><span class="va">trial_global</span>,</span>
-<span>  FUN <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">z</span><span class="op">)</span> <span class="op">{</span></span>
-<span>    <span class="va">zz</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">z</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span> <span class="op">/</span> <span class="fl">3</span>, <span class="fl">3</span><span class="op">)</span>, sides <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
-<span>    <span class="va">zz</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">zz</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">z</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">zz</span><span class="op">)</span><span class="op">]</span></span>
-<span>    <span class="va">zz</span></span>
-<span>  <span class="op">}</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">make_gca_demo</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">base</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/expand.grid.html" class="external-link">expand.grid</a></span><span class="op">(</span></span>
-<span>    subject <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">'S'</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">8</span><span class="op">)</span>,</span>
-<span>    condition <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'control'</span>, <span class="st">'treatment'</span><span class="op">)</span>,</span>
-<span>    gca_time <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">900</span>, by <span class="op">=</span> <span class="fl">100</span><span class="op">)</span>,</span>
-<span>    KEEP.OUT.ATTRS <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>    stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span>  <span class="op">)</span></span>
-<span>  <span class="va">base</span> <span class="op">&lt;-</span> <span class="va">base</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html" class="external-link">order</a></span><span class="op">(</span><span class="va">base</span><span class="op">$</span><span class="va">subject</span>, <span class="va">base</span><span class="op">$</span><span class="va">condition</span>, <span class="va">base</span><span class="op">$</span><span class="va">gca_time</span><span class="op">)</span>, <span class="op">]</span></span>
-<span>  <span class="va">time_poly</span> <span class="op">&lt;-</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/poly.html" class="external-link">poly</a></span><span class="op">(</span><span class="va">base</span><span class="op">$</span><span class="va">gca_time</span>, degree <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
-<span>  <span class="va">subject_shift</span> <span class="op">&lt;-</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/setNames.html" class="external-link">setNames</a></span><span class="op">(</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.20</span>, <span class="fl">0.20</span>, length.out <span class="op">=</span> <span class="fl">8</span><span class="op">)</span>,</span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">'S'</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">8</span><span class="op">)</span></span>
-<span>  <span class="op">)</span></span>
-<span>  <span class="va">base</span><span class="op">$</span><span class="va">time_poly_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">time_poly</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span><span class="op">)</span></span>
-<span>  <span class="va">base</span><span class="op">$</span><span class="va">time_poly_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">time_poly</span><span class="op">[</span>, <span class="fl">2</span><span class="op">]</span><span class="op">)</span></span>
-<span>  <span class="va">base</span><span class="op">$</span><span class="va">time_poly_3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">time_poly</span><span class="op">[</span>, <span class="fl">3</span><span class="op">]</span><span class="op">)</span></span>
-<span>  <span class="va">base</span><span class="op">$</span><span class="va">gca_pupil</span> <span class="op">&lt;-</span> <span class="fl">0.20</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">base</span><span class="op">$</span><span class="va">condition</span> <span class="op">==</span> <span class="st">'treatment'</span>, <span class="fl">0.10</span>, <span class="fl">0</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fl">0.60</span> <span class="op">*</span> <span class="va">base</span><span class="op">$</span><span class="va">time_poly_1</span> <span class="op">-</span></span>
-<span>    <span class="fl">0.35</span> <span class="op">*</span> <span class="va">base</span><span class="op">$</span><span class="va">time_poly_2</span> <span class="op">+</span></span>
-<span>    <span class="fl">0.15</span> <span class="op">*</span> <span class="va">base</span><span class="op">$</span><span class="va">time_poly_3</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">base</span><span class="op">$</span><span class="va">condition</span> <span class="op">==</span> <span class="st">'treatment'</span>, <span class="fl">0.15</span> <span class="op">*</span> <span class="va">base</span><span class="op">$</span><span class="va">time_poly_1</span>, <span class="fl">0</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="va">subject_shift</span><span class="op">[</span><span class="va">base</span><span class="op">$</span><span class="va">subject</span><span class="op">]</span></span>
-<span>  <span class="va">base</span></span>
-<span><span class="op">}</span></span>
-<span></span>
-<span><span class="va">gca_demo</span> <span class="op">&lt;-</span> <span class="fu">make_gca_demo</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <div class="section level2">
-<h2 id="plot-functions-covered">Plot functions covered<a class="anchor" aria-label="anchor" href="#plot-functions-covered"></a>
+<h2 id="important-note">Important note<a class="anchor" aria-label="anchor" href="#important-note"></a>
 </h2>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">plot_functions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span></span>
-<span>  <span class="st">'^plot_'</span>,</span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/ns-reflect.html" class="external-link">getNamespaceExports</a></span><span class="op">(</span><span class="st">'gp3tools'</span><span class="op">)</span>,</span>
-<span>  value <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
-<span>  plot_function <span class="op">=</span> <span class="va">plot_functions</span>,</span>
-<span>  row.names <span class="op">=</span> <span class="cn">NULL</span></span>
-<span><span class="op">)</span></span>
-<span><span class="co">#&gt;                           plot_function</span></span>
+<p><code>gp3tools</code> can parse official Gazepoint Analysis summary
+exports, but metrics recomputed from all-gaze and fixation files may not
+always exactly reproduce Gazepoint’s internal summary calculations. For
+official Gazepoint summary values, use
+<code><a href="../reference/read_gazepoint_summary.html">read_gazepoint_summary()</a></code>. For transparent reproducible
+calculations from exported rows, use the sample-level and fixation-level
+summary functions.</p>
+</div>
+<div class="section level2">
+<h2 id="exported-plot-functions">Exported plot functions<a class="anchor" aria-label="anchor" href="#exported-plot-functions"></a>
+</h2>
+<pre><code><span><span class="co">#&gt;                           plot_function</span></span>
 <span><span class="co">#&gt; 1               plot_gazepoint_aoi_gamm</span></span>
 <span><span class="co">#&gt; 2  plot_gazepoint_aoi_transition_matrix</span></span>
 <span><span class="co">#&gt; 3       plot_gazepoint_aoi_verification</span></span>
@@ -178,280 +106,72 @@ should not be read as an empirical analysis of real participants.</p>
 <span><span class="co">#&gt; 10      plot_gazepoint_pupil_timecourse</span></span>
 <span><span class="co">#&gt; 11                   plot_sampling_rate</span></span>
 <span><span class="co">#&gt; 12                plot_tracking_quality</span></span>
-<span><span class="co">#&gt; 13              plot_transition_heatmap</span></span></code></pre></div>
+<span><span class="co">#&gt; 13              plot_transition_heatmap</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="sampling-rate">Sampling rate<a class="anchor" aria-label="anchor" href="#sampling-rate"></a>
 </h2>
-<p>The built-in demonstration data are sampled every 50 ms,
-corresponding to approximately 20 Hz. This differs from a typical 60 Hz
-GP3 recording, but is sufficient for a compact website example.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">sampling</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/check_sampling_rate.html">check_sampling_rate</a></span><span class="op">(</span></span>
-<span>  <span class="va">master</span>,</span>
-<span>  group_cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'USER_FILE'</span>, <span class="st">'MEDIA_ID'</span><span class="op">)</span>,</span>
-<span>  time_col <span class="op">=</span> <span class="st">'TIME'</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="../reference/plot_sampling_rate.html">plot_sampling_rate</a></span><span class="op">(</span></span>
-<span>  <span class="va">sampling</span>,</span>
-<span>  user_col <span class="op">=</span> <span class="st">'USER_FILE'</span>,</span>
-<span>  media_col <span class="op">=</span> <span class="st">'MEDIA_ID'</span>,</span>
-<span>  expected_hz <span class="op">=</span> <span class="fl">20</span>,</span>
-<span>  hz_tolerance <span class="op">=</span> <span class="fl">2</span></span>
-<span><span class="op">)</span></span></code></pre></div>
 <p><img src="plot-gallery_files/figure-html/sampling-rate-plot-1.png" class="r-plt" alt="" width="672"></p>
 </div>
 <div class="section level2">
 <h2 id="tracking-quality">Tracking quality<a class="anchor" aria-label="anchor" href="#tracking-quality"></a>
 </h2>
-<p>The tracking-quality plot summarises valid gaze percentage by
-participant file and stimulus. A simple review flag is created here for
-demonstration.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">quality</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/summarise_tracking_quality.html">summarise_tracking_quality</a></span><span class="op">(</span></span>
-<span>  <span class="va">master</span>,</span>
-<span>  group_cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'USER_FILE'</span>, <span class="st">'MEDIA_ID'</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span><span class="va">quality</span><span class="op">$</span><span class="va">review_required</span> <span class="op">&lt;-</span> <span class="va">quality</span><span class="op">$</span><span class="va">BPOGV_valid_pct</span> <span class="op">&lt;</span> <span class="fl">70</span></span>
-<span></span>
-<span><span class="fu"><a href="../reference/plot_tracking_quality.html">plot_tracking_quality</a></span><span class="op">(</span></span>
-<span>  <span class="va">quality</span>,</span>
-<span>  metric_cols <span class="op">=</span> <span class="st">'BPOGV_valid_pct'</span>,</span>
-<span>  user_col <span class="op">=</span> <span class="st">'USER_FILE'</span>,</span>
-<span>  media_col <span class="op">=</span> <span class="st">'MEDIA_ID'</span>,</span>
-<span>  review_col <span class="op">=</span> <span class="st">'review_required'</span>,</span>
-<span>  min_valid_pct <span class="op">=</span> <span class="fl">70</span></span>
-<span><span class="op">)</span></span></code></pre></div>
 <p><img src="plot-gallery_files/figure-html/tracking-quality-plot-1.png" class="r-plt" alt="" width="672"></p>
 </div>
 <div class="section level2">
 <h2 id="pupil-status">Pupil status<a class="anchor" aria-label="anchor" href="#pupil-status"></a>
 </h2>
-<p>The pupil-status plot shows whether samples are observed or
-interpolated.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_gazepoint_pupil_status.html">plot_gazepoint_pupil_status</a></span><span class="op">(</span></span>
-<span>  <span class="va">pupil_demo</span>,</span>
-<span>  time_col <span class="op">=</span> <span class="st">'time'</span>,</span>
-<span>  pupil_col <span class="op">=</span> <span class="st">'pupil_interpolated'</span>,</span>
-<span>  status_col <span class="op">=</span> <span class="st">'pupil_interpolation_status'</span>,</span>
-<span>  interpolated_col <span class="op">=</span> <span class="st">'pupil_was_interpolated'</span>,</span>
-<span>  group_cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'subject'</span>, <span class="st">'trial_global'</span><span class="op">)</span>,</span>
-<span>  plot_type <span class="op">=</span> <span class="st">'summary'</span></span>
-<span><span class="op">)</span></span></code></pre></div>
 <p><img src="plot-gallery_files/figure-html/pupil-status-plot-1.png" class="r-plt" alt="" width="672"></p>
 </div>
 <div class="section level2">
 <h2 id="pupil-preprocessing">Pupil preprocessing<a class="anchor" aria-label="anchor" href="#pupil-preprocessing"></a>
 </h2>
-<p>The preprocessing plot compares raw, cleaned, interpolated,
-baseline-corrected, and smoothed pupil series for one synthetic
-trial.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_gazepoint_pupil_preprocessing.html">plot_gazepoint_pupil_preprocessing</a></span><span class="op">(</span></span>
-<span>  <span class="va">pupil_demo</span>,</span>
-<span>  subject <span class="op">=</span> <span class="st">'S01'</span>,</span>
-<span>  trial_global <span class="op">=</span> <span class="st">'control_T1'</span>,</span>
-<span>  time_col <span class="op">=</span> <span class="st">'time'</span>,</span>
-<span>  raw_pupil_col <span class="op">=</span> <span class="st">'pupil'</span>,</span>
-<span>  clean_pupil_col <span class="op">=</span> <span class="st">'pupil_clean'</span>,</span>
-<span>  interpolated_pupil_col <span class="op">=</span> <span class="st">'pupil_interpolated'</span>,</span>
-<span>  baseline_pupil_col <span class="op">=</span> <span class="st">'pupil_baseline_corrected'</span>,</span>
-<span>  smoothed_pupil_col <span class="op">=</span> <span class="st">'pupil_smoothed'</span>,</span>
-<span>  status_col <span class="op">=</span> <span class="st">'pupil_interpolation_status'</span>,</span>
-<span>  plot_style <span class="op">=</span> <span class="st">'faceted'</span></span>
-<span><span class="op">)</span></span></code></pre></div>
 <p><img src="plot-gallery_files/figure-html/pupil-preprocessing-plot-1.png" class="r-plt" alt="" width="672"></p>
 </div>
 <div class="section level2">
 <h2 id="pupil-time-course">Pupil time course<a class="anchor" aria-label="anchor" href="#pupil-time-course"></a>
 </h2>
-<p>The pupil time-course plot shows condition-level pupil trajectories
-after binning the synthetic sample-level data.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_gazepoint_pupil_timecourse.html">plot_gazepoint_pupil_timecourse</a></span><span class="op">(</span></span>
-<span>  <span class="va">master</span>,</span>
-<span>  pupil_col <span class="op">=</span> <span class="st">'pupil'</span>,</span>
-<span>  time_col <span class="op">=</span> <span class="st">'time'</span>,</span>
-<span>  condition_col <span class="op">=</span> <span class="st">'condition'</span>,</span>
-<span>  bin_width_ms <span class="op">=</span> <span class="fl">100</span></span>
-<span><span class="op">)</span></span></code></pre></div>
 <p><img src="plot-gallery_files/figure-html/pupil-timecourse-plot-1.png" class="r-plt" alt="" width="672"></p>
 </div>
 <div class="section level2">
 <h2 id="aoi-verification">AOI verification<a class="anchor" aria-label="anchor" href="#aoi-verification"></a>
 </h2>
-<p>The AOI verification plot overlays gaze samples on the synthetic AOI
-geometry. This helps users inspect whether AOI coordinates and gaze
-coordinates are on the same scale before computing AOI summaries.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_gazepoint_aoi_verification.html">plot_gazepoint_aoi_verification</a></span><span class="op">(</span></span>
-<span>  aoi_geometry <span class="op">=</span> <span class="va">aoi_geometry</span>,</span>
-<span>  gaze_data <span class="op">=</span> <span class="va">master</span>,</span>
-<span>  geometry_aoi_col <span class="op">=</span> <span class="st">'aoi'</span>,</span>
-<span>  geometry_stimulus_col <span class="op">=</span> <span class="st">'media_id'</span>,</span>
-<span>  gaze_x_col <span class="op">=</span> <span class="st">'x'</span>,</span>
-<span>  gaze_y_col <span class="op">=</span> <span class="st">'y'</span>,</span>
-<span>  gaze_stimulus_col <span class="op">=</span> <span class="st">'MEDIA_ID'</span>,</span>
-<span>  screen_x_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>,</span>
-<span>  screen_y_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>,</span>
-<span>  facet_by_stimulus <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  show_labels <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  show_gaze <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span><span class="op">)</span></span></code></pre></div>
 <p><img src="plot-gallery_files/figure-html/aoi-verification-plot-1.png" class="r-plt" alt="" width="672"></p>
 </div>
 <div class="section level2">
 <h2 id="aoi-transition-matrix">AOI transition matrix<a class="anchor" aria-label="anchor" href="#aoi-transition-matrix"></a>
 </h2>
-<p>The AOI transition matrix summarises transitions among AOI states by
-condition.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">aoi_transitions</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/compute_gazepoint_aoi_transition_matrix.html">compute_gazepoint_aoi_transition_matrix</a></span><span class="op">(</span></span>
-<span>  <span class="va">master</span>,</span>
-<span>  aoi_col <span class="op">=</span> <span class="st">'AOI'</span>,</span>
-<span>  time_col <span class="op">=</span> <span class="st">'time'</span>,</span>
-<span>  group_cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'subject'</span>, <span class="st">'MEDIA_ID'</span>, <span class="st">'trial_global'</span><span class="op">)</span>,</span>
-<span>  by_cols <span class="op">=</span> <span class="st">'condition'</span>,</span>
-<span>  include_non_aoi <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  include_self_transitions <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="../reference/plot_gazepoint_aoi_transition_matrix.html">plot_gazepoint_aoi_transition_matrix</a></span><span class="op">(</span></span>
-<span>  <span class="va">aoi_transitions</span>,</span>
-<span>  value <span class="op">=</span> <span class="st">'prob'</span>,</span>
-<span>  by_cols <span class="op">=</span> <span class="st">'condition'</span>,</span>
-<span>  facet <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  title <span class="op">=</span> <span class="st">'AOI transition probabilities by condition'</span></span>
-<span><span class="op">)</span></span></code></pre></div>
 <p><img src="plot-gallery_files/figure-html/aoi-transition-matrix-plot-1.png" class="r-plt" alt="" width="672"></p>
 </div>
 <div class="section level2">
 <h2 id="transition-heatmap">Transition heatmap<a class="anchor" aria-label="anchor" href="#transition-heatmap"></a>
 </h2>
-<p>The legacy transition heatmap provides a compact view of transitions
-computed from fixation-level AOI sequences.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">legacy_transitions</span> <span class="op">&lt;-</span> <span class="fu">safe_value</span><span class="op">(</span><span class="fu"><a href="../reference/compute_transition_matrix.html">compute_transition_matrix</a></span><span class="op">(</span></span>
-<span>  <span class="va">fixations</span>,</span>
-<span>  group_cols <span class="op">=</span> <span class="st">'MEDIA_ID'</span>,</span>
-<span>  aoi_col <span class="op">=</span> <span class="st">'AOI'</span>,</span>
-<span>  time_col <span class="op">=</span> <span class="st">'FPOGS'</span></span>
-<span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">legacy_transitions</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="fu">safe_plot</span><span class="op">(</span><span class="fu"><a href="../reference/plot_transition_heatmap.html">plot_transition_heatmap</a></span><span class="op">(</span><span class="va">legacy_transitions</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="op">}</span></span></code></pre></div>
 <p><img src="plot-gallery_files/figure-html/transition-heatmap-plot-1.png" class="r-plt" alt="" width="672"></p>
 </div>
 <div class="section level2">
 <h2 id="gca-model-plot">GCA model plot<a class="anchor" aria-label="anchor" href="#gca-model-plot"></a>
 </h2>
-<p>The GCA plot uses a compact synthetic growth-curve data set to
-illustrate observed and fitted trajectories.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">gca_fit</span> <span class="op">&lt;-</span> <span class="fu">safe_value</span><span class="op">(</span><span class="fu"><a href="../reference/fit_gazepoint_gca.html">fit_gazepoint_gca</a></span><span class="op">(</span></span>
-<span>  <span class="va">gca_demo</span>,</span>
-<span>  random_slopes <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  REML <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">gca_fit</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="fu">safe_plot</span><span class="op">(</span><span class="fu"><a href="../reference/plot_gazepoint_gca.html">plot_gazepoint_gca</a></span><span class="op">(</span></span>
-<span>    <span class="va">gca_fit</span>,</span>
-<span>    title <span class="op">=</span> <span class="st">'Synthetic GCA pupil trajectories'</span></span>
-<span>  <span class="op">)</span><span class="op">)</span></span>
-<span><span class="op">}</span></span></code></pre></div>
+<p><img src="plot-gallery_files/figure-html/gca-model-plot-1.png" class="r-plt" alt="" width="672"></p>
 </div>
 <div class="section level2">
 <h2 id="model-prediction-plot">Model-prediction plot<a class="anchor" aria-label="anchor" href="#model-prediction-plot"></a>
 </h2>
-<p>The model-prediction plot shows fitted trends from a simple model and
-observed condition-level summaries.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">prediction_model</span> <span class="op">&lt;-</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span></span>
-<span>  <span class="va">gca_pupil</span> <span class="op">~</span> <span class="va">gca_time</span> <span class="op">*</span> <span class="va">condition</span>,</span>
-<span>  data <span class="op">=</span> <span class="va">gca_demo</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">safe_plot</span><span class="op">(</span><span class="fu"><a href="../reference/plot_gazepoint_model_predictions.html">plot_gazepoint_model_predictions</a></span><span class="op">(</span></span>
-<span>  <span class="va">gca_demo</span>,</span>
-<span>  model <span class="op">=</span> <span class="va">prediction_model</span>,</span>
-<span>  x_col <span class="op">=</span> <span class="st">'gca_time'</span>,</span>
-<span>  outcome_col <span class="op">=</span> <span class="st">'gca_pupil'</span>,</span>
-<span>  condition_col <span class="op">=</span> <span class="st">'condition'</span></span>
-<span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="plot-gallery_files/figure-html/model-prediction-plot-1.png" class="r-plt" alt="" width="672"></p>
 </div>
 <div class="section level2">
 <h2 id="aoi-gamm-plot">AOI GAMM plot<a class="anchor" aria-label="anchor" href="#aoi-gamm-plot"></a>
 </h2>
-<p>The AOI GAMM plot is included when the optional modelling
-dependencies and example fit are available in the website build
-environment.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">aoi_gamm_fit</span> <span class="op">&lt;-</span> <span class="fu">safe_value</span><span class="op">(</span><span class="fu"><a href="../reference/fit_gazepoint_aoi_gamm.html">fit_gazepoint_aoi_gamm</a></span><span class="op">(</span></span>
-<span>  <span class="va">aoi_windows</span>,</span>
-<span>  outcome_col <span class="op">=</span> <span class="st">'target_sample_prop_valid'</span>,</span>
-<span>  time_col <span class="op">=</span> <span class="st">'window_start_ms'</span>,</span>
-<span>  condition_col <span class="op">=</span> <span class="st">'condition'</span>,</span>
-<span>  subject_col <span class="op">=</span> <span class="st">'subject'</span></span>
-<span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">aoi_gamm_fit</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="fu">safe_plot</span><span class="op">(</span><span class="fu"><a href="../reference/plot_gazepoint_aoi_gamm.html">plot_gazepoint_aoi_gamm</a></span><span class="op">(</span></span>
-<span>    <span class="va">aoi_gamm_fit</span>,</span>
-<span>    title <span class="op">=</span> <span class="st">'Synthetic AOI GAMM trajectory'</span></span>
-<span>  <span class="op">)</span><span class="op">)</span></span>
-<span><span class="op">}</span></span></code></pre></div>
+<p><img src="plot-gallery_files/figure-html/aoi-gamm-plot-1.png" class="r-plt" alt="" width="672"></p>
 </div>
 <div class="section level2">
 <h2 id="cluster-results-plot">Cluster-results plot<a class="anchor" aria-label="anchor" href="#cluster-results-plot"></a>
 </h2>
-<p>The cluster-results plot is rendered when a compatible
-cluster-permutation result can be computed from the compact synthetic
-data.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">cluster_result</span> <span class="op">&lt;-</span> <span class="fu">safe_value</span><span class="op">(</span><span class="fu"><a href="../reference/run_gazepoint_cluster_permutation.html">run_gazepoint_cluster_permutation</a></span><span class="op">(</span></span>
-<span>  <span class="va">gca_demo</span>,</span>
-<span>  time_col <span class="op">=</span> <span class="st">'gca_time'</span>,</span>
-<span>  outcome_col <span class="op">=</span> <span class="st">'gca_pupil'</span>,</span>
-<span>  condition_col <span class="op">=</span> <span class="st">'condition'</span>,</span>
-<span>  subject_col <span class="op">=</span> <span class="st">'subject'</span>,</span>
-<span>  n_permutations <span class="op">=</span> <span class="fl">99</span></span>
-<span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">cluster_result</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="fu">safe_plot</span><span class="op">(</span><span class="fu"><a href="../reference/plot_gazepoint_cluster_results.html">plot_gazepoint_cluster_results</a></span><span class="op">(</span></span>
-<span>    <span class="va">cluster_result</span>,</span>
-<span>    plot_type <span class="op">=</span> <span class="st">'both'</span>,</span>
-<span>    title <span class="op">=</span> <span class="st">'Synthetic cluster-permutation result'</span></span>
-<span>  <span class="op">)</span><span class="op">)</span></span>
-<span><span class="op">}</span></span></code></pre></div>
+<p><img src="plot-gallery_files/figure-html/cluster-results-plot-1.png" class="r-plt" alt="" width="672"></p>
 </div>
 <div class="section level2">
 <h2 id="multiverse-results-plot">Multiverse-results plot<a class="anchor" aria-label="anchor" href="#multiverse-results-plot"></a>
 </h2>
-<p>The multiverse plot summarises alternative preprocessing decisions
-when a compact multiverse object can be created in the website build
-environment.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">multiverse_result</span> <span class="op">&lt;-</span> <span class="fu">safe_value</span><span class="op">(</span><span class="fu"><a href="../reference/run_gazepoint_pupil_multiverse.html">run_gazepoint_pupil_multiverse</a></span><span class="op">(</span></span>
-<span>  <span class="va">pupil_demo</span>,</span>
-<span>  subject_col <span class="op">=</span> <span class="st">'subject'</span>,</span>
-<span>  trial_col <span class="op">=</span> <span class="st">'trial_global'</span>,</span>
-<span>  time_col <span class="op">=</span> <span class="st">'time'</span>,</span>
-<span>  pupil_col <span class="op">=</span> <span class="st">'pupil'</span></span>
-<span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">multiverse_result</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="fu">safe_plot</span><span class="op">(</span><span class="fu"><a href="../reference/plot_gazepoint_multiverse_results.html">plot_gazepoint_multiverse_results</a></span><span class="op">(</span></span>
-<span>    <span class="va">multiverse_result</span>,</span>
-<span>    plot <span class="op">=</span> <span class="st">'status'</span>,</span>
-<span>    family <span class="op">=</span> <span class="st">'pupil'</span></span>
-<span>  <span class="op">)</span><span class="op">)</span></span>
-<span><span class="op">}</span></span></code></pre></div>
+<p><img src="plot-gallery_files/figure-html/multiverse-results-plot-1.png" class="r-plt" alt="" width="672"></p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
