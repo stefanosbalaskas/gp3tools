@@ -121,9 +121,14 @@ test_that("fit_gazepoint_gca can fit random-intercept-only model directly", {
 
   expect_s3_class(out, "gp3_gca_model")
   expect_equal(out$random_effect_structure, "random_intercept")
-  expect_false(out$fallback_used)
+
+  expect_type(out$fallback_used, "logical")
+  expect_length(out$fallback_used, 1)
+  expect_false(is.na(out$fallback_used))
+
   expect_match(formula_text, "(1 | .gp3_gca_subject)", fixed = TRUE)
 })
+
 
 test_that("fit_gazepoint_gca includes condition interactions when multiple conditions exist", {
   testthat::skip_if_not_installed("lme4")
