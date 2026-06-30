@@ -14,3 +14,8 @@ articles:
     contents:
     - pupil_workflow
     - aoi_workflow
+
+  - title: Showcase
+    navbar: Showcase
+    contents:
+    - articles/plot-gallery
