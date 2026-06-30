@@ -1,0 +1,21 @@
+url: https://stefanosbalaskas.github.io/gp3tools/
+
+template:
+  bootstrap: 5
+
+navbar:
+  structure:
+    left: [reference, articles, news]
+    right: [search, github]
+
+articles:
+  - title: Workflows
+    navbar: Workflows
+    contents:
+    - pupil_workflow
+    - aoi_workflow
+
+  - title: Showcase
+    navbar: Showcase
+    contents:
+    - articles/plot-gallery
