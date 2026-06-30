@@ -1,0 +1,48 @@
+---
+title: "Plot gallery"
+description: "Representative gp3tools visual outputs built from safe synthetic demonstration data."
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = '#>',
+  fig.width = 7,
+  fig.height = 4.5,
+  warning = FALSE,
+  message = FALSE
+)
+```
+
+
+This article is a website-only showcase of the main plotting outputs in `gp3tools`.
+It is intended for users, reviewers, and readers who want to see the visual
+diagnostics and reporting outputs produced by the package.
+
+The gallery uses only package-safe synthetic or example data.
+It should not be read as an empirical analysis of real participants.
+
+## Plot functions covered
+
+```{r plot-function-inventory}
+plot_functions <- sort(grep(
+  '^plot_',
+  getNamespaceExports('gp3tools'),
+  value = TRUE
+))
+
+data.frame(
+  plot_function = plot_functions,
+  row.names = NULL
+)
+```
+
+## Planned gallery sections
+
+- Sampling and tracking-quality plots
+- Pupil preprocessing and pupil time-course plots
+- AOI geometry, verification, and transition plots
+- GCA and model-prediction plots
+- Cluster and multiverse-result plots
+
+We will add the rendered plots section by section, using only reproducible demonstration data.
