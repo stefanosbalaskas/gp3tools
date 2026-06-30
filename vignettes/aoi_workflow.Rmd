@@ -1,17 +1,16 @@
 ---
-
-title: "AOI, fixation, transition, and time-course workflow"
+title: "AOI analysis workflow"
 output: rmarkdown::html_vignette
 vignette: >
-%\VignetteIndexEntry{AOI, fixation, transition, and time-course workflow}
-%\VignetteEngine{knitr::rmarkdown}
-%\VignetteEncoding{UTF-8}
--------------------------
+  %\VignetteIndexEntry{AOI analysis workflow}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>",
+  comment = '#>',
   eval = FALSE
 )
 ```

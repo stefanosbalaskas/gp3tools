@@ -1,17 +1,16 @@
 ---
-
-title: "Pupil preprocessing and modelling workflow"
+title: "Pupil preprocessing and analysis workflow"
 output: rmarkdown::html_vignette
 vignette: >
-%\VignetteIndexEntry{Pupil preprocessing and modelling workflow}
-%\VignetteEngine{knitr::rmarkdown}
-%\VignetteEncoding{UTF-8}
--------------------------
+  %\VignetteIndexEntry{Pupil preprocessing and analysis workflow}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>",
+  comment = '#>',
   eval = FALSE
 )
 ```
