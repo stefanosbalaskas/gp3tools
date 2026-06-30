@@ -1,0 +1,11 @@
+pandoc: 3.8.3
+pkgdown: 2.2.0
+pkgdown_sha: ~
+articles:
+  aoi_workflow: aoi_workflow.html
+  articles/plot-gallery: plot-gallery.html
+  pupil_workflow: pupil_workflow.html
+last_built: 2026-06-30T10:09Z
+urls:
+  reference: https://stefanosbalaskas.github.io/gp3tools/reference
+  article: https://stefanosbalaskas.github.io/gp3tools/articles
