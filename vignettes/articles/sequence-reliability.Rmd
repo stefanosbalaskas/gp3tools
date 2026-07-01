@@ -1,0 +1,105 @@
+---
+title: "AOI sequence and reliability diagnostics"
+description: "Lightweight statistical-extension examples for AOI entropy, scanpath-style sequence metrics, sequence distance, split-half reliability, and AOI timeline plots."
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = '#>',
+  fig.width = 7,
+  fig.height = 4.5,
+  warning = FALSE,
+  message = FALSE
+)
+```
+
+This article demonstrates conservative statistical extensions for Gazepoint-style
+AOI and fixation workflows. The examples use small synthetic data and are
+intended as software demonstrations, not empirical findings.
+
+```{r}
+if (requireNamespace('pkgload', quietly = TRUE)) {
+  pkgload::load_all('.', export_all = FALSE, quiet = TRUE)
+} else {
+  library(gp3tools)
+}
+
+aoi_demo <- data.frame(
+  subject = rep(c('S01', 'S02'), each = 8),
+  trial = rep(rep(c('T01', 'T02'), each = 4), 2),
+  condition = rep(c('control', 'treatment'), each = 8),
+  time = rep(1:4, 4),
+  AOI = c(
+    'Claim', 'Claim', 'Evidence', 'CTA',
+    'Claim', 'Evidence', 'Evidence', 'CTA',
+    'Claim', 'CTA', 'Evidence', 'CTA',
+    'Claim', 'Evidence', 'CTA', 'CTA'
+  )
+)
+```
+
+## AOI entropy
+
+```{r}
+compute_gazepoint_aoi_entropy(
+  aoi_demo,
+  aoi_col = 'AOI',
+  group_cols = c('subject', 'trial', 'condition'),
+  time_col = 'time'
+)
+```
+
+## AOI sequence metrics
+
+```{r}
+compute_gazepoint_aoi_sequence_metrics(
+  aoi_demo,
+  aoi_col = 'AOI',
+  group_cols = c('subject', 'trial', 'condition'),
+  time_col = 'time'
+)
+```
+
+## Sequence distance
+
+```{r}
+compute_gazepoint_sequence_distance(
+  sequence_a = c('Claim', 'Evidence', 'CTA'),
+  sequence_b = c('Claim', 'CTA', 'Evidence')
+)
+```
+
+## Split-half reliability
+
+```{r}
+fix_demo <- expand.grid(
+  subject = paste0('S', 1:8),
+  trial = paste0('T', 1:4),
+  KEEP.OUT.ATTRS = FALSE
+)
+
+fix_demo$duration <- rep(seq_len(8), each = 4) +
+  rep(c(0, 0.1, 0, 0.1), 8)
+
+audit_gazepoint_fixation_reliability(
+  fix_demo,
+  subject_col = 'subject',
+  trial_col = 'trial',
+  metric = 'total_fixation_duration',
+  duration_col = 'duration'
+)
+```
+
+## AOI timeline plot
+
+```{r}
+plot_gazepoint_aoi_timeline(
+  aoi_demo,
+  aoi_col = 'AOI',
+  time_col = 'time',
+  subject_col = 'subject',
+  trial_col = 'trial',
+  title = 'Synthetic AOI timeline'
+)
+```

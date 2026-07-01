@@ -23,6 +23,7 @@ Imports:
     tibble,
     tidyr
 Suggests:
+    brms,
     DHARMa,
     emmeans,
     eyetools,
@@ -33,7 +34,9 @@ Suggests:
     mgcv,
     pracma,
     rmarkdown,
-    testthat (>= 3.0.0)
+    shiny,
+    testthat (>= 3.0.0),
+    TraMineR
 VignetteBuilder: knitr
 Config/testthat/edition: 3
 Config/roxygen2/version: 8.0.0
