@@ -141,6 +141,46 @@ Most users should start with
 for a quick folder-level pass, then move to the master-table, pupil,
 AOI, modelling, and reporting helpers as needed.
 
+### Statistical, sequence, simulation, and reporting extensions
+
+The development version also includes an optional statistical-extension
+layer for advanced, audit-friendly workflows:
+
+- **AOI sequence structure and uncertainty:**
+  [`compute_gazepoint_aoi_entropy()`](https://stefanosbalaskas.github.io/gp3tools/reference/compute_gazepoint_aoi_entropy.md),
+  [`compute_gazepoint_aoi_sequence_metrics()`](https://stefanosbalaskas.github.io/gp3tools/reference/compute_gazepoint_aoi_sequence_metrics.md),
+  [`compute_gazepoint_sequence_complexity()`](https://stefanosbalaskas.github.io/gp3tools/reference/compute_gazepoint_sequence_complexity.md),
+  [`compute_gazepoint_sequence_distance()`](https://stefanosbalaskas.github.io/gp3tools/reference/compute_gazepoint_sequence_distance.md),
+  [`compute_gazepoint_scanpath_similarity()`](https://stefanosbalaskas.github.io/gp3tools/reference/compute_gazepoint_scanpath_similarity.md),
+  and
+  [`flag_gazepoint_sequence_anomalies()`](https://stefanosbalaskas.github.io/gp3tools/reference/flag_gazepoint_sequence_anomalies.md).
+- **Fixation, scanpath, and transition diagnostics:**
+  [`audit_gazepoint_fixation_reliability()`](https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_fixation_reliability.md),
+  [`compute_gazepoint_saccade_metrics()`](https://stefanosbalaskas.github.io/gp3tools/reference/compute_gazepoint_saccade_metrics.md),
+  [`plot_gazepoint_scanpath()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_scanpath.md),
+  [`summarise_gazepoint_markovchain()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarise_gazepoint_markovchain.md),
+  [`summarise_gazepoint_semimarkov()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarise_gazepoint_semimarkov.md),
+  [`compute_gazepoint_sequence_recurrence()`](https://stefanosbalaskas.github.io/gp3tools/reference/compute_gazepoint_sequence_recurrence.md),
+  and
+  [`compute_gazepoint_transition_network_metrics()`](https://stefanosbalaskas.github.io/gp3tools/reference/compute_gazepoint_transition_network_metrics.md).
+- **Time-course, modelling, and reporting helpers:**
+  [`bootstrap_gazepoint_timecourse()`](https://stefanosbalaskas.github.io/gp3tools/reference/bootstrap_gazepoint_timecourse.md),
+  [`plot_gazepoint_time_varying_effect()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_time_varying_effect.md),
+  [`plot_gazepoint_model_residuals()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_model_residuals.md),
+  and
+  [`report_gazepoint_multiverse()`](https://stefanosbalaskas.github.io/gp3tools/reference/report_gazepoint_multiverse.md).
+- **Simulation and optional interoperability:**
+  [`simulate_gazepoint_data()`](https://stefanosbalaskas.github.io/gp3tools/reference/simulate_gazepoint_data.md),
+  [`export_gazepoint_to_bids()`](https://stefanosbalaskas.github.io/gp3tools/reference/export_gazepoint_to_bids.md),
+  [`fit_gazepoint_aoi_brms()`](https://stefanosbalaskas.github.io/gp3tools/reference/fit_gazepoint_aoi_brms.md),
+  [`prepare_gazepoint_traminer_data()`](https://stefanosbalaskas.github.io/gp3tools/reference/prepare_gazepoint_traminer_data.md),
+  [`detect_gazepoint_fixations_ivt()`](https://stefanosbalaskas.github.io/gp3tools/reference/detect_gazepoint_fixations_ivt.md),
+  and
+  [`launch_gazepoint_qc_dashboard()`](https://stefanosbalaskas.github.io/gp3tools/reference/launch_gazepoint_qc_dashboard.md).
+
+The rendered site includes a plot-first article for these additions:
+`articles/statistical-extensions-plots.html`.
+
 ## Citation
 
 If you use `gp3tools` in research, teaching, reports, or software
@@ -154,7 +194,7 @@ citation("gp3tools")
 Current citation:
 
 > Balaskas, S. (2026). `gp3tools`: Import, Inspect, Analyse, and Report
-> Gazepoint GP3 Exports. R package version 1.0.1.
+> Gazepoint GP3 Exports. R package version 1.0.2.9000.
 > <https://github.com/stefanosbalaskas/gp3tools>
 
 A formal software DOI will be added after a stable GitHub release is
@@ -2618,3 +2658,9 @@ sample-level and fixation-level summary functions.
   Lightweight statistical-extension examples for AOI entropy,
   scanpath-style sequence metrics, sequence distance, split-half
   reliability, and AOI timeline plots.
+
+- [Statistical extensions and
+  plots](https://stefanosbalaskas.github.io/gp3tools/articles/statistical-extensions-plots.md):
+
+  Plot-first examples for the statistical, sequence, scanpath, and
+  model-reporting extension layer.

@@ -43,6 +43,7 @@
     <li><h6 class="dropdown-header" data-toc-skip>Showcase</h6></li>
     <li><a class="dropdown-item" href="articles/plot-gallery.html">Plot gallery</a></li>
     <li><a class="dropdown-item" href="articles/sequence-reliability.html">AOI sequence and reliability diagnostics</a></li>
+    <li><a class="dropdown-item" href="articles/statistical-extensions-plots.html">Statistical extensions and plots</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="news/index.html">Changelog</a></li>
@@ -221,6 +222,22 @@
 </tbody>
 </table>
 <p>Most users should start with <code><a href="reference/run_gazepoint_workflow.html">run_gazepoint_workflow()</a></code> for a quick folder-level pass, then move to the master-table, pupil, AOI, modelling, and reporting helpers as needed.</p>
+<div class="section level3">
+<h3 id="statistical-sequence-simulation-and-reporting-extensions">Statistical, sequence, simulation, and reporting extensions<a class="anchor" aria-label="anchor" href="#statistical-sequence-simulation-and-reporting-extensions"></a>
+</h3>
+<p>The development version also includes an optional statistical-extension layer for advanced, audit-friendly workflows:</p>
+<ul>
+<li>
+<strong>AOI sequence structure and uncertainty:</strong> <code><a href="reference/compute_gazepoint_aoi_entropy.html">compute_gazepoint_aoi_entropy()</a></code>, <code><a href="reference/compute_gazepoint_aoi_sequence_metrics.html">compute_gazepoint_aoi_sequence_metrics()</a></code>, <code><a href="reference/compute_gazepoint_sequence_complexity.html">compute_gazepoint_sequence_complexity()</a></code>, <code><a href="reference/compute_gazepoint_sequence_distance.html">compute_gazepoint_sequence_distance()</a></code>, <code><a href="reference/compute_gazepoint_scanpath_similarity.html">compute_gazepoint_scanpath_similarity()</a></code>, and <code><a href="reference/flag_gazepoint_sequence_anomalies.html">flag_gazepoint_sequence_anomalies()</a></code>.</li>
+<li>
+<strong>Fixation, scanpath, and transition diagnostics:</strong> <code><a href="reference/audit_gazepoint_fixation_reliability.html">audit_gazepoint_fixation_reliability()</a></code>, <code><a href="reference/compute_gazepoint_saccade_metrics.html">compute_gazepoint_saccade_metrics()</a></code>, <code><a href="reference/plot_gazepoint_scanpath.html">plot_gazepoint_scanpath()</a></code>, <code><a href="reference/summarise_gazepoint_markovchain.html">summarise_gazepoint_markovchain()</a></code>, <code><a href="reference/summarise_gazepoint_semimarkov.html">summarise_gazepoint_semimarkov()</a></code>, <code><a href="reference/compute_gazepoint_sequence_recurrence.html">compute_gazepoint_sequence_recurrence()</a></code>, and <code><a href="reference/compute_gazepoint_transition_network_metrics.html">compute_gazepoint_transition_network_metrics()</a></code>.</li>
+<li>
+<strong>Time-course, modelling, and reporting helpers:</strong> <code><a href="reference/bootstrap_gazepoint_timecourse.html">bootstrap_gazepoint_timecourse()</a></code>, <code><a href="reference/plot_gazepoint_time_varying_effect.html">plot_gazepoint_time_varying_effect()</a></code>, <code><a href="reference/plot_gazepoint_model_residuals.html">plot_gazepoint_model_residuals()</a></code>, and <code><a href="reference/report_gazepoint_multiverse.html">report_gazepoint_multiverse()</a></code>.</li>
+<li>
+<strong>Simulation and optional interoperability:</strong> <code><a href="reference/simulate_gazepoint_data.html">simulate_gazepoint_data()</a></code>, <code><a href="reference/export_gazepoint_to_bids.html">export_gazepoint_to_bids()</a></code>, <code><a href="reference/fit_gazepoint_aoi_brms.html">fit_gazepoint_aoi_brms()</a></code>, <code><a href="reference/prepare_gazepoint_traminer_data.html">prepare_gazepoint_traminer_data()</a></code>, <code><a href="reference/detect_gazepoint_fixations_ivt.html">detect_gazepoint_fixations_ivt()</a></code>, and <code><a href="reference/launch_gazepoint_qc_dashboard.html">launch_gazepoint_qc_dashboard()</a></code>.</li>
+</ul>
+<p>The rendered site includes a plot-first article for these additions: <code>articles/statistical-extensions-plots.html</code>.</p>
+</div>
 </div>
 <div class="section level2">
 <h2 id="citation">Citation<a class="anchor" aria-label="anchor" href="#citation"></a>
@@ -230,7 +247,7 @@
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/citation.html" class="external-link">citation</a></span><span class="op">(</span><span class="st">"gp3tools"</span><span class="op">)</span></span></code></pre></div>
 <p>Current citation:</p>
 <blockquote>
-<p>Balaskas, S. (2026). <code>gp3tools</code>: Import, Inspect, Analyse, and Report Gazepoint GP3 Exports. R package version 1.0.1. <a href="https://github.com/stefanosbalaskas/gp3tools" class="external-link uri">https://github.com/stefanosbalaskas/gp3tools</a></p>
+<p>Balaskas, S. (2026). <code>gp3tools</code>: Import, Inspect, Analyse, and Report Gazepoint GP3 Exports. R package version 1.0.2.9000. <a href="https://github.com/stefanosbalaskas/gp3tools" class="external-link uri">https://github.com/stefanosbalaskas/gp3tools</a></p>
 </blockquote>
 <p>A formal software DOI will be added after a stable GitHub release is archived through Zenodo.</p>
 </div>

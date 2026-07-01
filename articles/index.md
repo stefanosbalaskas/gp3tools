@@ -21,3 +21,9 @@
   Lightweight statistical-extension examples for AOI entropy,
   scanpath-style sequence metrics, sequence distance, split-half
   reliability, and AOI timeline plots.
+
+- [Statistical extensions and
+  plots](https://stefanosbalaskas.github.io/gp3tools/articles/statistical-extensions-plots.md):
+
+  Plot-first examples for the statistical, sequence, scanpath, and
+  model-reporting extension layer.
