@@ -186,7 +186,7 @@ plot_gazepoint_scanpath <- function(data,
   } else {
     apply(d[, group_cols, drop = FALSE], 1L, function(z) paste(paste(group_cols, z, sep = "="), collapse = "|"))
   }
-  d$.gp3_order <- ave(seq_len(nrow(d)), d$.gp3_group, FUN = seq_along)
+  d$.gp3_order <- stats::ave(seq_len(nrow(d)), d$.gp3_group, FUN = seq_along)
   if (!is.null(label_col)) {
     d$.gp3_label <- as.character(d[[label_col]])
   } else if (!is.null(fixation_index_col)) {
