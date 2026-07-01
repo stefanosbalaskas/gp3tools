@@ -1,5 +1,14 @@
 # Changelog
 
+## gp3tools 1.0.2
+
+CRAN release: 2026-06-30
+
+- Made one
+  [`fit_gazepoint_gca()`](https://stefanosbalaskas.github.io/gp3tools/reference/fit_gazepoint_gca.md)
+  test robust to platform-specific mixed-model fallback behavior
+  observed under CRAN no-long-double checks.
+
 ## gp3tools 1.0.1
 
 CRAN release: 2026-06-29
