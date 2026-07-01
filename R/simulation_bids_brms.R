@@ -375,7 +375,8 @@ fit_gazepoint_aoi_brms <- function(data,
     stop("Package 'brms' is required for fitting. Install it or use dry_run = TRUE.", call. = FALSE)
   }
   brms_family <- get(family, envir = asNamespace("brms"))()
-  brms::brm(
+  brms_brm <- get("brm", envir = asNamespace("brms"))
+  brms_brm(
     formula = formula,
     data = data,
     family = brms_family,
