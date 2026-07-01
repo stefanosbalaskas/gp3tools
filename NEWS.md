@@ -1,3 +1,8 @@
+# gp3tools 1.0.2.9000
+
+* Development version after the 1.0.2 CRAN patch.
+* Added statistical, sequence, simulation, reporting, and optional interoperability extensions.
+
 # gp3tools 1.0.2
 
 * Made one `fit_gazepoint_gca()` test robust to platform-specific mixed-model fallback behavior observed under CRAN no-long-double checks.
