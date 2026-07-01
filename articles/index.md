@@ -14,3 +14,10 @@
 
   Representative gp3tools visual outputs built from safe synthetic
   demonstration data.
+
+- [AOI sequence and reliability
+  diagnostics](https://stefanosbalaskas.github.io/gp3tools/articles/sequence-reliability.md):
+
+  Lightweight statistical-extension examples for AOI entropy,
+  scanpath-style sequence metrics, sequence distance, split-half
+  reliability, and AOI timeline plots.

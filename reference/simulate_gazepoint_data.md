@@ -1,0 +1,71 @@
+# Simulate simple Gazepoint-style gaze data
+
+Generate a compact synthetic Gazepoint-style data set for examples,
+tests, teaching, and workflow demonstrations. The simulation is
+intentionally simple and should not be treated as a realistic generative
+model of visual attention.
+
+## Usage
+
+``` r
+simulate_gazepoint_data(
+  n_subjects = 12,
+  n_trials = 8,
+  trial_duration_ms = 2000,
+  sampling_rate_hz = 60,
+  conditions = c("control", "treatment"),
+  aoi_labels = c("target", "other"),
+  effect_size = 0.5,
+  target_aoi = aoi_labels[1L],
+  seed = NULL,
+  include_fixations = TRUE
+)
+```
+
+## Arguments
+
+- n_subjects:
+
+  Number of synthetic participants.
+
+- n_trials:
+
+  Number of trials per participant.
+
+- trial_duration_ms:
+
+  Trial duration in milliseconds.
+
+- sampling_rate_hz:
+
+  Sampling rate in Hz.
+
+- conditions:
+
+  Character vector of condition labels.
+
+- aoi_labels:
+
+  Character vector of AOI labels.
+
+- effect_size:
+
+  Logit-scale increase in target-AOI probability for the second and
+  later conditions.
+
+- target_aoi:
+
+  AOI receiving the simulated condition effect.
+
+- seed:
+
+  Optional random seed.
+
+- include_fixations:
+
+  Should a simple fixation-level table be returned?
+
+## Value
+
+A list containing `all_gaze`, `aoi_windows`, optional `fixations`, and
+simulation metadata.

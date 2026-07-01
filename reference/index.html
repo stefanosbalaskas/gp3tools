@@ -25,6 +25,7 @@
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Showcase</h6></li>
     <li><a class="dropdown-item" href="../articles/plot-gallery.html">Plot gallery</a></li>
+    <li><a class="dropdown-item" href="../articles/sequence-reliability.html">AOI sequence and reliability diagnostics</a></li>
   </ul></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
@@ -123,6 +124,13 @@
 
         <dt>
 
+          <code><a href="audit_gazepoint_fixation_reliability.html">audit_gazepoint_fixation_reliability()</a></code>
+
+        </dt>
+        <dd>Audit split-half reliability of fixation or AOI metrics</dd>
+
+        <dt>
+
           <code><a href="audit_gazepoint_gaze_signal_quality.html">audit_gazepoint_gaze_signal_quality()</a></code>
 
         </dt>
@@ -200,6 +208,13 @@
 
         <dt>
 
+          <code><a href="bootstrap_gazepoint_timecourse.html">bootstrap_gazepoint_timecourse()</a></code>
+
+        </dt>
+        <dd>Bootstrap time-course summaries</dd>
+
+        <dt>
+
           <code><a href="check_gazepoint_file_pairs.html">check_gazepoint_file_pairs()</a></code>
 
         </dt>
@@ -256,6 +271,20 @@
 
         <dt>
 
+          <code><a href="compute_gazepoint_aoi_entropy.html">compute_gazepoint_aoi_entropy()</a></code>
+
+        </dt>
+        <dd>Compute AOI entropy metrics</dd>
+
+        <dt>
+
+          <code><a href="compute_gazepoint_aoi_sequence_metrics.html">compute_gazepoint_aoi_sequence_metrics()</a></code>
+
+        </dt>
+        <dd>Compute AOI sequence metrics</dd>
+
+        <dt>
+
           <code><a href="compute_gazepoint_aoi_transition_matrix.html">compute_gazepoint_aoi_transition_matrix()</a></code>
 
         </dt>
@@ -263,10 +292,52 @@
 
         <dt>
 
+          <code><a href="compute_gazepoint_saccade_metrics.html">compute_gazepoint_saccade_metrics()</a></code>
+
+        </dt>
+        <dd>Compute basic saccade metrics from fixation coordinates</dd>
+
+        <dt>
+
+          <code><a href="compute_gazepoint_scanpath_similarity.html">compute_gazepoint_scanpath_similarity()</a></code>
+
+        </dt>
+        <dd>Compute AOI scanpath similarity</dd>
+
+        <dt>
+
+          <code><a href="compute_gazepoint_sequence_complexity.html">compute_gazepoint_sequence_complexity()</a></code>
+
+        </dt>
+        <dd>Compute AOI sequence complexity metrics</dd>
+
+        <dt>
+
+          <code><a href="compute_gazepoint_sequence_distance.html">compute_gazepoint_sequence_distance()</a></code>
+
+        </dt>
+        <dd>Compute AOI sequence distance</dd>
+
+        <dt>
+
+          <code><a href="compute_gazepoint_sequence_recurrence.html">compute_gazepoint_sequence_recurrence()</a></code>
+
+        </dt>
+        <dd>Compute simple categorical sequence recurrence metrics</dd>
+
+        <dt>
+
           <code><a href="compute_gazepoint_time_varying_transition_matrix.html">compute_gazepoint_time_varying_transition_matrix()</a></code>
 
         </dt>
         <dd>Compute time-varying Gazepoint transition matrices</dd>
+
+        <dt>
+
+          <code><a href="compute_gazepoint_transition_network_metrics.html">compute_gazepoint_transition_network_metrics()</a></code>
+
+        </dt>
+        <dd>Compute lightweight AOI transition-network metrics</dd>
 
         <dt>
 
@@ -326,6 +397,13 @@
 
         <dt>
 
+          <code><a href="detect_gazepoint_fixations_ivt.html">detect_gazepoint_fixations_ivt()</a></code>
+
+        </dt>
+        <dd>Detect simple I-VT fixations from gaze samples</dd>
+
+        <dt>
+
           <code><a href="diagnose_gazepoint_gamm.html">diagnose_gazepoint_gamm()</a></code>
 
         </dt>
@@ -365,6 +443,20 @@
 
         </dt>
         <dd>Export Gazepoint analysis tables to CSV files</dd>
+
+        <dt>
+
+          <code><a href="export_gazepoint_to_bids.html">export_gazepoint_to_bids()</a></code>
+
+        </dt>
+        <dd>Export Gazepoint data to a lightweight BIDS-style folder</dd>
+
+        <dt>
+
+          <code><a href="fit_gazepoint_aoi_brms.html">fit_gazepoint_aoi_brms()</a></code>
+
+        </dt>
+        <dd>Fit an optional Bayesian AOI model with brms</dd>
 
         <dt>
 
@@ -452,6 +544,13 @@
 
         <dt>
 
+          <code><a href="flag_gazepoint_sequence_anomalies.html">flag_gazepoint_sequence_anomalies()</a></code>
+
+        </dt>
+        <dd>Flag unusual AOI sequences</dd>
+
+        <dt>
+
           <code><a href="flag_tracking_quality.html">flag_tracking_quality()</a></code>
 
         </dt>
@@ -515,10 +614,24 @@
 
         <dt>
 
+          <code><a href="launch_gazepoint_qc_dashboard.html">launch_gazepoint_qc_dashboard()</a></code>
+
+        </dt>
+        <dd>Launch or describe a lightweight QC dashboard</dd>
+
+        <dt>
+
           <code><a href="plot_gazepoint_aoi_gamm.html">plot_gazepoint_aoi_gamm()</a></code>
 
         </dt>
         <dd>Plot AOI time-course GAMM results</dd>
+
+        <dt>
+
+          <code><a href="plot_gazepoint_aoi_timeline.html">plot_gazepoint_aoi_timeline()</a></code>
+
+        </dt>
+        <dd>Plot an AOI timeline</dd>
 
         <dt>
 
@@ -557,6 +670,13 @@
 
         <dt>
 
+          <code><a href="plot_gazepoint_model_residuals.html">plot_gazepoint_model_residuals()</a></code>
+
+        </dt>
+        <dd>Plot model residual diagnostics</dd>
+
+        <dt>
+
           <code><a href="plot_gazepoint_multiverse_results.html">plot_gazepoint_multiverse_results()</a></code>
 
         </dt>
@@ -582,6 +702,20 @@
 
         </dt>
         <dd>Plot Gazepoint pupil time course</dd>
+
+        <dt>
+
+          <code><a href="plot_gazepoint_scanpath.html">plot_gazepoint_scanpath()</a></code>
+
+        </dt>
+        <dd>Plot a fixation scanpath</dd>
+
+        <dt>
+
+          <code><a href="plot_gazepoint_time_varying_effect.html">plot_gazepoint_time_varying_effect()</a></code>
+
+        </dt>
+        <dd>Plot a time-varying effect curve</dd>
 
         <dt>
 
@@ -704,6 +838,13 @@
 
         <dt>
 
+          <code><a href="prepare_gazepoint_traminer_data.html">prepare_gazepoint_traminer_data()</a></code>
+
+        </dt>
+        <dd>Prepare AOI sequences for TraMineR-style workflows</dd>
+
+        <dt>
+
           <code><a href="read_gazepoint.html">read_gazepoint()</a></code>
 
         </dt>
@@ -736,6 +877,13 @@
 
         </dt>
         <dd>Recommend trial and participant exclusions</dd>
+
+        <dt>
+
+          <code><a href="report_gazepoint_multiverse.html">report_gazepoint_multiverse()</a></code>
+
+        </dt>
+        <dd>Report multiverse-analysis results</dd>
 
         <dt>
 
@@ -792,6 +940,13 @@
 
         </dt>
         <dd>Save standard Gazepoint diagnostic plots</dd>
+
+        <dt>
+
+          <code><a href="simulate_gazepoint_data.html">simulate_gazepoint_data()</a></code>
+
+        </dt>
+        <dd>Simulate simple Gazepoint-style gaze data</dd>
 
         <dt>
 
@@ -886,6 +1041,13 @@
 
         <dt>
 
+          <code><a href="summarise_gazepoint_markovchain.html">summarise_gazepoint_markovchain()</a></code>
+
+        </dt>
+        <dd>Summarise a Gazepoint Markov-chain object</dd>
+
+        <dt>
+
           <code><a href="summarise_gazepoint_multiverse_results.html">summarise_gazepoint_multiverse_results()</a></code>
 
         </dt>
@@ -911,6 +1073,13 @@
 
         </dt>
         <dd>Summarise Gazepoint pupil responses within time windows</dd>
+
+        <dt>
+
+          <code><a href="summarise_gazepoint_semimarkov.html">summarise_gazepoint_semimarkov()</a></code>
+
+        </dt>
+        <dd>Summarise Gazepoint semi-Markov data</dd>
 
         <dt>
 

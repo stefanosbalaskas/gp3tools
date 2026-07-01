@@ -22,18 +22,22 @@ sample-level and fixation-level summary functions.
 
     #>                           plot_function
     #> 1               plot_gazepoint_aoi_gamm
-    #> 2  plot_gazepoint_aoi_transition_matrix
-    #> 3       plot_gazepoint_aoi_verification
-    #> 4        plot_gazepoint_cluster_results
-    #> 5                    plot_gazepoint_gca
-    #> 6      plot_gazepoint_model_predictions
-    #> 7     plot_gazepoint_multiverse_results
-    #> 8    plot_gazepoint_pupil_preprocessing
-    #> 9           plot_gazepoint_pupil_status
-    #> 10      plot_gazepoint_pupil_timecourse
-    #> 11                   plot_sampling_rate
-    #> 12                plot_tracking_quality
-    #> 13              plot_transition_heatmap
+    #> 2           plot_gazepoint_aoi_timeline
+    #> 3  plot_gazepoint_aoi_transition_matrix
+    #> 4       plot_gazepoint_aoi_verification
+    #> 5        plot_gazepoint_cluster_results
+    #> 6                    plot_gazepoint_gca
+    #> 7      plot_gazepoint_model_predictions
+    #> 8        plot_gazepoint_model_residuals
+    #> 9     plot_gazepoint_multiverse_results
+    #> 10   plot_gazepoint_pupil_preprocessing
+    #> 11          plot_gazepoint_pupil_status
+    #> 12      plot_gazepoint_pupil_timecourse
+    #> 13              plot_gazepoint_scanpath
+    #> 14   plot_gazepoint_time_varying_effect
+    #> 15                   plot_sampling_rate
+    #> 16                plot_tracking_quality
+    #> 17              plot_transition_heatmap
 
 ## Sampling rate
 

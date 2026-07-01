@@ -22,6 +22,8 @@
   : Audit Gazepoint event and timing synchronisation
 - [`audit_gazepoint_exclusion_flow()`](https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_exclusion_flow.md)
   : Audit Gazepoint exclusion and retention flow
+- [`audit_gazepoint_fixation_reliability()`](https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_fixation_reliability.md)
+  : Audit split-half reliability of fixation or AOI metrics
 - [`audit_gazepoint_gaze_signal_quality()`](https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_gaze_signal_quality.md)
   : Audit Gazepoint gaze-signal quality
 - [`audit_gazepoint_master()`](https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_master.md)
@@ -44,6 +46,8 @@
   : Audit stimulus luminance and brightness for Gazepoint studies
 - [`baseline_correct_gazepoint_pupil()`](https://stefanosbalaskas.github.io/gp3tools/reference/baseline_correct_gazepoint_pupil.md)
   : Baseline-correct Gazepoint pupil data
+- [`bootstrap_gazepoint_timecourse()`](https://stefanosbalaskas.github.io/gp3tools/reference/bootstrap_gazepoint_timecourse.md)
+  : Bootstrap time-course summaries
 - [`check_gazepoint_file_pairs()`](https://stefanosbalaskas.github.io/gp3tools/reference/check_gazepoint_file_pairs.md)
   : Check Gazepoint all-gaze and fixation file pairs
 - [`check_gazepoint_model_convergence()`](https://stefanosbalaskas.github.io/gp3tools/reference/check_gazepoint_model_convergence.md)
@@ -60,10 +64,26 @@
   : Classify a Gazepoint export
 - [`compare_gazepoint_nested_models()`](https://stefanosbalaskas.github.io/gp3tools/reference/compare_gazepoint_nested_models.md)
   : Compare nested Gazepoint models
+- [`compute_gazepoint_aoi_entropy()`](https://stefanosbalaskas.github.io/gp3tools/reference/compute_gazepoint_aoi_entropy.md)
+  : Compute AOI entropy metrics
+- [`compute_gazepoint_aoi_sequence_metrics()`](https://stefanosbalaskas.github.io/gp3tools/reference/compute_gazepoint_aoi_sequence_metrics.md)
+  : Compute AOI sequence metrics
 - [`compute_gazepoint_aoi_transition_matrix()`](https://stefanosbalaskas.github.io/gp3tools/reference/compute_gazepoint_aoi_transition_matrix.md)
   : Compute Gazepoint AOI transition matrices
+- [`compute_gazepoint_saccade_metrics()`](https://stefanosbalaskas.github.io/gp3tools/reference/compute_gazepoint_saccade_metrics.md)
+  : Compute basic saccade metrics from fixation coordinates
+- [`compute_gazepoint_scanpath_similarity()`](https://stefanosbalaskas.github.io/gp3tools/reference/compute_gazepoint_scanpath_similarity.md)
+  : Compute AOI scanpath similarity
+- [`compute_gazepoint_sequence_complexity()`](https://stefanosbalaskas.github.io/gp3tools/reference/compute_gazepoint_sequence_complexity.md)
+  : Compute AOI sequence complexity metrics
+- [`compute_gazepoint_sequence_distance()`](https://stefanosbalaskas.github.io/gp3tools/reference/compute_gazepoint_sequence_distance.md)
+  : Compute AOI sequence distance
+- [`compute_gazepoint_sequence_recurrence()`](https://stefanosbalaskas.github.io/gp3tools/reference/compute_gazepoint_sequence_recurrence.md)
+  : Compute simple categorical sequence recurrence metrics
 - [`compute_gazepoint_time_varying_transition_matrix()`](https://stefanosbalaskas.github.io/gp3tools/reference/compute_gazepoint_time_varying_transition_matrix.md)
   : Compute time-varying Gazepoint transition matrices
+- [`compute_gazepoint_transition_network_metrics()`](https://stefanosbalaskas.github.io/gp3tools/reference/compute_gazepoint_transition_network_metrics.md)
+  : Compute lightweight AOI transition-network metrics
 - [`compute_transition_matrix()`](https://stefanosbalaskas.github.io/gp3tools/reference/compute_transition_matrix.md)
   : Compute an AOI transition matrix
 - [`create_gazepoint_analysis_decision_audit()`](https://stefanosbalaskas.github.io/gp3tools/reference/create_gazepoint_analysis_decision_audit.md)
@@ -80,6 +100,8 @@
   : Create a Gazepoint HTML diagnostic report
 - [`create_gazepoint_reporting_checklist()`](https://stefanosbalaskas.github.io/gp3tools/reference/create_gazepoint_reporting_checklist.md)
   : Create a Gazepoint reporting checklist
+- [`detect_gazepoint_fixations_ivt()`](https://stefanosbalaskas.github.io/gp3tools/reference/detect_gazepoint_fixations_ivt.md)
+  : Detect simple I-VT fixations from gaze samples
 - [`diagnose_gazepoint_gamm()`](https://stefanosbalaskas.github.io/gp3tools/reference/diagnose_gazepoint_gamm.md)
   : Diagnose GAM and BAM models
 - [`diagnose_gazepoint_glmm()`](https://stefanosbalaskas.github.io/gp3tools/reference/diagnose_gazepoint_glmm.md)
@@ -93,6 +115,10 @@
   : Export manuscript-ready model tables
 - [`export_gazepoint_tables()`](https://stefanosbalaskas.github.io/gp3tools/reference/export_gazepoint_tables.md)
   : Export Gazepoint analysis tables to CSV files
+- [`export_gazepoint_to_bids()`](https://stefanosbalaskas.github.io/gp3tools/reference/export_gazepoint_to_bids.md)
+  : Export Gazepoint data to a lightweight BIDS-style folder
+- [`fit_gazepoint_aoi_brms()`](https://stefanosbalaskas.github.io/gp3tools/reference/fit_gazepoint_aoi_brms.md)
+  : Fit an optional Bayesian AOI model with brms
 - [`fit_gazepoint_aoi_gamm()`](https://stefanosbalaskas.github.io/gp3tools/reference/fit_gazepoint_aoi_gamm.md)
   : Fit AOI time-course GAMMs
 - [`fit_gazepoint_aoi_model_sensitivity()`](https://stefanosbalaskas.github.io/gp3tools/reference/fit_gazepoint_aoi_model_sensitivity.md)
@@ -118,6 +144,8 @@
   : Flag Gazepoint pupil artifacts before interpolation
 - [`flag_gazepoint_pupil_hampel()`](https://stefanosbalaskas.github.io/gp3tools/reference/flag_gazepoint_pupil_hampel.md)
   : Flag pupil artifacts with a Hampel filter
+- [`flag_gazepoint_sequence_anomalies()`](https://stefanosbalaskas.github.io/gp3tools/reference/flag_gazepoint_sequence_anomalies.md)
+  : Flag unusual AOI sequences
 - [`flag_tracking_quality()`](https://stefanosbalaskas.github.io/gp3tools/reference/flag_tracking_quality.md)
   : Flag low-quality Gazepoint recordings
 - [`gazepoint_example_aoi_geometry`](https://stefanosbalaskas.github.io/gp3tools/reference/gazepoint_example_aoi_geometry.md)
@@ -136,8 +164,12 @@
   : Interpolate short missing gaps in Gazepoint pupil data
 - [`interpolate_gazepoint_pupil_pchip()`](https://stefanosbalaskas.github.io/gp3tools/reference/interpolate_gazepoint_pupil_pchip.md)
   : Interpolate Gazepoint pupil data using PCHIP
+- [`launch_gazepoint_qc_dashboard()`](https://stefanosbalaskas.github.io/gp3tools/reference/launch_gazepoint_qc_dashboard.md)
+  : Launch or describe a lightweight QC dashboard
 - [`plot_gazepoint_aoi_gamm()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_aoi_gamm.md)
   : Plot AOI time-course GAMM results
+- [`plot_gazepoint_aoi_timeline()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_aoi_timeline.md)
+  : Plot an AOI timeline
 - [`plot_gazepoint_aoi_transition_matrix()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_aoi_transition_matrix.md)
   : Plot Gazepoint AOI transition matrix
 - [`plot_gazepoint_aoi_verification()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_aoi_verification.md)
@@ -148,6 +180,8 @@
   : Plot observed and fitted Growth Curve Analysis trajectories
 - [`plot_gazepoint_model_predictions()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_model_predictions.md)
   : Plot observed summaries and model-implied predictions
+- [`plot_gazepoint_model_residuals()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_model_residuals.md)
+  : Plot model residual diagnostics
 - [`plot_gazepoint_multiverse_results()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_multiverse_results.md)
   : Plot Gazepoint preprocessing multiverse results
 - [`plot_gazepoint_pupil_preprocessing()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_pupil_preprocessing.md)
@@ -156,6 +190,10 @@
   : Plot Gazepoint pupil preprocessing status
 - [`plot_gazepoint_pupil_timecourse()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_pupil_timecourse.md)
   : Plot Gazepoint pupil time course
+- [`plot_gazepoint_scanpath()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_scanpath.md)
+  : Plot a fixation scanpath
+- [`plot_gazepoint_time_varying_effect()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_time_varying_effect.md)
+  : Plot a time-varying effect curve
 - [`plot_sampling_rate()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_sampling_rate.md)
   : Plot Gazepoint sampling-rate diagnostics
 - [`plot_tracking_quality()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_tracking_quality.md)
@@ -190,6 +228,8 @@
   : Prepare Gazepoint master data for pupillometryR-style workflows
 - [`prepare_gazepoint_semimarkov_data()`](https://stefanosbalaskas.github.io/gp3tools/reference/prepare_gazepoint_semimarkov_data.md)
   : Prepare Gazepoint AOI sequences for semi-Markov modelling
+- [`prepare_gazepoint_traminer_data()`](https://stefanosbalaskas.github.io/gp3tools/reference/prepare_gazepoint_traminer_data.md)
+  : Prepare AOI sequences for TraMineR-style workflows
 - [`read_gazepoint()`](https://stefanosbalaskas.github.io/gp3tools/reference/read_gazepoint.md)
   : Read a Gazepoint all-gaze or fixation CSV export
 - [`read_gazepoint_folder()`](https://stefanosbalaskas.github.io/gp3tools/reference/read_gazepoint_folder.md)
@@ -200,6 +240,8 @@
   : Offline gaze recalibration using known target coordinates
 - [`recommend_gazepoint_exclusions()`](https://stefanosbalaskas.github.io/gp3tools/reference/recommend_gazepoint_exclusions.md)
   : Recommend trial and participant exclusions
+- [`report_gazepoint_multiverse()`](https://stefanosbalaskas.github.io/gp3tools/reference/report_gazepoint_multiverse.md)
+  : Report multiverse-analysis results
 - [`run_gazepoint_aoi_multiverse()`](https://stefanosbalaskas.github.io/gp3tools/reference/run_gazepoint_aoi_multiverse.md)
   : Run a Gazepoint AOI preprocessing multiverse
 - [`run_gazepoint_cluster_permutation()`](https://stefanosbalaskas.github.io/gp3tools/reference/run_gazepoint_cluster_permutation.md)
@@ -216,6 +258,8 @@
   : Run a complete Gazepoint analysis workflow
 - [`save_gazepoint_plots()`](https://stefanosbalaskas.github.io/gp3tools/reference/save_gazepoint_plots.md)
   : Save standard Gazepoint diagnostic plots
+- [`simulate_gazepoint_data()`](https://stefanosbalaskas.github.io/gp3tools/reference/simulate_gazepoint_data.md)
+  : Simulate simple Gazepoint-style gaze data
 - [`smooth_gazepoint_pupil()`](https://stefanosbalaskas.github.io/gp3tools/reference/smooth_gazepoint_pupil.md)
   : Smooth Gazepoint pupil data
 - [`standardise_gazepoint_names()`](https://stefanosbalaskas.github.io/gp3tools/reference/standardise_gazepoint_names.md)
@@ -242,6 +286,8 @@
   : Summarise Gazepoint fixation trial features
 - [`summarise_gazepoint_fixed_effects()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarise_gazepoint_fixed_effects.md)
   : Summarise fixed effects from fitted models
+- [`summarise_gazepoint_markovchain()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarise_gazepoint_markovchain.md)
+  : Summarise a Gazepoint Markov-chain object
 - [`summarise_gazepoint_multiverse_results()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarise_gazepoint_multiverse_results.md)
   : Summarise Gazepoint preprocessing multiverse results
 - [`summarise_gazepoint_pupil()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarise_gazepoint_pupil.md)
@@ -250,6 +296,8 @@
   : Summarise Gazepoint pupil trial-level features
 - [`summarise_gazepoint_pupil_windows()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarise_gazepoint_pupil_windows.md)
   : Summarise Gazepoint pupil responses within time windows
+- [`summarise_gazepoint_semimarkov()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarise_gazepoint_semimarkov.md)
+  : Summarise Gazepoint semi-Markov data
 - [`summarise_gazepoint_workflow()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarise_gazepoint_workflow.md)
   : Summarise a Gazepoint workflow result
 - [`summarise_tracking_quality()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarise_tracking_quality.md)
