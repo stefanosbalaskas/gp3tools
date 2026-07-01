@@ -1,5 +1,11 @@
 # Changelog
 
+## gp3tools 1.0.2.9000
+
+- Development version after the 1.0.2 CRAN patch.
+- Added statistical, sequence, simulation, reporting, and optional
+  interoperability extensions.
+
 ## gp3tools 1.0.2
 
 CRAN release: 2026-06-30
