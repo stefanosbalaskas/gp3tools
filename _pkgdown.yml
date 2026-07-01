@@ -19,3 +19,4 @@ articles:
     navbar: Showcase
     contents:
     - articles/plot-gallery
+    - articles/sequence-reliability
