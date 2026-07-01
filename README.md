@@ -96,6 +96,17 @@ Use `check_gazepoint_real_data_readiness()`, `recommend_gazepoint_exclusions()`,
 
 Most users should start with `run_gazepoint_workflow()` for a quick folder-level pass, then move to the master-table, pupil, AOI, modelling, and reporting helpers as needed.
 
+### Statistical, sequence, simulation, and reporting extensions
+
+The development version also includes an optional statistical-extension layer for advanced, audit-friendly workflows:
+
+- **AOI sequence structure and uncertainty:** `compute_gazepoint_aoi_entropy()`, `compute_gazepoint_aoi_sequence_metrics()`, `compute_gazepoint_sequence_complexity()`, `compute_gazepoint_sequence_distance()`, `compute_gazepoint_scanpath_similarity()`, and `flag_gazepoint_sequence_anomalies()`.
+- **Fixation, scanpath, and transition diagnostics:** `audit_gazepoint_fixation_reliability()`, `compute_gazepoint_saccade_metrics()`, `plot_gazepoint_scanpath()`, `summarise_gazepoint_markovchain()`, `summarise_gazepoint_semimarkov()`, `compute_gazepoint_sequence_recurrence()`, and `compute_gazepoint_transition_network_metrics()`.
+- **Time-course, modelling, and reporting helpers:** `bootstrap_gazepoint_timecourse()`, `plot_gazepoint_time_varying_effect()`, `plot_gazepoint_model_residuals()`, and `report_gazepoint_multiverse()`.
+- **Simulation and optional interoperability:** `simulate_gazepoint_data()`, `export_gazepoint_to_bids()`, `fit_gazepoint_aoi_brms()`, `prepare_gazepoint_traminer_data()`, `detect_gazepoint_fixations_ivt()`, and `launch_gazepoint_qc_dashboard()`.
+
+The rendered site includes a plot-first article for these additions: `articles/statistical-extensions-plots.html`.
+
 ## Citation
 
 If you use `gp3tools` in research, teaching, reports, or software workflows, please cite the package:
@@ -106,7 +117,7 @@ citation("gp3tools")
 
 Current citation:
 
-> Balaskas, S. (2026). `gp3tools`: Import, Inspect, Analyse, and Report Gazepoint GP3 Exports. R package version 1.0.1. https://github.com/stefanosbalaskas/gp3tools
+> Balaskas, S. (2026). `gp3tools`: Import, Inspect, Analyse, and Report Gazepoint GP3 Exports. R package version 1.0.2.9000. https://github.com/stefanosbalaskas/gp3tools
 
 A formal software DOI will be added after a stable GitHub release is archived through Zenodo.
 
