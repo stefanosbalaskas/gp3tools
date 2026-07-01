@@ -1,7 +1,7 @@
 Package: gp3tools
 Type: Package
 Title: Import, Inspect, Analyse, and Report Gazepoint GP3 Exports
-Version: 1.0.1
+Version: 1.0.2
 Authors@R: person("Stefanos", "Balaskas", email = "s.balaskas@ac.upatras.gr", role = c("aut", "cre"))
 Description: Tools for importing, inspecting, cleaning, summarising,
     modelling, and reporting Gazepoint GP3 and Gazepoint Analysis CSV

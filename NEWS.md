@@ -1,3 +1,7 @@
+# gp3tools 1.0.2
+
+* Made one `fit_gazepoint_gca()` test robust to platform-specific mixed-model fallback behavior observed under CRAN no-long-double checks.
+
 # gp3tools 1.0.1
 
 * Prepared the package for CRAN-oriented release validation.
