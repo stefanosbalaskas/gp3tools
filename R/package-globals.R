@@ -11,3 +11,10 @@ utils::globalVariables(c(
   "fitted",
   "residual"
 ))
+utils::globalVariables(c(
+  ".gp3_intensity",
+  ".gp3_x_px",
+  ".gp3_x_tile",
+  ".gp3_y_px",
+  ".gp3_y_tile"
+))
