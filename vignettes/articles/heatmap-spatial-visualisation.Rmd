@@ -1,0 +1,115 @@
+---
+title: "Heatmaps and spatial visualisation"
+---
+
+```{r setup, include=FALSE}
+library(gp3tools)
+```
+
+This article gives compact examples for creating gaze and fixation heatmaps from
+Gazepoint-style coordinate data. The examples use synthetic data and are intended
+to demonstrate plotting behaviour rather than to evaluate visual attention.
+
+## Example data
+
+```{r}
+set.seed(42)
+
+n <- 250
+
+gaze <- data.frame(
+  x = pmin(pmax(c(
+    stats::rnorm(n / 2, mean = 0.35, sd = 0.08),
+    stats::rnorm(n / 2, mean = 0.68, sd = 0.07)
+  ), 0), 1),
+  y = pmin(pmax(c(
+    stats::rnorm(n / 2, mean = 0.42, sd = 0.08),
+    stats::rnorm(n / 2, mean = 0.58, sd = 0.07)
+  ), 0), 1),
+  duration = stats::runif(n, min = 60, max = 350)
+)
+
+head(gaze)
+```
+
+## Preparing heatmap data
+
+```{r}
+prepared <- prepare_gazepoint_heatmap_data(
+  gaze,
+  x_col = "x",
+  y_col = "y",
+  weight_col = "duration",
+  display_width = 1280,
+  display_height = 720
+)
+
+head(prepared[, c(".gp3_x_px", ".gp3_y_px", ".gp3_weight")])
+```
+
+## Native heatmap
+
+```{r}
+plot_gazepoint_heatmap(
+  prepared,
+  bins = 45,
+  alpha = 0.85
+)
+```
+
+## Heatmap with raw points
+
+```{r}
+plot_gazepoint_heatmap(
+  prepared,
+  bins = 45,
+  alpha = 0.80,
+  show_points = TRUE
+)
+```
+
+## Background-image overlay
+
+`plot_gazepoint_heatmap_overlay()` can place the heatmap over a PNG stimulus
+image. The background-image helper uses the optional `png` package.
+
+```{r}
+if (requireNamespace("png", quietly = TRUE)) {
+  bg <- tempfile(fileext = ".png")
+
+  img <- array(1, dim = c(720, 1280, 3))
+  img[150:570, 120:520, ] <- 0.92
+  img[220:520, 720:1120, ] <- 0.86
+
+  png::writePNG(img, bg)
+
+  plot_gazepoint_heatmap_overlay(
+    gaze,
+    background_image = bg,
+    x_col = "x",
+    y_col = "y",
+    weight_col = "duration",
+    display_width = 1280,
+    display_height = 720,
+    bins = 45,
+    heatmap_alpha = 0.70
+  )
+}
+```
+
+## Exporting a heatmap
+
+```{r eval=FALSE}
+p <- plot_gazepoint_heatmap(
+  prepared,
+  bins = 45
+)
+
+export_gazepoint_heatmap_png(
+  p,
+  filename = "gazepoint_heatmap.png",
+  width = 8,
+  height = 5,
+  dpi = 300
+)
+```
