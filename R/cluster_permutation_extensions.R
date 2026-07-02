@@ -1046,3 +1046,262 @@ run_gazepoint_cluster_permutation_parallel <- function(...) {
     "The current validated implementation runs serially to keep the permutation workflow simple, reproducible, and easier to audit."
   )
 }
+
+#' Export Gazepoint time-course data for MNE-style cluster workflows
+#'
+#' Write a conservative long-format CSV file and README for continuation in an
+#' external Python/MNE workflow. This helper prepares data only; it does not run
+#' MNE, construct adjacency matrices, validate exchangeability, or validate the
+#' external analysis.
+#'
+#' @param data A prepared or raw long-format time-course data frame.
+#' @param outdir Output directory.
+#' @param subject_col Subject column.
+#' @param condition_col Condition column.
+#' @param time_col Time-bin column.
+#' @param outcome_col Outcome column.
+#' @param overwrite Should an existing directory be reused?
+#'
+#' @return A data frame listing written files.
+#' @export
+export_gazepoint_mne_cluster_input <- function(data,
+                                               outdir,
+                                               subject_col = ".gp3_cluster_subject",
+                                               condition_col = ".gp3_cluster_condition",
+                                               time_col = ".gp3_cluster_time_bin",
+                                               outcome_col = ".gp3_cluster_outcome",
+                                               overwrite = FALSE) {
+  d <- .gp3_cluster_export_prepare(
+    data,
+    subject_col = subject_col,
+    condition_col = condition_col,
+    time_col = time_col,
+    outcome_col = outcome_col
+  )
+
+  outdir <- .gp3_cluster_ext_scalar_string(outdir, "outdir")
+  .gp3_cluster_ext_prepare_outdir(outdir, overwrite)
+
+  csv_path <- file.path(outdir, "mne_cluster_long_input.csv")
+  utils::write.csv(d, csv_path, row.names = FALSE)
+
+  readme_path <- file.path(outdir, "README_mne_cluster_input.txt")
+  writeLines(
+    c(
+      "gp3tools MNE-style cluster input",
+      "",
+      "This folder contains a conservative long-format CSV export for possible continuation in an external Python/MNE workflow.",
+      "Columns:",
+      "- subject: paired unit / participant identifier",
+      "- condition: condition label",
+      "- time_bin: ordered one-dimensional time bin",
+      "- outcome: numeric time-course outcome",
+      "",
+      "This helper prepares data only. It does not run MNE, construct adjacency matrices, validate exchangeability, or validate external inference.",
+      "Inspect and reshape the data in Python according to the exact MNE function and design used."
+    ),
+    readme_path,
+    useBytes = TRUE
+  )
+
+  out <- data.frame(
+    file = c(csv_path, readme_path),
+    file_type = c("mne_long_csv", "readme"),
+    export_status = "ok",
+    stringsAsFactors = FALSE
+  )
+
+  class(out) <- unique(c("gp3_external_cluster_export", class(out)))
+  out
+}
+
+
+#' Export Gazepoint time-course data for permuco-style cluster workflows
+#'
+#' Write a conservative long-format CSV file and README for continuation in an
+#' external R/permuco workflow. This helper prepares data only; it does not run
+#' permuco or validate the external model specification.
+#'
+#' @param data A prepared or raw long-format time-course data frame.
+#' @param outdir Output directory.
+#' @param subject_col Subject column.
+#' @param condition_col Condition column.
+#' @param time_col Time-bin column.
+#' @param outcome_col Outcome column.
+#' @param overwrite Should an existing directory be reused?
+#'
+#' @return A data frame listing written files.
+#' @export
+export_gazepoint_permuco_cluster_input <- function(data,
+                                                   outdir,
+                                                   subject_col = ".gp3_cluster_subject",
+                                                   condition_col = ".gp3_cluster_condition",
+                                                   time_col = ".gp3_cluster_time_bin",
+                                                   outcome_col = ".gp3_cluster_outcome",
+                                                   overwrite = FALSE) {
+  d <- .gp3_cluster_export_prepare(
+    data,
+    subject_col = subject_col,
+    condition_col = condition_col,
+    time_col = time_col,
+    outcome_col = outcome_col
+  )
+
+  outdir <- .gp3_cluster_ext_scalar_string(outdir, "outdir")
+  .gp3_cluster_ext_prepare_outdir(outdir, overwrite)
+
+  csv_path <- file.path(outdir, "permuco_cluster_long_input.csv")
+  utils::write.csv(d, csv_path, row.names = FALSE)
+
+  readme_path <- file.path(outdir, "README_permuco_cluster_input.txt")
+  writeLines(
+    c(
+      "gp3tools permuco-style cluster input",
+      "",
+      "This folder contains a conservative long-format CSV export for possible continuation in an external R/permuco workflow.",
+      "Columns:",
+      "- subject: paired unit / participant identifier",
+      "- condition: condition label",
+      "- time_bin: ordered one-dimensional time bin",
+      "- outcome: numeric time-course outcome",
+      "",
+      "This helper prepares data only. It does not run permuco, choose a formula, validate exchangeability, or validate external inference.",
+      "Specify the permutation model and repeated-measures structure explicitly in the external workflow."
+    ),
+    readme_path,
+    useBytes = TRUE
+  )
+
+  out <- data.frame(
+    file = c(csv_path, readme_path),
+    file_type = c("permuco_long_csv", "readme"),
+    export_status = "ok",
+    stringsAsFactors = FALSE
+  )
+
+  class(out) <- unique(c("gp3_external_cluster_export", class(out)))
+  out
+}
+
+
+#' Export Gazepoint time-course data for permutes-style cluster workflows
+#'
+#' Write a conservative long-format CSV file and README for continuation in an
+#' external R/permutes workflow. This helper prepares data only; it does not run
+#' permutes or validate the external model specification.
+#'
+#' @param data A prepared or raw long-format time-course data frame.
+#' @param outdir Output directory.
+#' @param subject_col Subject column.
+#' @param condition_col Condition column.
+#' @param time_col Time-bin column.
+#' @param outcome_col Outcome column.
+#' @param overwrite Should an existing directory be reused?
+#'
+#' @return A data frame listing written files.
+#' @export
+export_gazepoint_permutes_cluster_input <- function(data,
+                                                    outdir,
+                                                    subject_col = ".gp3_cluster_subject",
+                                                    condition_col = ".gp3_cluster_condition",
+                                                    time_col = ".gp3_cluster_time_bin",
+                                                    outcome_col = ".gp3_cluster_outcome",
+                                                    overwrite = FALSE) {
+  d <- .gp3_cluster_export_prepare(
+    data,
+    subject_col = subject_col,
+    condition_col = condition_col,
+    time_col = time_col,
+    outcome_col = outcome_col
+  )
+
+  outdir <- .gp3_cluster_ext_scalar_string(outdir, "outdir")
+  .gp3_cluster_ext_prepare_outdir(outdir, overwrite)
+
+  csv_path <- file.path(outdir, "permutes_cluster_long_input.csv")
+  utils::write.csv(d, csv_path, row.names = FALSE)
+
+  readme_path <- file.path(outdir, "README_permutes_cluster_input.txt")
+  writeLines(
+    c(
+      "gp3tools permutes-style cluster input",
+      "",
+      "This folder contains a conservative long-format CSV export for possible continuation in an external R/permutes workflow.",
+      "Columns:",
+      "- subject: paired unit / participant identifier",
+      "- condition: condition label",
+      "- time_bin: ordered one-dimensional time bin",
+      "- outcome: numeric time-course outcome",
+      "",
+      "This helper prepares data only. It does not run permutes, choose model terms, validate random-effects structure, or validate external inference.",
+      "Specify and validate the external model separately before making inferential claims."
+    ),
+    readme_path,
+    useBytes = TRUE
+  )
+
+  out <- data.frame(
+    file = c(csv_path, readme_path),
+    file_type = c("permutes_long_csv", "readme"),
+    export_status = "ok",
+    stringsAsFactors = FALSE
+  )
+
+  class(out) <- unique(c("gp3_external_cluster_export", class(out)))
+  out
+}
+
+
+.gp3_cluster_export_prepare <- function(data,
+                                        subject_col,
+                                        condition_col,
+                                        time_col,
+                                        outcome_col) {
+  if (!is.data.frame(data)) {
+    stop("`data` must be a data frame.", call. = FALSE)
+  }
+
+  subject_col <- .gp3_cluster_ext_scalar_string(subject_col, "subject_col")
+  condition_col <- .gp3_cluster_ext_scalar_string(condition_col, "condition_col")
+  time_col <- .gp3_cluster_ext_scalar_string(time_col, "time_col")
+  outcome_col <- .gp3_cluster_ext_scalar_string(outcome_col, "outcome_col")
+
+  .gp3_cluster_ext_check_columns(data, c(subject_col, condition_col, time_col, outcome_col))
+
+  d <- data.frame(
+    subject = as.character(data[[subject_col]]),
+    condition = as.character(data[[condition_col]]),
+    time_bin = suppressWarnings(as.numeric(data[[time_col]])),
+    outcome = suppressWarnings(as.numeric(data[[outcome_col]])),
+    stringsAsFactors = FALSE
+  )
+
+  d <- d[
+    !is.na(d$subject) &
+      !is.na(d$condition) &
+      is.finite(d$time_bin) &
+      is.finite(d$outcome),
+    ,
+    drop = FALSE
+  ]
+
+  if (nrow(d) == 0L) {
+    stop("No valid rows are available for external cluster export.", call. = FALSE)
+  }
+
+  d <- d[order(d$subject, d$time_bin, d$condition), , drop = FALSE]
+  rownames(d) <- NULL
+  d
+}
+
+
+.gp3_cluster_ext_prepare_outdir <- function(outdir, overwrite) {
+  .gp3_cluster_ext_logical_scalar(overwrite, "overwrite")
+
+  if (dir.exists(outdir) && !isTRUE(overwrite)) {
+    stop("`outdir` already exists. Use `overwrite = TRUE` to reuse it.", call. = FALSE)
+  }
+
+  dir.create(outdir, recursive = TRUE, showWarnings = FALSE)
+  invisible(outdir)
+}
