@@ -69,6 +69,8 @@ compute_gazepoint_sequence_distance(
   sequence_a = c("Claim", "Evidence", "CTA"),
   sequence_b = c("Claim", "CTA", "Evidence")
 )
-#> Warning: internal error 1 in R_decompress1 with libdeflate
-#> Error: lazy-load database 'C:/Users/Stefanos-PC/AppData/Local/R/win-library/4.6/gp3tools/R/gp3tools.rdb' is corrupt
+#>   edit_distance normalized_distance sequence_a_length sequence_b_length
+#> 1             2           0.6666667                 3                 3
+#>   distance_status
+#> 1              ok
 ```

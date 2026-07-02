@@ -7,8 +7,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Import, Inspect, Analyse, and Report Gazepoint GP3 Exports • gp3tools</title>
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Import, Inspect, Analyse, and Report Gazepoint GP3 Exports">
 <meta name="description" content="Tools for importing, inspecting, cleaning, summarising, modelling, and reporting Gazepoint GP3 and Gazepoint Analysis CSV exports. The package supports offline workflows for all-gaze, fixation, pupil, area-of-interest, transition, time-course, quality-audit, and manuscript-reporting analyses.">
@@ -50,6 +50,7 @@
     <li><a class="dropdown-item" href="articles/plot-gallery.html">Plot gallery</a></li>
     <li><a class="dropdown-item" href="articles/sequence-reliability.html">AOI sequence and reliability diagnostics</a></li>
     <li><a class="dropdown-item" href="articles/statistical-extensions-plots.html">Statistical extensions and plots</a></li>
+    <li><a class="dropdown-item" href="articles/heatmap-spatial-visualisation.html">Heatmaps and spatial visualisation</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="news/index.html">Changelog</a></li>
@@ -262,7 +263,7 @@
 </h2>
 <p>During development, install the package locally from the package project folder:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/install.html" class="external-link">install</a></span><span class="op">(</span>reload <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install</span><span class="op">(</span>reload <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <p>Then restart RStudio and load the package:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/stefanosbalaskas/gp3tools" class="external-link">gp3tools</a></span><span class="op">)</span></span></code></pre></div>
@@ -1759,13 +1760,13 @@
 </h2>
 <p>The current internal prototype status after the advanced sensitivity, recalibration, reporting, and exclusion-recommendation branches is:</p>
 <div class="sourceCode" id="cb121"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/test.html" class="external-link">test</a></span><span class="op">(</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">test</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co"># [ FAIL 0 | WARN 0 | SKIP 0 | PASS 6788 ]</span></span>
 <span></span>
-<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/check.html" class="external-link">check</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">check</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co"># 0 errors | 0 warnings | 0 notes</span></span></code></pre></div>
 <p>During full tests, <code>boundary (singular) fit: see help('isSingular')</code> messages may appear in mixed-model diagnostic contexts. These are expected diagnostic messages from singular-fit test fixtures and are not package failures when the final test summary reports <code>FAIL 0 | WARN 0</code>.</p>
-<p>On some Windows systems, a Quarto/TMPDIR message may appear after <code><a href="https://devtools.r-lib.org/reference/check.html" class="external-link">devtools::check()</a></code>. This is harmless when the final <code>R CMD check results</code> report:</p>
+<p>On some Windows systems, a Quarto/TMPDIR message may appear after <code>devtools::check()</code>. This is harmless when the final <code>R CMD check results</code> report:</p>
 <div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="#cb122-1" tabindex="-1"></a><span class="dv">0</span> errors <span class="sc">|</span> <span class="dv">0</span> warnings <span class="sc">|</span> <span class="dv">0</span> notes</span></code></pre></div>
 <p>The build may show a message that the package depends on R <code>&gt;= 4.1.0</code> because native pipe syntax is used. This is expected.</p>
 </div>

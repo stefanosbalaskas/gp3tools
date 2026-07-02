@@ -106,8 +106,6 @@ A tibble with one row per preprocessing parameter.
 
 ``` r
 registry <- create_gazepoint_preprocessing_registry()
-#> Warning: internal error 1 in R_decompress1 with libdeflate
-#> Error: lazy-load database 'C:/Users/Stefanos-PC/AppData/Local/R/win-library/4.6/gp3tools/R/gp3tools.rdb' is corrupt
 registry
 #> # A tibble: 15 × 5
 #>    parameter                             value unit         category description

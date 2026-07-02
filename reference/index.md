@@ -109,6 +109,8 @@
 - [`estimate_gazepoint_divergence_point()`](https://stefanosbalaskas.github.io/gp3tools/reference/estimate_gazepoint_divergence_point.md)
   : Estimate a bootstrapped divergence point between two Gazepoint time
   courses
+- [`export_gazepoint_heatmap_png()`](https://stefanosbalaskas.github.io/gp3tools/reference/export_gazepoint_heatmap_png.md)
+  : Export a Gazepoint heatmap plot to PNG
 - [`export_gazepoint_master_audit()`](https://stefanosbalaskas.github.io/gp3tools/reference/export_gazepoint_master_audit.md)
   : Export a Gazepoint master table, audit tables, and validation tables
 - [`export_gazepoint_model_tables()`](https://stefanosbalaskas.github.io/gp3tools/reference/export_gazepoint_model_tables.md)
@@ -178,6 +180,10 @@
   : Plot cluster-based permutation results
 - [`plot_gazepoint_gca()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_gca.md)
   : Plot observed and fitted Growth Curve Analysis trajectories
+- [`plot_gazepoint_heatmap()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_heatmap.md)
+  : Plot a Gazepoint gaze or fixation heatmap
+- [`plot_gazepoint_heatmap_overlay()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_heatmap_overlay.md)
+  : Plot a Gazepoint heatmap over a background image
 - [`plot_gazepoint_model_predictions()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_model_predictions.md)
   : Plot observed summaries and model-implied predictions
 - [`plot_gazepoint_model_residuals()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_model_residuals.md)
@@ -218,14 +224,16 @@
   : Prepare Gazepoint master data for gazer-style workflows
 - [`prepare_gazepoint_gca_data()`](https://stefanosbalaskas.github.io/gp3tools/reference/prepare_gazepoint_gca_data.md)
   : Prepare Gazepoint Growth Curve Analysis data
+- [`prepare_gazepoint_heatmap_data()`](https://stefanosbalaskas.github.io/gp3tools/reference/prepare_gazepoint_heatmap_data.md)
+  : Prepare gaze or fixation coordinates for heatmap plotting
 - [`prepare_gazepoint_hmm_data()`](https://stefanosbalaskas.github.io/gp3tools/reference/prepare_gazepoint_hmm_data.md)
   : Prepare Gazepoint AOI/state sequences for HMM-style workflows
-- [`prepare_gazepoint_pupillometryr_data()`](https://stefanosbalaskas.github.io/gp3tools/reference/prepare_gazepoint_pupillometryr_data.md)
-  : Prepare Gazepoint master data for pupillometryR-style workflows
 - [`prepare_gazepoint_pupil_gamm_data()`](https://stefanosbalaskas.github.io/gp3tools/reference/prepare_gazepoint_pupil_gamm_data.md)
   : Prepare Gazepoint pupil GAMM data
 - [`prepare_gazepoint_pupil_window_model_data()`](https://stefanosbalaskas.github.io/gp3tools/reference/prepare_gazepoint_pupil_window_model_data.md)
   : Prepare pupil-window data for confirmatory mixed models
+- [`prepare_gazepoint_pupillometryr_data()`](https://stefanosbalaskas.github.io/gp3tools/reference/prepare_gazepoint_pupillometryr_data.md)
+  : Prepare Gazepoint master data for pupillometryR-style workflows
 - [`prepare_gazepoint_semimarkov_data()`](https://stefanosbalaskas.github.io/gp3tools/reference/prepare_gazepoint_semimarkov_data.md)
   : Prepare Gazepoint AOI sequences for semi-Markov modelling
 - [`prepare_gazepoint_traminer_data()`](https://stefanosbalaskas.github.io/gp3tools/reference/prepare_gazepoint_traminer_data.md)

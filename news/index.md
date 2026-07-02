@@ -955,8 +955,8 @@ expected diagnostic messages from singular-fit test fixtures and are not
 package failures when the final test summary reports `FAIL 0 | WARN 0`.
 
 On some Windows systems, a Quarto/TMPDIR message may appear after
-[`devtools::check()`](https://devtools.r-lib.org/reference/check.html).
-This is harmless when the final `R CMD check results` report:
+`devtools::check()`. This is harmless when the final
+`R CMD check results` report:
 
 ``` r
 0 errors | 0 warnings | 0 notes
@@ -988,10 +988,8 @@ This is harmless when the final `R CMD check results` report:
 
 - Current validation after the example-data branch:
 
-  - [`devtools::test()`](https://devtools.r-lib.org/reference/test.html)
-    reports `FAIL 0 | WARN 0 | SKIP 0 | PASS 6788`.
-  - [`devtools::check()`](https://devtools.r-lib.org/reference/check.html)
-    reports `0 errors | 0 warnings | 0 notes`.
+  - `devtools::test()` reports `FAIL 0 | WARN 0 | SKIP 0 | PASS 6788`.
+  - `devtools::check()` reports `0 errors | 0 warnings | 0 notes`.
 
 ### Notes
 
@@ -1070,8 +1068,5 @@ This is harmless when the final `R CMD check results` report:
   coordinates and explicit trial/participant exclusion recommendation
   tables.
 - Current full package status after the README, vignette, and
-  example-data branches:
-  [`devtools::test()`](https://devtools.r-lib.org/reference/test.html)
-  passes with 6788 tests, and
-  [`devtools::check()`](https://devtools.r-lib.org/reference/check.html)
-  returns 0 errors, 0 warnings, and 0 notes.
+  example-data branches: `devtools::test()` passes with 6788 tests, and
+  `devtools::check()` returns 0 errors, 0 warnings, and 0 notes.

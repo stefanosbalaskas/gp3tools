@@ -7,7 +7,7 @@
 ## Citation
 
 Source:
-[`inst/CITATION`](https://github.com/stefanosbalaskas/gp3tools/blob/HEAD/inst/CITATION)
+[`inst/CITATION`](https://github.com/stefanosbalaskas/gp3tools/blob/master/inst/CITATION)
 
 Balaskas S (2026). *gp3tools: Import, Inspect, Analyse, and Report
 Gazepoint GP3 Exports*. R package version 1.0.1,

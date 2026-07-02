@@ -1,6 +1,8 @@
 <urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/404.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3tools/LICENSE-text.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/aoi_workflow.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/heatmap-spatial-visualisation.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/index.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/plot-gallery.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/pupil_workflow.html</loc></url>
@@ -8,7 +10,6 @@
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/statistical-extensions-plots.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/authors.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/index.html</loc></url>
-<url><loc>https://stefanosbalaskas.github.io/gp3tools/LICENSE-text.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/news/index.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/as_gazepoint_master.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_aoi_coding_matrix.html</loc></url>
@@ -63,6 +64,7 @@
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/diagnose_gazepoint_gamm.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/diagnose_gazepoint_glmm.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/estimate_gazepoint_divergence_point.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/export_gazepoint_heatmap_png.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/export_gazepoint_master_audit.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/export_gazepoint_model_tables.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/export_gazepoint_tables.html</loc></url>
@@ -98,6 +100,8 @@
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_aoi_verification.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_cluster_results.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_gca.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_heatmap.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_heatmap_overlay.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_model_predictions.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_model_residuals.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_multiverse_results.html</loc></url>
@@ -118,10 +122,11 @@
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/prepare_gazepoint_fixation_aligned_data.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/prepare_gazepoint_gazer_data.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/prepare_gazepoint_gca_data.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/prepare_gazepoint_heatmap_data.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/prepare_gazepoint_hmm_data.html</loc></url>
-<url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/prepare_gazepoint_pupillometryr_data.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/prepare_gazepoint_pupil_gamm_data.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/prepare_gazepoint_pupil_window_model_data.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/prepare_gazepoint_pupillometryr_data.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/prepare_gazepoint_semimarkov_data.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/prepare_gazepoint_traminer_data.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/read_gazepoint.html</loc></url>

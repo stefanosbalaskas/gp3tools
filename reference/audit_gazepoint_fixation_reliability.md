@@ -106,6 +106,10 @@ audit_gazepoint_fixation_reliability(
   metric = "total_fixation_duration",
   duration_col = "duration"
 )
-#> Warning: internal error 1 in R_decompress1 with libdeflate
-#> Error: lazy-load database 'C:/Users/Stefanos-PC/AppData/Local/R/win-library/4.6/gp3tools/R/gp3tools.rdb' is corrupt
+#>                    metric split_method correlation_method split_half_r
+#> 1 total_fixation_duration     odd_even            pearson    0.5055624
+#>   spearman_brown n_subjects_total n_subjects_used n_trials min_trials
+#> 1      0.6715928                6               6       24          4
+#>   reliability_status reliability_warning
+#> 1                 ok                    
 ```

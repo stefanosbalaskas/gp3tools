@@ -78,6 +78,12 @@ compute_gazepoint_aoi_entropy(
   group_cols = c("subject", "trial"),
   time_col = "time"
 )
-#> Warning: internal error 1 in R_decompress1 with libdeflate
-#> Error: lazy-load database 'C:/Users/Stefanos-PC/AppData/Local/R/win-library/4.6/gp3tools/R/gp3tools.rdb' is corrupt
+#>   subject trial n_observations n_aoi spatial_entropy spatial_entropy_norm
+#> 1     S01   T01              6     3        1.459148            0.9206198
+#>   n_transitions n_transition_types transition_entropy transition_entropy_norm
+#> 1             5                  5           2.321928                       1
+#>   conditional_transition_entropy conditional_transition_entropy_norm
+#> 1                            0.8                           0.5047438
+#>   entropy_status
+#> 1             ok
 ```

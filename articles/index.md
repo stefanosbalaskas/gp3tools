@@ -27,3 +27,6 @@
 
   Plot-first examples for the statistical, sequence, scanpath, and
   model-reporting extension layer.
+
+- [Heatmaps and spatial
+  visualisation](https://stefanosbalaskas.github.io/gp3tools/articles/heatmap-spatial-visualisation.md):
