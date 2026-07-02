@@ -890,3 +890,159 @@ export_gazepoint_cluster_results <- function(result,
 
   NULL
 }
+
+#' Guardrail for unsupported cluster-permutation extensions
+#'
+#' Internal helper used by advanced cluster-permutation guardrail functions.
+#'
+#' @noRd
+.gp3_cluster_guardrail_stop <- function(method, validated_scope) {
+  stop(
+    method,
+    " is outside the current validated scope of gp3tools. ",
+    "The validated cluster-permutation workflow is limited to a conservative ",
+    "two-condition, within-subject, one-dimensional time-course analysis using ",
+    "`prepare_gazepoint_timecourse_test_data()` and ",
+    "`run_gazepoint_cluster_permutation()`. ",
+    validated_scope,
+    call. = FALSE
+  )
+}
+
+
+#' Guardrail for cluster-permutation ANOVA
+#'
+#' This function intentionally fails safely. Cluster-permutation ANOVA is not
+#' implemented as an active inferential engine in gp3tools because it requires
+#' additional design, exchangeability, and error-term choices that are outside
+#' the currently validated two-condition workflow.
+#'
+#' @param ... Arguments reserved for a future implementation.
+#'
+#' @return This function always stops with an explanatory error.
+#' @export
+run_gazepoint_cluster_permutation_anova <- function(...) {
+  .gp3_cluster_guardrail_stop(
+    "Cluster-permutation ANOVA",
+    "For factorial or multi-condition designs, export prepared data and use a specialist permutation framework with explicit design validation."
+  )
+}
+
+
+#' Guardrail for mixed-model cluster permutation
+#'
+#' This function intentionally fails safely. Mixed-model cluster permutation is
+#' not implemented as an active inferential engine in gp3tools.
+#'
+#' @param ... Arguments reserved for a future implementation.
+#'
+#' @return This function always stops with an explanatory error.
+#' @export
+run_gazepoint_cluster_permutation_lmer <- function(...) {
+  .gp3_cluster_guardrail_stop(
+    "Mixed-model cluster permutation",
+    "For random-slope, crossed, nested, or unbalanced mixed-model time-course designs, use a specialist workflow and report the modelling assumptions explicitly."
+  )
+}
+
+
+#' Guardrail for threshold-free cluster enhancement
+#'
+#' This function intentionally fails safely. TFCE is not implemented as an
+#' active inferential engine in gp3tools.
+#'
+#' @param ... Arguments reserved for a future implementation.
+#'
+#' @return This function always stops with an explanatory error.
+#' @export
+run_gazepoint_tfce <- function(...) {
+  .gp3_cluster_guardrail_stop(
+    "Threshold-free cluster enhancement",
+    "TFCE requires validated enhancement parameters, permutation handling, and interpretation rules that are not part of the current gp3tools cluster engine."
+  )
+}
+
+
+#' Guardrail for multidimensional cluster permutation
+#'
+#' This function intentionally fails safely. Multidimensional cluster
+#' permutation is not implemented as an active inferential engine in gp3tools.
+#'
+#' @param ... Arguments reserved for a future implementation.
+#'
+#' @return This function always stops with an explanatory error.
+#' @export
+run_gazepoint_multidimensional_cluster_permutation <- function(...) {
+  .gp3_cluster_guardrail_stop(
+    "Multidimensional cluster permutation",
+    "The current validated workflow supports one ordered time dimension only; spatial, time-frequency, or other multidimensional adjacency structures are not validated here."
+  )
+}
+
+
+#' Guardrail for exact cluster-onset estimation
+#'
+#' This function intentionally fails safely. Cluster-permutation results should
+#' not be used as exact effect-onset estimates.
+#'
+#' @param ... Arguments reserved for a future implementation.
+#'
+#' @return This function always stops with an explanatory error.
+#' @export
+estimate_gazepoint_cluster_onset <- function(...) {
+  .gp3_cluster_guardrail_stop(
+    "Exact cluster-onset estimation",
+    "Cluster start bins may be reported descriptively as part of a cluster-level interval, but gp3tools does not support exact onset claims from cluster-permutation output."
+  )
+}
+
+
+#' Guardrail for exact cluster-offset estimation
+#'
+#' This function intentionally fails safely. Cluster-permutation results should
+#' not be used as exact effect-offset estimates.
+#'
+#' @param ... Arguments reserved for a future implementation.
+#'
+#' @return This function always stops with an explanatory error.
+#' @export
+estimate_gazepoint_cluster_offset <- function(...) {
+  .gp3_cluster_guardrail_stop(
+    "Exact cluster-offset estimation",
+    "Cluster end bins may be reported descriptively as part of a cluster-level interval, but gp3tools does not support exact offset claims from cluster-permutation output."
+  )
+}
+
+
+#' Guardrail for covariate-adjusted cluster permutation
+#'
+#' This function intentionally fails safely. Covariate-adjusted cluster
+#' permutation is not implemented as an active inferential engine in gp3tools.
+#'
+#' @param ... Arguments reserved for a future implementation.
+#'
+#' @return This function always stops with an explanatory error.
+#' @export
+run_gazepoint_cluster_permutation_covariate_adjusted <- function(...) {
+  .gp3_cluster_guardrail_stop(
+    "Covariate-adjusted cluster permutation",
+    "Covariate adjustment requires a validated residualisation or model-based permutation strategy; this is outside the current gp3tools cluster workflow."
+  )
+}
+
+
+#' Guardrail for parallel cluster permutation
+#'
+#' This function intentionally fails safely. Parallel cluster permutation is not
+#' implemented as a separate active engine in gp3tools.
+#'
+#' @param ... Arguments reserved for a future implementation.
+#'
+#' @return This function always stops with an explanatory error.
+#' @export
+run_gazepoint_cluster_permutation_parallel <- function(...) {
+  .gp3_cluster_guardrail_stop(
+    "Parallel cluster permutation",
+    "The current validated implementation runs serially to keep the permutation workflow simple, reproducible, and easier to audit."
+  )
+}

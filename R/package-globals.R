@@ -18,3 +18,8 @@ utils::globalVariables(c(
   ".gp3_y_px",
   ".gp3_y_tile"
 ))
+
+utils::globalVariables(c(
+  "null_statistic",
+  "observed_statistic"
+))
