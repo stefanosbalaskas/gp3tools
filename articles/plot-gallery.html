@@ -51,6 +51,7 @@
     <li><a class="dropdown-item" href="../articles/sequence-reliability.html">AOI sequence and reliability diagnostics</a></li>
     <li><a class="dropdown-item" href="../articles/statistical-extensions-plots.html">Statistical extensions and plots</a></li>
     <li><a class="dropdown-item" href="../articles/heatmap-spatial-visualisation.html">Heatmaps and spatial visualisation</a></li>
+    <li><a class="dropdown-item" href="../articles/cluster-permutation-workflow.html">Cluster-permutation time-course workflow</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -102,26 +103,28 @@ summary functions.</p>
 <div class="section level2">
 <h2 id="exported-plot-functions">Exported plot functions<a class="anchor" aria-label="anchor" href="#exported-plot-functions"></a>
 </h2>
-<pre><code><span><span class="co">#&gt;                           plot_function</span></span>
-<span><span class="co">#&gt; 1               plot_gazepoint_aoi_gamm</span></span>
-<span><span class="co">#&gt; 2           plot_gazepoint_aoi_timeline</span></span>
-<span><span class="co">#&gt; 3  plot_gazepoint_aoi_transition_matrix</span></span>
-<span><span class="co">#&gt; 4       plot_gazepoint_aoi_verification</span></span>
-<span><span class="co">#&gt; 5        plot_gazepoint_cluster_results</span></span>
-<span><span class="co">#&gt; 6                    plot_gazepoint_gca</span></span>
-<span><span class="co">#&gt; 7                plot_gazepoint_heatmap</span></span>
-<span><span class="co">#&gt; 8        plot_gazepoint_heatmap_overlay</span></span>
-<span><span class="co">#&gt; 9      plot_gazepoint_model_predictions</span></span>
-<span><span class="co">#&gt; 10       plot_gazepoint_model_residuals</span></span>
-<span><span class="co">#&gt; 11    plot_gazepoint_multiverse_results</span></span>
-<span><span class="co">#&gt; 12   plot_gazepoint_pupil_preprocessing</span></span>
-<span><span class="co">#&gt; 13          plot_gazepoint_pupil_status</span></span>
-<span><span class="co">#&gt; 14      plot_gazepoint_pupil_timecourse</span></span>
-<span><span class="co">#&gt; 15              plot_gazepoint_scanpath</span></span>
-<span><span class="co">#&gt; 16   plot_gazepoint_time_varying_effect</span></span>
-<span><span class="co">#&gt; 17                   plot_sampling_rate</span></span>
-<span><span class="co">#&gt; 18                plot_tracking_quality</span></span>
-<span><span class="co">#&gt; 19              plot_transition_heatmap</span></span></code></pre>
+<pre><code><span><span class="co">#&gt;                               plot_function</span></span>
+<span><span class="co">#&gt; 1                   plot_gazepoint_aoi_gamm</span></span>
+<span><span class="co">#&gt; 2               plot_gazepoint_aoi_timeline</span></span>
+<span><span class="co">#&gt; 3      plot_gazepoint_aoi_transition_matrix</span></span>
+<span><span class="co">#&gt; 4           plot_gazepoint_aoi_verification</span></span>
+<span><span class="co">#&gt; 5  plot_gazepoint_cluster_null_distribution</span></span>
+<span><span class="co">#&gt; 6        plot_gazepoint_cluster_permutation</span></span>
+<span><span class="co">#&gt; 7            plot_gazepoint_cluster_results</span></span>
+<span><span class="co">#&gt; 8                        plot_gazepoint_gca</span></span>
+<span><span class="co">#&gt; 9                    plot_gazepoint_heatmap</span></span>
+<span><span class="co">#&gt; 10           plot_gazepoint_heatmap_overlay</span></span>
+<span><span class="co">#&gt; 11         plot_gazepoint_model_predictions</span></span>
+<span><span class="co">#&gt; 12           plot_gazepoint_model_residuals</span></span>
+<span><span class="co">#&gt; 13        plot_gazepoint_multiverse_results</span></span>
+<span><span class="co">#&gt; 14       plot_gazepoint_pupil_preprocessing</span></span>
+<span><span class="co">#&gt; 15              plot_gazepoint_pupil_status</span></span>
+<span><span class="co">#&gt; 16          plot_gazepoint_pupil_timecourse</span></span>
+<span><span class="co">#&gt; 17                  plot_gazepoint_scanpath</span></span>
+<span><span class="co">#&gt; 18       plot_gazepoint_time_varying_effect</span></span>
+<span><span class="co">#&gt; 19                       plot_sampling_rate</span></span>
+<span><span class="co">#&gt; 20                    plot_tracking_quality</span></span>
+<span><span class="co">#&gt; 21                  plot_transition_heatmap</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="sampling-rate">Sampling rate<a class="anchor" aria-label="anchor" href="#sampling-rate"></a>

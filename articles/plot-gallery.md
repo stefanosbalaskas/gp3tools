@@ -20,26 +20,28 @@ sample-level and fixation-level summary functions.
 
 ## Exported plot functions
 
-    #>                           plot_function
-    #> 1               plot_gazepoint_aoi_gamm
-    #> 2           plot_gazepoint_aoi_timeline
-    #> 3  plot_gazepoint_aoi_transition_matrix
-    #> 4       plot_gazepoint_aoi_verification
-    #> 5        plot_gazepoint_cluster_results
-    #> 6                    plot_gazepoint_gca
-    #> 7                plot_gazepoint_heatmap
-    #> 8        plot_gazepoint_heatmap_overlay
-    #> 9      plot_gazepoint_model_predictions
-    #> 10       plot_gazepoint_model_residuals
-    #> 11    plot_gazepoint_multiverse_results
-    #> 12   plot_gazepoint_pupil_preprocessing
-    #> 13          plot_gazepoint_pupil_status
-    #> 14      plot_gazepoint_pupil_timecourse
-    #> 15              plot_gazepoint_scanpath
-    #> 16   plot_gazepoint_time_varying_effect
-    #> 17                   plot_sampling_rate
-    #> 18                plot_tracking_quality
-    #> 19              plot_transition_heatmap
+    #>                               plot_function
+    #> 1                   plot_gazepoint_aoi_gamm
+    #> 2               plot_gazepoint_aoi_timeline
+    #> 3      plot_gazepoint_aoi_transition_matrix
+    #> 4           plot_gazepoint_aoi_verification
+    #> 5  plot_gazepoint_cluster_null_distribution
+    #> 6        plot_gazepoint_cluster_permutation
+    #> 7            plot_gazepoint_cluster_results
+    #> 8                        plot_gazepoint_gca
+    #> 9                    plot_gazepoint_heatmap
+    #> 10           plot_gazepoint_heatmap_overlay
+    #> 11         plot_gazepoint_model_predictions
+    #> 12           plot_gazepoint_model_residuals
+    #> 13        plot_gazepoint_multiverse_results
+    #> 14       plot_gazepoint_pupil_preprocessing
+    #> 15              plot_gazepoint_pupil_status
+    #> 16          plot_gazepoint_pupil_timecourse
+    #> 17                  plot_gazepoint_scanpath
+    #> 18       plot_gazepoint_time_varying_effect
+    #> 19                       plot_sampling_rate
+    #> 20                    plot_tracking_quality
+    #> 21                  plot_transition_heatmap
 
 ## Sampling rate
 

@@ -30,3 +30,6 @@
 
 - [Heatmaps and spatial
   visualisation](https://stefanosbalaskas.github.io/gp3tools/articles/heatmap-spatial-visualisation.md):
+
+- [Cluster-permutation time-course
+  workflow](https://stefanosbalaskas.github.io/gp3tools/articles/cluster-permutation-workflow.md):

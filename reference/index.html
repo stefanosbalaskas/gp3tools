@@ -33,6 +33,7 @@
     <li><a class="dropdown-item" href="../articles/sequence-reliability.html">AOI sequence and reliability diagnostics</a></li>
     <li><a class="dropdown-item" href="../articles/statistical-extensions-plots.html">Statistical extensions and plots</a></li>
     <li><a class="dropdown-item" href="../articles/heatmap-spatial-visualisation.html">Heatmaps and spatial visualisation</a></li>
+    <li><a class="dropdown-item" href="../articles/cluster-permutation-workflow.html">Cluster-permutation time-course workflow</a></li>
   </ul></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
@@ -205,6 +206,13 @@
 
         </dt>
         <dd>Audit stimulus luminance and brightness for Gazepoint studies</dd>
+
+        <dt>
+
+          <code><a href="audit_gazepoint_timecourse_grid.html">audit_gazepoint_timecourse_grid()</a></code>
+
+        </dt>
+        <dd>Audit a Gazepoint time-course grid for cluster-permutation readiness</dd>
 
         <dt>
 
@@ -411,6 +419,13 @@
 
         <dt>
 
+          <code><a href="diagnose_gazepoint_cluster_design.html">diagnose_gazepoint_cluster_design()</a></code>
+
+        </dt>
+        <dd>Diagnose the design assumptions of a Gazepoint cluster-permutation workflow</dd>
+
+        <dt>
+
           <code><a href="diagnose_gazepoint_gamm.html">diagnose_gazepoint_gamm()</a></code>
 
         </dt>
@@ -425,10 +440,31 @@
 
         <dt>
 
+          <code><a href="estimate_gazepoint_cluster_offset.html">estimate_gazepoint_cluster_offset()</a></code>
+
+        </dt>
+        <dd>Guardrail for exact cluster-offset estimation</dd>
+
+        <dt>
+
+          <code><a href="estimate_gazepoint_cluster_onset.html">estimate_gazepoint_cluster_onset()</a></code>
+
+        </dt>
+        <dd>Guardrail for exact cluster-onset estimation</dd>
+
+        <dt>
+
           <code><a href="estimate_gazepoint_divergence_point.html">estimate_gazepoint_divergence_point()</a></code>
 
         </dt>
         <dd>Estimate a bootstrapped divergence point between two Gazepoint time courses</dd>
+
+        <dt>
+
+          <code><a href="export_gazepoint_cluster_results.html">export_gazepoint_cluster_results()</a></code>
+
+        </dt>
+        <dd>Export Gazepoint cluster-permutation results</dd>
 
         <dt>
 
@@ -446,10 +482,31 @@
 
         <dt>
 
+          <code><a href="export_gazepoint_mne_cluster_input.html">export_gazepoint_mne_cluster_input()</a></code>
+
+        </dt>
+        <dd>Export Gazepoint time-course data for MNE-style cluster workflows</dd>
+
+        <dt>
+
           <code><a href="export_gazepoint_model_tables.html">export_gazepoint_model_tables()</a></code>
 
         </dt>
         <dd>Export manuscript-ready model tables</dd>
+
+        <dt>
+
+          <code><a href="export_gazepoint_permuco_cluster_input.html">export_gazepoint_permuco_cluster_input()</a></code>
+
+        </dt>
+        <dd>Export Gazepoint time-course data for permuco-style cluster workflows</dd>
+
+        <dt>
+
+          <code><a href="export_gazepoint_permutes_cluster_input.html">export_gazepoint_permutes_cluster_input()</a></code>
+
+        </dt>
+        <dd>Export Gazepoint time-course data for permutes-style cluster workflows</dd>
 
         <dt>
 
@@ -663,6 +720,20 @@
 
         <dt>
 
+          <code><a href="plot_gazepoint_cluster_null_distribution.html">plot_gazepoint_cluster_null_distribution()</a></code>
+
+        </dt>
+        <dd>Plot the cluster-permutation null distribution</dd>
+
+        <dt>
+
+          <code><a href="plot_gazepoint_cluster_permutation.html">plot_gazepoint_cluster_permutation()</a></code>
+
+        </dt>
+        <dd>Plot a Gazepoint cluster-permutation result</dd>
+
+        <dt>
+
           <code><a href="plot_gazepoint_cluster_results.html">plot_gazepoint_cluster_results()</a></code>
 
         </dt>
@@ -873,6 +944,13 @@
 
         <dt>
 
+          <code><a href="prepare_gazepoint_timecourse_test_data.html">prepare_gazepoint_timecourse_test_data()</a></code>
+
+        </dt>
+        <dd>Prepare time-course data for Gazepoint cluster-permutation testing</dd>
+
+        <dt>
+
           <code><a href="prepare_gazepoint_traminer_data.html">prepare_gazepoint_traminer_data()</a></code>
 
         </dt>
@@ -915,6 +993,13 @@
 
         <dt>
 
+          <code><a href="report_gazepoint_cluster_permutation.html">report_gazepoint_cluster_permutation()</a></code>
+
+        </dt>
+        <dd>Report a Gazepoint cluster-permutation result</dd>
+
+        <dt>
+
           <code><a href="report_gazepoint_multiverse.html">report_gazepoint_multiverse()</a></code>
 
         </dt>
@@ -933,6 +1018,41 @@
 
         </dt>
         <dd>Run paired cluster-based permutation tests</dd>
+
+        <dt>
+
+          <code><a href="run_gazepoint_cluster_permutation_anova.html">run_gazepoint_cluster_permutation_anova()</a></code>
+
+        </dt>
+        <dd>Guardrail for cluster-permutation ANOVA</dd>
+
+        <dt>
+
+          <code><a href="run_gazepoint_cluster_permutation_covariate_adjusted.html">run_gazepoint_cluster_permutation_covariate_adjusted()</a></code>
+
+        </dt>
+        <dd>Guardrail for covariate-adjusted cluster permutation</dd>
+
+        <dt>
+
+          <code><a href="run_gazepoint_cluster_permutation_lmer.html">run_gazepoint_cluster_permutation_lmer()</a></code>
+
+        </dt>
+        <dd>Guardrail for mixed-model cluster permutation</dd>
+
+        <dt>
+
+          <code><a href="run_gazepoint_cluster_permutation_parallel.html">run_gazepoint_cluster_permutation_parallel()</a></code>
+
+        </dt>
+        <dd>Guardrail for parallel cluster permutation</dd>
+
+        <dt>
+
+          <code><a href="run_gazepoint_cluster_threshold_sensitivity.html">run_gazepoint_cluster_threshold_sensitivity()</a></code>
+
+        </dt>
+        <dd>Run threshold-sensitivity checks for Gazepoint cluster permutation</dd>
 
         <dt>
 
@@ -957,10 +1077,24 @@
 
         <dt>
 
+          <code><a href="run_gazepoint_multidimensional_cluster_permutation.html">run_gazepoint_multidimensional_cluster_permutation()</a></code>
+
+        </dt>
+        <dd>Guardrail for multidimensional cluster permutation</dd>
+
+        <dt>
+
           <code><a href="run_gazepoint_pupil_multiverse.html">run_gazepoint_pupil_multiverse()</a></code>
 
         </dt>
         <dd>Run a Gazepoint pupil preprocessing multiverse</dd>
+
+        <dt>
+
+          <code><a href="run_gazepoint_tfce.html">run_gazepoint_tfce()</a></code>
+
+        </dt>
+        <dd>Guardrail for threshold-free cluster enhancement</dd>
 
         <dt>
 
@@ -975,6 +1109,13 @@
 
         </dt>
         <dd>Save standard Gazepoint diagnostic plots</dd>
+
+        <dt>
+
+          <code><a href="simulate_gazepoint_cluster_timecourse_data.html">simulate_gazepoint_cluster_timecourse_data()</a></code>
+
+        </dt>
+        <dd>Simulate simple Gazepoint cluster time-course data</dd>
 
         <dt>
 
@@ -1129,6 +1270,13 @@
 
         </dt>
         <dd>Summarise Gazepoint tracking quality</dd>
+
+        <dt>
+
+          <code><a href="summarize_gazepoint_time_clusters.html">summarize_gazepoint_time_clusters()</a></code>
+
+        </dt>
+        <dd>Summarize Gazepoint time clusters</dd>
 
         <dt>
 
