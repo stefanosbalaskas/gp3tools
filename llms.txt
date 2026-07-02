@@ -2272,8 +2272,8 @@ expected diagnostic messages from singular-fit test fixtures and are not
 package failures when the final test summary reports `FAIL 0 | WARN 0`.
 
 On some Windows systems, a Quarto/TMPDIR message may appear after
-`devtools::check()`. This is harmless when the final
-`R CMD check results` report:
+[`devtools::check()`](https://devtools.r-lib.org/reference/check.html).
+This is harmless when the final `R CMD check results` report:
 
 ``` r
 0 errors | 0 warnings | 0 notes
@@ -2544,12 +2544,12 @@ sample-level and fixation-level summary functions.
   : Prepare Gazepoint Growth Curve Analysis data
 - [`prepare_gazepoint_hmm_data()`](https://stefanosbalaskas.github.io/gp3tools/reference/prepare_gazepoint_hmm_data.md)
   : Prepare Gazepoint AOI/state sequences for HMM-style workflows
+- [`prepare_gazepoint_pupillometryr_data()`](https://stefanosbalaskas.github.io/gp3tools/reference/prepare_gazepoint_pupillometryr_data.md)
+  : Prepare Gazepoint master data for pupillometryR-style workflows
 - [`prepare_gazepoint_pupil_gamm_data()`](https://stefanosbalaskas.github.io/gp3tools/reference/prepare_gazepoint_pupil_gamm_data.md)
   : Prepare Gazepoint pupil GAMM data
 - [`prepare_gazepoint_pupil_window_model_data()`](https://stefanosbalaskas.github.io/gp3tools/reference/prepare_gazepoint_pupil_window_model_data.md)
   : Prepare pupil-window data for confirmatory mixed models
-- [`prepare_gazepoint_pupillometryr_data()`](https://stefanosbalaskas.github.io/gp3tools/reference/prepare_gazepoint_pupillometryr_data.md)
-  : Prepare Gazepoint master data for pupillometryR-style workflows
 - [`prepare_gazepoint_semimarkov_data()`](https://stefanosbalaskas.github.io/gp3tools/reference/prepare_gazepoint_semimarkov_data.md)
   : Prepare Gazepoint AOI sequences for semi-Markov modelling
 - [`prepare_gazepoint_traminer_data()`](https://stefanosbalaskas.github.io/gp3tools/reference/prepare_gazepoint_traminer_data.md)

@@ -2272,8 +2272,8 @@ expected diagnostic messages from singular-fit test fixtures and are not
 package failures when the final test summary reports `FAIL 0 | WARN 0`.
 
 On some Windows systems, a Quarto/TMPDIR message may appear after
-`devtools::check()`. This is harmless when the final
-`R CMD check results` report:
+[`devtools::check()`](https://devtools.r-lib.org/reference/check.html).
+This is harmless when the final `R CMD check results` report:
 
 ``` r
 0 errors | 0 warnings | 0 notes

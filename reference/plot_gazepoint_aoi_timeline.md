@@ -106,4 +106,6 @@ plot_gazepoint_aoi_timeline(
   subject_col = "subject",
   trial_col = "trial"
 )
+#> Warning: internal error 1 in R_decompress1 with libdeflate
+#> Error: lazy-load database 'C:/Users/Stefanos-PC/AppData/Local/R/win-library/4.6/gp3tools/R/gp3tools.rdb' is corrupt
 ```

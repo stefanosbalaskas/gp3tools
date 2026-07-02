@@ -71,10 +71,6 @@ compute_gazepoint_aoi_sequence_metrics(
   group_cols = c("subject", "trial"),
   time_col = "time"
 )
-#>   subject trial sequence_length n_aoi_visits n_unique_aoi transition_count
-#> 1     S01   T01               6            4            3                3
-#>   revisit_count revisit_prop dominant_aoi first_aoi last_aoi mean_run_length
-#> 1             1         0.25            A         A        C             1.5
-#>   max_run_length sequence_status
-#> 1              2              ok
+#> Warning: internal error 1 in R_decompress1 with libdeflate
+#> Error: lazy-load database 'C:/Users/Stefanos-PC/AppData/Local/R/win-library/4.6/gp3tools/R/gp3tools.rdb' is corrupt
 ```

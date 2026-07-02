@@ -220,12 +220,12 @@
   : Prepare Gazepoint Growth Curve Analysis data
 - [`prepare_gazepoint_hmm_data()`](https://stefanosbalaskas.github.io/gp3tools/reference/prepare_gazepoint_hmm_data.md)
   : Prepare Gazepoint AOI/state sequences for HMM-style workflows
+- [`prepare_gazepoint_pupillometryr_data()`](https://stefanosbalaskas.github.io/gp3tools/reference/prepare_gazepoint_pupillometryr_data.md)
+  : Prepare Gazepoint master data for pupillometryR-style workflows
 - [`prepare_gazepoint_pupil_gamm_data()`](https://stefanosbalaskas.github.io/gp3tools/reference/prepare_gazepoint_pupil_gamm_data.md)
   : Prepare Gazepoint pupil GAMM data
 - [`prepare_gazepoint_pupil_window_model_data()`](https://stefanosbalaskas.github.io/gp3tools/reference/prepare_gazepoint_pupil_window_model_data.md)
   : Prepare pupil-window data for confirmatory mixed models
-- [`prepare_gazepoint_pupillometryr_data()`](https://stefanosbalaskas.github.io/gp3tools/reference/prepare_gazepoint_pupillometryr_data.md)
-  : Prepare Gazepoint master data for pupillometryR-style workflows
 - [`prepare_gazepoint_semimarkov_data()`](https://stefanosbalaskas.github.io/gp3tools/reference/prepare_gazepoint_semimarkov_data.md)
   : Prepare Gazepoint AOI sequences for semi-Markov modelling
 - [`prepare_gazepoint_traminer_data()`](https://stefanosbalaskas.github.io/gp3tools/reference/prepare_gazepoint_traminer_data.md)
