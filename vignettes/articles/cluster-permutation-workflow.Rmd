@@ -1,0 +1,154 @@
+---
+title: "Cluster-permutation time-course workflow"
+---
+
+```{r setup, include = FALSE}
+library(gp3tools)
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = '#>',
+  fig.width = 7,
+  fig.height = 4.5,
+  warning = FALSE,
+  message = FALSE
+)
+```
+
+This article gives a compact example of the conservative cluster-permutation workflow in `gp3tools`. The workflow is intended for two-condition, within-subject, one-dimensional time-course data. It is suitable for cautious screening of time-contiguous effects, not for exact onset or offset claims.
+
+## Simulated example data
+
+```{r}
+set.seed(123)
+
+raw <- simulate_gazepoint_cluster_timecourse_data(
+  n_subjects = 12,
+  n_time_bins = 30,
+  conditions = c("control", "treatment"),
+  effect_start = 12,
+  effect_end = 20,
+  effect_size = 0.7,
+  seed = 123
+)
+
+head(raw)
+```
+
+## Prepare the time-course grid
+
+`prepare_gazepoint_timecourse_test_data()` converts a long-format data set into the internal column contract expected by `run_gazepoint_cluster_permutation()`.
+
+```{r}
+prepared <- prepare_gazepoint_timecourse_test_data(
+  raw,
+  subject_col = "subject",
+  condition_col = "condition",
+  time_col = "time_bin",
+  outcome_col = "outcome",
+  condition_order = c("control", "treatment")
+)
+
+head(prepared)
+```
+
+## Audit the grid
+
+Before running a cluster-permutation workflow, check whether the data grid is complete, paired, and compatible with the validated two-condition workflow.
+
+```{r}
+grid_audit <- audit_gazepoint_timecourse_grid(prepared)
+
+grid_audit$grid_summary
+grid_audit$readiness
+```
+
+```{r}
+design_diagnostic <- diagnose_gazepoint_cluster_design(prepared)
+
+design_diagnostic
+```
+
+## Run the cluster-permutation workflow
+
+For a fast documentation example, this article uses a small number of permutations. Real analyses should use a larger number and report the settings.
+
+```{r}
+cluster_result <- run_gazepoint_cluster_permutation(
+  prepared,
+  condition_order = c("control", "treatment"),
+  n_permutations = 99,
+  cluster_threshold = 1.5,
+  min_time_bins = 2,
+  seed = 123
+)
+
+names(cluster_result)
+```
+
+## Summarise clusters
+
+```{r}
+cluster_summary <- summarize_gazepoint_time_clusters(cluster_result)
+
+cluster_summary
+```
+
+## Plot the cluster result
+
+```{r}
+plot_gazepoint_cluster_permutation(
+  cluster_result,
+  plot_type = "difference",
+  significant_only = FALSE
+)
+```
+
+## Cautious report text
+
+`report_gazepoint_cluster_permutation()` returns a compact report object. The generated wording is deliberately cautious: detected ranges are treated as cluster-level time intervals, not as exact effect-onset or effect-offset estimates.
+
+```{r}
+cluster_report <- report_gazepoint_cluster_permutation(cluster_result)
+
+cluster_report$report_text
+```
+
+## Threshold sensitivity
+
+Cluster-level results can depend on the cluster-forming threshold. A compact sensitivity table helps document whether the broad pattern is stable across reasonable threshold choices.
+
+```{r}
+threshold_sensitivity <- run_gazepoint_cluster_threshold_sensitivity(
+  prepared,
+  thresholds = c(1.25, 1.5, 1.75),
+  condition_order = c("control", "treatment"),
+  n_permutations = 49,
+  min_time_bins = 2,
+  seed = 123
+)
+
+threshold_sensitivity$summary
+```
+
+## External export helpers
+
+The external export helpers prepare long-format files and README notes for possible continuation in specialist tools. They do not run or validate the external analyses.
+
+```{r}
+external_dir <- tempfile("gp3_cluster_export_")
+
+external_files <- export_gazepoint_mne_cluster_input(
+  prepared,
+  outdir = external_dir
+)
+
+external_files
+```
+
+## Guardrails for unsupported extensions
+
+Some advanced method names are available as explicit guardrails. They intentionally stop with explanatory messages rather than silently supporting methods outside the validated scope.
+
+```{r}
+try(run_gazepoint_tfce(), silent = TRUE)
+```
