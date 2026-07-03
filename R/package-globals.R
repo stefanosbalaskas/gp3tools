@@ -23,3 +23,8 @@ utils::globalVariables(c(
   "null_statistic",
   "observed_statistic"
 ))
+
+utils::globalVariables(c(
+  ".gp3_missing_rate",
+  ".gp3_variable"
+))

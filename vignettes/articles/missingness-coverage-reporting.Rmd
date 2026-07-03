@@ -1,0 +1,116 @@
+---
+title: "Missingness and data-coverage reporting"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Missingness and data-coverage reporting}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 7,
+  fig.height = 4.5,
+  warning = FALSE,
+  message = FALSE
+)
+
+library(gp3tools)
+```
+
+This article demonstrates compact helpers for summarising, plotting, and reporting missingness in Gazepoint-style data. The helpers are intended for transparent data-coverage review. They do not define exclusion rules by themselves.
+
+## Simulate example data
+
+```{r}
+synthetic <- simulate_gazepoint_pupil_data(
+  n_subjects = 4,
+  n_trials = 4,
+  n_time_bins = 20,
+  conditions = c("control", "treatment"),
+  blink_probability = 0.08,
+  seed = 123
+)
+
+head(synthetic)
+```
+
+## Summarise missingness
+
+`summarize_gazepoint_missingness()` computes missing and observed rates for selected variables, optionally within grouping columns.
+
+```{r}
+missingness <- summarize_gazepoint_missingness(
+  synthetic,
+  cols = c("pupil_left", "pupil_right", "pupil", "gaze_x", "gaze_y"),
+  group_cols = "condition"
+)
+
+missingness
+```
+
+The British spelling alias is also available.
+
+```{r}
+summarise_gazepoint_missingness(
+  synthetic,
+  cols = c("pupil_left", "pupil_right", "pupil")
+)
+```
+
+## Plot missingness profiles
+
+`plot_gazepoint_missingness_profile()` can use either raw data or a missingness summary.
+
+```{r}
+plot_gazepoint_missingness_profile(
+  missingness,
+  plot_type = "bar",
+  title = "Missingness by condition and variable"
+)
+```
+
+A tile view can be useful when there are many groups or variables.
+
+```{r}
+plot_gazepoint_missingness_profile(
+  missingness,
+  plot_type = "tile",
+  title = "Missingness profile"
+)
+```
+
+## Generate cautious report text
+
+`report_gazepoint_missingness()` returns the summary table, an overall table, a variable-level table, and compact report text.
+
+```{r}
+missingness_report <- report_gazepoint_missingness(
+  missingness,
+  digits = 1,
+  max_variables = 3
+)
+
+missingness_report$overall
+```
+
+```{r}
+missingness_report$variable_summary
+```
+
+```{r}
+missingness_report$report_text
+```
+
+The generated wording is deliberately cautious. Missingness rates are data-coverage diagnostics and should be interpreted together with study design, preprocessing decisions, and planned exclusion criteria.
+
+## Suggested workflow
+
+A transparent reporting workflow is:
+
+1. Summarise missingness for pupil, gaze, AOI, or trial-level variables.
+2. Plot missingness by participant, trial, condition, AOI, or preprocessing stage.
+3. Report overall and variable-level missingness rates.
+4. Keep exclusion decisions separate from descriptive missingness summaries.
