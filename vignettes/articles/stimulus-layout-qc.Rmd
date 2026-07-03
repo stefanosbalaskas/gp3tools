@@ -1,0 +1,139 @@
+---
+title: "Stimulus-layout quality control"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Stimulus-layout quality control}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 7,
+  fig.height = 4.5,
+  warning = FALSE,
+  message = FALSE
+)
+
+library(gp3tools)
+```
+
+This article demonstrates descriptive quality-control helpers for checking whether AOI geometry and gaze coordinates are compatible with declared screen or stimulus dimensions. The helpers are intended for transparent review before AOI summaries, heatmaps, scanpaths, or publication reporting. They do not make automatic exclusion decisions.
+
+## Example AOI layout
+
+```{r}
+aoi <- data.frame(
+  aoi = c("headline", "image", "claim", "cta"),
+  x_min = c(120, 850, 120, 850),
+  x_max = c(760, 1700, 760, 1700),
+  y_min = c(100, 100, 620, 720),
+  y_max = c(260, 560, 760, 860)
+)
+
+aoi
+```
+
+## Audit AOI screen coverage
+
+`audit_gazepoint_aoi_screen_coverage()` checks rectangular AOIs against declared screen or stimulus dimensions. It reports missing geometry, invalid rectangles, off-screen boundaries, raw AOI area, clipped on-screen area, and descriptive screen-coverage rates.
+
+```{r}
+aoi_audit <- audit_gazepoint_aoi_screen_coverage(
+  aoi,
+  screen_width = 1920,
+  screen_height = 1080,
+  aoi_col = "aoi"
+)
+
+aoi_audit$overall_summary
+```
+
+The AOI-level table shows which regions are inside or outside the declared screen.
+
+```{r}
+aoi_audit$aoi_summary
+```
+
+Coverage totals are descriptive and do not correct for overlap between AOIs. Use the existing AOI-overlap helpers when overlap itself is the target diagnostic.
+
+## Summarise coordinate coverage
+
+We create privacy-safe synthetic gaze and pupil data for the example.
+
+```{r}
+synthetic <- simulate_gazepoint_pupil_data(
+  n_subjects = 4,
+  n_trials = 4,
+  n_time_bins = 30,
+  conditions = c("control", "treatment"),
+  seed = 123
+)
+
+head(synthetic)
+```
+
+`summarize_gazepoint_coordinate_coverage()` reports valid-coordinate rates, inside-screen rates, coordinate ranges, and coarse grid occupancy. This can help identify whether gaze samples cover plausible screen areas before plotting or AOI analysis.
+
+```{r}
+coverage <- summarize_gazepoint_coordinate_coverage(
+  synthetic,
+  x_col = "gaze_x",
+  y_col = "gaze_y",
+  screen_width = 1920,
+  screen_height = 1080,
+  group_cols = "condition",
+  grid_n_x = 8,
+  grid_n_y = 6
+)
+
+coverage
+```
+
+The grid-occupancy result is descriptive. It should not be interpreted as an inferential measure of attention.
+
+## Plot stimulus-layout quality control
+
+`plot_gazepoint_stimulus_layout_qc()` draws the screen bounds, AOI rectangles, and optional gaze points in the same coordinate system.
+
+```{r}
+plot_gazepoint_stimulus_layout_qc(
+  aoi,
+  screen_width = 1920,
+  screen_height = 1080,
+  aoi_col = "aoi",
+  gaze_data = synthetic,
+  gaze_x_col = "gaze_x",
+  gaze_y_col = "gaze_y",
+  title = "Stimulus-layout QC with synthetic gaze"
+)
+```
+
+The plot is intended for visual review of coordinate compatibility, AOI placement, and gaze coverage. It is not an inferential scanpath or attention analysis.
+
+## Combine with screen-bound auditing
+
+The layout QC helpers complement the screen-coordinate checks introduced in the scanpath/QC article.
+
+```{r}
+screen_audit <- audit_gazepoint_screen_bounds(
+  synthetic,
+  x_col = "gaze_x",
+  y_col = "gaze_y",
+  screen_width = 1920,
+  screen_height = 1080,
+  group_cols = c("subject", "trial")
+)
+
+screen_audit$overall_summary
+```
+
+Together, these helpers support a transparent workflow:
+
+1. Check raw gaze coordinates against screen bounds.
+2. Check AOI geometry against the same screen bounds.
+3. Summarise coordinate coverage.
+4. Plot AOIs and gaze points together for visual inspection.
+5. Report any exclusions or coordinate harmonisation decisions explicitly.
