@@ -12,6 +12,8 @@
   : Audit AOI margin sensitivity
 - [`audit_gazepoint_aoi_overlap()`](https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_aoi_overlap.md)
   : Audit AOI overlap
+- [`audit_gazepoint_aoi_screen_coverage()`](https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_aoi_screen_coverage.md)
+  : Audit AOI coverage against screen bounds
 - [`audit_gazepoint_aoi_window_denominators()`](https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_aoi_window_denominators.md)
   : Audit AOI window denominators before binomial modelling
 - [`audit_gazepoint_condition_quality_imbalance()`](https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_condition_quality_imbalance.md)
@@ -231,6 +233,8 @@
   : Plot a fixation scanpath
 - [`plot_gazepoint_scanpaths()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_scanpaths.md)
   : Plot multiple Gazepoint scanpaths
+- [`plot_gazepoint_stimulus_layout_qc()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_stimulus_layout_qc.md)
+  : Plot stimulus-layout quality control
 - [`plot_gazepoint_time_series()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_time_series.md)
   : Plot a Gazepoint-style time series
 - [`plot_gazepoint_time_varying_effect()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_time_varying_effect.md)
@@ -367,6 +371,8 @@
   : Summarise a Gazepoint workflow result
 - [`summarise_tracking_quality()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarise_tracking_quality.md)
   : Summarise Gazepoint tracking quality
+- [`summarize_gazepoint_coordinate_coverage()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarize_gazepoint_coordinate_coverage.md)
+  : Summarize gaze-coordinate coverage over a screen grid
 - [`summarize_gazepoint_time_clusters()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarize_gazepoint_time_clusters.md)
   : Summarize Gazepoint time clusters
 - [`tidy_gazepoint_model_summary()`](https://stefanosbalaskas.github.io/gp3tools/reference/tidy_gazepoint_model_summary.md)

@@ -36,3 +36,6 @@
 
 - [Scanpath and quality-control quick
   wins](https://stefanosbalaskas.github.io/gp3tools/articles/scanpath-qc-quick-wins.md):
+
+- [Stimulus-layout quality
+  control](https://stefanosbalaskas.github.io/gp3tools/articles/stimulus-layout-qc.md):

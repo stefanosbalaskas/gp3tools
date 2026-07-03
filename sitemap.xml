@@ -10,6 +10,7 @@
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/scanpath-qc-quick-wins.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/sequence-reliability.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/statistical-extensions-plots.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/stimulus-layout-qc.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/authors.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/index.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/news/index.html</loc></url>
@@ -18,6 +19,7 @@
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_aoi_geometry.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_aoi_margin_sensitivity.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_aoi_overlap.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_aoi_screen_coverage.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_aoi_window_denominators.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_condition_quality_imbalance.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_design_balance.html</loc></url>
@@ -126,6 +128,7 @@
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_pupil_timecourse.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_scanpath.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_scanpaths.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_stimulus_layout_qc.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_time_series.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_time_varying_effect.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/plot_sampling_rate.html</loc></url>
@@ -194,6 +197,7 @@
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/summarise_gazepoint_semimarkov.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/summarise_gazepoint_workflow.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/summarise_tracking_quality.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/summarize_gazepoint_coordinate_coverage.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/summarize_gazepoint_time_clusters.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/tidy_gazepoint_model_summary.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/transform_gazepoint_aoi_empirical_logit.html</loc></url>
