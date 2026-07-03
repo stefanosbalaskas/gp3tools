@@ -5,6 +5,7 @@
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/cluster-permutation-workflow.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/heatmap-spatial-visualisation.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/index.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/missingness-coverage-reporting.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/plot-gallery.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/pupil_workflow.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/scanpath-qc-quick-wins.html</loc></url>
@@ -120,6 +121,7 @@
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_gca.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_heatmap.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_heatmap_overlay.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_missingness_profile.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_model_predictions.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_model_residuals.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_multiverse_results.html</loc></url>
@@ -157,6 +159,7 @@
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/recalibrate_gazepoint_gaze.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/recommend_gazepoint_exclusions.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/report_gazepoint_cluster_permutation.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/report_gazepoint_missingness.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/report_gazepoint_multiverse.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/run_gazepoint_aoi_multiverse.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/run_gazepoint_cluster_permutation.html</loc></url>
@@ -198,6 +201,7 @@
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/summarise_gazepoint_workflow.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/summarise_tracking_quality.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/summarize_gazepoint_coordinate_coverage.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/summarize_gazepoint_missingness.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/summarize_gazepoint_time_clusters.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/tidy_gazepoint_model_summary.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/transform_gazepoint_aoi_empirical_logit.html</loc></url>

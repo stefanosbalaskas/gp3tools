@@ -5,13 +5,14 @@ articles:
   aoi_workflow: aoi_workflow.html
   articles/cluster-permutation-workflow: cluster-permutation-workflow.html
   articles/heatmap-spatial-visualisation: heatmap-spatial-visualisation.html
+  articles/missingness-coverage-reporting: missingness-coverage-reporting.html
   articles/plot-gallery: plot-gallery.html
   pupil_workflow: pupil_workflow.html
   articles/scanpath-qc-quick-wins: scanpath-qc-quick-wins.html
   articles/sequence-reliability: sequence-reliability.html
   articles/statistical-extensions-plots: statistical-extensions-plots.html
   articles/stimulus-layout-qc: stimulus-layout-qc.html
-last_built: 2026-07-03T09:23Z
+last_built: 2026-07-03T10:38Z
 urls:
   reference: https://stefanosbalaskas.github.io/gp3tools/reference
   article: https://stefanosbalaskas.github.io/gp3tools/articles

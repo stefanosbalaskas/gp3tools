@@ -39,3 +39,6 @@
 
 - [Stimulus-layout quality
   control](https://stefanosbalaskas.github.io/gp3tools/articles/stimulus-layout-qc.md):
+
+- [Missingness and data-coverage
+  reporting](https://stefanosbalaskas.github.io/gp3tools/articles/missingness-coverage-reporting.md):

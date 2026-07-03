@@ -217,6 +217,8 @@
   : Plot a Gazepoint gaze or fixation heatmap
 - [`plot_gazepoint_heatmap_overlay()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_heatmap_overlay.md)
   : Plot a Gazepoint heatmap over a background image
+- [`plot_gazepoint_missingness_profile()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_missingness_profile.md)
+  : Plot a Gazepoint missingness profile
 - [`plot_gazepoint_model_predictions()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_model_predictions.md)
   : Plot observed summaries and model-implied predictions
 - [`plot_gazepoint_model_residuals()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_model_residuals.md)
@@ -291,6 +293,8 @@
   : Recommend trial and participant exclusions
 - [`report_gazepoint_cluster_permutation()`](https://stefanosbalaskas.github.io/gp3tools/reference/report_gazepoint_cluster_permutation.md)
   : Report a Gazepoint cluster-permutation result
+- [`report_gazepoint_missingness()`](https://stefanosbalaskas.github.io/gp3tools/reference/report_gazepoint_missingness.md)
+  : Report Gazepoint missingness
 - [`report_gazepoint_multiverse()`](https://stefanosbalaskas.github.io/gp3tools/reference/report_gazepoint_multiverse.md)
   : Report multiverse-analysis results
 - [`run_gazepoint_aoi_multiverse()`](https://stefanosbalaskas.github.io/gp3tools/reference/run_gazepoint_aoi_multiverse.md)
@@ -373,6 +377,9 @@
   : Summarise Gazepoint tracking quality
 - [`summarize_gazepoint_coordinate_coverage()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarize_gazepoint_coordinate_coverage.md)
   : Summarize gaze-coordinate coverage over a screen grid
+- [`summarize_gazepoint_missingness()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarize_gazepoint_missingness.md)
+  [`summarise_gazepoint_missingness()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarize_gazepoint_missingness.md)
+  : Summarize missingness in Gazepoint-style data
 - [`summarize_gazepoint_time_clusters()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarize_gazepoint_time_clusters.md)
   : Summarize Gazepoint time clusters
 - [`tidy_gazepoint_model_summary()`](https://stefanosbalaskas.github.io/gp3tools/reference/tidy_gazepoint_model_summary.md)
