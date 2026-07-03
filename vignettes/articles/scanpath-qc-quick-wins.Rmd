@@ -135,4 +135,45 @@ plot_gazepoint_scanpaths(
 )
 ```
 
+
+## Audit screen bounds
+
+`audit_gazepoint_screen_bounds()` checks whether gaze coordinates are missing, equal to `(0, 0)`, or outside expected screen or stimulus bounds. This is useful before heatmaps, AOI checks, or scanpath visualisation.
+
+```{r}
+screen_audit <- audit_gazepoint_screen_bounds(
+  synthetic,
+  x_col = "gaze_x",
+  y_col = "gaze_y",
+  screen_width = 1920,
+  screen_height = 1080,
+  group_cols = c("subject", "trial")
+)
+
+screen_audit$overall_summary
+```
+
+The row-level and group-level outputs make the diagnostic transparent without automatically changing the data.
+
+```{r}
+head(screen_audit$group_summary)
+```
+
+## Harmonize screen coordinates
+
+`harmonize_gazepoint_screen_coordinates()` rescales gaze coordinates from one screen or stimulus resolution to another. This is a deterministic transformation for harmonising exports before plotting or descriptive summaries. It is not a recalibration method.
+
+```{r}
+harmonized <- harmonize_gazepoint_screen_coordinates(
+  synthetic,
+  x_col = "gaze_x",
+  y_col = "gaze_y",
+  from_width = 1920,
+  from_height = 1080,
+  to_width = 1280,
+  to_height = 720
+)
+
+head(harmonized[, c("gaze_x", "gaze_y", "gaze_x_harmonized", "gaze_y_harmonized")])
+```
 These visualisations are intended for quality review and documentation, not as inferential scanpath-comparison methods.
