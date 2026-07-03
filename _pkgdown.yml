@@ -33,3 +33,4 @@ articles:
     - articles/statistical-extensions-plots
     - articles/heatmap-spatial-visualisation
     - articles/cluster-permutation-workflow
+    - articles/scanpath-qc-quick-wins

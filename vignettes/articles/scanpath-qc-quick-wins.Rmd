@@ -1,0 +1,138 @@
+---
+title: "Scanpath and quality-control quick wins"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Scanpath and quality-control quick wins}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 7,
+  fig.height = 4.5,
+  warning = FALSE,
+  message = FALSE
+)
+
+library(gp3tools)
+```
+
+This article demonstrates a compact set of descriptive helpers for privacy-safe examples, binocular pupil preparation, trackloss review, time-series plotting, and multi-scanpath visual inspection. These helpers are intended for transparent quality control and documentation. They do not replace study-specific preprocessing decisions or inferential modelling.
+
+## Simulate pupil and gaze data
+
+`simulate_gazepoint_pupil_data()` creates a small synthetic data set with participant, trial, condition, time-bin, gaze-coordinate, left-pupil, right-pupil, blink, trackloss, and combined-pupil columns.
+
+```{r}
+synthetic <- simulate_gazepoint_pupil_data(
+  n_subjects = 4,
+  n_trials = 4,
+  n_time_bins = 20,
+  conditions = c("control", "treatment"),
+  blink_probability = 0.05,
+  seed = 123
+)
+
+head(synthetic)
+```
+
+The generator is designed for examples and tests. It should not be used to make claims about empirical pupil physiology.
+
+## Combine left and right pupil channels
+
+`combine_gazepoint_eyes()` combines two eye-specific numeric columns into a single analysis column. The default method averages available left/right values. Other options can prefer one eye or choose the globally less-missing eye.
+
+```{r}
+combined <- combine_gazepoint_eyes(
+  synthetic,
+  left_col = "pupil_left",
+  right_col = "pupil_right",
+  output_col = "pupil_combined",
+  method = "mean",
+  valid_min = 1,
+  valid_max = 9
+)
+
+head(combined[, c("pupil_left", "pupil_right", "pupil_combined")])
+```
+
+## Flag groups by trackloss
+
+`clean_gazepoint_by_trackloss()` computes trackloss rates globally or within grouping columns. Here, participant-trial groups with more than 20% trackloss are flagged.
+
+```{r}
+trackloss_flagged <- clean_gazepoint_by_trackloss(
+  synthetic,
+  group_cols = c("subject", "trial"),
+  tracking_col = "trackloss",
+  max_trackloss = 0.20,
+  action = "flag"
+)
+
+head(trackloss_flagged[, c("subject", "trial", "trackloss", ".gp3_trackloss_rate", ".gp3_trackloss_exclude")])
+```
+
+A compact group-level summary is stored as an attribute.
+
+```{r}
+head(attr(trackloss_flagged, "gp3_trackloss_summary"))
+```
+
+The same helper can filter high-trackloss groups, but filtering should normally be reported as an explicit preprocessing decision.
+
+## Plot a descriptive time series
+
+`plot_gazepoint_time_series()` provides a general descriptive line plot for pupil, gaze, AOI, or other time-varying measures that have already been prepared by the user.
+
+```{r}
+plot_gazepoint_time_series(
+  synthetic,
+  time_col = "time_bin",
+  value_col = "pupil",
+  group_cols = c("subject", "trial"),
+  colour_col = "condition",
+  title = "Synthetic pupil time series",
+  x_label = "Time bin",
+  y_label = "Pupil size"
+)
+```
+
+This plot is descriptive. It does not smooth, model, or test condition differences.
+
+## Plot multiple scanpaths
+
+`plot_gazepoint_scanpaths()` supports quick visual inspection of gaze paths across participants, trials, or conditions.
+
+```{r}
+plot_gazepoint_scanpaths(
+  synthetic,
+  x_col = "gaze_x",
+  y_col = "gaze_y",
+  order_col = "time_bin",
+  group_cols = c("subject", "trial"),
+  colour_col = "condition",
+  screen_width = 1920,
+  screen_height = 1080,
+  title = "Synthetic multi-scanpath inspection"
+)
+```
+
+For crowded data, faceting can make trial or condition-level review easier.
+
+```{r}
+plot_gazepoint_scanpaths(
+  synthetic,
+  x_col = "gaze_x",
+  y_col = "gaze_y",
+  order_col = "time_bin",
+  group_cols = c("subject", "trial"),
+  facet_col = "condition",
+  show_points = FALSE,
+  title = "Faceted synthetic scanpaths"
+)
+```
+
+These visualisations are intended for quality review and documentation, not as inferential scanpath-comparison methods.
