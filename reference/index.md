@@ -64,6 +64,10 @@
   : Check sampling rate by group
 - [`classify_gazepoint_export()`](https://stefanosbalaskas.github.io/gp3tools/reference/classify_gazepoint_export.md)
   : Classify a Gazepoint export
+- [`clean_gazepoint_by_trackloss()`](https://stefanosbalaskas.github.io/gp3tools/reference/clean_gazepoint_by_trackloss.md)
+  : Flag or filter Gazepoint data by trackloss
+- [`combine_gazepoint_eyes()`](https://stefanosbalaskas.github.io/gp3tools/reference/combine_gazepoint_eyes.md)
+  : Combine left and right Gazepoint eye channels
 - [`compare_gazepoint_nested_models()`](https://stefanosbalaskas.github.io/gp3tools/reference/compare_gazepoint_nested_models.md)
   : Compare nested Gazepoint models
 - [`compute_gazepoint_aoi_entropy()`](https://stefanosbalaskas.github.io/gp3tools/reference/compute_gazepoint_aoi_entropy.md)
@@ -221,6 +225,10 @@
   : Plot Gazepoint pupil time course
 - [`plot_gazepoint_scanpath()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_scanpath.md)
   : Plot a fixation scanpath
+- [`plot_gazepoint_scanpaths()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_scanpaths.md)
+  : Plot multiple Gazepoint scanpaths
+- [`plot_gazepoint_time_series()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_time_series.md)
+  : Plot a Gazepoint-style time series
 - [`plot_gazepoint_time_varying_effect()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_time_varying_effect.md)
   : Plot a time-varying effect curve
 - [`plot_sampling_rate()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_sampling_rate.md)
@@ -311,6 +319,8 @@
   : Simulate simple Gazepoint cluster time-course data
 - [`simulate_gazepoint_data()`](https://stefanosbalaskas.github.io/gp3tools/reference/simulate_gazepoint_data.md)
   : Simulate simple Gazepoint-style gaze data
+- [`simulate_gazepoint_pupil_data()`](https://stefanosbalaskas.github.io/gp3tools/reference/simulate_gazepoint_pupil_data.md)
+  : Simulate Gazepoint-like pupil data
 - [`smooth_gazepoint_pupil()`](https://stefanosbalaskas.github.io/gp3tools/reference/smooth_gazepoint_pupil.md)
   : Smooth Gazepoint pupil data
 - [`standardise_gazepoint_names()`](https://stefanosbalaskas.github.io/gp3tools/reference/standardise_gazepoint_names.md)

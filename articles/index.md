@@ -33,3 +33,6 @@
 
 - [Cluster-permutation time-course
   workflow](https://stefanosbalaskas.github.io/gp3tools/articles/cluster-permutation-workflow.md):
+
+- [Scanpath and quality-control quick
+  wins](https://stefanosbalaskas.github.io/gp3tools/articles/scanpath-qc-quick-wins.md):
