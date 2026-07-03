@@ -141,3 +141,82 @@ test_that("summarize_gazepoint_coordinate_coverage validates inputs", {
     "positive integer"
   )
 })
+
+test_that("plot_gazepoint_stimulus_layout_qc returns a ggplot with AOIs and gaze", {
+  aoi <- data.frame(
+    aoi = c("left", "right"),
+    x_min = c(100, 1200),
+    x_max = c(500, 1700),
+    y_min = c(100, 100),
+    y_max = c(400, 400)
+  )
+
+  gaze <- simulate_gazepoint_pupil_data(
+    n_subjects = 1,
+    n_trials = 1,
+    n_time_bins = 10,
+    seed = 1
+  )
+
+  p <- plot_gazepoint_stimulus_layout_qc(
+    aoi,
+    screen_width = 1920,
+    screen_height = 1080,
+    aoi_col = "aoi",
+    gaze_data = gaze,
+    gaze_x_col = "gaze_x",
+    gaze_y_col = "gaze_y"
+  )
+
+  expect_s3_class(p, "ggplot")
+})
+
+
+test_that("plot_gazepoint_stimulus_layout_qc works without gaze data", {
+  aoi <- data.frame(
+    x_min = c(100, 1200),
+    x_max = c(500, 1700),
+    y_min = c(100, 100),
+    y_max = c(400, 400)
+  )
+
+  p <- plot_gazepoint_stimulus_layout_qc(
+    aoi,
+    screen_width = 1920,
+    screen_height = 1080,
+    reverse_y = FALSE,
+    show_aoi_labels = FALSE
+  )
+
+  expect_s3_class(p, "ggplot")
+})
+
+
+test_that("plot_gazepoint_stimulus_layout_qc validates plotting inputs", {
+  aoi <- data.frame(x_min = 1, x_max = 2, y_min = 1, y_max = 2)
+
+  expect_error(
+    plot_gazepoint_stimulus_layout_qc(aoi, screen_width = 0, screen_height = 1080),
+    "screen_width"
+  )
+
+  expect_error(
+    plot_gazepoint_stimulus_layout_qc(
+      aoi,
+      screen_width = 1920,
+      screen_height = 1080,
+      gaze_data = data.frame(x = 1, y = 1)
+    ),
+    "gaze_x_col"
+  )
+
+  expect_error(
+    plot_gazepoint_stimulus_layout_qc(
+      aoi,
+      screen_width = 1920,
+      screen_height = 1080,
+      x_min_col = "missing"
+    ),
+    "missing required column"
+  )
+})

@@ -282,3 +282,166 @@ summarize_gazepoint_coordinate_coverage <- function(data,
 
   mean(x, na.rm = TRUE)
 }
+
+#' Plot stimulus-layout quality control
+#'
+#' Draws screen/stimulus bounds, rectangular AOIs, and optional gaze coordinates.
+#' The plot is intended for visual quality review of coordinate systems, AOI
+#' placement, and gaze coverage. It is descriptive and should not be interpreted
+#' as an inferential attention analysis.
+#'
+#' @param aoi_data A data frame containing rectangular AOI geometry.
+#' @param screen_width,screen_height Numeric screen or stimulus dimensions.
+#' @param aoi_col Optional AOI identifier column.
+#' @param x_min_col,x_max_col,y_min_col,y_max_col Character names of AOI
+#'   rectangle boundary columns.
+#' @param gaze_data Optional data frame containing gaze coordinates.
+#' @param gaze_x_col,gaze_y_col Character names of gaze-coordinate columns in
+#'   `gaze_data`.
+#' @param reverse_y If `TRUE`, reverses the y-axis to match common screen
+#'   coordinate conventions with the origin at the top-left.
+#' @param show_aoi_labels If `TRUE`, AOI labels are drawn at rectangle centres.
+#' @param show_gaze If `TRUE`, gaze points are shown when `gaze_data` is supplied.
+#' @param gaze_alpha Opacity of gaze points.
+#' @param gaze_point_size Size of gaze points.
+#' @param title Optional plot title.
+#'
+#' @return A ggplot object.
+#' @export
+#'
+#' @examples
+#' aoi <- data.frame(
+#'   aoi = c("left", "right"),
+#'   x_min = c(100, 1200),
+#'   x_max = c(500, 1700),
+#'   y_min = c(100, 100),
+#'   y_max = c(400, 400)
+#' )
+#' gaze <- simulate_gazepoint_pupil_data(n_subjects = 1, n_trials = 1, n_time_bins = 10, seed = 1)
+#' plot_gazepoint_stimulus_layout_qc(
+#'   aoi,
+#'   screen_width = 1920,
+#'   screen_height = 1080,
+#'   aoi_col = "aoi",
+#'   gaze_data = gaze,
+#'   gaze_x_col = "gaze_x",
+#'   gaze_y_col = "gaze_y"
+#' )
+plot_gazepoint_stimulus_layout_qc <- function(aoi_data,
+                                              screen_width,
+                                              screen_height,
+                                              aoi_col = NULL,
+                                              x_min_col = "x_min",
+                                              x_max_col = "x_max",
+                                              y_min_col = "y_min",
+                                              y_max_col = "y_max",
+                                              gaze_data = NULL,
+                                              gaze_x_col = NULL,
+                                              gaze_y_col = NULL,
+                                              reverse_y = TRUE,
+                                              show_aoi_labels = TRUE,
+                                              show_gaze = TRUE,
+                                              gaze_alpha = 0.25,
+                                              gaze_point_size = 0.7,
+                                              title = NULL) {
+  .gp3_require_data_frame(aoi_data, "aoi_data")
+  .gp3_require_columns(
+    aoi_data,
+    c(aoi_col, x_min_col, x_max_col, y_min_col, y_max_col),
+    "aoi_data"
+  )
+  .gp3_require_plot_scalar(screen_width, "screen_width", lower = 0, allow_zero = FALSE)
+  .gp3_require_plot_scalar(screen_height, "screen_height", lower = 0, allow_zero = FALSE)
+  .gp3_require_plot_scalar(gaze_alpha, "gaze_alpha", lower = 0, upper = 1, allow_zero = TRUE)
+  .gp3_require_plot_scalar(gaze_point_size, "gaze_point_size", lower = 0, allow_zero = FALSE)
+
+  aoi_plot <- data.frame(
+    .gp3_aoi_id = if (is.null(aoi_col)) {
+      paste0("AOI_", seq_len(nrow(aoi_data)))
+    } else {
+      as.character(aoi_data[[aoi_col]])
+    },
+    .gp3_x_min = suppressWarnings(as.numeric(aoi_data[[x_min_col]])),
+    .gp3_x_max = suppressWarnings(as.numeric(aoi_data[[x_max_col]])),
+    .gp3_y_min = suppressWarnings(as.numeric(aoi_data[[y_min_col]])),
+    .gp3_y_max = suppressWarnings(as.numeric(aoi_data[[y_max_col]])),
+    stringsAsFactors = FALSE
+  )
+
+  aoi_plot$.gp3_x_mid <- (aoi_plot$.gp3_x_min + aoi_plot$.gp3_x_max) / 2
+  aoi_plot$.gp3_y_mid <- (aoi_plot$.gp3_y_min + aoi_plot$.gp3_y_max) / 2
+
+  p <- ggplot2::ggplot() +
+    ggplot2::annotate(
+      "rect",
+      xmin = 0,
+      xmax = screen_width,
+      ymin = 0,
+      ymax = screen_height,
+      fill = NA,
+      colour = "grey30",
+      linewidth = 0.6
+    ) +
+    ggplot2::annotate(
+      "rect",
+      xmin = aoi_plot$.gp3_x_min,
+      xmax = aoi_plot$.gp3_x_max,
+      ymin = aoi_plot$.gp3_y_min,
+      ymax = aoi_plot$.gp3_y_max,
+      fill = NA,
+      colour = "steelblue",
+      linewidth = 0.6
+    ) +
+    ggplot2::coord_equal() +
+    ggplot2::xlim(0, screen_width) +
+    ggplot2::labs(
+      title = title,
+      x = "x coordinate",
+      y = "y coordinate"
+    ) +
+    ggplot2::theme_minimal()
+
+  if (isTRUE(show_aoi_labels) && nrow(aoi_plot) > 0L) {
+    p <- p +
+      ggplot2::annotate(
+        "text",
+        x = aoi_plot$.gp3_x_mid,
+        y = aoi_plot$.gp3_y_mid,
+        label = aoi_plot$.gp3_aoi_id,
+        size = 3
+      )
+  }
+
+  if (isTRUE(show_gaze) && !is.null(gaze_data)) {
+    .gp3_require_data_frame(gaze_data, "gaze_data")
+
+    if (is.null(gaze_x_col) || is.null(gaze_y_col)) {
+      stop("Supply both `gaze_x_col` and `gaze_y_col` when `gaze_data` is supplied.", call. = FALSE)
+    }
+
+    .gp3_require_columns(gaze_data, c(gaze_x_col, gaze_y_col), "gaze_data")
+
+    gaze_plot <- data.frame(
+      .gp3_x = suppressWarnings(as.numeric(gaze_data[[gaze_x_col]])),
+      .gp3_y = suppressWarnings(as.numeric(gaze_data[[gaze_y_col]])),
+      stringsAsFactors = FALSE
+    )
+
+    p <- p +
+      ggplot2::geom_point(
+        data = gaze_plot,
+        ggplot2::aes(x = .gp3_x, y = .gp3_y),
+        alpha = gaze_alpha,
+        size = gaze_point_size,
+        na.rm = TRUE
+      )
+  }
+
+  if (isTRUE(reverse_y)) {
+    p <- p + ggplot2::scale_y_reverse(limits = c(screen_height, 0))
+  } else {
+    p <- p + ggplot2::ylim(0, screen_height)
+  }
+
+  p
+}
