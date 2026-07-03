@@ -2366,6 +2366,8 @@ sample-level and fixation-level summary functions.
   : Audit Gazepoint pupil-response overlap risk
 - [`audit_gazepoint_pupil_reliability()`](https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_pupil_reliability.md)
   : Audit split-half reliability for Gazepoint pupil outcomes
+- [`audit_gazepoint_screen_bounds()`](https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_screen_bounds.md)
+  : Audit Gazepoint gaze coordinates against screen bounds
 - [`audit_gazepoint_stimulus_luminance()`](https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_stimulus_luminance.md)
   : Audit stimulus luminance and brightness for Gazepoint studies
 - [`audit_gazepoint_timecourse_grid()`](https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_timecourse_grid.md)
@@ -2507,6 +2509,8 @@ sample-level and fixation-level summary functions.
   : Example Gazepoint master table
 - [`gazepoint_example_pupil_windows`](https://stefanosbalaskas.github.io/gp3tools/reference/gazepoint_example_pupil_windows.md)
   : Example pupil-window summary table
+- [`harmonize_gazepoint_screen_coordinates()`](https://stefanosbalaskas.github.io/gp3tools/reference/harmonize_gazepoint_screen_coordinates.md)
+  : Harmonize Gazepoint screen coordinates across resolutions
 - [`inspect_gazepoint_columns()`](https://stefanosbalaskas.github.io/gp3tools/reference/inspect_gazepoint_columns.md)
   : Inspect Gazepoint columns
 - [`interpolate_gazepoint_pupil()`](https://stefanosbalaskas.github.io/gp3tools/reference/interpolate_gazepoint_pupil.md)

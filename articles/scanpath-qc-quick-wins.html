@@ -239,6 +239,83 @@ easier.</p>
 <span>  title <span class="op">=</span> <span class="st">"Faceted synthetic scanpaths"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p><img src="scanpath-qc-quick-wins_files/figure-html/unnamed-chunk-7-1.png" class="r-plt" alt="" width="672"></p>
+</div>
+<div class="section level2">
+<h2 id="audit-screen-bounds">Audit screen bounds<a class="anchor" aria-label="anchor" href="#audit-screen-bounds"></a>
+</h2>
+<p><code><a href="../reference/audit_gazepoint_screen_bounds.html">audit_gazepoint_screen_bounds()</a></code> checks whether gaze
+coordinates are missing, equal to <code>(0, 0)</code>, or outside
+expected screen or stimulus bounds. This is useful before heatmaps, AOI
+checks, or scanpath visualisation.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">screen_audit</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/audit_gazepoint_screen_bounds.html">audit_gazepoint_screen_bounds</a></span><span class="op">(</span></span>
+<span>  <span class="va">synthetic</span>,</span>
+<span>  x_col <span class="op">=</span> <span class="st">"gaze_x"</span>,</span>
+<span>  y_col <span class="op">=</span> <span class="st">"gaze_y"</span>,</span>
+<span>  screen_width <span class="op">=</span> <span class="fl">1920</span>,</span>
+<span>  screen_height <span class="op">=</span> <span class="fl">1080</span>,</span>
+<span>  group_cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"subject"</span>, <span class="st">"trial"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">screen_audit</span><span class="op">$</span><span class="va">overall_summary</span></span>
+<span><span class="co">#&gt;   n_rows n_missing_coordinate n_zero_zero n_outside_bounds n_invalid_coordinate</span></span>
+<span><span class="co">#&gt; 1    320                    0           0                0                    0</span></span>
+<span><span class="co">#&gt;   missing_coordinate_rate zero_zero_rate outside_bounds_rate</span></span>
+<span><span class="co">#&gt; 1                       0              0                   0</span></span>
+<span><span class="co">#&gt;   invalid_coordinate_rate</span></span>
+<span><span class="co">#&gt; 1                       0</span></span></code></pre></div>
+<p>The row-level and group-level outputs make the diagnostic transparent
+without automatically changing the data.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">screen_audit</span><span class="op">$</span><span class="va">group_summary</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   group_id n_rows n_missing_coordinate n_zero_zero n_outside_bounds</span></span>
+<span><span class="co">#&gt; 1   S001.1     20                    0           0                0</span></span>
+<span><span class="co">#&gt; 2   S001.2     20                    0           0                0</span></span>
+<span><span class="co">#&gt; 3   S001.3     20                    0           0                0</span></span>
+<span><span class="co">#&gt; 4   S001.4     20                    0           0                0</span></span>
+<span><span class="co">#&gt; 5   S002.1     20                    0           0                0</span></span>
+<span><span class="co">#&gt; 6   S002.2     20                    0           0                0</span></span>
+<span><span class="co">#&gt;   n_invalid_coordinate missing_coordinate_rate zero_zero_rate</span></span>
+<span><span class="co">#&gt; 1                    0                       0              0</span></span>
+<span><span class="co">#&gt; 2                    0                       0              0</span></span>
+<span><span class="co">#&gt; 3                    0                       0              0</span></span>
+<span><span class="co">#&gt; 4                    0                       0              0</span></span>
+<span><span class="co">#&gt; 5                    0                       0              0</span></span>
+<span><span class="co">#&gt; 6                    0                       0              0</span></span>
+<span><span class="co">#&gt;   outside_bounds_rate invalid_coordinate_rate</span></span>
+<span><span class="co">#&gt; 1                   0                       0</span></span>
+<span><span class="co">#&gt; 2                   0                       0</span></span>
+<span><span class="co">#&gt; 3                   0                       0</span></span>
+<span><span class="co">#&gt; 4                   0                       0</span></span>
+<span><span class="co">#&gt; 5                   0                       0</span></span>
+<span><span class="co">#&gt; 6                   0                       0</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="harmonize-screen-coordinates">Harmonize screen coordinates<a class="anchor" aria-label="anchor" href="#harmonize-screen-coordinates"></a>
+</h2>
+<p><code><a href="../reference/harmonize_gazepoint_screen_coordinates.html">harmonize_gazepoint_screen_coordinates()</a></code> rescales gaze
+coordinates from one screen or stimulus resolution to another. This is a
+deterministic transformation for harmonising exports before plotting or
+descriptive summaries. It is not a recalibration method.</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">harmonized</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/harmonize_gazepoint_screen_coordinates.html">harmonize_gazepoint_screen_coordinates</a></span><span class="op">(</span></span>
+<span>  <span class="va">synthetic</span>,</span>
+<span>  x_col <span class="op">=</span> <span class="st">"gaze_x"</span>,</span>
+<span>  y_col <span class="op">=</span> <span class="st">"gaze_y"</span>,</span>
+<span>  from_width <span class="op">=</span> <span class="fl">1920</span>,</span>
+<span>  from_height <span class="op">=</span> <span class="fl">1080</span>,</span>
+<span>  to_width <span class="op">=</span> <span class="fl">1280</span>,</span>
+<span>  to_height <span class="op">=</span> <span class="fl">720</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">harmonized</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gaze_x"</span>, <span class="st">"gaze_y"</span>, <span class="st">"gaze_x_harmonized"</span>, <span class="st">"gaze_y_harmonized"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="co">#&gt;      gaze_x   gaze_y gaze_x_harmonized gaze_y_harmonized</span></span>
+<span><span class="co">#&gt; 1  993.1529 498.0263          662.1020          332.0175</span></span>
+<span><span class="co">#&gt; 2  977.2926 794.7236          651.5284          529.8157</span></span>
+<span><span class="co">#&gt; 3  950.9250 535.9970          633.9500          357.3313</span></span>
+<span><span class="co">#&gt; 4 1219.3699 504.5001          812.9133          336.3334</span></span>
+<span><span class="co">#&gt; 5  993.1579 563.9892          662.1052          375.9928</span></span>
+<span><span class="co">#&gt; 6  941.0047 414.5260          627.3365          276.3507</span></span></code></pre></div>
 <p>These visualisations are intended for quality review and
 documentation, not as inferential scanpath-comparison methods.</p>
 </div>

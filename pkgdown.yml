@@ -10,7 +10,7 @@ articles:
   articles/scanpath-qc-quick-wins: scanpath-qc-quick-wins.html
   articles/sequence-reliability: sequence-reliability.html
   articles/statistical-extensions-plots: statistical-extensions-plots.html
-last_built: 2026-07-03T00:21Z
+last_built: 2026-07-03T00:57Z
 urls:
   reference: https://stefanosbalaskas.github.io/gp3tools/reference
   article: https://stefanosbalaskas.github.io/gp3tools/articles

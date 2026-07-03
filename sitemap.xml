@@ -33,6 +33,7 @@
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_pupil_imbalance.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_pupil_overlap_risk.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_pupil_reliability.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_screen_bounds.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_stimulus_luminance.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_timecourse_grid.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/baseline_correct_gazepoint_pupil.html</loc></url>
@@ -101,6 +102,7 @@
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/gazepoint_example_fixations.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/gazepoint_example_master.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/gazepoint_example_pupil_windows.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/harmonize_gazepoint_screen_coordinates.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/index.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/inspect_gazepoint_columns.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/interpolate_gazepoint_pupil.html</loc></url>

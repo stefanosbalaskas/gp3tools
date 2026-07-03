@@ -184,5 +184,91 @@ plot_gazepoint_scanpaths(
 
 ![](scanpath-qc-quick-wins_files/figure-html/unnamed-chunk-7-1.png)
 
+## Audit screen bounds
+
+[`audit_gazepoint_screen_bounds()`](https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_screen_bounds.md)
+checks whether gaze coordinates are missing, equal to `(0, 0)`, or
+outside expected screen or stimulus bounds. This is useful before
+heatmaps, AOI checks, or scanpath visualisation.
+
+``` r
+
+screen_audit <- audit_gazepoint_screen_bounds(
+  synthetic,
+  x_col = "gaze_x",
+  y_col = "gaze_y",
+  screen_width = 1920,
+  screen_height = 1080,
+  group_cols = c("subject", "trial")
+)
+
+screen_audit$overall_summary
+#>   n_rows n_missing_coordinate n_zero_zero n_outside_bounds n_invalid_coordinate
+#> 1    320                    0           0                0                    0
+#>   missing_coordinate_rate zero_zero_rate outside_bounds_rate
+#> 1                       0              0                   0
+#>   invalid_coordinate_rate
+#> 1                       0
+```
+
+The row-level and group-level outputs make the diagnostic transparent
+without automatically changing the data.
+
+``` r
+
+head(screen_audit$group_summary)
+#>   group_id n_rows n_missing_coordinate n_zero_zero n_outside_bounds
+#> 1   S001.1     20                    0           0                0
+#> 2   S001.2     20                    0           0                0
+#> 3   S001.3     20                    0           0                0
+#> 4   S001.4     20                    0           0                0
+#> 5   S002.1     20                    0           0                0
+#> 6   S002.2     20                    0           0                0
+#>   n_invalid_coordinate missing_coordinate_rate zero_zero_rate
+#> 1                    0                       0              0
+#> 2                    0                       0              0
+#> 3                    0                       0              0
+#> 4                    0                       0              0
+#> 5                    0                       0              0
+#> 6                    0                       0              0
+#>   outside_bounds_rate invalid_coordinate_rate
+#> 1                   0                       0
+#> 2                   0                       0
+#> 3                   0                       0
+#> 4                   0                       0
+#> 5                   0                       0
+#> 6                   0                       0
+```
+
+## Harmonize screen coordinates
+
+[`harmonize_gazepoint_screen_coordinates()`](https://stefanosbalaskas.github.io/gp3tools/reference/harmonize_gazepoint_screen_coordinates.md)
+rescales gaze coordinates from one screen or stimulus resolution to
+another. This is a deterministic transformation for harmonising exports
+before plotting or descriptive summaries. It is not a recalibration
+method.
+
+``` r
+
+harmonized <- harmonize_gazepoint_screen_coordinates(
+  synthetic,
+  x_col = "gaze_x",
+  y_col = "gaze_y",
+  from_width = 1920,
+  from_height = 1080,
+  to_width = 1280,
+  to_height = 720
+)
+
+head(harmonized[, c("gaze_x", "gaze_y", "gaze_x_harmonized", "gaze_y_harmonized")])
+#>      gaze_x   gaze_y gaze_x_harmonized gaze_y_harmonized
+#> 1  993.1529 498.0263          662.1020          332.0175
+#> 2  977.2926 794.7236          651.5284          529.8157
+#> 3  950.9250 535.9970          633.9500          357.3313
+#> 4 1219.3699 504.5001          812.9133          336.3334
+#> 5  993.1579 563.9892          662.1052          375.9928
+#> 6  941.0047 414.5260          627.3365          276.3507
+```
+
 These visualisations are intended for quality review and documentation,
 not as inferential scanpath-comparison methods.

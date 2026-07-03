@@ -227,9 +227,9 @@ external_files <- export_gazepoint_mne_cluster_input(
 )
 
 external_files
-#>                                                                          file
-#> 1   /tmp/RtmpV954cO/gp3_cluster_export_33b6605f08c/mne_cluster_long_input.csv
-#> 2 /tmp/RtmpV954cO/gp3_cluster_export_33b6605f08c/README_mne_cluster_input.txt
+#>                                                                           file
+#> 1   /tmp/RtmpUJCtTe/gp3_cluster_export_33d4281663a4/mne_cluster_long_input.csv
+#> 2 /tmp/RtmpUJCtTe/gp3_cluster_export_33d4281663a4/README_mne_cluster_input.txt
 #>      file_type export_status
 #> 1 mne_long_csv            ok
 #> 2       readme            ok
