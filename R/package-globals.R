@@ -28,3 +28,9 @@ utils::globalVariables(c(
   ".gp3_missing_rate",
   ".gp3_variable"
 ))
+
+utils::globalVariables(c(
+  ".gp3_phase",
+  ".gp3_min_time",
+  ".gp3_max_time"
+))

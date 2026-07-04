@@ -399,3 +399,101 @@ report_gazepoint_phase_coverage <- function(data,
   is.data.frame(data) &&
     all(c("group_id", "phase", "n_rows") %in% names(data))
 }
+#' Plot a Gazepoint task-phase timeline
+#'
+#' Creates a descriptive timeline plot from segmented Gazepoint-style data or
+#' from a phase-coverage summary. The plot is intended for visual inspection of
+#' task-phase coverage and timing, not for inferential analysis.
+#'
+#' @param data A segmented data frame or a summary produced by
+#'   `summarize_gazepoint_phase_coverage()`.
+#' @param phase_col Character name of the phase column when `data` is raw data.
+#' @param group_cols Optional grouping columns when `data` is raw data.
+#' @param time_col Optional time column when `data` is raw data.
+#' @param title Optional plot title.
+#'
+#' @return A ggplot object.
+#' @export
+#'
+#' @examples
+#' x <- data.frame(time_ms = c(0, 250, 750, 1250))
+#' windows <- data.frame(
+#'   phase = c("baseline", "stimulus"),
+#'   start = c(0, 500),
+#'   end = c(500, 1500)
+#' )
+#' segmented <- segment_gazepoint_task_phases(x, "time_ms", windows)
+#' plot_gazepoint_phase_timeline(segmented, time_col = "time_ms")
+plot_gazepoint_phase_timeline <- function(data,
+                                          phase_col = "task_phase",
+                                          group_cols = NULL,
+                                          time_col = NULL,
+                                          title = NULL) {
+  .gp3_require_data_frame(data, "data")
+
+  if (.gp3_is_phase_coverage_summary(data)) {
+    summary <- data
+  } else {
+    summary <- summarize_gazepoint_phase_coverage(
+      data,
+      phase_col = phase_col,
+      group_cols = group_cols,
+      time_col = time_col
+    )
+  }
+
+  .gp3_require_columns(summary, c("group_id", "phase", "n_rows"), "phase coverage summary")
+
+  plot_data <- summary
+  plot_data$.gp3_group <- factor(plot_data$group_id, levels = unique(plot_data$group_id))
+  plot_data$.gp3_phase <- factor(plot_data$phase, levels = unique(plot_data$phase))
+
+  has_time <- all(c("min_time", "max_time") %in% names(plot_data)) &&
+    any(is.finite(plot_data$min_time)) &&
+    any(is.finite(plot_data$max_time))
+
+  if (isTRUE(has_time)) {
+    plot_data$.gp3_min_time <- as.numeric(plot_data$min_time)
+    plot_data$.gp3_max_time <- as.numeric(plot_data$max_time)
+
+    return(
+      ggplot2::ggplot(
+        plot_data,
+        ggplot2::aes(
+          x = .gp3_min_time,
+          xend = .gp3_max_time,
+          y = .gp3_group,
+          yend = .gp3_group,
+          colour = .gp3_phase
+        )
+      ) +
+        ggplot2::geom_segment(linewidth = 6, na.rm = TRUE) +
+        ggplot2::labs(
+          title = title,
+          x = "Time",
+          y = "Group",
+          colour = "Phase"
+        ) +
+        ggplot2::theme_minimal()
+    )
+  }
+
+  ggplot2::ggplot(
+    plot_data,
+    ggplot2::aes(
+      x = .gp3_phase,
+      y = n_rows,
+      fill = .gp3_phase
+    )
+  ) +
+    ggplot2::geom_col(na.rm = TRUE) +
+    ggplot2::facet_wrap(ggplot2::vars(.gp3_group), scales = "free_y") +
+    ggplot2::labs(
+      title = title,
+      x = "Phase",
+      y = "Rows",
+      fill = "Phase"
+    ) +
+    ggplot2::theme_minimal() +
+    ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 45, hjust = 1))
+}

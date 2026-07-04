@@ -173,3 +173,59 @@ test_that("report_gazepoint_phase_coverage accepts summary input and validates d
     "digits"
   )
 })
+
+test_that("plot_gazepoint_phase_timeline returns ggplot with timing information", {
+  x <- data.frame(
+    subject = rep(c("S1", "S2"), each = 4),
+    time_ms = rep(c(0, 250, 750, 1250), times = 2)
+  )
+
+  windows <- data.frame(
+    phase = c("baseline", "stimulus"),
+    start = c(0, 500),
+    end = c(500, 1500)
+  )
+
+  segmented <- segment_gazepoint_task_phases(x, "time_ms", windows)
+
+  p <- plot_gazepoint_phase_timeline(
+    segmented,
+    group_cols = "subject",
+    time_col = "time_ms",
+    title = "Task-phase timeline"
+  )
+
+  expect_s3_class(p, "ggplot")
+})
+
+
+test_that("plot_gazepoint_phase_timeline returns fallback count plot without timing", {
+  x <- data.frame(
+    task_phase = c("baseline", "baseline", "stimulus", "response"),
+    subject = c("S1", "S1", "S1", "S1")
+  )
+
+  p <- plot_gazepoint_phase_timeline(
+    x,
+    group_cols = "subject"
+  )
+
+  expect_s3_class(p, "ggplot")
+})
+
+
+test_that("plot_gazepoint_phase_timeline accepts summary input", {
+  x <- data.frame(
+    task_phase = c("baseline", "baseline", "stimulus"),
+    value = c(1, NA, 3)
+  )
+
+  summary <- summarize_gazepoint_phase_coverage(
+    x,
+    value_cols = "value"
+  )
+
+  p <- plot_gazepoint_phase_timeline(summary)
+
+  expect_s3_class(p, "ggplot")
+})
