@@ -42,3 +42,6 @@
 
 - [Missingness and data-coverage
   reporting](https://stefanosbalaskas.github.io/gp3tools/articles/missingness-coverage-reporting.md):
+
+- [Task-phase segmentation and coverage
+  reporting](https://stefanosbalaskas.github.io/gp3tools/articles/phase-segmentation-reporting.md):

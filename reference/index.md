@@ -225,6 +225,8 @@
   : Plot model residual diagnostics
 - [`plot_gazepoint_multiverse_results()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_multiverse_results.md)
   : Plot Gazepoint preprocessing multiverse results
+- [`plot_gazepoint_phase_timeline()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_phase_timeline.md)
+  : Plot a Gazepoint task-phase timeline
 - [`plot_gazepoint_pupil_preprocessing()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_pupil_preprocessing.md)
   : Plot Gazepoint pupil preprocessing for one trial
 - [`plot_gazepoint_pupil_status()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_pupil_status.md)
@@ -297,6 +299,8 @@
   : Report Gazepoint missingness
 - [`report_gazepoint_multiverse()`](https://stefanosbalaskas.github.io/gp3tools/reference/report_gazepoint_multiverse.md)
   : Report multiverse-analysis results
+- [`report_gazepoint_phase_coverage()`](https://stefanosbalaskas.github.io/gp3tools/reference/report_gazepoint_phase_coverage.md)
+  : Report task-phase coverage
 - [`run_gazepoint_aoi_multiverse()`](https://stefanosbalaskas.github.io/gp3tools/reference/run_gazepoint_aoi_multiverse.md)
   : Run a Gazepoint AOI preprocessing multiverse
 - [`run_gazepoint_cluster_permutation()`](https://stefanosbalaskas.github.io/gp3tools/reference/run_gazepoint_cluster_permutation.md)
@@ -327,6 +331,8 @@
   : Run a complete Gazepoint analysis workflow
 - [`save_gazepoint_plots()`](https://stefanosbalaskas.github.io/gp3tools/reference/save_gazepoint_plots.md)
   : Save standard Gazepoint diagnostic plots
+- [`segment_gazepoint_task_phases()`](https://stefanosbalaskas.github.io/gp3tools/reference/segment_gazepoint_task_phases.md)
+  : Segment Gazepoint-style data into task phases
 - [`simulate_gazepoint_cluster_timecourse_data()`](https://stefanosbalaskas.github.io/gp3tools/reference/simulate_gazepoint_cluster_timecourse_data.md)
   : Simulate simple Gazepoint cluster time-course data
 - [`simulate_gazepoint_data()`](https://stefanosbalaskas.github.io/gp3tools/reference/simulate_gazepoint_data.md)
@@ -380,6 +386,9 @@
 - [`summarize_gazepoint_missingness()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarize_gazepoint_missingness.md)
   [`summarise_gazepoint_missingness()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarize_gazepoint_missingness.md)
   : Summarize missingness in Gazepoint-style data
+- [`summarize_gazepoint_phase_coverage()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarize_gazepoint_phase_coverage.md)
+  [`summarise_gazepoint_phase_coverage()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarize_gazepoint_phase_coverage.md)
+  : Summarize task-phase coverage
 - [`summarize_gazepoint_time_clusters()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarize_gazepoint_time_clusters.md)
   : Summarize Gazepoint time clusters
 - [`tidy_gazepoint_model_summary()`](https://stefanosbalaskas.github.io/gp3tools/reference/tidy_gazepoint_model_summary.md)

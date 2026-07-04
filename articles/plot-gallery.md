@@ -35,17 +35,18 @@ sample-level and fixation-level summary functions.
     #> 12         plot_gazepoint_model_predictions
     #> 13           plot_gazepoint_model_residuals
     #> 14        plot_gazepoint_multiverse_results
-    #> 15       plot_gazepoint_pupil_preprocessing
-    #> 16              plot_gazepoint_pupil_status
-    #> 17          plot_gazepoint_pupil_timecourse
-    #> 18                  plot_gazepoint_scanpath
-    #> 19                 plot_gazepoint_scanpaths
-    #> 20        plot_gazepoint_stimulus_layout_qc
-    #> 21               plot_gazepoint_time_series
-    #> 22       plot_gazepoint_time_varying_effect
-    #> 23                       plot_sampling_rate
-    #> 24                    plot_tracking_quality
-    #> 25                  plot_transition_heatmap
+    #> 15            plot_gazepoint_phase_timeline
+    #> 16       plot_gazepoint_pupil_preprocessing
+    #> 17              plot_gazepoint_pupil_status
+    #> 18          plot_gazepoint_pupil_timecourse
+    #> 19                  plot_gazepoint_scanpath
+    #> 20                 plot_gazepoint_scanpaths
+    #> 21        plot_gazepoint_stimulus_layout_qc
+    #> 22               plot_gazepoint_time_series
+    #> 23       plot_gazepoint_time_varying_effect
+    #> 24                       plot_sampling_rate
+    #> 25                    plot_tracking_quality
+    #> 26                  plot_transition_heatmap
 
 ## Sampling rate
 
