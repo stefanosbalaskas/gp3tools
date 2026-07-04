@@ -34,3 +34,7 @@ utils::globalVariables(c(
   ".gp3_min_time",
   ".gp3_max_time"
 ))
+
+utils::globalVariables(c(
+  "n_rows"
+))
