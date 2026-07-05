@@ -45,3 +45,6 @@
 
 - [Task-phase segmentation and coverage
   reporting](https://stefanosbalaskas.github.io/gp3tools/articles/phase-segmentation-reporting.md):
+
+- [QC reporting
+  bundle](https://stefanosbalaskas.github.io/gp3tools/articles/qc-reporting-bundle.md):

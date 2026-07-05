@@ -70,6 +70,8 @@
   : Classify a Gazepoint export
 - [`clean_gazepoint_by_trackloss()`](https://stefanosbalaskas.github.io/gp3tools/reference/clean_gazepoint_by_trackloss.md)
   : Flag or filter Gazepoint data by trackloss
+- [`collect_gazepoint_qc_summaries()`](https://stefanosbalaskas.github.io/gp3tools/reference/collect_gazepoint_qc_summaries.md)
+  : Collect Gazepoint QC summaries
 - [`combine_gazepoint_eyes()`](https://stefanosbalaskas.github.io/gp3tools/reference/combine_gazepoint_eyes.md)
   : Combine left and right Gazepoint eye channels
 - [`compare_gazepoint_nested_models()`](https://stefanosbalaskas.github.io/gp3tools/reference/compare_gazepoint_nested_models.md)
@@ -233,6 +235,8 @@
   : Plot Gazepoint pupil preprocessing status
 - [`plot_gazepoint_pupil_timecourse()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_pupil_timecourse.md)
   : Plot Gazepoint pupil time course
+- [`plot_gazepoint_qc_overview()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_qc_overview.md)
+  : Plot a Gazepoint QC overview
 - [`plot_gazepoint_scanpath()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_scanpath.md)
   : Plot a fixation scanpath
 - [`plot_gazepoint_scanpaths()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_scanpaths.md)
@@ -301,6 +305,8 @@
   : Report multiverse-analysis results
 - [`report_gazepoint_phase_coverage()`](https://stefanosbalaskas.github.io/gp3tools/reference/report_gazepoint_phase_coverage.md)
   : Report task-phase coverage
+- [`report_gazepoint_qc_overview()`](https://stefanosbalaskas.github.io/gp3tools/reference/report_gazepoint_qc_overview.md)
+  : Report Gazepoint QC overview
 - [`run_gazepoint_aoi_multiverse()`](https://stefanosbalaskas.github.io/gp3tools/reference/run_gazepoint_aoi_multiverse.md)
   : Run a Gazepoint AOI preprocessing multiverse
 - [`run_gazepoint_cluster_permutation()`](https://stefanosbalaskas.github.io/gp3tools/reference/run_gazepoint_cluster_permutation.md)
@@ -389,6 +395,9 @@
 - [`summarize_gazepoint_phase_coverage()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarize_gazepoint_phase_coverage.md)
   [`summarise_gazepoint_phase_coverage()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarize_gazepoint_phase_coverage.md)
   : Summarize task-phase coverage
+- [`summarize_gazepoint_qc_status()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarize_gazepoint_qc_status.md)
+  [`summarise_gazepoint_qc_status()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarize_gazepoint_qc_status.md)
+  : Summarize Gazepoint QC status
 - [`summarize_gazepoint_time_clusters()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarize_gazepoint_time_clusters.md)
   : Summarize Gazepoint time clusters
 - [`tidy_gazepoint_model_summary()`](https://stefanosbalaskas.github.io/gp3tools/reference/tidy_gazepoint_model_summary.md)

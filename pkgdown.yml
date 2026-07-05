@@ -9,11 +9,12 @@ articles:
   articles/phase-segmentation-reporting: phase-segmentation-reporting.html
   articles/plot-gallery: plot-gallery.html
   pupil_workflow: pupil_workflow.html
+  articles/qc-reporting-bundle: qc-reporting-bundle.html
   articles/scanpath-qc-quick-wins: scanpath-qc-quick-wins.html
   articles/sequence-reliability: sequence-reliability.html
   articles/statistical-extensions-plots: statistical-extensions-plots.html
   articles/stimulus-layout-qc: stimulus-layout-qc.html
-last_built: 2026-07-04T11:21Z
+last_built: 2026-07-05T09:07Z
 urls:
   reference: https://stefanosbalaskas.github.io/gp3tools/reference
   article: https://stefanosbalaskas.github.io/gp3tools/articles
