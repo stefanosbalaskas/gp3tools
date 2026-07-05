@@ -1,7 +1,13 @@
 # gp3tools 1.0.2.9000
 
 * Development version after the 1.0.2 CRAN patch.
-* Added statistical, sequence, simulation, reporting, and optional interoperability extensions.
+* Added heatmap and spatial visualisation helpers for preparing, plotting, overlaying, and exporting gaze heatmaps.
+* Added scanpath and coordinate-QC helpers for binocular pupil combination, trackloss cleaning, synthetic pupil simulation, time-series plotting, multi-scanpath plotting, screen-bound auditing, and coordinate harmonisation.
+* Added stimulus-layout QC helpers for AOI screen coverage, coordinate coverage summaries, and stimulus-layout QC plots.
+* Added missingness and data-coverage reporting helpers for summarising, plotting, and reporting missing values across selected variables and groups.
+* Added task-phase segmentation and coverage-reporting helpers for explicit phase-window labelling, phase-level data coverage, cautious report text, and phase-timeline visualisation.
+* Added a QC reporting bundle for collecting existing gp3tools audit, readiness, checklist, diagnostic, and reporting objects into compact status summaries, cautious report text, and overview plots.
+* Added pkgdown articles for heatmap spatial visualisation, scanpath QC quick wins, stimulus-layout QC, missingness/data-coverage reporting, task-phase segmentation/reporting, and the QC reporting bundle.
 
 # gp3tools 1.0.2
 

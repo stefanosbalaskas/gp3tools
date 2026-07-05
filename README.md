@@ -27,6 +27,7 @@ It supports common Gazepoint workflows, including:
 * nested model comparison, model-implied prediction plotting, and leave-one-unit model sensitivity;
 * manuscript-ready fixed-effect, EMM, contrast, diagnostic, and model-export tables;
 * real-data readiness gates, reporting checklists, and final analysis-decision audits;
+* stimulus-layout QC, missingness reporting, task-phase coverage, and QC overview bundles;
 * explicit trial and participant exclusion recommendations;
 * offline gaze recalibration / drift correction when known target coordinates are available;
 * diagnostic plots, lightweight HTML reports, and CSV exports;
@@ -72,6 +73,7 @@ Use cluster-based permutation testing for time-course inference. Use `estimate_g
 Use model diagnostics, model summaries, estimated marginal means, nested model comparison, model-prediction plots, and leave-one-unit sensitivity checks before manuscript reporting.
 
 Use `check_gazepoint_real_data_readiness()`, `recommend_gazepoint_exclusions()`, and `create_gazepoint_reporting_checklist()` before final interpretation.
+Use `summarize_gazepoint_missingness()`, `segment_gazepoint_task_phases()`, `collect_gazepoint_qc_summaries()`, and `report_gazepoint_qc_overview()` when preparing transparent data-coverage and QC-reporting summaries.
 
 ## Function map
 
@@ -83,6 +85,9 @@ Use `check_gazepoint_real_data_readiness()`, `recommend_gazepoint_exclusions()`,
 | Create and validate master data | `create_gazepoint_master()`, `as_gazepoint_master()`, `validate_gazepoint_master()`, `audit_gazepoint_master()` |
 | Run a quick end-to-end workflow | `run_gazepoint_workflow()`, `summarise_gazepoint_workflow()`, `create_gazepoint_report()` |
 | Check file pairing, sampling, and signal quality | `check_gazepoint_file_pairs()`, `check_sampling_rate()`, `summarise_tracking_quality()`, `audit_gazepoint_gaze_signal_quality()` |
+| Review screen, stimulus-layout, and coordinate coverage | `audit_gazepoint_screen_bounds()`, `harmonize_gazepoint_screen_coordinates()`, `audit_gazepoint_aoi_screen_coverage()`, `summarize_gazepoint_coordinate_coverage()`, `plot_gazepoint_stimulus_layout_qc()` |
+| Summarise missingness and task-phase coverage | `summarize_gazepoint_missingness()`, `plot_gazepoint_missingness_profile()`, `report_gazepoint_missingness()`, `segment_gazepoint_task_phases()`, `summarize_gazepoint_phase_coverage()`, `plot_gazepoint_phase_timeline()` |
+| Collect QC outputs for reporting | `collect_gazepoint_qc_summaries()`, `summarize_gazepoint_qc_status()`, `report_gazepoint_qc_overview()`, `plot_gazepoint_qc_overview()` |
 | Preprocess pupil data | `flag_gazepoint_pupil()`, `flag_gazepoint_pupil_artifacts()`, `flag_gazepoint_pupil_hampel()`, `interpolate_gazepoint_pupil()`, `smooth_gazepoint_pupil()`, `baseline_correct_gazepoint_pupil()` |
 | Audit pupil reliability and preprocessing choices | `audit_gazepoint_pupil_gaps()`, `audit_gazepoint_pupil_baseline()`, `audit_gazepoint_pupil_drift()`, `audit_gazepoint_pupil_reliability()`, `audit_gazepoint_pupil_overlap_risk()` |
 | Summarise and model pupil outcomes | `summarise_gazepoint_pupil()`, `summarise_gazepoint_pupil_windows()`, `summarise_gazepoint_pupil_trial_features()`, `fit_gazepoint_pupil_window_lmm()`, `fit_gazepoint_pupil_gamm()` |
@@ -103,6 +108,7 @@ The development version also includes an optional statistical-extension layer fo
 - **AOI sequence structure and uncertainty:** `compute_gazepoint_aoi_entropy()`, `compute_gazepoint_aoi_sequence_metrics()`, `compute_gazepoint_sequence_complexity()`, `compute_gazepoint_sequence_distance()`, `compute_gazepoint_scanpath_similarity()`, and `flag_gazepoint_sequence_anomalies()`.
 - **Fixation, scanpath, and transition diagnostics:** `audit_gazepoint_fixation_reliability()`, `compute_gazepoint_saccade_metrics()`, `plot_gazepoint_scanpath()`, `summarise_gazepoint_markovchain()`, `summarise_gazepoint_semimarkov()`, `compute_gazepoint_sequence_recurrence()`, and `compute_gazepoint_transition_network_metrics()`.
 - **Time-course, modelling, and reporting helpers:** `bootstrap_gazepoint_timecourse()`, `plot_gazepoint_time_varying_effect()`, `plot_gazepoint_model_residuals()`, and `report_gazepoint_multiverse()`.
+- **QC coverage and reporting bundles:** `audit_gazepoint_aoi_screen_coverage()`, `summarize_gazepoint_missingness()`, `segment_gazepoint_task_phases()`, `collect_gazepoint_qc_summaries()`, and `report_gazepoint_qc_overview()`.
 - **Simulation and optional interoperability:** `simulate_gazepoint_data()`, `export_gazepoint_to_bids()`, `fit_gazepoint_aoi_brms()`, `prepare_gazepoint_traminer_data()`, `detect_gazepoint_fixations_ivt()`, and `launch_gazepoint_qc_dashboard()`.
 
 The rendered site includes a plot-first article for these additions: `articles/statistical-extensions-plots.html`.
