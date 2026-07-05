@@ -38,3 +38,9 @@ utils::globalVariables(c(
 utils::globalVariables(c(
   "n_rows"
 ))
+
+utils::globalVariables(c(
+  ".gp3_qc_status",
+  ".gp3_qc_object",
+  "n_objects"
+))

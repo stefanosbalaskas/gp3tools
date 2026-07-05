@@ -1,0 +1,143 @@
+---
+title: "QC reporting bundle"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{QC reporting bundle}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 7,
+  fig.height = 4.5,
+  warning = FALSE,
+  message = FALSE
+)
+
+library(gp3tools)
+```
+
+This article demonstrates lightweight helpers for collecting existing gp3tools quality-control outputs into a compact overview. The QC bundle is a reporting aid. It does not rerun audits, define exclusion rules, or replace readiness gates, reporting checklists, or study-specific decisions.
+
+## Example QC objects
+
+The collector works with gp3tools-style objects that contain an `overview` table, as well as standalone overview data frames.
+
+```{r}
+tracking_audit <- list(
+  overview = data.frame(
+    audit_status = "ok",
+    message = "Tracking-quality checks passed.",
+    stringsAsFactors = FALSE
+  )
+)
+
+missingness_audit <- list(
+  overview = data.frame(
+    audit_status = "review",
+    message = "Missingness should be reported by condition.",
+    stringsAsFactors = FALSE
+  )
+)
+
+readiness_gate <- list(
+  overview = data.frame(
+    readiness_status = "ready",
+    decision_message = "Ready for analysis review.",
+    stringsAsFactors = FALSE
+  )
+)
+
+qc_objects <- list(
+  tracking_audit = tracking_audit,
+  missingness_audit = missingness_audit,
+  readiness_gate = readiness_gate
+)
+```
+
+## Collect QC summaries
+
+`collect_gazepoint_qc_summaries()` extracts interpretable status and message information from supplied objects.
+
+```{r}
+qc_bundle <- collect_gazepoint_qc_summaries(qc_objects)
+
+qc_bundle$overview
+```
+
+```{r}
+qc_bundle$object_summary
+```
+
+```{r}
+qc_bundle$status_counts
+```
+
+When requested, the function also keeps a combined long-form table of available overview rows.
+
+```{r}
+head(qc_bundle$overview_rows)
+```
+
+## Summarise QC status
+
+`summarize_gazepoint_qc_status()` produces a compact status summary from a bundle, an object-summary table, or a raw list of objects.
+
+```{r}
+qc_status <- summarize_gazepoint_qc_status(qc_bundle)
+
+qc_status$overview
+```
+
+The British spelling alias is also available.
+
+```{r}
+summarise_gazepoint_qc_status(qc_bundle)$status_counts
+```
+
+## Plot QC overview
+
+`plot_gazepoint_qc_overview()` can show status counts.
+
+```{r}
+plot_gazepoint_qc_overview(
+  qc_bundle,
+  plot_type = "status_counts",
+  title = "QC status counts"
+)
+```
+
+It can also show object-level status.
+
+```{r}
+plot_gazepoint_qc_overview(
+  qc_bundle,
+  plot_type = "objects",
+  title = "QC status by object"
+)
+```
+
+## Generate cautious report text
+
+`report_gazepoint_qc_overview()` returns compact text for reporting support.
+
+```{r}
+qc_report <- report_gazepoint_qc_overview(qc_bundle)
+
+qc_report$report_text
+```
+
+The generated wording is deliberately cautious. The QC overview describes available outputs and interpreted status patterns; it should be read together with the underlying audit tables, readiness gates, exclusion recommendations, and reporting checklist.
+
+## Suggested workflow
+
+A transparent QC-reporting workflow is:
+
+1. Run the relevant gp3tools audits, checks, summaries, and reporting helpers.
+2. Collect their overview tables into a QC bundle.
+3. Inspect the status summary and object-level messages.
+4. Use the plot and report text as a compact review aid.
+5. Keep final exclusion, imputation, modelling, and manuscript decisions separate from the overview itself.
