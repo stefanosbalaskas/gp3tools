@@ -344,6 +344,90 @@ report_gazepoint_qc_overview <- function(qc_bundle,
   setdiff(candidates, message_like)
 }
 
+#' Plot a Gazepoint QC overview
+#'
+#' Creates a descriptive QC-status plot from a QC bundle, QC status summary, or
+#' object-summary table produced by `collect_gazepoint_qc_summaries()`. The plot
+#' is intended for quick review and reporting support; it does not replace the
+#' underlying audit outputs.
+#'
+#' @param qc_bundle A `gp3_qc_summary_bundle`, `gp3_qc_status_summary`,
+#'   object-summary data frame, or list of objects that can be passed to
+#'   `collect_gazepoint_qc_summaries()`.
+#' @param plot_type Either `"status_counts"` or `"objects"`.
+#' @param title Optional plot title.
+#'
+#' @return A ggplot object.
+#' @export
+#'
+#' @examples
+#' x <- list(
+#'   pass = list(overview = data.frame(audit_status = "ok")),
+#'   warn = list(overview = data.frame(audit_status = "review"))
+#' )
+#' plot_gazepoint_qc_overview(x)
+plot_gazepoint_qc_overview <- function(qc_bundle,
+                                       plot_type = c("status_counts", "objects"),
+                                       title = NULL) {
+  plot_type <- match.arg(plot_type)
+
+  summary <- summarize_gazepoint_qc_status(qc_bundle)
+
+  if (identical(plot_type, "status_counts")) {
+    plot_data <- summary$status_counts
+    plot_data$.gp3_qc_status <- factor(
+      plot_data$qc_status,
+      levels = c("fail", "warn", "info", "unknown", "pass")
+    )
+
+    return(
+      ggplot2::ggplot(
+        plot_data,
+        ggplot2::aes(
+          x = .gp3_qc_status,
+          y = n_objects,
+          fill = .gp3_qc_status
+        )
+      ) +
+        ggplot2::geom_col(na.rm = TRUE) +
+        ggplot2::labs(
+          title = title,
+          x = "QC status",
+          y = "Objects",
+          fill = "QC status"
+        ) +
+        ggplot2::theme_minimal()
+    )
+  }
+
+  plot_data <- summary$object_summary
+  plot_data$.gp3_qc_status <- factor(
+    plot_data$qc_status,
+    levels = c("fail", "warn", "info", "unknown", "pass")
+  )
+  plot_data$.gp3_qc_object <- factor(
+    plot_data$object_name,
+    levels = rev(unique(plot_data$object_name))
+  )
+
+  ggplot2::ggplot(
+    plot_data,
+    ggplot2::aes(
+      x = .gp3_qc_status,
+      y = .gp3_qc_object,
+      fill = .gp3_qc_status
+    )
+  ) +
+    ggplot2::geom_tile() +
+    ggplot2::labs(
+      title = title,
+      x = "QC status",
+      y = "Object",
+      fill = "QC status"
+    ) +
+    ggplot2::theme_minimal()
+}
+
 
 .gp3_qc_message_columns <- function(overview) {
   grep(

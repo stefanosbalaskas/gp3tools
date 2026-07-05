@@ -147,3 +147,61 @@ test_that("report_gazepoint_qc_overview validates max_objects", {
     "positive integer"
   )
 })
+test_that("plot_gazepoint_qc_overview returns status-count plot", {
+  bundle <- collect_gazepoint_qc_summaries(
+    list(
+      pass = list(overview = data.frame(audit_status = "ok")),
+      warn = list(overview = data.frame(audit_status = "review"))
+    )
+  )
+
+  p <- plot_gazepoint_qc_overview(
+    bundle,
+    plot_type = "status_counts",
+    title = "QC overview"
+  )
+
+  expect_s3_class(p, "ggplot")
+})
+
+
+test_that("plot_gazepoint_qc_overview returns object-level plot", {
+  bundle <- collect_gazepoint_qc_summaries(
+    list(
+      pass = list(overview = data.frame(audit_status = "ok")),
+      fail = list(overview = data.frame(audit_status = "failed")),
+      unknown = 1:3
+    )
+  )
+
+  p <- plot_gazepoint_qc_overview(
+    bundle,
+    plot_type = "objects"
+  )
+
+  expect_s3_class(p, "ggplot")
+})
+
+
+test_that("plot_gazepoint_qc_overview accepts raw object lists", {
+  objects <- list(
+    pass = list(overview = data.frame(audit_status = "ok")),
+    warn = list(overview = data.frame(audit_status = "review"))
+  )
+
+  p <- plot_gazepoint_qc_overview(objects)
+
+  expect_s3_class(p, "ggplot")
+})
+
+
+test_that("plot_gazepoint_qc_overview validates plot type", {
+  bundle <- collect_gazepoint_qc_summaries(
+    list(pass = list(overview = data.frame(audit_status = "ok")))
+  )
+
+  expect_error(
+    plot_gazepoint_qc_overview(bundle, plot_type = "bad"),
+    "should be one of"
+  )
+})
