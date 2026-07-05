@@ -101,6 +101,7 @@
 <li>nested model comparison, model-implied prediction plotting, and leave-one-unit model sensitivity;</li>
 <li>manuscript-ready fixed-effect, EMM, contrast, diagnostic, and model-export tables;</li>
 <li>real-data readiness gates, reporting checklists, and final analysis-decision audits;</li>
+<li>stimulus-layout QC, missingness reporting, task-phase coverage, and QC overview bundles;</li>
 <li>explicit trial and participant exclusion recommendations;</li>
 <li>offline gaze recalibration / drift correction when known target coordinates are available;</li>
 <li>diagnostic plots, lightweight HTML reports, and CSV exports;</li>
@@ -132,7 +133,7 @@
 <p>Use AOI-entry, fixation, and transition helpers when the analysis concerns looking episodes, fixation summaries, AOI sequences, transition matrices, or scanpath structure.</p>
 <p>Use cluster-based permutation testing for time-course inference. Use <code><a href="reference/estimate_gazepoint_divergence_point.html">estimate_gazepoint_divergence_point()</a></code> as complementary onset/sensitivity evidence, not as a replacement for confirmatory model specification.</p>
 <p>Use model diagnostics, model summaries, estimated marginal means, nested model comparison, model-prediction plots, and leave-one-unit sensitivity checks before manuscript reporting.</p>
-<p>Use <code><a href="reference/check_gazepoint_real_data_readiness.html">check_gazepoint_real_data_readiness()</a></code>, <code><a href="reference/recommend_gazepoint_exclusions.html">recommend_gazepoint_exclusions()</a></code>, and <code><a href="reference/create_gazepoint_reporting_checklist.html">create_gazepoint_reporting_checklist()</a></code> before final interpretation.</p>
+<p>Use <code><a href="reference/check_gazepoint_real_data_readiness.html">check_gazepoint_real_data_readiness()</a></code>, <code><a href="reference/recommend_gazepoint_exclusions.html">recommend_gazepoint_exclusions()</a></code>, and <code><a href="reference/create_gazepoint_reporting_checklist.html">create_gazepoint_reporting_checklist()</a></code> before final interpretation. Use <code><a href="reference/summarize_gazepoint_missingness.html">summarize_gazepoint_missingness()</a></code>, <code><a href="reference/segment_gazepoint_task_phases.html">segment_gazepoint_task_phases()</a></code>, <code><a href="reference/collect_gazepoint_qc_summaries.html">collect_gazepoint_qc_summaries()</a></code>, and <code><a href="reference/report_gazepoint_qc_overview.html">report_gazepoint_qc_overview()</a></code> when preparing transparent data-coverage and QC-reporting summaries.</p>
 </div>
 <div class="section level2">
 <h2 id="function-map">Function map<a class="anchor" aria-label="anchor" href="#function-map"></a>
@@ -170,6 +171,24 @@
 <td>Check file pairing, sampling, and signal quality</td>
 <td>
 <code><a href="reference/check_gazepoint_file_pairs.html">check_gazepoint_file_pairs()</a></code>, <code><a href="reference/check_sampling_rate.html">check_sampling_rate()</a></code>, <code><a href="reference/summarise_tracking_quality.html">summarise_tracking_quality()</a></code>, <code><a href="reference/audit_gazepoint_gaze_signal_quality.html">audit_gazepoint_gaze_signal_quality()</a></code>
+</td>
+</tr>
+<tr>
+<td>Review screen, stimulus-layout, and coordinate coverage</td>
+<td>
+<code><a href="reference/audit_gazepoint_screen_bounds.html">audit_gazepoint_screen_bounds()</a></code>, <code><a href="reference/harmonize_gazepoint_screen_coordinates.html">harmonize_gazepoint_screen_coordinates()</a></code>, <code><a href="reference/audit_gazepoint_aoi_screen_coverage.html">audit_gazepoint_aoi_screen_coverage()</a></code>, <code><a href="reference/summarize_gazepoint_coordinate_coverage.html">summarize_gazepoint_coordinate_coverage()</a></code>, <code><a href="reference/plot_gazepoint_stimulus_layout_qc.html">plot_gazepoint_stimulus_layout_qc()</a></code>
+</td>
+</tr>
+<tr>
+<td>Summarise missingness and task-phase coverage</td>
+<td>
+<code><a href="reference/summarize_gazepoint_missingness.html">summarize_gazepoint_missingness()</a></code>, <code><a href="reference/plot_gazepoint_missingness_profile.html">plot_gazepoint_missingness_profile()</a></code>, <code><a href="reference/report_gazepoint_missingness.html">report_gazepoint_missingness()</a></code>, <code><a href="reference/segment_gazepoint_task_phases.html">segment_gazepoint_task_phases()</a></code>, <code><a href="reference/summarize_gazepoint_phase_coverage.html">summarize_gazepoint_phase_coverage()</a></code>, <code><a href="reference/plot_gazepoint_phase_timeline.html">plot_gazepoint_phase_timeline()</a></code>
+</td>
+</tr>
+<tr>
+<td>Collect QC outputs for reporting</td>
+<td>
+<code><a href="reference/collect_gazepoint_qc_summaries.html">collect_gazepoint_qc_summaries()</a></code>, <code><a href="reference/summarize_gazepoint_qc_status.html">summarize_gazepoint_qc_status()</a></code>, <code><a href="reference/report_gazepoint_qc_overview.html">report_gazepoint_qc_overview()</a></code>, <code><a href="reference/plot_gazepoint_qc_overview.html">plot_gazepoint_qc_overview()</a></code>
 </td>
 </tr>
 <tr>
@@ -246,6 +265,8 @@
 <strong>Fixation, scanpath, and transition diagnostics:</strong> <code><a href="reference/audit_gazepoint_fixation_reliability.html">audit_gazepoint_fixation_reliability()</a></code>, <code><a href="reference/compute_gazepoint_saccade_metrics.html">compute_gazepoint_saccade_metrics()</a></code>, <code><a href="reference/plot_gazepoint_scanpath.html">plot_gazepoint_scanpath()</a></code>, <code><a href="reference/summarise_gazepoint_markovchain.html">summarise_gazepoint_markovchain()</a></code>, <code><a href="reference/summarise_gazepoint_semimarkov.html">summarise_gazepoint_semimarkov()</a></code>, <code><a href="reference/compute_gazepoint_sequence_recurrence.html">compute_gazepoint_sequence_recurrence()</a></code>, and <code><a href="reference/compute_gazepoint_transition_network_metrics.html">compute_gazepoint_transition_network_metrics()</a></code>.</li>
 <li>
 <strong>Time-course, modelling, and reporting helpers:</strong> <code><a href="reference/bootstrap_gazepoint_timecourse.html">bootstrap_gazepoint_timecourse()</a></code>, <code><a href="reference/plot_gazepoint_time_varying_effect.html">plot_gazepoint_time_varying_effect()</a></code>, <code><a href="reference/plot_gazepoint_model_residuals.html">plot_gazepoint_model_residuals()</a></code>, and <code><a href="reference/report_gazepoint_multiverse.html">report_gazepoint_multiverse()</a></code>.</li>
+<li>
+<strong>QC coverage and reporting bundles:</strong> <code><a href="reference/audit_gazepoint_aoi_screen_coverage.html">audit_gazepoint_aoi_screen_coverage()</a></code>, <code><a href="reference/summarize_gazepoint_missingness.html">summarize_gazepoint_missingness()</a></code>, <code><a href="reference/segment_gazepoint_task_phases.html">segment_gazepoint_task_phases()</a></code>, <code><a href="reference/collect_gazepoint_qc_summaries.html">collect_gazepoint_qc_summaries()</a></code>, and <code><a href="reference/report_gazepoint_qc_overview.html">report_gazepoint_qc_overview()</a></code>.</li>
 <li>
 <strong>Simulation and optional interoperability:</strong> <code><a href="reference/simulate_gazepoint_data.html">simulate_gazepoint_data()</a></code>, <code><a href="reference/export_gazepoint_to_bids.html">export_gazepoint_to_bids()</a></code>, <code><a href="reference/fit_gazepoint_aoi_brms.html">fit_gazepoint_aoi_brms()</a></code>, <code><a href="reference/prepare_gazepoint_traminer_data.html">prepare_gazepoint_traminer_data()</a></code>, <code><a href="reference/detect_gazepoint_fixations_ivt.html">detect_gazepoint_fixations_ivt()</a></code>, and <code><a href="reference/launch_gazepoint_qc_dashboard.html">launch_gazepoint_qc_dashboard()</a></code>.</li>
 </ul>

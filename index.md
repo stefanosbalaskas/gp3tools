@@ -36,6 +36,8 @@ It supports common Gazepoint workflows, including:
   model-export tables;
 - real-data readiness gates, reporting checklists, and final
   analysis-decision audits;
+- stimulus-layout QC, missingness reporting, task-phase coverage, and QC
+  overview bundles;
 - explicit trial and participant exclusion recommendations;
 - offline gaze recalibration / drift correction when known target
   coordinates are available;
@@ -113,7 +115,13 @@ Use
 [`recommend_gazepoint_exclusions()`](https://stefanosbalaskas.github.io/gp3tools/reference/recommend_gazepoint_exclusions.md),
 and
 [`create_gazepoint_reporting_checklist()`](https://stefanosbalaskas.github.io/gp3tools/reference/create_gazepoint_reporting_checklist.md)
-before final interpretation.
+before final interpretation. Use
+[`summarize_gazepoint_missingness()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarize_gazepoint_missingness.md),
+[`segment_gazepoint_task_phases()`](https://stefanosbalaskas.github.io/gp3tools/reference/segment_gazepoint_task_phases.md),
+[`collect_gazepoint_qc_summaries()`](https://stefanosbalaskas.github.io/gp3tools/reference/collect_gazepoint_qc_summaries.md),
+and
+[`report_gazepoint_qc_overview()`](https://stefanosbalaskas.github.io/gp3tools/reference/report_gazepoint_qc_overview.md)
+when preparing transparent data-coverage and QC-reporting summaries.
 
 ## Function map
 
@@ -125,6 +133,9 @@ before final interpretation.
 | Create and validate master data | [`create_gazepoint_master()`](https://stefanosbalaskas.github.io/gp3tools/reference/create_gazepoint_master.md), [`as_gazepoint_master()`](https://stefanosbalaskas.github.io/gp3tools/reference/as_gazepoint_master.md), [`validate_gazepoint_master()`](https://stefanosbalaskas.github.io/gp3tools/reference/validate_gazepoint_master.md), [`audit_gazepoint_master()`](https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_master.md) |
 | Run a quick end-to-end workflow | [`run_gazepoint_workflow()`](https://stefanosbalaskas.github.io/gp3tools/reference/run_gazepoint_workflow.md), [`summarise_gazepoint_workflow()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarise_gazepoint_workflow.md), [`create_gazepoint_report()`](https://stefanosbalaskas.github.io/gp3tools/reference/create_gazepoint_report.md) |
 | Check file pairing, sampling, and signal quality | [`check_gazepoint_file_pairs()`](https://stefanosbalaskas.github.io/gp3tools/reference/check_gazepoint_file_pairs.md), [`check_sampling_rate()`](https://stefanosbalaskas.github.io/gp3tools/reference/check_sampling_rate.md), [`summarise_tracking_quality()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarise_tracking_quality.md), [`audit_gazepoint_gaze_signal_quality()`](https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_gaze_signal_quality.md) |
+| Review screen, stimulus-layout, and coordinate coverage | [`audit_gazepoint_screen_bounds()`](https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_screen_bounds.md), [`harmonize_gazepoint_screen_coordinates()`](https://stefanosbalaskas.github.io/gp3tools/reference/harmonize_gazepoint_screen_coordinates.md), [`audit_gazepoint_aoi_screen_coverage()`](https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_aoi_screen_coverage.md), [`summarize_gazepoint_coordinate_coverage()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarize_gazepoint_coordinate_coverage.md), [`plot_gazepoint_stimulus_layout_qc()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_stimulus_layout_qc.md) |
+| Summarise missingness and task-phase coverage | [`summarize_gazepoint_missingness()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarize_gazepoint_missingness.md), [`plot_gazepoint_missingness_profile()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_missingness_profile.md), [`report_gazepoint_missingness()`](https://stefanosbalaskas.github.io/gp3tools/reference/report_gazepoint_missingness.md), [`segment_gazepoint_task_phases()`](https://stefanosbalaskas.github.io/gp3tools/reference/segment_gazepoint_task_phases.md), [`summarize_gazepoint_phase_coverage()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarize_gazepoint_phase_coverage.md), [`plot_gazepoint_phase_timeline()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_phase_timeline.md) |
+| Collect QC outputs for reporting | [`collect_gazepoint_qc_summaries()`](https://stefanosbalaskas.github.io/gp3tools/reference/collect_gazepoint_qc_summaries.md), [`summarize_gazepoint_qc_status()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarize_gazepoint_qc_status.md), [`report_gazepoint_qc_overview()`](https://stefanosbalaskas.github.io/gp3tools/reference/report_gazepoint_qc_overview.md), [`plot_gazepoint_qc_overview()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_qc_overview.md) |
 | Preprocess pupil data | [`flag_gazepoint_pupil()`](https://stefanosbalaskas.github.io/gp3tools/reference/flag_gazepoint_pupil.md), [`flag_gazepoint_pupil_artifacts()`](https://stefanosbalaskas.github.io/gp3tools/reference/flag_gazepoint_pupil_artifacts.md), [`flag_gazepoint_pupil_hampel()`](https://stefanosbalaskas.github.io/gp3tools/reference/flag_gazepoint_pupil_hampel.md), [`interpolate_gazepoint_pupil()`](https://stefanosbalaskas.github.io/gp3tools/reference/interpolate_gazepoint_pupil.md), [`smooth_gazepoint_pupil()`](https://stefanosbalaskas.github.io/gp3tools/reference/smooth_gazepoint_pupil.md), [`baseline_correct_gazepoint_pupil()`](https://stefanosbalaskas.github.io/gp3tools/reference/baseline_correct_gazepoint_pupil.md) |
 | Audit pupil reliability and preprocessing choices | [`audit_gazepoint_pupil_gaps()`](https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_pupil_gaps.md), [`audit_gazepoint_pupil_baseline()`](https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_pupil_baseline.md), [`audit_gazepoint_pupil_drift()`](https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_pupil_drift.md), [`audit_gazepoint_pupil_reliability()`](https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_pupil_reliability.md), [`audit_gazepoint_pupil_overlap_risk()`](https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_pupil_overlap_risk.md) |
 | Summarise and model pupil outcomes | [`summarise_gazepoint_pupil()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarise_gazepoint_pupil.md), [`summarise_gazepoint_pupil_windows()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarise_gazepoint_pupil_windows.md), [`summarise_gazepoint_pupil_trial_features()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarise_gazepoint_pupil_trial_features.md), [`fit_gazepoint_pupil_window_lmm()`](https://stefanosbalaskas.github.io/gp3tools/reference/fit_gazepoint_pupil_window_lmm.md), [`fit_gazepoint_pupil_gamm()`](https://stefanosbalaskas.github.io/gp3tools/reference/fit_gazepoint_pupil_gamm.md) |
@@ -169,6 +180,13 @@ layer for advanced, audit-friendly workflows:
   [`plot_gazepoint_model_residuals()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_model_residuals.md),
   and
   [`report_gazepoint_multiverse()`](https://stefanosbalaskas.github.io/gp3tools/reference/report_gazepoint_multiverse.md).
+- **QC coverage and reporting bundles:**
+  [`audit_gazepoint_aoi_screen_coverage()`](https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_aoi_screen_coverage.md),
+  [`summarize_gazepoint_missingness()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarize_gazepoint_missingness.md),
+  [`segment_gazepoint_task_phases()`](https://stefanosbalaskas.github.io/gp3tools/reference/segment_gazepoint_task_phases.md),
+  [`collect_gazepoint_qc_summaries()`](https://stefanosbalaskas.github.io/gp3tools/reference/collect_gazepoint_qc_summaries.md),
+  and
+  [`report_gazepoint_qc_overview()`](https://stefanosbalaskas.github.io/gp3tools/reference/report_gazepoint_qc_overview.md).
 - **Simulation and optional interoperability:**
   [`simulate_gazepoint_data()`](https://stefanosbalaskas.github.io/gp3tools/reference/simulate_gazepoint_data.md),
   [`export_gazepoint_to_bids()`](https://stefanosbalaskas.github.io/gp3tools/reference/export_gazepoint_to_bids.md),
