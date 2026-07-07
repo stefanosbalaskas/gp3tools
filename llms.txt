@@ -2366,6 +2366,8 @@ sample-level and fixation-level summary functions.
   : Audit Gazepoint event and timing synchronisation
 - [`audit_gazepoint_exclusion_flow()`](https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_exclusion_flow.md)
   : Audit Gazepoint exclusion and retention flow
+- [`audit_gazepoint_face_quality()`](https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_face_quality.md)
+  : Audit external facial-behaviour data quality
 - [`audit_gazepoint_fixation_reliability()`](https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_fixation_reliability.md)
   : Audit split-half reliability of fixation or AOI metrics
 - [`audit_gazepoint_gaze_signal_quality()`](https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_gaze_signal_quality.md)
@@ -2555,6 +2557,8 @@ sample-level and fixation-level summary functions.
   : Plot a Gazepoint cluster-permutation result
 - [`plot_gazepoint_cluster_results()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_cluster_results.md)
   : Plot cluster-based permutation results
+- [`plot_gazepoint_face_quality()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_face_quality.md)
+  : Plot external facial-behaviour data quality
 - [`plot_gazepoint_gca()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_gca.md)
   : Plot observed and fitted Growth Curve Analysis trajectories
 - [`plot_gazepoint_heatmap()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_heatmap.md)
@@ -2735,6 +2739,9 @@ sample-level and fixation-level summary functions.
   : Summarise Gazepoint tracking quality
 - [`summarize_gazepoint_coordinate_coverage()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarize_gazepoint_coordinate_coverage.md)
   : Summarize gaze-coordinate coverage over a screen grid
+- [`summarize_gazepoint_face_quality()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarize_gazepoint_face_quality.md)
+  [`summarise_gazepoint_face_quality()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarize_gazepoint_face_quality.md)
+  : Summarise external facial-behaviour data quality
 - [`summarize_gazepoint_missingness()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarize_gazepoint_missingness.md)
   [`summarise_gazepoint_missingness()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarize_gazepoint_missingness.md)
   : Summarize missingness in Gazepoint-style data
@@ -2808,3 +2815,6 @@ sample-level and fixation-level summary functions.
 
 - [External face-export
   import](https://stefanosbalaskas.github.io/gp3tools/articles/face-export-import.md):
+
+- [External face-data quality
+  audit](https://stefanosbalaskas.github.io/gp3tools/articles/face-quality-audit.md):

@@ -51,3 +51,6 @@
 
 - [External face-export
   import](https://stefanosbalaskas.github.io/gp3tools/articles/face-export-import.md):
+
+- [External face-data quality
+  audit](https://stefanosbalaskas.github.io/gp3tools/articles/face-quality-audit.md):

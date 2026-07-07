@@ -60,10 +60,10 @@ face_raw
 #> # A tibble: 4 × 15
 #>   gp3_face_file        gp3_face_path      gp3_face_source gp3_face_participant…¹
 #>   <chr>                <chr>              <chr>           <chr>                 
-#> 1 file35cf244bec40.csv /tmp/Rtmplaxscc/f… openface        P001                  
-#> 2 file35cf244bec40.csv /tmp/Rtmplaxscc/f… openface        P001                  
-#> 3 file35cf244bec40.csv /tmp/Rtmplaxscc/f… openface        P001                  
-#> 4 file35cf244bec40.csv /tmp/Rtmplaxscc/f… openface        P001                  
+#> 1 file36a0588ed1bc.csv /tmp/Rtmpe0KMm8/f… openface        P001                  
+#> 2 file36a0588ed1bc.csv /tmp/Rtmpe0KMm8/f… openface        P001                  
+#> 3 file36a0588ed1bc.csv /tmp/Rtmpe0KMm8/f… openface        P001                  
+#> 4 file36a0588ed1bc.csv /tmp/Rtmpe0KMm8/f… openface        P001                  
 #> # ℹ abbreviated name: ¹​gp3_face_participant_id
 #> # ℹ 11 more variables: gp3_face_session_id <chr>, frame <int>, timestamp <dbl>,
 #> #   confidence <dbl>, success <int>, gaze_0_x <dbl>, pose_Tx <dbl>,
@@ -119,10 +119,10 @@ face_std[, c(
 #> # A tibble: 4 × 14
 #>   face_source face_file     participant_id face_frame face_time_sec face_time_ms
 #>   <chr>       <chr>         <chr>               <int>         <dbl>        <dbl>
-#> 1 openface    file35cf244b… P001                    1         0                0
-#> 2 openface    file35cf244b… P001                    2         0.033           33
-#> 3 openface    file35cf244b… P001                    3         0.066           66
-#> 4 openface    file35cf244b… P001                    4         0.099           99
+#> 1 openface    file36a0588e… P001                    1         0                0
+#> 2 openface    file36a0588e… P001                    2         0.033           33
+#> 3 openface    file36a0588e… P001                    3         0.066           66
+#> 4 openface    file36a0588e… P001                    4         0.099           99
 #> # ℹ 8 more variables: face_confidence <dbl>, face_success <lgl>,
 #> #   face_valid <lgl>, face_pose_tx <dbl>, face_pose_rx <dbl>, AU04_r <dbl>,
 #> #   AU12_r <dbl>, AU12_c <int>

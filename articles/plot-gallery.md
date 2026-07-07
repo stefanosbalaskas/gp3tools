@@ -28,26 +28,27 @@ sample-level and fixation-level summary functions.
     #> 5  plot_gazepoint_cluster_null_distribution
     #> 6        plot_gazepoint_cluster_permutation
     #> 7            plot_gazepoint_cluster_results
-    #> 8                        plot_gazepoint_gca
-    #> 9                    plot_gazepoint_heatmap
-    #> 10           plot_gazepoint_heatmap_overlay
-    #> 11       plot_gazepoint_missingness_profile
-    #> 12         plot_gazepoint_model_predictions
-    #> 13           plot_gazepoint_model_residuals
-    #> 14        plot_gazepoint_multiverse_results
-    #> 15            plot_gazepoint_phase_timeline
-    #> 16       plot_gazepoint_pupil_preprocessing
-    #> 17              plot_gazepoint_pupil_status
-    #> 18          plot_gazepoint_pupil_timecourse
-    #> 19               plot_gazepoint_qc_overview
-    #> 20                  plot_gazepoint_scanpath
-    #> 21                 plot_gazepoint_scanpaths
-    #> 22        plot_gazepoint_stimulus_layout_qc
-    #> 23               plot_gazepoint_time_series
-    #> 24       plot_gazepoint_time_varying_effect
-    #> 25                       plot_sampling_rate
-    #> 26                    plot_tracking_quality
-    #> 27                  plot_transition_heatmap
+    #> 8               plot_gazepoint_face_quality
+    #> 9                        plot_gazepoint_gca
+    #> 10                   plot_gazepoint_heatmap
+    #> 11           plot_gazepoint_heatmap_overlay
+    #> 12       plot_gazepoint_missingness_profile
+    #> 13         plot_gazepoint_model_predictions
+    #> 14           plot_gazepoint_model_residuals
+    #> 15        plot_gazepoint_multiverse_results
+    #> 16            plot_gazepoint_phase_timeline
+    #> 17       plot_gazepoint_pupil_preprocessing
+    #> 18              plot_gazepoint_pupil_status
+    #> 19          plot_gazepoint_pupil_timecourse
+    #> 20               plot_gazepoint_qc_overview
+    #> 21                  plot_gazepoint_scanpath
+    #> 22                 plot_gazepoint_scanpaths
+    #> 23        plot_gazepoint_stimulus_layout_qc
+    #> 24               plot_gazepoint_time_series
+    #> 25       plot_gazepoint_time_varying_effect
+    #> 26                       plot_sampling_rate
+    #> 27                    plot_tracking_quality
+    #> 28                  plot_transition_heatmap
 
 ## Sampling rate
 
