@@ -44,3 +44,10 @@ utils::globalVariables(c(
   ".gp3_qc_object",
   "n_objects"
 ))
+
+utils::globalVariables(c(
+  ".gp3_face_quality_status",
+  ".gp3_face_quality_n_groups",
+  ".gp3_face_quality_group",
+  ".gp3_face_quality_value"
+))
