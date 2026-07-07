@@ -601,3 +601,176 @@ summarise_gazepoint_face_quality <- summarize_gazepoint_face_quality
 
   do.call(rbind, x)
 }
+
+#' Plot external facial-behaviour data quality
+#'
+#' Creates descriptive quality-control plots from
+#' `audit_gazepoint_face_quality()` output. The plots summarise face-data
+#' validity, confidence, status, or timing gaps. They do not infer facial
+#' expressions or emotional states.
+#'
+#' @param data A `gp3_face_quality_audit` object, a standardised face data frame,
+#'   an unstandardised face data frame, or a CSV path.
+#' @param plot_type One of `"status"`, `"validity"`, `"confidence"`, or
+#'   `"time_gaps"`.
+#' @param group_col Optional grouping column to use on the y-axis for
+#'   group-level plots. Defaults to `face_quality_group`.
+#' @param title Optional plot title.
+#' @param ... Additional arguments passed to `audit_gazepoint_face_quality()`
+#'   when `data` is not already an audit object.
+#'
+#' @return A ggplot object.
+#' @export
+#'
+#' @examples
+#' face <- data.frame(
+#'   frame = 1:3,
+#'   timestamp = c(0, 0.033, 0.066),
+#'   confidence = c(0.95, 0.90, 0.40),
+#'   success = c(1, 1, 1)
+#' )
+#'
+#' plot_gazepoint_face_quality(face)
+plot_gazepoint_face_quality <- function(data,
+                                        plot_type = c(
+                                          "status",
+                                          "validity",
+                                          "confidence",
+                                          "time_gaps"
+                                        ),
+                                        group_col = NULL,
+                                        title = NULL,
+                                        ...) {
+  plot_type <- match.arg(plot_type)
+
+  audit <- if (inherits(data, "gp3_face_quality_audit")) {
+    data
+  } else {
+    audit_gazepoint_face_quality(data, ...)
+  }
+
+  group_summary <- as.data.frame(audit$group_summary, stringsAsFactors = FALSE)
+
+  if (nrow(group_summary) < 1L) {
+    stop("The face-quality audit contains no group-summary rows.", call. = FALSE)
+  }
+
+  if (is.null(group_col)) {
+    group_col <- "face_quality_group"
+  }
+
+  if (!group_col %in% names(group_summary)) {
+    stop("`group_col` was not found in the face-quality summary.", call. = FALSE)
+  }
+
+  if (identical(plot_type, "status")) {
+    plot_data <- as.data.frame(
+      table(group_summary$face_quality_status),
+      stringsAsFactors = FALSE
+    )
+    names(plot_data) <- c("face_quality_status", "n_groups")
+
+    plot_data$.gp3_face_quality_status <- factor(
+      plot_data$face_quality_status,
+      levels = c("fail", "warn", "unknown", "pass")
+    )
+    plot_data$.gp3_face_quality_n_groups <- as.numeric(plot_data$n_groups)
+
+    return(
+      ggplot2::ggplot(
+        plot_data,
+        ggplot2::aes(
+          x = .gp3_face_quality_status,
+          y = .gp3_face_quality_n_groups,
+          fill = .gp3_face_quality_status
+        )
+      ) +
+        ggplot2::geom_col(na.rm = TRUE) +
+        ggplot2::labs(
+          title = title,
+          x = "Face-data quality status",
+          y = "Number of groups",
+          fill = "Status"
+        ) +
+        ggplot2::theme_minimal() +
+        ggplot2::guides(fill = "none")
+    )
+  }
+
+  plot_data <- group_summary
+  plot_data$.gp3_face_quality_group <- factor(
+    plot_data[[group_col]],
+    levels = rev(unique(plot_data[[group_col]]))
+  )
+  plot_data$.gp3_face_quality_status <- factor(
+    plot_data$face_quality_status,
+    levels = c("fail", "warn", "unknown", "pass")
+  )
+
+  if (identical(plot_type, "validity")) {
+    plot_data$.gp3_face_quality_value <- as.numeric(plot_data$valid_percent)
+
+    return(
+      ggplot2::ggplot(
+        plot_data,
+        ggplot2::aes(
+          x = .gp3_face_quality_value,
+          y = .gp3_face_quality_group,
+          fill = .gp3_face_quality_status
+        )
+      ) +
+        ggplot2::geom_col(na.rm = TRUE) +
+        ggplot2::labs(
+          title = title,
+          x = "Valid rows (%)",
+          y = "Group",
+          fill = "Status"
+        ) +
+        ggplot2::theme_minimal()
+    )
+  }
+
+  if (identical(plot_type, "confidence")) {
+    plot_data$.gp3_face_quality_value <- as.numeric(
+      plot_data$median_confidence
+    )
+
+    return(
+      ggplot2::ggplot(
+        plot_data,
+        ggplot2::aes(
+          x = .gp3_face_quality_value,
+          y = .gp3_face_quality_group,
+          fill = .gp3_face_quality_status
+        )
+      ) +
+        ggplot2::geom_col(na.rm = TRUE) +
+        ggplot2::labs(
+          title = title,
+          x = "Median face-detection confidence",
+          y = "Group",
+          fill = "Status"
+        ) +
+        ggplot2::theme_minimal()
+    )
+  }
+
+  plot_data$.gp3_face_quality_value <- as.numeric(plot_data$max_time_gap_sec)
+
+  ggplot2::ggplot(
+    plot_data,
+    ggplot2::aes(
+      x = .gp3_face_quality_value,
+      y = .gp3_face_quality_group,
+      fill = .gp3_face_quality_status
+    )
+  ) +
+    ggplot2::geom_col(na.rm = TRUE) +
+    ggplot2::labs(
+      title = title,
+      x = "Maximum time gap (seconds)",
+      y = "Group",
+      fill = "Status"
+    ) +
+    ggplot2::theme_minimal()
+}

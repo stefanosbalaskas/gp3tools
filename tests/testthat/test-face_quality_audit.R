@@ -148,3 +148,112 @@ test_that("audit_gazepoint_face_quality validates inputs", {
     "must be a data frame"
   )
 })
+
+test_that("plot_gazepoint_face_quality returns status plot", {
+  dat <- data.frame(
+    participant_id = c("P001", "P001", "P002", "P002"),
+    frame = c(1, 2, 1, 2),
+    timestamp = c(0, 0.033, 0, 0.033),
+    confidence = c(0.95, 0.90, 0.95, 0.30),
+    success = c(1, 1, 1, 1),
+    stringsAsFactors = FALSE
+  )
+
+  audit <- audit_gazepoint_face_quality(
+    dat,
+    group_cols = "participant_id"
+  )
+
+  p <- plot_gazepoint_face_quality(audit, plot_type = "status")
+
+  expect_s3_class(p, "ggplot")
+})
+
+
+test_that("plot_gazepoint_face_quality returns validity plot", {
+  dat <- data.frame(
+    participant_id = c("P001", "P001", "P002", "P002"),
+    frame = c(1, 2, 1, 2),
+    timestamp = c(0, 0.033, 0, 0.033),
+    confidence = c(0.95, 0.90, 0.95, 0.30),
+    success = c(1, 1, 1, 1),
+    stringsAsFactors = FALSE
+  )
+
+  p <- plot_gazepoint_face_quality(
+    dat,
+    plot_type = "validity",
+    group_cols = "participant_id"
+  )
+
+  expect_s3_class(p, "ggplot")
+})
+
+
+test_that("plot_gazepoint_face_quality returns confidence plot", {
+  dat <- data.frame(
+    participant_id = c("P001", "P001", "P002", "P002"),
+    frame = c(1, 2, 1, 2),
+    timestamp = c(0, 0.033, 0, 0.033),
+    confidence = c(0.95, 0.90, 0.95, 0.30),
+    success = c(1, 1, 1, 1),
+    stringsAsFactors = FALSE
+  )
+
+  audit <- audit_gazepoint_face_quality(
+    dat,
+    group_cols = "participant_id"
+  )
+
+  p <- plot_gazepoint_face_quality(audit, plot_type = "confidence")
+
+  expect_s3_class(p, "ggplot")
+})
+
+
+test_that("plot_gazepoint_face_quality returns time-gap plot", {
+  dat <- data.frame(
+    participant_id = c("P001", "P001", "P001", "P001"),
+    frame = 1:4,
+    timestamp = c(0, 0.033, 0.066, 1.000),
+    confidence = c(0.95, 0.96, 0.94, 0.93),
+    success = c(1, 1, 1, 1),
+    stringsAsFactors = FALSE
+  )
+
+  audit <- audit_gazepoint_face_quality(
+    dat,
+    group_cols = "participant_id",
+    max_time_gap_sec = 0.20
+  )
+
+  p <- plot_gazepoint_face_quality(audit, plot_type = "time_gaps")
+
+  expect_s3_class(p, "ggplot")
+})
+
+
+test_that("plot_gazepoint_face_quality validates plot type and group column", {
+  dat <- data.frame(
+    frame = 1:2,
+    timestamp = c(0, 0.033),
+    confidence = c(0.95, 0.96),
+    success = c(1, 1)
+  )
+
+  audit <- audit_gazepoint_face_quality(dat)
+
+  expect_error(
+    plot_gazepoint_face_quality(audit, plot_type = "bad"),
+    "should be one of"
+  )
+
+  expect_error(
+    plot_gazepoint_face_quality(
+      audit,
+      plot_type = "validity",
+      group_col = "missing_col"
+    ),
+    "not found"
+  )
+})
