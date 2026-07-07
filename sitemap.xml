@@ -3,6 +3,7 @@
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/LICENSE-text.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/aoi_workflow.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/cluster-permutation-workflow.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/face-export-import.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/heatmap-spatial-visualisation.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/index.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/missingness-coverage-reporting.html</loc></url>
@@ -159,6 +160,7 @@
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/prepare_gazepoint_timecourse_test_data.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/prepare_gazepoint_traminer_data.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/read_gazepoint.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/read_gazepoint_face_export.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/read_gazepoint_folder.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/read_gazepoint_summary.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/recalibrate_gazepoint_gaze.html</loc></url>
@@ -189,6 +191,7 @@
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/simulate_gazepoint_pupil_data.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/smooth_gazepoint_pupil.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/standardise_gazepoint_names.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/standardize_gazepoint_face_columns.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/summarise_aoi_samples.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/summarise_fixations.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/summarise_gazepoint_aoi.html</loc></url>

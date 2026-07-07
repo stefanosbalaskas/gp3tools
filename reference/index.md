@@ -289,6 +289,8 @@
   : Prepare AOI sequences for TraMineR-style workflows
 - [`read_gazepoint()`](https://stefanosbalaskas.github.io/gp3tools/reference/read_gazepoint.md)
   : Read a Gazepoint all-gaze or fixation CSV export
+- [`read_gazepoint_face_export()`](https://stefanosbalaskas.github.io/gp3tools/reference/read_gazepoint_face_export.md)
+  : Read external facial-analysis exports
 - [`read_gazepoint_folder()`](https://stefanosbalaskas.github.io/gp3tools/reference/read_gazepoint_folder.md)
   : Read multiple Gazepoint CSV exports from a folder
 - [`read_gazepoint_summary()`](https://stefanosbalaskas.github.io/gp3tools/reference/read_gazepoint_summary.md)
@@ -349,6 +351,8 @@
   : Smooth Gazepoint pupil data
 - [`standardise_gazepoint_names()`](https://stefanosbalaskas.github.io/gp3tools/reference/standardise_gazepoint_names.md)
   : Standardise Gazepoint column names
+- [`standardize_gazepoint_face_columns()`](https://stefanosbalaskas.github.io/gp3tools/reference/standardize_gazepoint_face_columns.md)
+  : Standardise external facial-analysis columns
 - [`summarise_aoi_samples()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarise_aoi_samples.md)
   : Summarise sample-level AOI viewing
 - [`summarise_fixations()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarise_fixations.md)

@@ -48,3 +48,6 @@
 
 - [QC reporting
   bundle](https://stefanosbalaskas.github.io/gp3tools/articles/qc-reporting-bundle.md):
+
+- [External face-export
+  import](https://stefanosbalaskas.github.io/gp3tools/articles/face-export-import.md):
