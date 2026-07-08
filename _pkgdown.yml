@@ -40,3 +40,4 @@ articles:
     - articles/qc-reporting-bundle
     - articles/face-export-import
     - articles/face-quality-audit
+    - articles/face-data-synchronisation
