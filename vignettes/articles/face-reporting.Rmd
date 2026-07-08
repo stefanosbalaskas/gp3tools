@@ -1,0 +1,229 @@
+---
+title: "External face-data reporting"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{External face-data reporting}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  warning = FALSE,
+  message = FALSE
+)
+
+library(gp3tools)
+```
+
+This article demonstrates reporting helpers for external facial-behaviour workflows used alongside Gazepoint data.
+
+These helpers do **not** infer facial expressions from Gazepoint CSV files. They also do **not** interpret facial behaviour as emotion. Their purpose is narrower: to create reviewer-facing reporting checklists and compact QC summaries for externally generated face-analysis data.
+
+The current scope is:
+
+1. document whether face-analysis input data are available;
+2. check whether standardised face-analysis columns are present;
+3. summarise face-data quality-audit readiness;
+4. summarise synchronisation-audit readiness;
+5. summarise window-summary and reactivity readiness;
+6. summarise model-reporting readiness when models are used;
+7. preserve explicit interpretation cautions.
+
+## Example external face-analysis data
+
+```{r}
+face <- data.frame(
+  participant_id = "P001",
+  frame = 1:4,
+  timestamp = c(0.000, 0.033, 0.066, 0.099),
+  confidence = c(0.98, 0.96, 0.94, 0.92),
+  success = c(1, 1, 1, 1),
+  AU04_r = c(0.05, 0.06, 0.08, 0.09),
+  AU12_r = c(0.20, 0.22, 0.25, 0.27),
+  stringsAsFactors = FALSE
+)
+
+face_std <- standardize_gazepoint_face_columns(face)
+```
+
+## Quality audit
+
+```{r}
+quality_audit <- audit_gazepoint_face_quality(face_std)
+
+quality_audit$overview
+```
+
+## Synchronisation audit
+
+```{r}
+gaze <- data.frame(
+  participant_id = "P001",
+  time_sec = c(0.000, 0.033, 0.066, 0.099),
+  AOI = c("claim", "claim", "logo", "evidence"),
+  stringsAsFactors = FALSE
+)
+
+synced <- sync_gazepoint_face_data(
+  gazepoint_data = gaze,
+  face_data = face,
+  by = c(participant_id = "participant_id"),
+  gaze_time_col = "time_sec",
+  tolerance_sec = 0.050
+)
+
+sync_audit <- audit_gazepoint_face_sync(synced)
+
+sync_audit$overview
+```
+
+## Window summaries
+
+```{r}
+windows <- data.frame(
+  participant_id = "P001",
+  window = c("baseline", "response"),
+  window_start_sec = c(0.000, 0.066),
+  window_end_sec = c(0.033, 0.120),
+  stringsAsFactors = FALSE
+)
+
+face_windows <- summarize_gazepoint_face_windows(
+  face_std,
+  windows = windows,
+  group_cols = "participant_id",
+  window_label_col = "window",
+  measure_cols = c("AU04_r", "AU12_r")
+)
+
+face_windows
+```
+
+## Reactivity summary
+
+```{r}
+face_reactivity <- summarize_gazepoint_face_reactivity(
+  face_windows,
+  baseline_window = "baseline",
+  response_window = "response",
+  group_cols = "participant_id",
+  measure_cols = c("AU04_r", "AU12_r")
+)
+
+face_reactivity
+```
+
+## Optional model object
+
+```{r}
+model_data <- data.frame(
+  AU12_r_mean = c(0.10, 0.20, 0.30, 0.40),
+  rating = c(3, 4, 5, 6)
+)
+
+face_model <- fit_gazepoint_face_window_lmm(
+  model_data,
+  outcome = "rating",
+  predictors = "AU12_r_mean"
+)
+
+face_model$formula
+```
+
+## Reporting checklist
+
+`create_gazepoint_face_reporting_checklist()` creates a compact checklist for methods, supplements, or internal review.
+
+```{r}
+checklist <- create_gazepoint_face_reporting_checklist(
+  face_data = face_std,
+  quality_audit = quality_audit,
+  sync_audit = sync_audit,
+  window_summary = face_windows,
+  reactivity_summary = face_reactivity,
+  multimodal_model = face_model
+)
+
+checklist
+```
+
+The checklist records whether key workflow objects are present, what evidence is available, and what should be reported.
+
+## Markdown QC report
+
+`report_gazepoint_face_qc()` returns a compact markdown report by default.
+
+```{r}
+face_report <- report_gazepoint_face_qc(
+  face_data = face_std,
+  quality_audit = quality_audit,
+  sync_audit = sync_audit,
+  window_summary = face_windows,
+  reactivity_summary = face_reactivity,
+  multimodal_model = face_model
+)
+
+cat(paste(face_report, collapse = "\n"))
+```
+
+## Structured report list
+
+The same information can be returned as a structured list.
+
+```{r}
+face_report_list <- report_gazepoint_face_qc(
+  face_data = face_std,
+  quality_audit = quality_audit,
+  sync_audit = sync_audit,
+  window_summary = face_windows,
+  reactivity_summary = face_reactivity,
+  multimodal_model = face_model,
+  output = "list"
+)
+
+names(face_report_list)
+```
+
+```{r}
+face_report_list$model_summary
+```
+
+## Recommended reporting language
+
+Prefer cautious language such as:
+
+- external facial-behaviour data;
+- face-analysis confidence;
+- valid face-analysis rows;
+- synchronisation coverage;
+- timing difference;
+- window-level facial-behaviour summary;
+- baseline-to-response facial-behaviour change;
+- multimodal association.
+
+Avoid unsupported language such as:
+
+- true emotion detection;
+- hidden affect;
+- psychological diagnosis;
+- micro-expression evidence;
+- emotional state inferred directly from an algorithmic label;
+- causal mechanism without appropriate design support.
+
+## Suggested workflow position
+
+A transparent workflow is:
+
+1. import external face-analysis CSVs with `read_gazepoint_face_export()`;
+2. standardise face-analysis columns with `standardize_gazepoint_face_columns()`;
+3. audit face-data quality with `audit_gazepoint_face_quality()`;
+4. synchronise face data with Gazepoint rows using `sync_gazepoint_face_data()`;
+5. audit synchronisation quality with `audit_gazepoint_face_sync()`;
+6. summarise facial-behaviour variables within analysis windows with `summarize_gazepoint_face_windows()`;
+7. compute descriptive baseline-to-response changes with `summarize_gazepoint_face_reactivity()`;
+8. prepare multimodal analysis tables with `prepare_gazepoint_multimodal_data()`;
+9. fit explicit models where appropriate;
+10. create checklist/reporting summaries with `create_gazepoint_face_reporting_checklist()` and `report_gazepoint_face_qc()`.
