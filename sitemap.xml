@@ -6,6 +6,7 @@
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/face-data-synchronisation.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/face-export-import.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/face-quality-audit.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/face-reporting.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/face-window-summaries.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/heatmap-spatial-visualisation.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/index.html</loc></url>
@@ -73,6 +74,7 @@
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/compute_gazepoint_transition_network_metrics.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/compute_transition_matrix.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/create_gazepoint_analysis_decision_audit.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/create_gazepoint_face_reporting_checklist.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/create_gazepoint_markovchain_object.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/create_gazepoint_master.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/create_gazepoint_preprocessing_multiverse.html</loc></url>
@@ -176,6 +178,7 @@
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/recalibrate_gazepoint_gaze.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/recommend_gazepoint_exclusions.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/report_gazepoint_cluster_permutation.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/report_gazepoint_face_qc.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/report_gazepoint_missingness.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/report_gazepoint_multiverse.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/report_gazepoint_phase_coverage.html</loc></url>

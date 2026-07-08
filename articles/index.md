@@ -63,3 +63,6 @@
 
 - [Multimodal modelling with external face-window
   summaries](https://stefanosbalaskas.github.io/gp3tools/articles/multimodal-modelling.md):
+
+- [External face-data
+  reporting](https://stefanosbalaskas.github.io/gp3tools/articles/face-reporting.md):

@@ -105,6 +105,8 @@
   : Compute an AOI transition matrix
 - [`create_gazepoint_analysis_decision_audit()`](https://stefanosbalaskas.github.io/gp3tools/reference/create_gazepoint_analysis_decision_audit.md)
   : Create a final Gazepoint analysis-decision audit
+- [`create_gazepoint_face_reporting_checklist()`](https://stefanosbalaskas.github.io/gp3tools/reference/create_gazepoint_face_reporting_checklist.md)
+  : Create a reporting checklist for external facial-behaviour workflows
 - [`create_gazepoint_markovchain_object()`](https://stefanosbalaskas.github.io/gp3tools/reference/create_gazepoint_markovchain_object.md)
   : Create a Gazepoint AOI Markov-chain object
 - [`create_gazepoint_master()`](https://stefanosbalaskas.github.io/gp3tools/reference/create_gazepoint_master.md)
@@ -314,6 +316,8 @@
   : Recommend trial and participant exclusions
 - [`report_gazepoint_cluster_permutation()`](https://stefanosbalaskas.github.io/gp3tools/reference/report_gazepoint_cluster_permutation.md)
   : Report a Gazepoint cluster-permutation result
+- [`report_gazepoint_face_qc()`](https://stefanosbalaskas.github.io/gp3tools/reference/report_gazepoint_face_qc.md)
+  : Report external facial-behaviour QC and reporting readiness
 - [`report_gazepoint_missingness()`](https://stefanosbalaskas.github.io/gp3tools/reference/report_gazepoint_missingness.md)
   : Report Gazepoint missingness
 - [`report_gazepoint_multiverse()`](https://stefanosbalaskas.github.io/gp3tools/reference/report_gazepoint_multiverse.md)
