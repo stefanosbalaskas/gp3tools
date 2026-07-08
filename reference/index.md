@@ -403,6 +403,10 @@
 - [`summarize_gazepoint_face_quality()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarize_gazepoint_face_quality.md)
   [`summarise_gazepoint_face_quality()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarize_gazepoint_face_quality.md)
   : Summarise external facial-behaviour data quality
+- [`summarize_gazepoint_face_reactivity()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarize_gazepoint_face_reactivity.md)
+  : Summarise facial-behaviour reactivity between two windows
+- [`summarize_gazepoint_face_windows()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarize_gazepoint_face_windows.md)
+  : Summarise external facial-behaviour data within analysis windows
 - [`summarize_gazepoint_missingness()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarize_gazepoint_missingness.md)
   [`summarise_gazepoint_missingness()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarize_gazepoint_missingness.md)
   : Summarize missingness in Gazepoint-style data

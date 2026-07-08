@@ -58,6 +58,7 @@
     <li><a class="dropdown-item" href="../articles/face-export-import.html">External face-export import</a></li>
     <li><a class="dropdown-item" href="../articles/face-quality-audit.html">External face-data quality audit</a></li>
     <li><a class="dropdown-item" href="../articles/face-data-synchronisation.html">External face-data synchronisation</a></li>
+    <li><a class="dropdown-item" href="../articles/face-window-summaries.html">External face-data window summaries</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -145,10 +146,10 @@ attempts to detect the likely source format when
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 4 × 15</span></span></span>
 <span><span class="co">#&gt;   gp3_face_file        gp3_face_path      gp3_face_source gp3_face_participant…¹</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> file36f53d3a9b16.csv /tmp/RtmpT22DTM/f… openface        P001                  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> file36f53d3a9b16.csv /tmp/RtmpT22DTM/f… openface        P001                  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> file36f53d3a9b16.csv /tmp/RtmpT22DTM/f… openface        P001                  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> file36f53d3a9b16.csv /tmp/RtmpT22DTM/f… openface        P001                  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> file36e225aac1a5.csv /tmp/Rtmp29Uo4x/f… openface        P001                  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> file36e225aac1a5.csv /tmp/Rtmp29Uo4x/f… openface        P001                  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> file36e225aac1a5.csv /tmp/Rtmp29Uo4x/f… openface        P001                  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> file36e225aac1a5.csv /tmp/Rtmp29Uo4x/f… openface        P001                  </span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ abbreviated name: ¹​gp3_face_participant_id</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 11 more variables: gp3_face_session_id &lt;chr&gt;, frame &lt;int&gt;, timestamp &lt;dbl&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   confidence &lt;dbl&gt;, success &lt;int&gt;, gaze_0_x &lt;dbl&gt;, pose_Tx &lt;dbl&gt;,</span></span></span>
@@ -195,10 +196,10 @@ for later auditing and synchronisation.</p>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 4 × 14</span></span></span>
 <span><span class="co">#&gt;   face_source face_file     participant_id face_frame face_time_sec face_time_ms</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> openface    file36f53d3a… P001                    1         0                0</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> openface    file36f53d3a… P001                    2         0.033           33</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> openface    file36f53d3a… P001                    3         0.066           66</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> openface    file36f53d3a… P001                    4         0.099           99</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> openface    file36e225aa… P001                    1         0                0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> openface    file36e225aa… P001                    2         0.033           33</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> openface    file36e225aa… P001                    3         0.066           66</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> openface    file36e225aa… P001                    4         0.099           99</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 8 more variables: face_confidence &lt;dbl&gt;, face_success &lt;lgl&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   face_valid &lt;lgl&gt;, face_pose_tx &lt;dbl&gt;, face_pose_rx &lt;dbl&gt;, AU04_r &lt;dbl&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   AU12_r &lt;dbl&gt;, AU12_c &lt;int&gt;</span></span></span></code></pre></div>
@@ -329,7 +330,7 @@ facial-behaviour features.</li>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer>

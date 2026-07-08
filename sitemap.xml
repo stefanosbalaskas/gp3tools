@@ -6,6 +6,7 @@
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/face-data-synchronisation.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/face-export-import.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/face-quality-audit.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/face-window-summaries.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/heatmap-spatial-visualisation.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/index.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/missingness-coverage-reporting.html</loc></url>
@@ -218,6 +219,8 @@
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/summarise_tracking_quality.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/summarize_gazepoint_coordinate_coverage.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/summarize_gazepoint_face_quality.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/summarize_gazepoint_face_reactivity.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/summarize_gazepoint_face_windows.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/summarize_gazepoint_missingness.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/summarize_gazepoint_phase_coverage.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/summarize_gazepoint_qc_status.html</loc></url>

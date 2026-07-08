@@ -57,3 +57,6 @@
 
 - [External face-data
   synchronisation](https://stefanosbalaskas.github.io/gp3tools/articles/face-data-synchronisation.md):
+
+- [External face-data window
+  summaries](https://stefanosbalaskas.github.io/gp3tools/articles/face-window-summaries.md):
