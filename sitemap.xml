@@ -3,6 +3,7 @@
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/LICENSE-text.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/aoi_workflow.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/cluster-permutation-workflow.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/face-data-synchronisation.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/face-export-import.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/face-quality-audit.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/heatmap-spatial-visualisation.html</loc></url>
@@ -31,6 +32,7 @@
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_event_sync.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_exclusion_flow.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_face_quality.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_face_sync.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_fixation_reliability.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_gaze_signal_quality.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_master.html</loc></url>
@@ -220,6 +222,7 @@
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/summarize_gazepoint_phase_coverage.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/summarize_gazepoint_qc_status.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/summarize_gazepoint_time_clusters.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/sync_gazepoint_face_data.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/tidy_gazepoint_model_summary.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/transform_gazepoint_aoi_empirical_logit.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/validate_gazepoint_master.html</loc></url>

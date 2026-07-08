@@ -54,3 +54,6 @@
 
 - [External face-data quality
   audit](https://stefanosbalaskas.github.io/gp3tools/articles/face-quality-audit.md):
+
+- [External face-data
+  synchronisation](https://stefanosbalaskas.github.io/gp3tools/articles/face-data-synchronisation.md):

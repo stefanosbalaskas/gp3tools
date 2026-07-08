@@ -26,6 +26,9 @@
   : Audit Gazepoint exclusion and retention flow
 - [`audit_gazepoint_face_quality()`](https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_face_quality.md)
   : Audit external facial-behaviour data quality
+- [`audit_gazepoint_face_sync()`](https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_face_sync.md)
+  : Audit synchronisation between Gazepoint and external
+  facial-behaviour data
 - [`audit_gazepoint_fixation_reliability()`](https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_fixation_reliability.md)
   : Audit split-half reliability of fixation or AOI metrics
 - [`audit_gazepoint_gaze_signal_quality()`](https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_gaze_signal_quality.md)
@@ -411,6 +414,8 @@
   : Summarize Gazepoint QC status
 - [`summarize_gazepoint_time_clusters()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarize_gazepoint_time_clusters.md)
   : Summarize Gazepoint time clusters
+- [`sync_gazepoint_face_data()`](https://stefanosbalaskas.github.io/gp3tools/reference/sync_gazepoint_face_data.md)
+  : Synchronise external facial-behaviour data with Gazepoint data
 - [`tidy_gazepoint_model_summary()`](https://stefanosbalaskas.github.io/gp3tools/reference/tidy_gazepoint_model_summary.md)
   : Create a tidy model summary for manuscript tables
 - [`transform_gazepoint_aoi_empirical_logit()`](https://stefanosbalaskas.github.io/gp3tools/reference/transform_gazepoint_aoi_empirical_logit.md)
