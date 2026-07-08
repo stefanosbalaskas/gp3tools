@@ -1,0 +1,207 @@
+---
+title: "Multimodal modelling with external face-window summaries"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Multimodal modelling with external face-window summaries}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  warning = FALSE,
+  message = FALSE
+)
+
+library(gp3tools)
+```
+
+This article demonstrates how to prepare and model multimodal tables that combine external facial-behaviour window summaries with optional Gazepoint-derived gaze, pupil, physiological, or response variables.
+
+These helpers do **not** infer facial expressions from Gazepoint CSV files. They also do **not** interpret facial behaviour as emotion. Their purpose is narrower: to prepare transparent multimodal analysis tables and fit explicit user-specified models.
+
+The current scope is:
+
+1. join facial window summaries with optional gaze or response tables;
+2. mark predictor, outcome, and covariate columns;
+3. optionally create scaled predictor columns;
+4. fit explicit linear, generalised linear, or mixed-effects models;
+5. return the fitted model together with the prepared data and modelling settings.
+
+The helpers do not make causal, diagnostic, or emotion-inference claims.
+
+## Example face-window summaries
+
+```{r}
+face_windows <- data.frame(
+  participant_id = c("P001", "P002", "P003", "P004", "P005", "P006"),
+  trial_id = c(1, 1, 1, 1, 1, 1),
+  face_window_label = "response",
+  AU04_r_mean = c(0.05, 0.08, 0.10, 0.12, 0.14, 0.15),
+  AU12_r_mean = c(0.20, 0.22, 0.25, 0.28, 0.30, 0.32),
+  face_confidence_mean = c(0.95, 0.94, 0.95, 0.93, 0.94, 0.92),
+  stringsAsFactors = FALSE
+)
+```
+
+## Optional Gazepoint-derived summaries
+
+The gaze table may contain AOI dwell time, fixation counts, pupil summaries, GSR summaries, HR/IBI summaries, or other already-computed Gazepoint-derived variables.
+
+```{r}
+gaze_summary <- data.frame(
+  participant_id = c("P001", "P002", "P003", "P004", "P005", "P006"),
+  trial_id = c(1, 1, 1, 1, 1, 1),
+  claim_dwell_time = c(1.10, 1.25, 1.30, 1.45, 1.50, 1.65),
+  pupil_mean = c(3.10, 3.15, 3.20, 3.25, 3.30, 3.35),
+  stringsAsFactors = FALSE
+)
+```
+
+## Optional response table
+
+```{r}
+responses <- data.frame(
+  participant_id = c("P001", "P002", "P003", "P004", "P005", "P006"),
+  trial_id = c(1, 1, 1, 1, 1, 1),
+  rating = c(3, 3.5, 4, 4.5, 5, 5.5),
+  choice = c(0, 0, 1, 1, 1, 1),
+  stringsAsFactors = FALSE
+)
+```
+
+## Prepare multimodal data
+
+`prepare_gazepoint_multimodal_data()` joins the supplied tables and optionally creates scaled predictor columns.
+
+```{r}
+multimodal <- prepare_gazepoint_multimodal_data(
+  face_windows = face_windows,
+  gaze_data = gaze_summary,
+  response_data = responses,
+  by = c("participant_id", "trial_id"),
+  predictor_cols = c(
+    "AU04_r_mean",
+    "AU12_r_mean",
+    "claim_dwell_time",
+    "pupil_mean"
+  ),
+  outcome_cols = c("rating", "choice"),
+  scale_predictors = TRUE
+)
+
+multimodal
+```
+
+The scaling metadata are stored as an attribute.
+
+```{r}
+attr(multimodal, "gp3_multimodal_scaling")
+```
+
+The modelling settings are also retained.
+
+```{r}
+attr(multimodal, "gp3_multimodal_settings")
+```
+
+## Fit a face-window model
+
+`fit_gazepoint_face_window_lmm()` fits an explicit model to a face-window or multimodal table. If `random_effects` is omitted, the helper uses `stats::lm()`.
+
+```{r}
+face_fit <- fit_gazepoint_face_window_lmm(
+  data = multimodal,
+  outcome = "rating",
+  predictors = c("AU04_r_mean_z", "AU12_r_mean_z")
+)
+
+face_fit$formula
+```
+
+```{r}
+summary(face_fit$model)
+```
+
+When `random_effects` is supplied, the helper uses `lme4::lmer()` if `lme4` is installed. This article uses a simple linear model so that the example remains lightweight.
+
+## Fit a multimodal response model
+
+`fit_gazepoint_multimodal_response_model()` can include face-window variables together with gaze, pupil, physiological, or response predictors.
+
+```{r}
+multi_fit <- fit_gazepoint_multimodal_response_model(
+  data = multimodal,
+  outcome = "rating",
+  predictors = c(
+    "AU04_r_mean_z",
+    "AU12_r_mean_z",
+    "claim_dwell_time_z",
+    "pupil_mean_z"
+  )
+)
+
+multi_fit$formula
+```
+
+```{r}
+summary(multi_fit$model)
+```
+
+## Generalised response model
+
+When a `family` is supplied, the helper uses a generalised linear model unless random effects are requested.
+
+```{r}
+choice_fit <- fit_gazepoint_multimodal_response_model(
+  data = multimodal,
+  outcome = "choice",
+  predictors = c("AU12_r_mean_z", "claim_dwell_time_z"),
+  family = stats::binomial()
+)
+
+choice_fit$formula
+```
+
+```{r}
+summary(choice_fit$model)
+```
+
+## Recommended interpretation
+
+The fitted models are statistical summaries of associations among observed or derived variables. They should be interpreted in relation to the study design, measurement quality, synchronisation quality, and preregistered or theoretically justified hypotheses.
+
+Prefer cautious language such as:
+
+- facial-behaviour window predictor;
+- multimodal association;
+- response model;
+- adjusted association;
+- model-estimated relationship;
+- exploratory multimodal feature.
+
+Avoid unsupported language such as:
+
+- true emotion detection;
+- hidden affect;
+- causal proof from observational predictors;
+- psychological diagnosis;
+- emotional state inferred directly from an algorithmic label;
+- definitive mechanism without experimental or longitudinal support.
+
+## Suggested workflow position
+
+A transparent workflow is:
+
+1. import external face-analysis CSVs with `read_gazepoint_face_export()`;
+2. standardise face-analysis columns with `standardize_gazepoint_face_columns()`;
+3. audit face-data quality with `audit_gazepoint_face_quality()`;
+4. synchronise face data with Gazepoint rows using `sync_gazepoint_face_data()`;
+5. audit synchronisation quality with `audit_gazepoint_face_sync()`;
+6. summarise facial-behaviour variables within analysis windows with `summarize_gazepoint_face_windows()`;
+7. compute descriptive baseline-to-response changes with `summarize_gazepoint_face_reactivity()`;
+8. prepare multimodal analysis tables with `prepare_gazepoint_multimodal_data()`;
+9. fit explicit models with `fit_gazepoint_face_window_lmm()` or `fit_gazepoint_multimodal_response_model()`;
+10. report model results together with quality, synchronisation, and window-summary diagnostics.
