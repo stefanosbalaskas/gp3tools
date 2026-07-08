@@ -161,8 +161,12 @@
   : Fit AOI-window model-family sensitivity checks
 - [`fit_gazepoint_aoi_window_glmm()`](https://stefanosbalaskas.github.io/gp3tools/reference/fit_gazepoint_aoi_window_glmm.md)
   : Fit an AOI-window binomial GLMM
+- [`fit_gazepoint_face_window_lmm()`](https://stefanosbalaskas.github.io/gp3tools/reference/fit_gazepoint_face_window_lmm.md)
+  : Fit a facial-behaviour window mixed or linear model
 - [`fit_gazepoint_gca()`](https://stefanosbalaskas.github.io/gp3tools/reference/fit_gazepoint_gca.md)
   : Fit a Gazepoint Growth Curve Analysis mixed model
+- [`fit_gazepoint_multimodal_response_model()`](https://stefanosbalaskas.github.io/gp3tools/reference/fit_gazepoint_multimodal_response_model.md)
+  : Fit a multimodal response model
 - [`fit_gazepoint_pupil_gamm()`](https://stefanosbalaskas.github.io/gp3tools/reference/fit_gazepoint_pupil_gamm.md)
   : Fit a Gazepoint pupil GAMM
 - [`fit_gazepoint_pupil_pfe_gamm()`](https://stefanosbalaskas.github.io/gp3tools/reference/fit_gazepoint_pupil_pfe_gamm.md)
@@ -282,6 +286,8 @@
   : Prepare gaze or fixation coordinates for heatmap plotting
 - [`prepare_gazepoint_hmm_data()`](https://stefanosbalaskas.github.io/gp3tools/reference/prepare_gazepoint_hmm_data.md)
   : Prepare Gazepoint AOI/state sequences for HMM-style workflows
+- [`prepare_gazepoint_multimodal_data()`](https://stefanosbalaskas.github.io/gp3tools/reference/prepare_gazepoint_multimodal_data.md)
+  : Prepare multimodal Gazepoint and external face-window data
 - [`prepare_gazepoint_pupil_gamm_data()`](https://stefanosbalaskas.github.io/gp3tools/reference/prepare_gazepoint_pupil_gamm_data.md)
   : Prepare Gazepoint pupil GAMM data
 - [`prepare_gazepoint_pupil_window_model_data()`](https://stefanosbalaskas.github.io/gp3tools/reference/prepare_gazepoint_pupil_window_model_data.md)

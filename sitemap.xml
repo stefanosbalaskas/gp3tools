@@ -10,6 +10,7 @@
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/heatmap-spatial-visualisation.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/index.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/missingness-coverage-reporting.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/multimodal-modelling.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/phase-segmentation-reporting.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/plot-gallery.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/pupil_workflow.html</loc></url>
@@ -98,7 +99,9 @@
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/fit_gazepoint_aoi_gamm.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/fit_gazepoint_aoi_model_sensitivity.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/fit_gazepoint_aoi_window_glmm.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/fit_gazepoint_face_window_lmm.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/fit_gazepoint_gca.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/fit_gazepoint_multimodal_response_model.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/fit_gazepoint_pupil_gamm.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/fit_gazepoint_pupil_pfe_gamm.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/fit_gazepoint_pupil_window_lmm.html</loc></url>
@@ -159,6 +162,7 @@
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/prepare_gazepoint_gca_data.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/prepare_gazepoint_heatmap_data.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/prepare_gazepoint_hmm_data.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/prepare_gazepoint_multimodal_data.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/prepare_gazepoint_pupil_gamm_data.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/prepare_gazepoint_pupil_window_model_data.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/prepare_gazepoint_pupillometryr_data.html</loc></url>
