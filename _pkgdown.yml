@@ -44,3 +44,13 @@ articles:
     - articles/face-window-summaries
     - articles/multimodal-modelling
     - articles/face-reporting
+    - articles/end-to-end-workflow
+    - articles/plot-gallery-expanded
+    - articles/qc-dashboard-workflow
+    - articles/pupil-preprocessing-baseline-audit
+    - articles/aoi-modelling-workflow
+    - articles/fixations-transitions-scanpaths
+    - articles/model-readiness-sensitivity
+    - articles/external-face-complete-workflow
+    - articles/ecosystem-exports
+    - articles/paper-grade-synthetic-showcase

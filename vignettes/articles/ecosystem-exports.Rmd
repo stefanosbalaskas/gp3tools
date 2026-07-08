@@ -1,0 +1,51 @@
+---
+title: "Exporting to other ecosystems"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Exporting to other ecosystems}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  warning = FALSE,
+  message = FALSE
+)
+
+library(gp3tools)
+```
+
+This article summarises package bridges for preparing outputs for other R, Python, and physiological-analysis ecosystems.
+
+The goal is not to replace specialised tools, but to create clean and documented handoff tables.
+
+## Eye-tracking ecosystem adapters
+
+```{r, eval=FALSE}
+eyetrackingr_data <- prepare_gazepoint_eyetrackingr_input(all_gaze)
+pupillometryr_data <- prepare_gazepoint_pupillometryr_input(all_gaze)
+gazer_data <- run_gazepoint_gazer_crosscheck(all_gaze)
+eyetools_data <- run_gazepoint_eyetools_fixation_detection(all_gaze)
+```
+
+## Physiological and EDA bridges
+
+```{r, eval=FALSE}
+rhrv_input <- prepare_gazepoint_rhrv_input(biometric_data)
+pyppg_input <- prepare_gazepoint_pyppg_input(biometric_data)
+
+ledalab_input <- prepare_gazepoint_ledalab_input(eda_data)
+pspm_input <- prepare_gazepoint_pspm_input(eda_data)
+cvxeda_input <- prepare_gazepoint_cvxeda_input(eda_data)
+```
+
+## Recommended metadata
+
+Exported handoff tables should retain participant IDs, trial IDs, time columns, sampling-rate information, event markers, preprocessing flags, and package-generated diagnostics.
+
+## Reporting note
+
+When using external tools, report both the gp3tools preparation step and the downstream software version/settings.
