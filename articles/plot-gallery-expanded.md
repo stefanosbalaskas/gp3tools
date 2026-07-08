@@ -1,0 +1,55 @@
+# Plot gallery
+
+This article lists the main plotting workflows supported by `gp3tools`
+and explains what each plot is intended to communicate.
+
+The examples are written as reusable templates. Replace the example
+object names with outputs from your own workflow.
+
+## Quality-control plots
+
+``` r
+
+plot_gazepoint_pupil_gaps(pupil_qc)
+plot_gazepoint_pupil_baseline(baseline_qc)
+plot_gazepoint_signal_activity(signal_qc)
+plot_gazepoint_time_resets(time_reset_qc)
+plot_gazepoint_biometric_report_dashboard(report_dashboard)
+```
+
+Use these plots to inspect missingness, timing issues, baseline
+stability, and signal availability before modelling.
+
+## AOI and fixation plots
+
+``` r
+
+plot_gazepoint_aoi_summary(aoi_summary)
+plot_gazepoint_transition_matrix(transition_matrix)
+plot_gazepoint_time_varying_transition_matrix(time_varying_transitions)
+```
+
+AOI and transition plots should be interpreted as visual-attention
+summaries, not as direct evidence of internal cognitive states.
+
+## Model plots
+
+``` r
+
+plot_gazepoint_model_predictions(model_predictions)
+plot_gazepoint_model_leave_one_out(loo_results)
+```
+
+Model plots are useful for communicating predicted values, uncertainty,
+and influential cases.
+
+## External face-data plots
+
+``` r
+
+plot_gazepoint_face_quality(face_quality_qc)
+```
+
+External facial-behaviour plots should be described as quality-control
+and feature-summary plots. They should not be described as direct
+emotion detection.

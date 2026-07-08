@@ -1,0 +1,42 @@
+# AOI modelling workflow
+
+This article summarises AOI-level modelling preparation.
+
+AOI measures are visual-attention measures. They can indicate allocation
+and duration of gaze within defined areas, but they do not directly
+prove interpretation, scrutiny, preference, or comprehension.
+
+## Example workflow
+
+``` r
+
+aoi_summary <- summarize_gazepoint_aoi(
+  all_gaze,
+  group_cols = c('participant_id', 'trial_id', 'AOI')
+)
+
+aoi_glmm <- prepare_gazepoint_aoi_glmm_data(
+  aoi_summary,
+  outcome_col = 'dwell_time_ms',
+  participant_col = 'participant_id',
+  trial_col = 'trial_id'
+)
+
+aoi_logit <- transform_gazepoint_aoi_empirical_logit(
+  aoi_glmm,
+  success_col = 'aoi_samples',
+  total_col = 'total_samples'
+)
+```
+
+## Model-readiness checks
+
+Before fitting models, inspect zero-inflation, trial coverage,
+repeated-measures structure, missing AOIs, and whether the outcome is a
+count, duration, proportion, or transformed proportion.
+
+## Reporting note
+
+Report AOI definitions, screen coordinate system, overlap rules,
+dwell/fixation definitions, and any transformation used before
+modelling.

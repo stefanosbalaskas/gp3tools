@@ -61,6 +61,16 @@
     <li><a class="dropdown-item" href="../articles/face-window-summaries.html">External face-data window summaries</a></li>
     <li><a class="dropdown-item" href="../articles/multimodal-modelling.html">Multimodal modelling with external face-window summaries</a></li>
     <li><a class="dropdown-item" href="../articles/face-reporting.html">External face-data reporting</a></li>
+    <li><a class="dropdown-item" href="../articles/end-to-end-workflow.html">End-to-end Gazepoint analysis workflow</a></li>
+    <li><a class="dropdown-item" href="../articles/plot-gallery-expanded.html">Plot gallery</a></li>
+    <li><a class="dropdown-item" href="../articles/qc-dashboard-workflow.html">Quality-control dashboard workflow</a></li>
+    <li><a class="dropdown-item" href="../articles/pupil-preprocessing-baseline-audit.html">Pupil preprocessing and baseline audit</a></li>
+    <li><a class="dropdown-item" href="../articles/aoi-modelling-workflow.html">AOI modelling workflow</a></li>
+    <li><a class="dropdown-item" href="../articles/fixations-transitions-scanpaths.html">Fixation, transitions, and scanpaths</a></li>
+    <li><a class="dropdown-item" href="../articles/model-readiness-sensitivity.html">Model-readiness and sensitivity analysis</a></li>
+    <li><a class="dropdown-item" href="../articles/external-face-complete-workflow.html">External face-data complete workflow</a></li>
+    <li><a class="dropdown-item" href="../articles/ecosystem-exports.html">Exporting to other ecosystems</a></li>
+    <li><a class="dropdown-item" href="../articles/paper-grade-synthetic-showcase.html">Paper-grade synthetic showcase</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -245,7 +255,7 @@ omitted, the helper uses <code><a href="https://rdrr.io/r/stats/lm.html" class="
 <span></span>
 <span><span class="va">face_fit</span><span class="op">$</span><span class="va">formula</span></span>
 <span><span class="co">#&gt; rating ~ AU04_r_mean_z + AU12_r_mean_z</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x5653a59f66f8&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt; &lt;environment: 0x5556f97508f0&gt;</span></span></code></pre></div>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">face_fit</span><span class="op">$</span><span class="va">model</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -293,7 +303,7 @@ response predictors.</p>
 <span><span class="va">multi_fit</span><span class="op">$</span><span class="va">formula</span></span>
 <span><span class="co">#&gt; rating ~ AU04_r_mean_z + AU12_r_mean_z + claim_dwell_time_z + </span></span>
 <span><span class="co">#&gt;     pupil_mean_z</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x5653a687b710&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt; &lt;environment: 0x5556fa5d4648&gt;</span></span></code></pre></div>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">multi_fit</span><span class="op">$</span><span class="va">model</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -333,7 +343,7 @@ linear model unless random effects are requested.</p>
 <span></span>
 <span><span class="va">choice_fit</span><span class="op">$</span><span class="va">formula</span></span>
 <span><span class="co">#&gt; choice ~ AU12_r_mean_z + claim_dwell_time_z</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x5653a7187b50&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt; &lt;environment: 0x5556faee1b90&gt;</span></span></code></pre></div>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">choice_fit</span><span class="op">$</span><span class="va">model</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>

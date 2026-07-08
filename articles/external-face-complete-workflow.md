@@ -1,0 +1,68 @@
+# External face-data complete workflow
+
+This article combines the external face-data helpers into one complete
+workflow.
+
+These helpers work with externally generated face-analysis CSV files.
+They do not infer facial expressions from Gazepoint CSV files and do not
+treat facial behaviour as direct evidence of emotion.
+
+## Complete workflow
+
+``` r
+
+face_raw <- read_gazepoint_face_export(
+  file = 'external_face_export.csv',
+  source = 'openface'
+)
+
+face_std <- standardize_gazepoint_face_columns(face_raw)
+
+face_quality <- audit_gazepoint_face_quality(face_std)
+
+face_synced <- sync_gazepoint_face_data(
+  gazepoint_data = all_gaze,
+  face_data = face_std,
+  by = c(participant_id = 'participant_id'),
+  gaze_time_col = 'time_sec',
+  tolerance_sec = 0.050
+)
+
+face_sync_qc <- audit_gazepoint_face_sync(face_synced)
+
+face_windows <- summarize_gazepoint_face_windows(
+  face_std,
+  windows = windows,
+  group_cols = c('participant_id', 'trial_id'),
+  window_label_col = 'window',
+  measure_cols = c('AU04_r', 'AU12_r')
+)
+
+face_reactivity <- summarize_gazepoint_face_reactivity(
+  face_windows,
+  baseline_window = 'baseline',
+  response_window = 'response'
+)
+
+face_model <- fit_gazepoint_face_window_lmm(
+  face_windows,
+  outcome = 'rating',
+  predictors = c('AU04_r_mean', 'AU12_r_mean')
+)
+
+face_report <- report_gazepoint_face_qc(
+  face_data = face_std,
+  quality_audit = face_quality,
+  sync_audit = face_sync_qc,
+  window_summary = face_windows,
+  reactivity_summary = face_reactivity,
+  multimodal_model = face_model
+)
+```
+
+## Reporting note
+
+Report the external tool, version, exported variables,
+confidence/validity fields, synchronisation tolerance, window
+definitions, and model specification. Avoid unsupported claims of true
+emotion detection or hidden affect.

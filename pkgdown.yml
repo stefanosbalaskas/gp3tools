@@ -3,24 +3,34 @@ pkgdown: 2.2.1
 pkgdown_sha: ~
 articles:
   aoi_workflow: aoi_workflow.html
+  articles/aoi-modelling-workflow: aoi-modelling-workflow.html
   articles/cluster-permutation-workflow: cluster-permutation-workflow.html
+  articles/ecosystem-exports: ecosystem-exports.html
+  articles/end-to-end-workflow: end-to-end-workflow.html
+  articles/external-face-complete-workflow: external-face-complete-workflow.html
   articles/face-data-synchronisation: face-data-synchronisation.html
   articles/face-export-import: face-export-import.html
   articles/face-quality-audit: face-quality-audit.html
   articles/face-reporting: face-reporting.html
   articles/face-window-summaries: face-window-summaries.html
+  articles/fixations-transitions-scanpaths: fixations-transitions-scanpaths.html
   articles/heatmap-spatial-visualisation: heatmap-spatial-visualisation.html
   articles/missingness-coverage-reporting: missingness-coverage-reporting.html
+  articles/model-readiness-sensitivity: model-readiness-sensitivity.html
   articles/multimodal-modelling: multimodal-modelling.html
+  articles/paper-grade-synthetic-showcase: paper-grade-synthetic-showcase.html
   articles/phase-segmentation-reporting: phase-segmentation-reporting.html
+  articles/plot-gallery-expanded: plot-gallery-expanded.html
   articles/plot-gallery: plot-gallery.html
   pupil_workflow: pupil_workflow.html
+  articles/pupil-preprocessing-baseline-audit: pupil-preprocessing-baseline-audit.html
+  articles/qc-dashboard-workflow: qc-dashboard-workflow.html
   articles/qc-reporting-bundle: qc-reporting-bundle.html
   articles/scanpath-qc-quick-wins: scanpath-qc-quick-wins.html
   articles/sequence-reliability: sequence-reliability.html
   articles/statistical-extensions-plots: statistical-extensions-plots.html
   articles/stimulus-layout-qc: stimulus-layout-qc.html
-last_built: 2026-07-08T10:41Z
+last_built: 2026-07-08T23:35Z
 urls:
   reference: https://stefanosbalaskas.github.io/gp3tools/reference
   article: https://stefanosbalaskas.github.io/gp3tools/articles

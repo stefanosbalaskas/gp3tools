@@ -66,3 +66,33 @@
 
 - [External face-data
   reporting](https://stefanosbalaskas.github.io/gp3tools/articles/face-reporting.md):
+
+- [End-to-end Gazepoint analysis
+  workflow](https://stefanosbalaskas.github.io/gp3tools/articles/end-to-end-workflow.md):
+
+- [Plot
+  gallery](https://stefanosbalaskas.github.io/gp3tools/articles/plot-gallery-expanded.md):
+
+- [Quality-control dashboard
+  workflow](https://stefanosbalaskas.github.io/gp3tools/articles/qc-dashboard-workflow.md):
+
+- [Pupil preprocessing and baseline
+  audit](https://stefanosbalaskas.github.io/gp3tools/articles/pupil-preprocessing-baseline-audit.md):
+
+- [AOI modelling
+  workflow](https://stefanosbalaskas.github.io/gp3tools/articles/aoi-modelling-workflow.md):
+
+- [Fixation, transitions, and
+  scanpaths](https://stefanosbalaskas.github.io/gp3tools/articles/fixations-transitions-scanpaths.md):
+
+- [Model-readiness and sensitivity
+  analysis](https://stefanosbalaskas.github.io/gp3tools/articles/model-readiness-sensitivity.md):
+
+- [External face-data complete
+  workflow](https://stefanosbalaskas.github.io/gp3tools/articles/external-face-complete-workflow.md):
+
+- [Exporting to other
+  ecosystems](https://stefanosbalaskas.github.io/gp3tools/articles/ecosystem-exports.md):
+
+- [Paper-grade synthetic
+  showcase](https://stefanosbalaskas.github.io/gp3tools/articles/paper-grade-synthetic-showcase.md):
