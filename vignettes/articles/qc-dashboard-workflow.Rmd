@@ -1,0 +1,60 @@
+---
+title: "Quality-control dashboard workflow"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Quality-control dashboard workflow}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  warning = FALSE,
+  message = FALSE
+)
+
+library(gp3tools)
+```
+
+This article shows how to organise reviewer-facing quality-control checks.
+
+The focus is on transparent reporting rather than automatic exclusion.
+
+## Core QC domains
+
+- file structure and import success;
+- missing gaze or pupil rows;
+- long gaps and interpolation burden;
+- baseline coverage and stability;
+- calibration or recalibration diagnostics;
+- timing resets and signal activity;
+- exclusion recommendations and review flags.
+
+## Example workflow
+
+```{r, eval=FALSE}
+gap_qc <- audit_gazepoint_pupil_gaps(all_gaze)
+baseline_qc <- audit_gazepoint_pupil_baseline(all_gaze)
+reliability_qc <- audit_gazepoint_pupil_reliability(all_gaze)
+luminance_qc <- audit_gazepoint_stimulus_luminance(stimulus_data)
+
+signal_qc <- assess_gazepoint_signal_activity(all_gaze)
+reset_qc <- assess_gazepoint_time_resets(all_gaze)
+
+exclusions <- recommend_gazepoint_exclusions(
+  pupil_qc = gap_qc,
+  baseline_qc = baseline_qc
+)
+
+dashboard <- plot_gazepoint_biometric_report_dashboard(
+  gap_qc = gap_qc,
+  baseline_qc = baseline_qc,
+  signal_qc = signal_qc
+)
+```
+
+## Reporting recommendation
+
+Report QC results as descriptive diagnostics and decision support. Avoid presenting automated flags as definitive evidence that a participant or trial is invalid without a documented rule.

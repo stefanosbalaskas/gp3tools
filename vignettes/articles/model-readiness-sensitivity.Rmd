@@ -1,0 +1,61 @@
+---
+title: "Model-readiness and sensitivity analysis"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Model-readiness and sensitivity analysis}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  warning = FALSE,
+  message = FALSE
+)
+
+library(gp3tools)
+```
+
+This article summarises model-readiness checks and sensitivity workflows.
+
+## Model-readiness principle
+
+Before modelling, check whether the analysis table contains the expected participant, trial, condition, outcome, predictor, and covariate columns. Also inspect missingness, group sizes, influential observations, and scale compatibility.
+
+## Example workflow
+
+```{r, eval=FALSE}
+model_data <- prepare_gazepoint_multimodal_data(
+  face_windows = face_windows,
+  gaze_data = gaze_summary,
+  response_data = response_data,
+  by = c('participant_id', 'trial_id'),
+  predictors = c('AU12_r_mean', 'claim_dwell_ms'),
+  outcome = 'rating'
+)
+
+fit <- fit_gazepoint_multimodal_response_model(
+  model_data,
+  outcome = 'rating',
+  predictors = c('AU12_r_mean', 'claim_dwell_ms'),
+  covariates = c('trial_order')
+)
+
+loo <- run_gazepoint_model_leave_one_out(fit)
+nested <- compare_gazepoint_nested_models(fit_reduced, fit_full)
+pred <- plot_gazepoint_model_predictions(fit)
+```
+
+## Sensitivity examples
+
+- leave-one-participant-out or leave-one-trial-out checks;
+- nested model comparisons;
+- robustness to covariates;
+- robustness to exclusion thresholds;
+- robustness to alternative AOI or baseline definitions.
+
+## Reporting note
+
+Sensitivity analyses should be described as robustness checks. They should not be used to selectively report only favourable specifications.
