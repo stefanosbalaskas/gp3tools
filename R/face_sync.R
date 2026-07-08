@@ -462,3 +462,452 @@ sync_gazepoint_face_data <- function(gazepoint_data,
 
   x[, c(other_cols, sync_cols), drop = FALSE]
 }
+#' Audit synchronisation between Gazepoint and external facial-behaviour data
+#'
+#' Summarises the output of `sync_gazepoint_face_data()` by reporting matched,
+#' unmatched, outside-tolerance, and missing-timing/frame rows. For nearest-time
+#' synchronisation, it also reports absolute time-difference summaries. The
+#' helper audits alignment quality only; it does not infer facial expressions or
+#' emotional states.
+#'
+#' @param data A data frame returned by `sync_gazepoint_face_data()`.
+#' @param group_cols Optional character vector of grouping columns. Columns not
+#'   present in `data` are ignored. Use `NULL` for an overall-only audit.
+#' @param min_matched_percent Minimum percentage of rows that must have
+#'   `face_sync_status == "matched"` for a group to pass.
+#' @param warning_matched_percent Percentage below which a group is marked as
+#'   `"warn"` when still above `min_matched_percent`.
+#' @param max_abs_diff_sec Optional maximum allowed absolute synchronisation
+#'   difference in seconds. Only evaluated when `face_sync_abs_diff_sec` is
+#'   available.
+#'
+#' @return A list with `overview`, `group_summary`, `issue_summary`, `data`, and
+#'   `settings`. The returned object has class `gp3_face_sync_audit`.
+#' @export
+#'
+#' @examples
+#' gaze <- data.frame(
+#'   subject_id = "P001",
+#'   time_sec = c(0.00, 0.03, 0.07)
+#' )
+#'
+#' face <- data.frame(
+#'   participant_id = "P001",
+#'   frame = 1:3,
+#'   timestamp = c(0.00, 0.033, 0.066),
+#'   confidence = c(0.95, 0.94, 0.93),
+#'   success = c(1, 1, 1)
+#' )
+#'
+#' synced <- sync_gazepoint_face_data(
+#'   gaze,
+#'   face,
+#'   by = c(subject_id = "participant_id"),
+#'   gaze_time_col = "time_sec"
+#' )
+#'
+#' audit_gazepoint_face_sync(synced)
+audit_gazepoint_face_sync <- function(data,
+                                      group_cols = NULL,
+                                      min_matched_percent = 70,
+                                      warning_matched_percent = 85,
+                                      max_abs_diff_sec = NULL) {
+  if (!is.data.frame(data)) {
+    stop("`data` must be a data frame returned by sync_gazepoint_face_data().",
+         call. = FALSE)
+  }
+
+  required <- c(
+    "face_sync_method",
+    "face_sync_status",
+    "face_sync_within_tolerance"
+  )
+
+  missing_required <- setdiff(required, names(data))
+
+  if (length(missing_required) > 0L) {
+    stop(
+      "`data` does not look like synchronised face data. Missing column(s): ",
+      paste(missing_required, collapse = ", "),
+      call. = FALSE
+    )
+  }
+
+  data <- as.data.frame(data, stringsAsFactors = FALSE)
+
+  if (!is.null(group_cols)) {
+    group_cols <- intersect(group_cols, names(data))
+  }
+
+  if (length(group_cols) < 1L) {
+    group_cols <- NULL
+  }
+
+  groups <- .gp3_face_sync_audit_group_indices(data, group_cols)
+
+  group_summary <- lapply(groups, function(idx) {
+    .gp3_face_sync_audit_summarise_subset(
+      data = data,
+      idx = idx,
+      group_cols = group_cols,
+      min_matched_percent = min_matched_percent,
+      warning_matched_percent = warning_matched_percent,
+      max_abs_diff_sec = max_abs_diff_sec
+    )
+  })
+
+  group_summary <- .gp3_face_sync_audit_bind_rows(group_summary)
+  group_summary <- tibble::as_tibble(group_summary)
+
+  overview <- .gp3_face_sync_audit_summarise_subset(
+    data = data,
+    idx = seq_len(nrow(data)),
+    group_cols = NULL,
+    min_matched_percent = min_matched_percent,
+    warning_matched_percent = warning_matched_percent,
+    max_abs_diff_sec = max_abs_diff_sec
+  )
+
+  overview$face_sync_group <- NULL
+  overview <- cbind(
+    data.frame(
+      n_groups = nrow(group_summary),
+      stringsAsFactors = FALSE
+    ),
+    overview,
+    stringsAsFactors = FALSE
+  )
+
+  overview <- tibble::as_tibble(overview)
+
+  issue_summary <- .gp3_face_sync_audit_issue_summary(
+    group_summary = group_summary,
+    min_matched_percent = min_matched_percent,
+    warning_matched_percent = warning_matched_percent,
+    max_abs_diff_sec = max_abs_diff_sec
+  )
+
+  out <- list(
+    overview = overview,
+    group_summary = group_summary,
+    issue_summary = issue_summary,
+    data = tibble::as_tibble(data),
+    settings = list(
+      group_cols = group_cols,
+      min_matched_percent = min_matched_percent,
+      warning_matched_percent = warning_matched_percent,
+      max_abs_diff_sec = max_abs_diff_sec
+    )
+  )
+
+  class(out) <- c("gp3_face_sync_audit", class(out))
+
+  out
+}
+
+
+.gp3_face_sync_audit_group_indices <- function(data, group_cols = NULL) {
+  if (is.null(group_cols) || length(group_cols) < 1L) {
+    return(list(overall = seq_len(nrow(data))))
+  }
+
+  group_data <- data[, group_cols, drop = FALSE]
+  group_data[] <- lapply(group_data, function(x) {
+    x <- as.character(x)
+    x[is.na(x) | x == ""] <- "missing"
+    x
+  })
+
+  group_id <- do.call(paste, c(group_data, sep = " | "))
+  split(seq_len(nrow(data)), group_id)
+}
+
+
+.gp3_face_sync_audit_summarise_subset <- function(data,
+                                                  idx,
+                                                  group_cols = NULL,
+                                                  min_matched_percent = 70,
+                                                  warning_matched_percent = 85,
+                                                  max_abs_diff_sec = NULL) {
+  n_rows <- length(idx)
+
+  group_values <- .gp3_face_sync_audit_group_values(data, idx, group_cols)
+
+  status <- as.character(data$face_sync_status[idx])
+  within_tolerance <- data$face_sync_within_tolerance[idx]
+
+  abs_diff <- if ("face_sync_abs_diff_sec" %in% names(data)) {
+    suppressWarnings(as.numeric(data$face_sync_abs_diff_sec[idx]))
+  } else {
+    rep(NA_real_, n_rows)
+  }
+
+  n_matched <- sum(status == "matched", na.rm = TRUE)
+  n_unmatched <- sum(status == "unmatched", na.rm = TRUE)
+  n_outside_tolerance <- sum(status == "outside_tolerance", na.rm = TRUE)
+  n_missing_gaze_time <- sum(status == "missing_gaze_time", na.rm = TRUE)
+  n_missing_gaze_frame <- sum(status == "missing_gaze_frame", na.rm = TRUE)
+  n_unknown_status <- sum(is.na(status) | status == "", na.rm = TRUE)
+
+  matched_percent <- .gp3_face_sync_audit_percent(n_matched, n_rows)
+  unmatched_percent <- .gp3_face_sync_audit_percent(n_unmatched, n_rows)
+  outside_tolerance_percent <- .gp3_face_sync_audit_percent(
+    n_outside_tolerance,
+    n_rows
+  )
+
+  n_within_tolerance <- sum(within_tolerance %in% TRUE, na.rm = TRUE)
+  within_tolerance_percent <- .gp3_face_sync_audit_percent(
+    n_within_tolerance,
+    n_rows
+  )
+
+  finite_abs_diff <- abs_diff[is.finite(abs_diff)]
+
+  mean_abs_diff_sec <- if (length(finite_abs_diff) > 0L) {
+    mean(finite_abs_diff)
+  } else {
+    NA_real_
+  }
+
+  median_abs_diff_sec <- if (length(finite_abs_diff) > 0L) {
+    stats::median(finite_abs_diff)
+  } else {
+    NA_real_
+  }
+
+  max_abs_diff_sec_observed <- if (length(finite_abs_diff) > 0L) {
+    max(finite_abs_diff)
+  } else {
+    NA_real_
+  }
+
+  p95_abs_diff_sec <- if (length(finite_abs_diff) > 0L) {
+    as.numeric(stats::quantile(finite_abs_diff, probs = 0.95, names = FALSE))
+  } else {
+    NA_real_
+  }
+
+  n_abs_diff_above_limit <- if (!is.null(max_abs_diff_sec)) {
+    sum(abs_diff > max_abs_diff_sec, na.rm = TRUE)
+  } else {
+    NA_integer_
+  }
+
+  face_sync_audit_status <- .gp3_face_sync_audit_status(
+    n_rows = n_rows,
+    matched_percent = matched_percent,
+    max_abs_diff_sec_observed = max_abs_diff_sec_observed,
+    min_matched_percent = min_matched_percent,
+    warning_matched_percent = warning_matched_percent,
+    max_abs_diff_sec = max_abs_diff_sec
+  )
+
+  message <- .gp3_face_sync_audit_message(
+    face_sync_audit_status = face_sync_audit_status,
+    matched_percent = matched_percent,
+    min_matched_percent = min_matched_percent,
+    warning_matched_percent = warning_matched_percent
+  )
+
+  metrics <- data.frame(
+    n_rows = n_rows,
+    n_matched = n_matched,
+    matched_percent = matched_percent,
+    n_unmatched = n_unmatched,
+    unmatched_percent = unmatched_percent,
+    n_outside_tolerance = n_outside_tolerance,
+    outside_tolerance_percent = outside_tolerance_percent,
+    n_missing_gaze_time = n_missing_gaze_time,
+    n_missing_gaze_frame = n_missing_gaze_frame,
+    n_unknown_status = n_unknown_status,
+    n_within_tolerance = n_within_tolerance,
+    within_tolerance_percent = within_tolerance_percent,
+    mean_abs_diff_sec = mean_abs_diff_sec,
+    median_abs_diff_sec = median_abs_diff_sec,
+    p95_abs_diff_sec = p95_abs_diff_sec,
+    max_abs_diff_sec = max_abs_diff_sec_observed,
+    n_abs_diff_above_limit = n_abs_diff_above_limit,
+    face_sync_audit_status = face_sync_audit_status,
+    message = message,
+    stringsAsFactors = FALSE
+  )
+
+  cbind(group_values, metrics, stringsAsFactors = FALSE)
+}
+
+
+.gp3_face_sync_audit_group_values <- function(data, idx, group_cols = NULL) {
+  if (is.null(group_cols) || length(group_cols) < 1L) {
+    return(
+      data.frame(
+        face_sync_group = "overall",
+        stringsAsFactors = FALSE
+      )
+    )
+  }
+
+  vals <- data[idx[[1L]], group_cols, drop = FALSE]
+  vals[] <- lapply(vals, as.character)
+  vals[is.na(vals)] <- "missing"
+
+  group_label <- paste(
+    paste0(names(vals), "=", unlist(vals, use.names = FALSE)),
+    collapse = " | "
+  )
+
+  cbind(
+    data.frame(
+      face_sync_group = group_label,
+      stringsAsFactors = FALSE
+    ),
+    vals,
+    stringsAsFactors = FALSE
+  )
+}
+
+
+.gp3_face_sync_audit_status <- function(n_rows,
+                                        matched_percent,
+                                        max_abs_diff_sec_observed,
+                                        min_matched_percent = 70,
+                                        warning_matched_percent = 85,
+                                        max_abs_diff_sec = NULL) {
+  if (n_rows < 1L) {
+    return("fail")
+  }
+
+  if (is.na(matched_percent)) {
+    return("unknown")
+  }
+
+  if (matched_percent < min_matched_percent) {
+    return("fail")
+  }
+
+  if (matched_percent < warning_matched_percent) {
+    return("warn")
+  }
+
+  if (
+    !is.null(max_abs_diff_sec) &&
+    !is.na(max_abs_diff_sec_observed) &&
+    max_abs_diff_sec_observed > max_abs_diff_sec
+  ) {
+    return("warn")
+  }
+
+  "pass"
+}
+
+
+.gp3_face_sync_audit_message <- function(face_sync_audit_status,
+                                         matched_percent,
+                                         min_matched_percent = 70,
+                                         warning_matched_percent = 85) {
+  if (identical(face_sync_audit_status, "unknown")) {
+    return("Face-data synchronisation quality could not be evaluated.")
+  }
+
+  if (identical(face_sync_audit_status, "fail")) {
+    return(
+      paste0(
+        "Face-data synchronisation is below the minimum threshold (",
+        round(matched_percent, 1),
+        "% matched; minimum ",
+        min_matched_percent,
+        "%)."
+      )
+    )
+  }
+
+  if (identical(face_sync_audit_status, "warn")) {
+    return(
+      paste0(
+        "Face-data synchronisation should be reviewed before analysis (",
+        round(matched_percent, 1),
+        "% matched; warning threshold ",
+        warning_matched_percent,
+        "%)."
+      )
+    )
+  }
+
+  "Face-data synchronisation passed the configured checks."
+}
+
+
+.gp3_face_sync_audit_issue_summary <- function(group_summary,
+                                               min_matched_percent = 70,
+                                               warning_matched_percent = 85,
+                                               max_abs_diff_sec = NULL) {
+  n_groups <- nrow(group_summary)
+
+  out <- data.frame(
+    issue = c(
+      "matched_percent_below_minimum",
+      "matched_percent_below_warning",
+      "unmatched_rows",
+      "outside_tolerance_rows",
+      "missing_gaze_time_rows",
+      "missing_gaze_frame_rows",
+      "large_time_differences"
+    ),
+    n_groups_affected = c(
+      sum(group_summary$matched_percent < min_matched_percent, na.rm = TRUE),
+      sum(group_summary$matched_percent < warning_matched_percent, na.rm = TRUE),
+      sum(group_summary$n_unmatched > 0, na.rm = TRUE),
+      sum(group_summary$n_outside_tolerance > 0, na.rm = TRUE),
+      sum(group_summary$n_missing_gaze_time > 0, na.rm = TRUE),
+      sum(group_summary$n_missing_gaze_frame > 0, na.rm = TRUE),
+      if (!is.null(max_abs_diff_sec)) {
+        sum(group_summary$max_abs_diff_sec > max_abs_diff_sec, na.rm = TRUE)
+      } else {
+        NA_integer_
+      }
+    ),
+    n_groups = n_groups,
+    threshold = c(
+      min_matched_percent,
+      warning_matched_percent,
+      NA_real_,
+      NA_real_,
+      NA_real_,
+      NA_real_,
+      if (is.null(max_abs_diff_sec)) NA_real_ else max_abs_diff_sec
+    ),
+    stringsAsFactors = FALSE
+  )
+
+  out$status <- ifelse(
+    is.na(out$n_groups_affected),
+    "not_checked",
+    ifelse(out$n_groups_affected > 0L, "review", "ok")
+  )
+
+  tibble::as_tibble(out)
+}
+
+
+.gp3_face_sync_audit_percent <- function(x, n) {
+  if (is.na(n) || n <= 0) {
+    return(NA_real_)
+  }
+
+  100 * x / n
+}
+
+
+.gp3_face_sync_audit_bind_rows <- function(x) {
+  all_names <- unique(unlist(lapply(x, names), use.names = FALSE))
+
+  x <- lapply(x, function(dat) {
+    missing <- setdiff(all_names, names(dat))
+    for (m in missing) {
+      dat[[m]] <- NA
+    }
+    dat[, all_names, drop = FALSE]
+  })
+
+  do.call(rbind, x)
+}
