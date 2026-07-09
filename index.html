@@ -63,7 +63,7 @@
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Plots and diagnostics</h6></li>
     <li><a class="dropdown-item" href="articles/plot-gallery.html">Plot gallery</a></li>
-    <li><a class="dropdown-item" href="articles/plot-gallery-expanded.html">Plot gallery</a></li>
+    <li><a class="dropdown-item" href="articles/plot-gallery-expanded.html">Expanded plot gallery</a></li>
     <li><a class="dropdown-item" href="articles/sequence-reliability.html">AOI sequence and reliability diagnostics</a></li>
     <li><a class="dropdown-item" href="articles/statistical-extensions-plots.html">Statistical extensions and plots</a></li>
     <li><a class="dropdown-item" href="articles/heatmap-spatial-visualisation.html">Heatmaps and spatial visualisation</a></li>
@@ -133,6 +133,7 @@
 <li>diagnostic plots, lightweight HTML reports, and CSV exports;</li>
 <li>package-adapter exports for eyetrackingR-style, pupillometryR-style, gazer-style, and eyetools-style workflows;</li>
 <li>optional external gazeR and eyetools cross-check workflows.</li>
+<li>external facial-behaviour import, quality audit, synchronisation, window summaries, multimodal modelling, and reporting helpers for externally generated face-analysis outputs.</li>
 </ul>
 <div class="section level2">
 <h2 id="which-workflow-should-i-use">Which workflow should I use?<a class="anchor" aria-label="anchor" href="#which-workflow-should-i-use"></a>
@@ -275,6 +276,12 @@
 <td>Prepare data for other R eye-tracking packages</td>
 <td>
 <code><a href="reference/prepare_gazepoint_eyetrackingr_data.html">prepare_gazepoint_eyetrackingr_data()</a></code>, <code><a href="reference/prepare_gazepoint_pupillometryr_data.html">prepare_gazepoint_pupillometryr_data()</a></code>, <code><a href="reference/prepare_gazepoint_gazer_data.html">prepare_gazepoint_gazer_data()</a></code>, <code><a href="reference/prepare_gazepoint_eyetools_data.html">prepare_gazepoint_eyetools_data()</a></code>
+</td>
+</tr>
+<tr>
+<td>Work with external facial-behaviour outputs</td>
+<td>
+<code><a href="reference/read_gazepoint_face_export.html">read_gazepoint_face_export()</a></code>, <code><a href="reference/standardize_gazepoint_face_columns.html">standardize_gazepoint_face_columns()</a></code>, <code><a href="reference/audit_gazepoint_face_quality.html">audit_gazepoint_face_quality()</a></code>, <code><a href="reference/sync_gazepoint_face_data.html">sync_gazepoint_face_data()</a></code>, <code><a href="reference/summarize_gazepoint_face_windows.html">summarize_gazepoint_face_windows()</a></code>, <code><a href="reference/fit_gazepoint_multimodal_response_model.html">fit_gazepoint_multimodal_response_model()</a></code>, <code><a href="reference/create_gazepoint_face_reporting_checklist.html">create_gazepoint_face_reporting_checklist()</a></code>, <code><a href="reference/report_gazepoint_face_qc.html">report_gazepoint_face_qc()</a></code>
 </td>
 </tr>
 </tbody>
@@ -1811,16 +1818,15 @@
 <div class="section level2">
 <h2 id="current-package-status">Current package status<a class="anchor" aria-label="anchor" href="#current-package-status"></a>
 </h2>
-<p>The current internal prototype status after the advanced sensitivity, recalibration, reporting, and exclusion-recommendation branches is:</p>
+<p>The current development version includes the core Gazepoint import, quality-control, pupil, AOI, fixation/transition, time-course, model-diagnostics, reporting, ecosystem-adapter, external face-data, and workflow-documentation layers.</p>
+<p>Recent local validation after the website and article updates should end with:</p>
 <div class="sourceCode" id="cb121"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">test</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co"># [ FAIL 0 | WARN 0 | SKIP 0 | PASS 6788 ]</span></span>
-<span></span>
-<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">check</span><span class="op">(</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">check</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co"># 0 errors | 0 warnings | 0 notes</span></span></code></pre></div>
+<p>Focused tests for the recent external face-data, multimodal, reporting, and workflow-documentation branches have also passed with <code>FAIL 0</code>, <code>WARN 0</code>, and <code>SKIP 0</code>.</p>
 <p>During full tests, <code>boundary (singular) fit: see help('isSingular')</code> messages may appear in mixed-model diagnostic contexts. These are expected diagnostic messages from singular-fit test fixtures and are not package failures when the final test summary reports <code>FAIL 0 | WARN 0</code>.</p>
-<p>On some Windows systems, a Quarto/TMPDIR message may appear after <code>devtools::check()</code>. This is harmless when the final <code>R CMD check results</code> report:</p>
-<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="#cb122-1" tabindex="-1"></a><span class="dv">0</span> errors <span class="sc">|</span> <span class="dv">0</span> warnings <span class="sc">|</span> <span class="dv">0</span> notes</span></code></pre></div>
+<p>On some Windows systems, a Quarto/TMPDIR message may appear after <code>devtools::check()</code>. This is harmless when the final R CMD check results report:</p>
+<pre class="text"><code>0 errors | 0 warnings | 0 notes</code></pre>
 <p>The build may show a message that the package depends on R <code>&gt;= 4.1.0</code> because native pipe syntax is used. This is expected.</p>
 </div>
 <div class="section level2">

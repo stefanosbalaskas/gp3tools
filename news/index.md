@@ -2,24 +2,51 @@
 
 ## gp3tools 1.0.2.9000
 
+- Added external facial-behaviour reporting helpers
+  [`create_gazepoint_face_reporting_checklist()`](https://stefanosbalaskas.github.io/gp3tools/reference/create_gazepoint_face_reporting_checklist.md)
+  and
+  [`report_gazepoint_face_qc()`](https://stefanosbalaskas.github.io/gp3tools/reference/report_gazepoint_face_qc.md)
+  for reviewer-facing QC and reporting summaries.
+
+- Added the external face-data reporting article and the complete
+  external face-data workflow article.
+
+- Added ten workflow-oriented pkgdown articles covering end-to-end
+  analysis, plot galleries, QC dashboards, pupil preprocessing, AOI
+  modelling, transitions/scanpaths, model sensitivity, ecosystem
+  exports, and synthetic showcases.
+
+- Reorganised the pkgdown article navbar into clearer topical
+  categories.
+
+- Updated website documentation to reduce duplicate article labels and
+  improve workflow discoverability.
+
 - Development version after the 1.0.2 CRAN patch.
+
 - Added heatmap and spatial visualisation helpers for preparing,
   plotting, overlaying, and exporting gaze heatmaps.
+
 - Added scanpath and coordinate-QC helpers for binocular pupil
   combination, trackloss cleaning, synthetic pupil simulation,
   time-series plotting, multi-scanpath plotting, screen-bound auditing,
   and coordinate harmonisation.
+
 - Added stimulus-layout QC helpers for AOI screen coverage, coordinate
   coverage summaries, and stimulus-layout QC plots.
+
 - Added missingness and data-coverage reporting helpers for summarising,
   plotting, and reporting missing values across selected variables and
   groups.
+
 - Added task-phase segmentation and coverage-reporting helpers for
   explicit phase-window labelling, phase-level data coverage, cautious
   report text, and phase-timeline visualisation.
+
 - Added a QC reporting bundle for collecting existing gp3tools audit,
   readiness, checklist, diagnostic, and reporting objects into compact
   status summaries, cautious report text, and overview plots.
+
 - Added pkgdown articles for heatmap spatial visualisation, scanpath QC
   quick wins, stimulus-layout QC, missingness/data-coverage reporting,
   task-phase segmentation/reporting, and the QC reporting bundle.

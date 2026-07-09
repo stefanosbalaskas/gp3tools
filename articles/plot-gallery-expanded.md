@@ -1,4 +1,4 @@
-# Plot gallery
+# Expanded plot gallery
 
 This article lists the main plotting workflows supported by `gp3tools`
 and explains what each plot is intended to communicate.

@@ -45,6 +45,9 @@ It supports common Gazepoint workflows, including:
 - package-adapter exports for eyetrackingR-style, pupillometryR-style,
   gazer-style, and eyetools-style workflows;
 - optional external gazeR and eyetools cross-check workflows.
+- external facial-behaviour import, quality audit, synchronisation,
+  window summaries, multimodal modelling, and reporting helpers for
+  externally generated face-analysis outputs.
 
 ## Which workflow should I use?
 
@@ -146,6 +149,7 @@ when preparing transparent data-coverage and QC-reporting summaries.
 | Prepare reporting and exclusion decisions | [`check_gazepoint_real_data_readiness()`](https://stefanosbalaskas.github.io/gp3tools/reference/check_gazepoint_real_data_readiness.md), [`recommend_gazepoint_exclusions()`](https://stefanosbalaskas.github.io/gp3tools/reference/recommend_gazepoint_exclusions.md), [`create_gazepoint_reporting_checklist()`](https://stefanosbalaskas.github.io/gp3tools/reference/create_gazepoint_reporting_checklist.md), [`create_gazepoint_analysis_decision_audit()`](https://stefanosbalaskas.github.io/gp3tools/reference/create_gazepoint_analysis_decision_audit.md) |
 | Export tables and outputs | [`export_gazepoint_tables()`](https://stefanosbalaskas.github.io/gp3tools/reference/export_gazepoint_tables.md), [`export_gazepoint_model_tables()`](https://stefanosbalaskas.github.io/gp3tools/reference/export_gazepoint_model_tables.md), [`export_gazepoint_master_audit()`](https://stefanosbalaskas.github.io/gp3tools/reference/export_gazepoint_master_audit.md), [`save_gazepoint_plots()`](https://stefanosbalaskas.github.io/gp3tools/reference/save_gazepoint_plots.md) |
 | Prepare data for other R eye-tracking packages | [`prepare_gazepoint_eyetrackingr_data()`](https://stefanosbalaskas.github.io/gp3tools/reference/prepare_gazepoint_eyetrackingr_data.md), [`prepare_gazepoint_pupillometryr_data()`](https://stefanosbalaskas.github.io/gp3tools/reference/prepare_gazepoint_pupillometryr_data.md), [`prepare_gazepoint_gazer_data()`](https://stefanosbalaskas.github.io/gp3tools/reference/prepare_gazepoint_gazer_data.md), [`prepare_gazepoint_eyetools_data()`](https://stefanosbalaskas.github.io/gp3tools/reference/prepare_gazepoint_eyetools_data.md) |
+| Work with external facial-behaviour outputs | [`read_gazepoint_face_export()`](https://stefanosbalaskas.github.io/gp3tools/reference/read_gazepoint_face_export.md), [`standardize_gazepoint_face_columns()`](https://stefanosbalaskas.github.io/gp3tools/reference/standardize_gazepoint_face_columns.md), [`audit_gazepoint_face_quality()`](https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_face_quality.md), [`sync_gazepoint_face_data()`](https://stefanosbalaskas.github.io/gp3tools/reference/sync_gazepoint_face_data.md), [`summarize_gazepoint_face_windows()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarize_gazepoint_face_windows.md), [`fit_gazepoint_multimodal_response_model()`](https://stefanosbalaskas.github.io/gp3tools/reference/fit_gazepoint_multimodal_response_model.md), [`create_gazepoint_face_reporting_checklist()`](https://stefanosbalaskas.github.io/gp3tools/reference/create_gazepoint_face_reporting_checklist.md), [`report_gazepoint_face_qc()`](https://stefanosbalaskas.github.io/gp3tools/reference/report_gazepoint_face_qc.md) |
 
 Most users should start with
 [`run_gazepoint_workflow()`](https://stefanosbalaskas.github.io/gp3tools/reference/run_gazepoint_workflow.md)
@@ -2272,17 +2276,23 @@ status fields, and metadata attributes.
 
 ## Current package status
 
-The current internal prototype status after the advanced sensitivity,
-recalibration, reporting, and exclusion-recommendation branches is:
+The current development version includes the core Gazepoint import,
+quality-control, pupil, AOI, fixation/transition, time-course,
+model-diagnostics, reporting, ecosystem-adapter, external face-data, and
+workflow-documentation layers.
+
+Recent local validation after the website and article updates should end
+with:
 
 ``` r
-
-devtools::test()
-# [ FAIL 0 | WARN 0 | SKIP 0 | PASS 6788 ]
 
 devtools::check()
 # 0 errors | 0 warnings | 0 notes
 ```
+
+Focused tests for the recent external face-data, multimodal, reporting,
+and workflow-documentation branches have also passed with `FAIL 0`,
+`WARN 0`, and `SKIP 0`.
 
 During full tests, `boundary (singular) fit: see help('isSingular')`
 messages may appear in mixed-model diagnostic contexts. These are
@@ -2290,10 +2300,10 @@ expected diagnostic messages from singular-fit test fixtures and are not
 package failures when the final test summary reports `FAIL 0 | WARN 0`.
 
 On some Windows systems, a Quarto/TMPDIR message may appear after
-`devtools::check()`. This is harmless when the final
-`R CMD check results` report:
+`devtools::check()`. This is harmless when the final R CMD check results
+report:
 
-``` r
+``` text
 0 errors | 0 warnings | 0 notes
 ```
 

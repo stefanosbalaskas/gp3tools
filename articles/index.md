@@ -43,7 +43,7 @@
   Representative gp3tools visual outputs built from safe synthetic
   demonstration data.
 
-- [Plot
+- [Expanded plot
   gallery](https://stefanosbalaskas.github.io/gp3tools/articles/plot-gallery-expanded.md):
 
 - [AOI sequence and reliability
