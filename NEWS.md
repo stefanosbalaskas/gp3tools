@@ -1,5 +1,11 @@
 # gp3tools 1.0.2.9000
 
+- Added external facial-behaviour reporting helpers `create_gazepoint_face_reporting_checklist()` and `report_gazepoint_face_qc()` for reviewer-facing QC and reporting summaries.
+- Added the external face-data reporting article and the complete external face-data workflow article.
+- Added ten workflow-oriented pkgdown articles covering end-to-end analysis, plot galleries, QC dashboards, pupil preprocessing, AOI modelling, transitions/scanpaths, model sensitivity, ecosystem exports, and synthetic showcases.
+- Reorganised the pkgdown article navbar into clearer topical categories.
+- Updated website documentation to reduce duplicate article labels and improve workflow discoverability.
+
 * Development version after the 1.0.2 CRAN patch.
 * Added heatmap and spatial visualisation helpers for preparing, plotting, overlaying, and exporting gaze heatmaps.
 * Added scanpath and coordinate-QC helpers for binocular pupil combination, trackloss cleaning, synthetic pupil simulation, time-series plotting, multi-scanpath plotting, screen-bound auditing, and coordinate harmonisation.

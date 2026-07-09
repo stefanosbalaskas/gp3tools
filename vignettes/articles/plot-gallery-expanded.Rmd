@@ -1,8 +1,8 @@
 ---
-title: "Plot gallery"
+title: "Expanded plot gallery"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Plot gallery}
+  %\VignetteIndexEntry{Expanded plot gallery}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
