@@ -19,38 +19,58 @@ navbar:
     right: [search, github]
 
 articles:
-  - title: Workflows
-    navbar: Workflows
+  - title: Getting started
+    navbar: Getting started
+    contents:
+    - articles/end-to-end-workflow
+    - articles/paper-grade-synthetic-showcase
+
+  - title: Core gaze and pupil workflows
+    navbar: Core workflows
     contents:
     - pupil_workflow
+    - articles/pupil-preprocessing-baseline-audit
     - aoi_workflow
+    - articles/aoi-modelling-workflow
+    - articles/fixations-transitions-scanpaths
 
-  - title: Showcase
-    navbar: Showcase
+  - title: Quality control and reporting
+    navbar: QC and reporting
     contents:
-    - articles/plot-gallery
-    - articles/sequence-reliability
-    - articles/statistical-extensions-plots
-    - articles/heatmap-spatial-visualisation
-    - articles/cluster-permutation-workflow
-    - articles/scanpath-qc-quick-wins
-    - articles/stimulus-layout-qc
+    - articles/qc-dashboard-workflow
     - articles/missingness-coverage-reporting
     - articles/phase-segmentation-reporting
     - articles/qc-reporting-bundle
+    - articles/stimulus-layout-qc
+    - articles/scanpath-qc-quick-wins
+
+  - title: Plots and visual diagnostics
+    navbar: Plots and diagnostics
+    contents:
+    - articles/plot-gallery
+    - articles/plot-gallery-expanded
+    - articles/sequence-reliability
+    - articles/statistical-extensions-plots
+    - articles/heatmap-spatial-visualisation
+
+  - title: Advanced modelling and sensitivity
+    navbar: Advanced modelling
+    contents:
+    - articles/model-readiness-sensitivity
+    - articles/cluster-permutation-workflow
+
+  - title: External face and multimodal workflows
+    navbar: Face and multimodal
+    contents:
     - articles/face-export-import
     - articles/face-quality-audit
     - articles/face-data-synchronisation
     - articles/face-window-summaries
     - articles/multimodal-modelling
     - articles/face-reporting
-    - articles/end-to-end-workflow
-    - articles/plot-gallery-expanded
-    - articles/qc-dashboard-workflow
-    - articles/pupil-preprocessing-baseline-audit
-    - articles/aoi-modelling-workflow
-    - articles/fixations-transitions-scanpaths
-    - articles/model-readiness-sensitivity
     - articles/external-face-complete-workflow
+
+  - title: Ecosystem bridges
+    navbar: Ecosystem bridges
+    contents:
     - articles/ecosystem-exports
-    - articles/paper-grade-synthetic-showcase
