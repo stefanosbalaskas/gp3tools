@@ -33,6 +33,7 @@ It supports common Gazepoint workflows, including:
 * diagnostic plots, lightweight HTML reports, and CSV exports;
 * package-adapter exports for eyetrackingR-style, pupillometryR-style, gazer-style, and eyetools-style workflows;
 * optional external gazeR and eyetools cross-check workflows.
+* external facial-behaviour import, quality audit, synchronisation, window summaries, multimodal modelling, and reporting helpers for externally generated face-analysis outputs.
 
 ## Which workflow should I use?
 
@@ -98,6 +99,7 @@ Use `summarize_gazepoint_missingness()`, `segment_gazepoint_task_phases()`, `col
 | Prepare reporting and exclusion decisions | `check_gazepoint_real_data_readiness()`, `recommend_gazepoint_exclusions()`, `create_gazepoint_reporting_checklist()`, `create_gazepoint_analysis_decision_audit()` |
 | Export tables and outputs | `export_gazepoint_tables()`, `export_gazepoint_model_tables()`, `export_gazepoint_master_audit()`, `save_gazepoint_plots()` |
 | Prepare data for other R eye-tracking packages | `prepare_gazepoint_eyetrackingr_data()`, `prepare_gazepoint_pupillometryr_data()`, `prepare_gazepoint_gazer_data()`, `prepare_gazepoint_eyetools_data()` |
+| Work with external facial-behaviour outputs | `read_gazepoint_face_export()`, `standardize_gazepoint_face_columns()`, `audit_gazepoint_face_quality()`, `sync_gazepoint_face_data()`, `summarize_gazepoint_face_windows()`, `fit_gazepoint_multimodal_response_model()`, `create_gazepoint_face_reporting_checklist()`, `report_gazepoint_face_qc()` |
 
 Most users should start with `run_gazepoint_workflow()` for a quick folder-level pass, then move to the master-table, pupil, AOI, modelling, and reporting helpers as needed.
 
@@ -1972,22 +1974,22 @@ The adapter helpers do not import the external packages directly. Instead, they 
 
 ## Current package status
 
-The current internal prototype status after the advanced sensitivity, recalibration, reporting, and exclusion-recommendation branches is:
+The current development version includes the core Gazepoint import, quality-control, pupil, AOI, fixation/transition, time-course, model-diagnostics, reporting, ecosystem-adapter, external face-data, and workflow-documentation layers.
 
-```r
-devtools::test()
-# [ FAIL 0 | WARN 0 | SKIP 0 | PASS 6788 ]
+Recent local validation after the website and article updates should end with:
 
+``` r
 devtools::check()
 # 0 errors | 0 warnings | 0 notes
 ```
 
+Focused tests for the recent external face-data, multimodal, reporting, and workflow-documentation branches have also passed with `FAIL 0`, `WARN 0`, and `SKIP 0`.
+
 During full tests, `boundary (singular) fit: see help('isSingular')` messages may appear in mixed-model diagnostic contexts. These are expected diagnostic messages from singular-fit test fixtures and are not package failures when the final test summary reports `FAIL 0 | WARN 0`.
 
+On some Windows systems, a Quarto/TMPDIR message may appear after `devtools::check()`. This is harmless when the final R CMD check results report:
 
-On some Windows systems, a Quarto/TMPDIR message may appear after `devtools::check()`. This is harmless when the final `R CMD check results` report:
-
-```r
+``` text
 0 errors | 0 warnings | 0 notes
 ```
 
