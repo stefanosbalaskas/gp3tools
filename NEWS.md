@@ -1,4 +1,4 @@
-# gp3tools 1.0.2.9000
+# gp3tools 2.0.0
 
 - Added external facial-behaviour reporting helpers `create_gazepoint_face_reporting_checklist()` and `report_gazepoint_face_qc()` for reviewer-facing QC and reporting summaries.
 - Added the external face-data reporting article and the complete external face-data workflow article.
