@@ -105,7 +105,7 @@ Most users should start with `run_gazepoint_workflow()` for a quick folder-level
 
 ### Statistical, sequence, simulation, and reporting extensions
 
-The development version also includes an optional statistical-extension layer for advanced, audit-friendly workflows:
+Version 2.0.0 also includes an optional statistical-extension layer for advanced, audit-friendly workflows:
 
 - **AOI sequence structure and uncertainty:** `compute_gazepoint_aoi_entropy()`, `compute_gazepoint_aoi_sequence_metrics()`, `compute_gazepoint_sequence_complexity()`, `compute_gazepoint_sequence_distance()`, `compute_gazepoint_scanpath_similarity()`, and `flag_gazepoint_sequence_anomalies()`.
 - **Fixation, scanpath, and transition diagnostics:** `audit_gazepoint_fixation_reliability()`, `compute_gazepoint_saccade_metrics()`, `plot_gazepoint_scanpath()`, `summarise_gazepoint_markovchain()`, `summarise_gazepoint_semimarkov()`, `compute_gazepoint_sequence_recurrence()`, and `compute_gazepoint_transition_network_metrics()`.
@@ -1974,9 +1974,9 @@ The adapter helpers do not import the external packages directly. Instead, they 
 
 ## Current package status
 
-The current development version includes the core Gazepoint import, quality-control, pupil, AOI, fixation/transition, time-course, model-diagnostics, reporting, ecosystem-adapter, external face-data, and workflow-documentation layers.
+Version 2.0.0 includes the core Gazepoint import, quality-control, pupil, AOI, fixation/transition, time-course, model-diagnostics, reporting, ecosystem-adapter, external face-data, and workflow-documentation layers.
 
-Recent local validation after the website and article updates should end with:
+Recent local validation for version 2.0.0 should end with:
 
 ``` r
 devtools::check()
