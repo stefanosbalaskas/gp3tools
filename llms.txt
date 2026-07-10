@@ -158,8 +158,8 @@ AOI, modelling, and reporting helpers as needed.
 
 ### Statistical, sequence, simulation, and reporting extensions
 
-The development version also includes an optional statistical-extension
-layer for advanced, audit-friendly workflows:
+Version 2.0.0 also includes an optional statistical-extension layer for
+advanced, audit-friendly workflows:
 
 - **AOI sequence structure and uncertainty:**
   [`compute_gazepoint_aoi_entropy()`](https://stefanosbalaskas.github.io/gp3tools/reference/compute_gazepoint_aoi_entropy.md),
@@ -2276,13 +2276,12 @@ status fields, and metadata attributes.
 
 ## Current package status
 
-The current development version includes the core Gazepoint import,
-quality-control, pupil, AOI, fixation/transition, time-course,
-model-diagnostics, reporting, ecosystem-adapter, external face-data, and
+Version 2.0.0 includes the core Gazepoint import, quality-control,
+pupil, AOI, fixation/transition, time-course, model-diagnostics,
+reporting, ecosystem-adapter, external face-data, and
 workflow-documentation layers.
 
-Recent local validation after the website and article updates should end
-with:
+Recent local validation for version 2.0.0 should end with:
 
 ``` r
 
