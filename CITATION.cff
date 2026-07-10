@@ -9,8 +9,9 @@ authors:
 repository-code: "https://github.com/stefanosbalaskas/gp3tools"
 url: "https://github.com/stefanosbalaskas/gp3tools"
 license: MIT
-version: 1.0.1
-date-released: "2026-06-17"
+version: 2.0.0
+date-released: "2026-07-10"
+doi: "10.5281/zenodo.21292384"
 abstract: >-
   gp3tools provides tools for importing, checking, summarising, exporting,
   visualising, preprocessing, modelling, and reporting Gazepoint GP3 and
