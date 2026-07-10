@@ -82,9 +82,9 @@
     </div>
 
     <div class="section level2">
-      <h2 id="all-functions">All functions<a class="anchor" aria-label="anchor" href="#all-functions"></a></h2>
+      <h2 id="import-file-checks-and-master-data">Import, file checks, and master data<a class="anchor" aria-label="anchor" href="#import-file-checks-and-master-data"></a></h2>
 
-
+      <div class="section-desc"><p>Read Gazepoint exports, inspect columns, create master tables, and validate analysis-ready data.</p></div>
 
       <dl></dl></div><div class="section level2">
 
@@ -93,108 +93,66 @@
 
       <dl><dt>
 
+          <code><a href="read_gazepoint.html">read_gazepoint()</a></code>
+
+        </dt>
+        <dd>Read a Gazepoint all-gaze or fixation CSV export</dd>
+
+        <dt>
+
+          <code><a href="read_gazepoint_folder.html">read_gazepoint_folder()</a></code>
+
+        </dt>
+        <dd>Read multiple Gazepoint CSV exports from a folder</dd>
+
+        <dt>
+
+          <code><a href="read_gazepoint_summary.html">read_gazepoint_summary()</a></code>
+
+        </dt>
+        <dd>Read a Gazepoint Analysis Data Summary export</dd>
+
+        <dt>
+
+          <code><a href="classify_gazepoint_export.html">classify_gazepoint_export()</a></code>
+
+        </dt>
+        <dd>Classify a Gazepoint export</dd>
+
+        <dt>
+
+          <code><a href="inspect_gazepoint_columns.html">inspect_gazepoint_columns()</a></code>
+
+        </dt>
+        <dd>Inspect Gazepoint columns</dd>
+
+        <dt>
+
+          <code><a href="standardise_gazepoint_names.html">standardise_gazepoint_names()</a></code>
+
+        </dt>
+        <dd>Standardise Gazepoint column names</dd>
+
+        <dt>
+
+          <code><a href="check_gazepoint_file_pairs.html">check_gazepoint_file_pairs()</a></code>
+
+        </dt>
+        <dd>Check Gazepoint all-gaze and fixation file pairs</dd>
+
+        <dt>
+
+          <code><a href="create_gazepoint_master.html">create_gazepoint_master()</a></code>
+
+        </dt>
+        <dd>Create a master long-format dataset from Gazepoint all-gaze data</dd>
+
+        <dt>
+
           <code><a href="as_gazepoint_master.html">as_gazepoint_master()</a></code>
 
         </dt>
         <dd>Convert Gazepoint all-gaze data to a master sample table</dd>
-
-        <dt>
-
-          <code><a href="audit_gazepoint_aoi_coding_matrix.html">audit_gazepoint_aoi_coding_matrix()</a></code>
-
-        </dt>
-        <dd>Audit AOI coding against geometry</dd>
-
-        <dt>
-
-          <code><a href="audit_gazepoint_aoi_geometry.html">audit_gazepoint_aoi_geometry()</a></code>
-
-        </dt>
-        <dd>Audit AOI geometry definitions</dd>
-
-        <dt>
-
-          <code><a href="audit_gazepoint_aoi_margin_sensitivity.html">audit_gazepoint_aoi_margin_sensitivity()</a></code>
-
-        </dt>
-        <dd>Audit AOI margin sensitivity</dd>
-
-        <dt>
-
-          <code><a href="audit_gazepoint_aoi_overlap.html">audit_gazepoint_aoi_overlap()</a></code>
-
-        </dt>
-        <dd>Audit AOI overlap</dd>
-
-        <dt>
-
-          <code><a href="audit_gazepoint_aoi_screen_coverage.html">audit_gazepoint_aoi_screen_coverage()</a></code>
-
-        </dt>
-        <dd>Audit AOI coverage against screen bounds</dd>
-
-        <dt>
-
-          <code><a href="audit_gazepoint_aoi_window_denominators.html">audit_gazepoint_aoi_window_denominators()</a></code>
-
-        </dt>
-        <dd>Audit AOI window denominators before binomial modelling</dd>
-
-        <dt>
-
-          <code><a href="audit_gazepoint_condition_quality_imbalance.html">audit_gazepoint_condition_quality_imbalance()</a></code>
-
-        </dt>
-        <dd>Audit condition-level quality imbalance</dd>
-
-        <dt>
-
-          <code><a href="audit_gazepoint_design_balance.html">audit_gazepoint_design_balance()</a></code>
-
-        </dt>
-        <dd>Audit Gazepoint experimental design balance</dd>
-
-        <dt>
-
-          <code><a href="audit_gazepoint_event_sync.html">audit_gazepoint_event_sync()</a></code>
-
-        </dt>
-        <dd>Audit Gazepoint event and timing synchronisation</dd>
-
-        <dt>
-
-          <code><a href="audit_gazepoint_exclusion_flow.html">audit_gazepoint_exclusion_flow()</a></code>
-
-        </dt>
-        <dd>Audit Gazepoint exclusion and retention flow</dd>
-
-        <dt>
-
-          <code><a href="audit_gazepoint_face_quality.html">audit_gazepoint_face_quality()</a></code>
-
-        </dt>
-        <dd>Audit external facial-behaviour data quality</dd>
-
-        <dt>
-
-          <code><a href="audit_gazepoint_face_sync.html">audit_gazepoint_face_sync()</a></code>
-
-        </dt>
-        <dd>Audit synchronisation between Gazepoint and external facial-behaviour data</dd>
-
-        <dt>
-
-          <code><a href="audit_gazepoint_fixation_reliability.html">audit_gazepoint_fixation_reliability()</a></code>
-
-        </dt>
-        <dd>Audit split-half reliability of fixation or AOI metrics</dd>
-
-        <dt>
-
-          <code><a href="audit_gazepoint_gaze_signal_quality.html">audit_gazepoint_gaze_signal_quality()</a></code>
-
-        </dt>
-        <dd>Audit Gazepoint gaze-signal quality</dd>
 
         <dt>
 
@@ -205,10 +163,389 @@
 
         <dt>
 
-          <code><a href="audit_gazepoint_post_exclusion_balance.html">audit_gazepoint_post_exclusion_balance()</a></code>
+          <code><a href="validate_gazepoint_master.html">validate_gazepoint_master()</a></code>
 
         </dt>
-        <dd>Audit post-exclusion condition balance</dd>
+        <dd>Validate a Gazepoint master sample table</dd>
+
+        <dt>
+
+          <code><a href="export_gazepoint_master_audit.html">export_gazepoint_master_audit()</a></code>
+
+        </dt>
+        <dd>Export a Gazepoint master table, audit tables, and validation tables</dd>
+      </dl></div><div class="section level2">
+      <h2 id="quick-workflows-reports-and-outputs">Quick workflows, reports, and outputs<a class="anchor" aria-label="anchor" href="#quick-workflows-reports-and-outputs"></a></h2>
+
+      <div class="section-desc"><p>Run folder-level workflows, create reports, save plots, and write standard output tables.</p></div>
+
+      <dl></dl></div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="run_gazepoint_workflow.html">run_gazepoint_workflow()</a></code>
+
+        </dt>
+        <dd>Run a complete Gazepoint analysis workflow</dd>
+
+        <dt>
+
+          <code><a href="summarise_gazepoint_workflow.html">summarise_gazepoint_workflow()</a></code>
+
+        </dt>
+        <dd>Summarise a Gazepoint workflow result</dd>
+
+        <dt>
+
+          <code><a href="create_gazepoint_report.html">create_gazepoint_report()</a></code>
+
+        </dt>
+        <dd>Create a Gazepoint HTML diagnostic report</dd>
+
+        <dt>
+
+          <code><a href="write_gazepoint_outputs.html">write_gazepoint_outputs()</a></code>
+
+        </dt>
+        <dd>Write standard Gazepoint analysis outputs</dd>
+
+        <dt>
+
+          <code><a href="export_gazepoint_tables.html">export_gazepoint_tables()</a></code>
+
+        </dt>
+        <dd>Export Gazepoint analysis tables to CSV files</dd>
+
+        <dt>
+
+          <code><a href="save_gazepoint_plots.html">save_gazepoint_plots()</a></code>
+
+        </dt>
+        <dd>Save standard Gazepoint diagnostic plots</dd>
+      </dl></div><div class="section level2">
+      <h2 id="sampling-tracking-quality-and-qc-summaries">Sampling, tracking quality, and QC summaries<a class="anchor" aria-label="anchor" href="#sampling-tracking-quality-and-qc-summaries"></a></h2>
+
+      <div class="section-desc"><p>Check sampling rate, tracking quality, screen bounds, coordinate coverage, missingness, and task-phase coverage.</p></div>
+
+      <dl></dl></div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="check_sampling_rate.html">check_sampling_rate()</a></code>
+
+        </dt>
+        <dd>Check sampling rate by group</dd>
+
+        <dt>
+
+          <code><a href="plot_sampling_rate.html">plot_sampling_rate()</a></code>
+
+        </dt>
+        <dd>Plot Gazepoint sampling-rate diagnostics</dd>
+
+        <dt>
+
+          <code><a href="summarise_tracking_quality.html">summarise_tracking_quality()</a></code>
+
+        </dt>
+        <dd>Summarise Gazepoint tracking quality</dd>
+
+        <dt>
+
+          <code><a href="flag_tracking_quality.html">flag_tracking_quality()</a></code>
+
+        </dt>
+        <dd>Flag low-quality Gazepoint recordings</dd>
+
+        <dt>
+
+          <code><a href="clean_gazepoint_by_trackloss.html">clean_gazepoint_by_trackloss()</a></code>
+
+        </dt>
+        <dd>Flag or filter Gazepoint data by trackloss</dd>
+
+        <dt>
+
+          <code><a href="plot_tracking_quality.html">plot_tracking_quality()</a></code>
+
+        </dt>
+        <dd>Plot Gazepoint tracking-quality diagnostics</dd>
+
+        <dt>
+
+          <code><a href="audit_gazepoint_gaze_signal_quality.html">audit_gazepoint_gaze_signal_quality()</a></code>
+
+        </dt>
+        <dd>Audit Gazepoint gaze-signal quality</dd>
+
+        <dt>
+
+          <code><a href="audit_gazepoint_screen_bounds.html">audit_gazepoint_screen_bounds()</a></code>
+
+        </dt>
+        <dd>Audit Gazepoint gaze coordinates against screen bounds</dd>
+
+        <dt>
+
+          <code><a href="harmonize_gazepoint_screen_coordinates.html">harmonize_gazepoint_screen_coordinates()</a></code>
+
+        </dt>
+        <dd>Harmonize Gazepoint screen coordinates across resolutions</dd>
+
+        <dt>
+
+          <code><a href="summarize_gazepoint_coordinate_coverage.html">summarize_gazepoint_coordinate_coverage()</a></code>
+
+        </dt>
+        <dd>Summarize gaze-coordinate coverage over a screen grid</dd>
+
+        <dt>
+
+          <code><a href="summarize_gazepoint_missingness.html">summarize_gazepoint_missingness()</a></code> <code><a href="summarize_gazepoint_missingness.html">summarise_gazepoint_missingness()</a></code>
+
+        </dt>
+        <dd>Summarize missingness in Gazepoint-style data</dd>
+
+        <dt>
+
+          <code><a href="plot_gazepoint_missingness_profile.html">plot_gazepoint_missingness_profile()</a></code>
+
+        </dt>
+        <dd>Plot a Gazepoint missingness profile</dd>
+
+        <dt>
+
+          <code><a href="report_gazepoint_missingness.html">report_gazepoint_missingness()</a></code>
+
+        </dt>
+        <dd>Report Gazepoint missingness</dd>
+
+        <dt>
+
+          <code><a href="segment_gazepoint_task_phases.html">segment_gazepoint_task_phases()</a></code>
+
+        </dt>
+        <dd>Segment Gazepoint-style data into task phases</dd>
+
+        <dt>
+
+          <code><a href="summarize_gazepoint_phase_coverage.html">summarize_gazepoint_phase_coverage()</a></code> <code><a href="summarize_gazepoint_phase_coverage.html">summarise_gazepoint_phase_coverage()</a></code>
+
+        </dt>
+        <dd>Summarize task-phase coverage</dd>
+
+        <dt>
+
+          <code><a href="report_gazepoint_phase_coverage.html">report_gazepoint_phase_coverage()</a></code>
+
+        </dt>
+        <dd>Report task-phase coverage</dd>
+
+        <dt>
+
+          <code><a href="plot_gazepoint_phase_timeline.html">plot_gazepoint_phase_timeline()</a></code>
+
+        </dt>
+        <dd>Plot a Gazepoint task-phase timeline</dd>
+
+        <dt>
+
+          <code><a href="collect_gazepoint_qc_summaries.html">collect_gazepoint_qc_summaries()</a></code>
+
+        </dt>
+        <dd>Collect Gazepoint QC summaries</dd>
+
+        <dt>
+
+          <code><a href="summarize_gazepoint_qc_status.html">summarize_gazepoint_qc_status()</a></code> <code><a href="summarize_gazepoint_qc_status.html">summarise_gazepoint_qc_status()</a></code>
+
+        </dt>
+        <dd>Summarize Gazepoint QC status</dd>
+
+        <dt>
+
+          <code><a href="report_gazepoint_qc_overview.html">report_gazepoint_qc_overview()</a></code>
+
+        </dt>
+        <dd>Report Gazepoint QC overview</dd>
+
+        <dt>
+
+          <code><a href="plot_gazepoint_qc_overview.html">plot_gazepoint_qc_overview()</a></code>
+
+        </dt>
+        <dd>Plot a Gazepoint QC overview</dd>
+
+        <dt>
+
+          <code><a href="launch_gazepoint_qc_dashboard.html">launch_gazepoint_qc_dashboard()</a></code>
+
+        </dt>
+        <dd>Launch or describe a lightweight QC dashboard</dd>
+      </dl></div><div class="section level2">
+      <h2 id="stimulus-layout-and-aoi-geometry-qc">Stimulus layout and AOI geometry QC<a class="anchor" aria-label="anchor" href="#stimulus-layout-and-aoi-geometry-qc"></a></h2>
+
+      <div class="section-desc"><p>Audit AOI geometry, screen coverage, overlap, margins, and stimulus-layout quality.</p></div>
+
+      <dl></dl></div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="audit_gazepoint_aoi_geometry.html">audit_gazepoint_aoi_geometry()</a></code>
+
+        </dt>
+        <dd>Audit AOI geometry definitions</dd>
+
+        <dt>
+
+          <code><a href="audit_gazepoint_aoi_overlap.html">audit_gazepoint_aoi_overlap()</a></code>
+
+        </dt>
+        <dd>Audit AOI overlap</dd>
+
+        <dt>
+
+          <code><a href="audit_gazepoint_aoi_margin_sensitivity.html">audit_gazepoint_aoi_margin_sensitivity()</a></code>
+
+        </dt>
+        <dd>Audit AOI margin sensitivity</dd>
+
+        <dt>
+
+          <code><a href="audit_gazepoint_aoi_screen_coverage.html">audit_gazepoint_aoi_screen_coverage()</a></code>
+
+        </dt>
+        <dd>Audit AOI coverage against screen bounds</dd>
+
+        <dt>
+
+          <code><a href="audit_gazepoint_aoi_coding_matrix.html">audit_gazepoint_aoi_coding_matrix()</a></code>
+
+        </dt>
+        <dd>Audit AOI coding against geometry</dd>
+
+        <dt>
+
+          <code><a href="plot_gazepoint_aoi_verification.html">plot_gazepoint_aoi_verification()</a></code>
+
+        </dt>
+        <dd>Plot AOI geometry for visual verification</dd>
+
+        <dt>
+
+          <code><a href="plot_gazepoint_stimulus_layout_qc.html">plot_gazepoint_stimulus_layout_qc()</a></code>
+
+        </dt>
+        <dd>Plot stimulus-layout quality control</dd>
+      </dl></div><div class="section level2">
+      <h2 id="pupil-preprocessing-audits-and-windows">Pupil preprocessing, audits, and windows<a class="anchor" aria-label="anchor" href="#pupil-preprocessing-audits-and-windows"></a></h2>
+
+      <div class="section-desc"><p>Flag, interpolate, baseline-correct, smooth, audit, and summarise pupil data.</p></div>
+
+      <dl></dl></div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="summarise_gazepoint_pupil.html">summarise_gazepoint_pupil()</a></code>
+
+        </dt>
+        <dd>Summarise Gazepoint pupil data</dd>
+
+        <dt>
+
+          <code><a href="flag_gazepoint_pupil.html">flag_gazepoint_pupil()</a></code>
+
+        </dt>
+        <dd>Flag invalid, missing, implausible, and outlying Gazepoint pupil samples</dd>
+
+        <dt>
+
+          <code><a href="combine_gazepoint_eyes.html">combine_gazepoint_eyes()</a></code>
+
+        </dt>
+        <dd>Combine left and right Gazepoint eye channels</dd>
+
+        <dt>
+
+          <code><a href="flag_gazepoint_pupil_artifacts.html">flag_gazepoint_pupil_artifacts()</a></code>
+
+        </dt>
+        <dd>Flag Gazepoint pupil artifacts before interpolation</dd>
+
+        <dt>
+
+          <code><a href="flag_gazepoint_pupil_hampel.html">flag_gazepoint_pupil_hampel()</a></code>
+
+        </dt>
+        <dd>Flag pupil artifacts with a Hampel filter</dd>
+
+        <dt>
+
+          <code><a href="interpolate_gazepoint_pupil.html">interpolate_gazepoint_pupil()</a></code>
+
+        </dt>
+        <dd>Interpolate short missing gaps in Gazepoint pupil data</dd>
+
+        <dt>
+
+          <code><a href="interpolate_gazepoint_pupil_pchip.html">interpolate_gazepoint_pupil_pchip()</a></code>
+
+        </dt>
+        <dd>Interpolate Gazepoint pupil data using PCHIP</dd>
+
+        <dt>
+
+          <code><a href="baseline_correct_gazepoint_pupil.html">baseline_correct_gazepoint_pupil()</a></code>
+
+        </dt>
+        <dd>Baseline-correct Gazepoint pupil data</dd>
+
+        <dt>
+
+          <code><a href="smooth_gazepoint_pupil.html">smooth_gazepoint_pupil()</a></code>
+
+        </dt>
+        <dd>Smooth Gazepoint pupil data</dd>
+
+        <dt>
+
+          <code><a href="create_gazepoint_preprocessing_registry.html">create_gazepoint_preprocessing_registry()</a></code>
+
+        </dt>
+        <dd>Create a Gazepoint pupil-preprocessing registry</dd>
+
+        <dt>
+
+          <code><a href="create_gazepoint_preprocessing_multiverse.html">create_gazepoint_preprocessing_multiverse()</a></code>
+
+        </dt>
+        <dd>Create a Gazepoint preprocessing multiverse</dd>
+
+        <dt>
+
+          <code><a href="run_gazepoint_pupil_multiverse.html">run_gazepoint_pupil_multiverse()</a></code>
+
+        </dt>
+        <dd>Run a Gazepoint pupil preprocessing multiverse</dd>
+
+        <dt>
+
+          <code><a href="audit_gazepoint_pupil_gaps.html">audit_gazepoint_pupil_gaps()</a></code>
+
+        </dt>
+        <dd>Audit Gazepoint pupil interpolation gaps</dd>
 
         <dt>
 
@@ -223,13 +560,6 @@
 
         </dt>
         <dd>Audit Gazepoint pupil drift</dd>
-
-        <dt>
-
-          <code><a href="audit_gazepoint_pupil_gaps.html">audit_gazepoint_pupil_gaps()</a></code>
-
-        </dt>
-        <dd>Audit Gazepoint pupil interpolation gaps</dd>
 
         <dt>
 
@@ -254,13 +584,6 @@
 
         <dt>
 
-          <code><a href="audit_gazepoint_screen_bounds.html">audit_gazepoint_screen_bounds()</a></code>
-
-        </dt>
-        <dd>Audit Gazepoint gaze coordinates against screen bounds</dd>
-
-        <dt>
-
           <code><a href="audit_gazepoint_stimulus_luminance.html">audit_gazepoint_stimulus_luminance()</a></code>
 
         </dt>
@@ -268,409 +591,54 @@
 
         <dt>
 
-          <code><a href="audit_gazepoint_timecourse_grid.html">audit_gazepoint_timecourse_grid()</a></code>
+          <code><a href="summarise_gazepoint_pupil_windows.html">summarise_gazepoint_pupil_windows()</a></code>
 
         </dt>
-        <dd>Audit a Gazepoint time-course grid for cluster-permutation readiness</dd>
+        <dd>Summarise Gazepoint pupil responses within time windows</dd>
 
         <dt>
 
-          <code><a href="baseline_correct_gazepoint_pupil.html">baseline_correct_gazepoint_pupil()</a></code>
+          <code><a href="summarise_gazepoint_pupil_trial_features.html">summarise_gazepoint_pupil_trial_features()</a></code>
 
         </dt>
-        <dd>Baseline-correct Gazepoint pupil data</dd>
+        <dd>Summarise Gazepoint pupil trial-level features</dd>
 
         <dt>
 
-          <code><a href="bootstrap_gazepoint_timecourse.html">bootstrap_gazepoint_timecourse()</a></code>
+          <code><a href="plot_gazepoint_pupil_status.html">plot_gazepoint_pupil_status()</a></code>
 
         </dt>
-        <dd>Bootstrap time-course summaries</dd>
+        <dd>Plot Gazepoint pupil preprocessing status</dd>
 
         <dt>
 
-          <code><a href="check_gazepoint_file_pairs.html">check_gazepoint_file_pairs()</a></code>
+          <code><a href="plot_gazepoint_pupil_preprocessing.html">plot_gazepoint_pupil_preprocessing()</a></code>
 
         </dt>
-        <dd>Check Gazepoint all-gaze and fixation file pairs</dd>
+        <dd>Plot Gazepoint pupil preprocessing for one trial</dd>
 
         <dt>
 
-          <code><a href="check_gazepoint_model_convergence.html">check_gazepoint_model_convergence()</a></code>
+          <code><a href="plot_gazepoint_pupil_timecourse.html">plot_gazepoint_pupil_timecourse()</a></code>
 
         </dt>
-        <dd>Check model convergence</dd>
+        <dd>Plot Gazepoint pupil time course</dd>
+      </dl></div><div class="section level2">
+      <h2 id="pupil-modelling-and-time-course-data">Pupil modelling and time-course data<a class="anchor" aria-label="anchor" href="#pupil-modelling-and-time-course-data"></a></h2>
 
-        <dt>
+      <div class="section-desc"><p>Prepare and fit pupil-window, GAMM, PFE-GAMM, and growth-curve models.</p></div>
 
-          <code><a href="check_gazepoint_model_overdispersion.html">check_gazepoint_model_overdispersion()</a></code>
+      <dl></dl></div><div class="section level2">
 
-        </dt>
-        <dd>Check model overdispersion</dd>
 
-        <dt>
 
-          <code><a href="check_gazepoint_model_singularity.html">check_gazepoint_model_singularity()</a></code>
 
-        </dt>
-        <dd>Check model singularity</dd>
+      <dl><dt>
 
-        <dt>
-
-          <code><a href="check_gazepoint_real_data_readiness.html">check_gazepoint_real_data_readiness()</a></code>
+          <code><a href="prepare_gazepoint_pupil_window_model_data.html">prepare_gazepoint_pupil_window_model_data()</a></code>
 
         </dt>
-        <dd>Check real-data readiness before Gazepoint analysis</dd>
-
-        <dt>
-
-          <code><a href="check_sampling_rate.html">check_sampling_rate()</a></code>
-
-        </dt>
-        <dd>Check sampling rate by group</dd>
-
-        <dt>
-
-          <code><a href="classify_gazepoint_export.html">classify_gazepoint_export()</a></code>
-
-        </dt>
-        <dd>Classify a Gazepoint export</dd>
-
-        <dt>
-
-          <code><a href="clean_gazepoint_by_trackloss.html">clean_gazepoint_by_trackloss()</a></code>
-
-        </dt>
-        <dd>Flag or filter Gazepoint data by trackloss</dd>
-
-        <dt>
-
-          <code><a href="collect_gazepoint_qc_summaries.html">collect_gazepoint_qc_summaries()</a></code>
-
-        </dt>
-        <dd>Collect Gazepoint QC summaries</dd>
-
-        <dt>
-
-          <code><a href="combine_gazepoint_eyes.html">combine_gazepoint_eyes()</a></code>
-
-        </dt>
-        <dd>Combine left and right Gazepoint eye channels</dd>
-
-        <dt>
-
-          <code><a href="compare_gazepoint_nested_models.html">compare_gazepoint_nested_models()</a></code>
-
-        </dt>
-        <dd>Compare nested Gazepoint models</dd>
-
-        <dt>
-
-          <code><a href="compute_gazepoint_aoi_entropy.html">compute_gazepoint_aoi_entropy()</a></code>
-
-        </dt>
-        <dd>Compute AOI entropy metrics</dd>
-
-        <dt>
-
-          <code><a href="compute_gazepoint_aoi_sequence_metrics.html">compute_gazepoint_aoi_sequence_metrics()</a></code>
-
-        </dt>
-        <dd>Compute AOI sequence metrics</dd>
-
-        <dt>
-
-          <code><a href="compute_gazepoint_aoi_transition_matrix.html">compute_gazepoint_aoi_transition_matrix()</a></code>
-
-        </dt>
-        <dd>Compute Gazepoint AOI transition matrices</dd>
-
-        <dt>
-
-          <code><a href="compute_gazepoint_saccade_metrics.html">compute_gazepoint_saccade_metrics()</a></code>
-
-        </dt>
-        <dd>Compute basic saccade metrics from fixation coordinates</dd>
-
-        <dt>
-
-          <code><a href="compute_gazepoint_scanpath_similarity.html">compute_gazepoint_scanpath_similarity()</a></code>
-
-        </dt>
-        <dd>Compute AOI scanpath similarity</dd>
-
-        <dt>
-
-          <code><a href="compute_gazepoint_sequence_complexity.html">compute_gazepoint_sequence_complexity()</a></code>
-
-        </dt>
-        <dd>Compute AOI sequence complexity metrics</dd>
-
-        <dt>
-
-          <code><a href="compute_gazepoint_sequence_distance.html">compute_gazepoint_sequence_distance()</a></code>
-
-        </dt>
-        <dd>Compute AOI sequence distance</dd>
-
-        <dt>
-
-          <code><a href="compute_gazepoint_sequence_recurrence.html">compute_gazepoint_sequence_recurrence()</a></code>
-
-        </dt>
-        <dd>Compute simple categorical sequence recurrence metrics</dd>
-
-        <dt>
-
-          <code><a href="compute_gazepoint_time_varying_transition_matrix.html">compute_gazepoint_time_varying_transition_matrix()</a></code>
-
-        </dt>
-        <dd>Compute time-varying Gazepoint transition matrices</dd>
-
-        <dt>
-
-          <code><a href="compute_gazepoint_transition_network_metrics.html">compute_gazepoint_transition_network_metrics()</a></code>
-
-        </dt>
-        <dd>Compute lightweight AOI transition-network metrics</dd>
-
-        <dt>
-
-          <code><a href="compute_transition_matrix.html">compute_transition_matrix()</a></code>
-
-        </dt>
-        <dd>Compute an AOI transition matrix</dd>
-
-        <dt>
-
-          <code><a href="create_gazepoint_analysis_decision_audit.html">create_gazepoint_analysis_decision_audit()</a></code>
-
-        </dt>
-        <dd>Create a final Gazepoint analysis-decision audit</dd>
-
-        <dt>
-
-          <code><a href="create_gazepoint_face_reporting_checklist.html">create_gazepoint_face_reporting_checklist()</a></code>
-
-        </dt>
-        <dd>Create a reporting checklist for external facial-behaviour workflows</dd>
-
-        <dt>
-
-          <code><a href="create_gazepoint_markovchain_object.html">create_gazepoint_markovchain_object()</a></code>
-
-        </dt>
-        <dd>Create a Gazepoint AOI Markov-chain object</dd>
-
-        <dt>
-
-          <code><a href="create_gazepoint_master.html">create_gazepoint_master()</a></code>
-
-        </dt>
-        <dd>Create a master long-format dataset from Gazepoint all-gaze data</dd>
-
-        <dt>
-
-          <code><a href="create_gazepoint_preprocessing_multiverse.html">create_gazepoint_preprocessing_multiverse()</a></code>
-
-        </dt>
-        <dd>Create a Gazepoint preprocessing multiverse</dd>
-
-        <dt>
-
-          <code><a href="create_gazepoint_preprocessing_registry.html">create_gazepoint_preprocessing_registry()</a></code>
-
-        </dt>
-        <dd>Create a Gazepoint pupil-preprocessing registry</dd>
-
-        <dt>
-
-          <code><a href="create_gazepoint_report.html">create_gazepoint_report()</a></code>
-
-        </dt>
-        <dd>Create a Gazepoint HTML diagnostic report</dd>
-
-        <dt>
-
-          <code><a href="create_gazepoint_reporting_checklist.html">create_gazepoint_reporting_checklist()</a></code>
-
-        </dt>
-        <dd>Create a Gazepoint reporting checklist</dd>
-
-        <dt>
-
-          <code><a href="detect_gazepoint_fixations_ivt.html">detect_gazepoint_fixations_ivt()</a></code>
-
-        </dt>
-        <dd>Detect simple I-VT fixations from gaze samples</dd>
-
-        <dt>
-
-          <code><a href="diagnose_gazepoint_cluster_design.html">diagnose_gazepoint_cluster_design()</a></code>
-
-        </dt>
-        <dd>Diagnose the design assumptions of a Gazepoint cluster-permutation workflow</dd>
-
-        <dt>
-
-          <code><a href="diagnose_gazepoint_gamm.html">diagnose_gazepoint_gamm()</a></code>
-
-        </dt>
-        <dd>Diagnose GAM and BAM models</dd>
-
-        <dt>
-
-          <code><a href="diagnose_gazepoint_glmm.html">diagnose_gazepoint_glmm()</a></code>
-
-        </dt>
-        <dd>Diagnose GLMM, LMM, and GLM models</dd>
-
-        <dt>
-
-          <code><a href="estimate_gazepoint_cluster_offset.html">estimate_gazepoint_cluster_offset()</a></code>
-
-        </dt>
-        <dd>Guardrail for exact cluster-offset estimation</dd>
-
-        <dt>
-
-          <code><a href="estimate_gazepoint_cluster_onset.html">estimate_gazepoint_cluster_onset()</a></code>
-
-        </dt>
-        <dd>Guardrail for exact cluster-onset estimation</dd>
-
-        <dt>
-
-          <code><a href="estimate_gazepoint_divergence_point.html">estimate_gazepoint_divergence_point()</a></code>
-
-        </dt>
-        <dd>Estimate a bootstrapped divergence point between two Gazepoint time courses</dd>
-
-        <dt>
-
-          <code><a href="export_gazepoint_cluster_results.html">export_gazepoint_cluster_results()</a></code>
-
-        </dt>
-        <dd>Export Gazepoint cluster-permutation results</dd>
-
-        <dt>
-
-          <code><a href="export_gazepoint_heatmap_png.html">export_gazepoint_heatmap_png()</a></code>
-
-        </dt>
-        <dd>Export a Gazepoint heatmap plot to PNG</dd>
-
-        <dt>
-
-          <code><a href="export_gazepoint_master_audit.html">export_gazepoint_master_audit()</a></code>
-
-        </dt>
-        <dd>Export a Gazepoint master table, audit tables, and validation tables</dd>
-
-        <dt>
-
-          <code><a href="export_gazepoint_mne_cluster_input.html">export_gazepoint_mne_cluster_input()</a></code>
-
-        </dt>
-        <dd>Export Gazepoint time-course data for MNE-style cluster workflows</dd>
-
-        <dt>
-
-          <code><a href="export_gazepoint_model_tables.html">export_gazepoint_model_tables()</a></code>
-
-        </dt>
-        <dd>Export manuscript-ready model tables</dd>
-
-        <dt>
-
-          <code><a href="export_gazepoint_permuco_cluster_input.html">export_gazepoint_permuco_cluster_input()</a></code>
-
-        </dt>
-        <dd>Export Gazepoint time-course data for permuco-style cluster workflows</dd>
-
-        <dt>
-
-          <code><a href="export_gazepoint_permutes_cluster_input.html">export_gazepoint_permutes_cluster_input()</a></code>
-
-        </dt>
-        <dd>Export Gazepoint time-course data for permutes-style cluster workflows</dd>
-
-        <dt>
-
-          <code><a href="export_gazepoint_tables.html">export_gazepoint_tables()</a></code>
-
-        </dt>
-        <dd>Export Gazepoint analysis tables to CSV files</dd>
-
-        <dt>
-
-          <code><a href="export_gazepoint_to_bids.html">export_gazepoint_to_bids()</a></code>
-
-        </dt>
-        <dd>Export Gazepoint data to a lightweight BIDS-style folder</dd>
-
-        <dt>
-
-          <code><a href="fit_gazepoint_aoi_brms.html">fit_gazepoint_aoi_brms()</a></code>
-
-        </dt>
-        <dd>Fit an optional Bayesian AOI model with brms</dd>
-
-        <dt>
-
-          <code><a href="fit_gazepoint_aoi_gamm.html">fit_gazepoint_aoi_gamm()</a></code>
-
-        </dt>
-        <dd>Fit AOI time-course GAMMs</dd>
-
-        <dt>
-
-          <code><a href="fit_gazepoint_aoi_model_sensitivity.html">fit_gazepoint_aoi_model_sensitivity()</a></code>
-
-        </dt>
-        <dd>Fit AOI-window model-family sensitivity checks</dd>
-
-        <dt>
-
-          <code><a href="fit_gazepoint_aoi_window_glmm.html">fit_gazepoint_aoi_window_glmm()</a></code>
-
-        </dt>
-        <dd>Fit an AOI-window binomial GLMM</dd>
-
-        <dt>
-
-          <code><a href="fit_gazepoint_face_window_lmm.html">fit_gazepoint_face_window_lmm()</a></code>
-
-        </dt>
-        <dd>Fit a facial-behaviour window mixed or linear model</dd>
-
-        <dt>
-
-          <code><a href="fit_gazepoint_gca.html">fit_gazepoint_gca()</a></code>
-
-        </dt>
-        <dd>Fit a Gazepoint Growth Curve Analysis mixed model</dd>
-
-        <dt>
-
-          <code><a href="fit_gazepoint_multimodal_response_model.html">fit_gazepoint_multimodal_response_model()</a></code>
-
-        </dt>
-        <dd>Fit a multimodal response model</dd>
-
-        <dt>
-
-          <code><a href="fit_gazepoint_pupil_gamm.html">fit_gazepoint_pupil_gamm()</a></code>
-
-        </dt>
-        <dd>Fit a Gazepoint pupil GAMM</dd>
-
-        <dt>
-
-          <code><a href="fit_gazepoint_pupil_pfe_gamm.html">fit_gazepoint_pupil_pfe_gamm()</a></code>
-
-        </dt>
-        <dd>Fit a gaze-position-adjusted pupil GAMM sensitivity model</dd>
+        <dd>Prepare pupil-window data for confirmatory mixed models</dd>
 
         <dt>
 
@@ -688,115 +656,145 @@
 
         <dt>
 
-          <code><a href="fit_gazepoint_transition_count_nb_sensitivity.html">fit_gazepoint_transition_count_nb_sensitivity()</a></code>
+          <code><a href="prepare_gazepoint_pupil_gamm_data.html">prepare_gazepoint_pupil_gamm_data()</a></code>
 
         </dt>
-        <dd>Fit optional negative-binomial transition-count sensitivity models</dd>
+        <dd>Prepare Gazepoint pupil GAMM data</dd>
 
         <dt>
 
-          <code><a href="flag_gazepoint_pupil.html">flag_gazepoint_pupil()</a></code>
+          <code><a href="fit_gazepoint_pupil_gamm.html">fit_gazepoint_pupil_gamm()</a></code>
 
         </dt>
-        <dd>Flag invalid, missing, implausible, and outlying Gazepoint pupil samples</dd>
+        <dd>Fit a Gazepoint pupil GAMM</dd>
 
         <dt>
 
-          <code><a href="flag_gazepoint_pupil_artifacts.html">flag_gazepoint_pupil_artifacts()</a></code>
+          <code><a href="fit_gazepoint_pupil_pfe_gamm.html">fit_gazepoint_pupil_pfe_gamm()</a></code>
 
         </dt>
-        <dd>Flag Gazepoint pupil artifacts before interpolation</dd>
+        <dd>Fit a gaze-position-adjusted pupil GAMM sensitivity model</dd>
 
         <dt>
 
-          <code><a href="flag_gazepoint_pupil_hampel.html">flag_gazepoint_pupil_hampel()</a></code>
+          <code><a href="prepare_gazepoint_gca_data.html">prepare_gazepoint_gca_data()</a></code>
 
         </dt>
-        <dd>Flag pupil artifacts with a Hampel filter</dd>
+        <dd>Prepare Gazepoint Growth Curve Analysis data</dd>
 
         <dt>
 
-          <code><a href="flag_gazepoint_sequence_anomalies.html">flag_gazepoint_sequence_anomalies()</a></code>
+          <code><a href="fit_gazepoint_gca.html">fit_gazepoint_gca()</a></code>
 
         </dt>
-        <dd>Flag unusual AOI sequences</dd>
+        <dd>Fit a Gazepoint Growth Curve Analysis mixed model</dd>
 
         <dt>
 
-          <code><a href="flag_tracking_quality.html">flag_tracking_quality()</a></code>
+          <code><a href="plot_gazepoint_gca.html">plot_gazepoint_gca()</a></code>
 
         </dt>
-        <dd>Flag low-quality Gazepoint recordings</dd>
+        <dd>Plot observed and fitted Growth Curve Analysis trajectories</dd>
+      </dl></div><div class="section level2">
+      <h2 id="aoi-summaries-and-aoi-modelling">AOI summaries and AOI modelling<a class="anchor" aria-label="anchor" href="#aoi-summaries-and-aoi-modelling"></a></h2>
+
+      <div class="section-desc"><p>Summarise AOI behaviour, prepare AOI-window data, and fit GLMM/GAMM/sensitivity models.</p></div>
+
+      <dl></dl></div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="summarise_aoi_samples.html">summarise_aoi_samples()</a></code>
+
+        </dt>
+        <dd>Summarise sample-level AOI viewing</dd>
 
         <dt>
 
-          <code><a href="gazepoint_example_aoi_geometry.html">gazepoint_example_aoi_geometry</a></code>
+          <code><a href="summarise_gazepoint_aoi.html">summarise_gazepoint_aoi()</a></code>
 
         </dt>
-        <dd>Example AOI geometry table</dd>
+        <dd>Summarise Gazepoint AOI metrics from gaze and fixation exports</dd>
 
         <dt>
 
-          <code><a href="gazepoint_example_aoi_windows.html">gazepoint_example_aoi_windows</a></code>
+          <code><a href="summarise_gazepoint_aoi_entries.html">summarise_gazepoint_aoi_entries()</a></code>
 
         </dt>
-        <dd>Example AOI-window summary table</dd>
+        <dd>Summarise Gazepoint AOI entry episodes</dd>
 
         <dt>
 
-          <code><a href="gazepoint_example_fixations.html">gazepoint_example_fixations</a></code>
+          <code><a href="summarise_gazepoint_aoi_windows.html">summarise_gazepoint_aoi_windows()</a></code>
 
         </dt>
-        <dd>Example Gazepoint fixation table</dd>
+        <dd>Summarise Gazepoint AOI samples within predefined time windows</dd>
 
         <dt>
 
-          <code><a href="gazepoint_example_master.html">gazepoint_example_master</a></code>
+          <code><a href="summarise_gazepoint_aoi_trial_features.html">summarise_gazepoint_aoi_trial_features()</a></code>
 
         </dt>
-        <dd>Example Gazepoint master table</dd>
+        <dd>Summarise Gazepoint AOI trial features</dd>
 
         <dt>
 
-          <code><a href="gazepoint_example_pupil_windows.html">gazepoint_example_pupil_windows</a></code>
+          <code><a href="audit_gazepoint_aoi_window_denominators.html">audit_gazepoint_aoi_window_denominators()</a></code>
 
         </dt>
-        <dd>Example pupil-window summary table</dd>
+        <dd>Audit AOI window denominators before binomial modelling</dd>
 
         <dt>
 
-          <code><a href="harmonize_gazepoint_screen_coordinates.html">harmonize_gazepoint_screen_coordinates()</a></code>
+          <code><a href="prepare_gazepoint_aoi_glmm_data.html">prepare_gazepoint_aoi_glmm_data()</a></code>
 
         </dt>
-        <dd>Harmonize Gazepoint screen coordinates across resolutions</dd>
+        <dd>Prepare AOI-window data for binomial GLMMs</dd>
 
         <dt>
 
-          <code><a href="inspect_gazepoint_columns.html">inspect_gazepoint_columns()</a></code>
+          <code><a href="fit_gazepoint_aoi_window_glmm.html">fit_gazepoint_aoi_window_glmm()</a></code>
 
         </dt>
-        <dd>Inspect Gazepoint columns</dd>
+        <dd>Fit an AOI-window binomial GLMM</dd>
 
         <dt>
 
-          <code><a href="interpolate_gazepoint_pupil.html">interpolate_gazepoint_pupil()</a></code>
+          <code><a href="transform_gazepoint_aoi_empirical_logit.html">transform_gazepoint_aoi_empirical_logit()</a></code>
 
         </dt>
-        <dd>Interpolate short missing gaps in Gazepoint pupil data</dd>
+        <dd>Transform AOI proportions to empirical logits</dd>
 
         <dt>
 
-          <code><a href="interpolate_gazepoint_pupil_pchip.html">interpolate_gazepoint_pupil_pchip()</a></code>
+          <code><a href="fit_gazepoint_aoi_model_sensitivity.html">fit_gazepoint_aoi_model_sensitivity()</a></code>
 
         </dt>
-        <dd>Interpolate Gazepoint pupil data using PCHIP</dd>
+        <dd>Fit AOI-window model-family sensitivity checks</dd>
 
         <dt>
 
-          <code><a href="launch_gazepoint_qc_dashboard.html">launch_gazepoint_qc_dashboard()</a></code>
+          <code><a href="run_gazepoint_aoi_multiverse.html">run_gazepoint_aoi_multiverse()</a></code>
 
         </dt>
-        <dd>Launch or describe a lightweight QC dashboard</dd>
+        <dd>Run a Gazepoint AOI preprocessing multiverse</dd>
+
+        <dt>
+
+          <code><a href="prepare_gazepoint_aoi_gamm_data.html">prepare_gazepoint_aoi_gamm_data()</a></code>
+
+        </dt>
+        <dd>Prepare AOI time-course data for GAMM analysis</dd>
+
+        <dt>
+
+          <code><a href="fit_gazepoint_aoi_gamm.html">fit_gazepoint_aoi_gamm()</a></code>
+
+        </dt>
+        <dd>Fit AOI time-course GAMMs</dd>
 
         <dt>
 
@@ -804,6 +802,162 @@
 
         </dt>
         <dd>Plot AOI time-course GAMM results</dd>
+
+        <dt>
+
+          <code><a href="fit_gazepoint_aoi_brms.html">fit_gazepoint_aoi_brms()</a></code>
+
+        </dt>
+        <dd>Fit an optional Bayesian AOI model with brms</dd>
+      </dl></div><div class="section level2">
+      <h2 id="fixations-aoi-sequences-transitions-and-scanpaths">Fixations, AOI sequences, transitions, and scanpaths<a class="anchor" aria-label="anchor" href="#fixations-aoi-sequences-transitions-and-scanpaths"></a></h2>
+
+      <div class="section-desc"><p>Summarise fixation data, AOI sequences, transition matrices, scanpaths, and sequence reliability.</p></div>
+
+      <dl></dl></div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="summarise_fixations.html">summarise_fixations()</a></code>
+
+        </dt>
+        <dd>Summarise fixation-level AOI metrics</dd>
+
+        <dt>
+
+          <code><a href="summarise_gazepoint_fixation_trials.html">summarise_gazepoint_fixation_trials()</a></code>
+
+        </dt>
+        <dd>Summarise Gazepoint fixation trial features</dd>
+
+        <dt>
+
+          <code><a href="audit_gazepoint_fixation_reliability.html">audit_gazepoint_fixation_reliability()</a></code>
+
+        </dt>
+        <dd>Audit split-half reliability of fixation or AOI metrics</dd>
+
+        <dt>
+
+          <code><a href="detect_gazepoint_fixations_ivt.html">detect_gazepoint_fixations_ivt()</a></code>
+
+        </dt>
+        <dd>Detect simple I-VT fixations from gaze samples</dd>
+
+        <dt>
+
+          <code><a href="prepare_gazepoint_fixation_aligned_data.html">prepare_gazepoint_fixation_aligned_data()</a></code>
+
+        </dt>
+        <dd>Prepare fixation- or saccade-contingent aligned Gazepoint data</dd>
+
+        <dt>
+
+          <code><a href="prepare_gazepoint_aoi_sequences.html">prepare_gazepoint_aoi_sequences()</a></code>
+
+        </dt>
+        <dd>Prepare Gazepoint AOI sequences</dd>
+
+        <dt>
+
+          <code><a href="summarise_gazepoint_aoi_transitions.html">summarise_gazepoint_aoi_transitions()</a></code>
+
+        </dt>
+        <dd>Summarise Gazepoint AOI transition features</dd>
+
+        <dt>
+
+          <code><a href="compute_transition_matrix.html">compute_transition_matrix()</a></code>
+
+        </dt>
+        <dd>Compute an AOI transition matrix</dd>
+
+        <dt>
+
+          <code><a href="compute_gazepoint_aoi_transition_matrix.html">compute_gazepoint_aoi_transition_matrix()</a></code>
+
+        </dt>
+        <dd>Compute Gazepoint AOI transition matrices</dd>
+
+        <dt>
+
+          <code><a href="compute_gazepoint_time_varying_transition_matrix.html">compute_gazepoint_time_varying_transition_matrix()</a></code>
+
+        </dt>
+        <dd>Compute time-varying Gazepoint transition matrices</dd>
+
+        <dt>
+
+          <code><a href="compute_gazepoint_transition_network_metrics.html">compute_gazepoint_transition_network_metrics()</a></code>
+
+        </dt>
+        <dd>Compute lightweight AOI transition-network metrics</dd>
+
+        <dt>
+
+          <code><a href="fit_gazepoint_transition_count_nb_sensitivity.html">fit_gazepoint_transition_count_nb_sensitivity()</a></code>
+
+        </dt>
+        <dd>Fit optional negative-binomial transition-count sensitivity models</dd>
+
+        <dt>
+
+          <code><a href="compute_gazepoint_aoi_entropy.html">compute_gazepoint_aoi_entropy()</a></code>
+
+        </dt>
+        <dd>Compute AOI entropy metrics</dd>
+
+        <dt>
+
+          <code><a href="compute_gazepoint_aoi_sequence_metrics.html">compute_gazepoint_aoi_sequence_metrics()</a></code>
+
+        </dt>
+        <dd>Compute AOI sequence metrics</dd>
+
+        <dt>
+
+          <code><a href="compute_gazepoint_sequence_complexity.html">compute_gazepoint_sequence_complexity()</a></code>
+
+        </dt>
+        <dd>Compute AOI sequence complexity metrics</dd>
+
+        <dt>
+
+          <code><a href="compute_gazepoint_sequence_distance.html">compute_gazepoint_sequence_distance()</a></code>
+
+        </dt>
+        <dd>Compute AOI sequence distance</dd>
+
+        <dt>
+
+          <code><a href="compute_gazepoint_scanpath_similarity.html">compute_gazepoint_scanpath_similarity()</a></code>
+
+        </dt>
+        <dd>Compute AOI scanpath similarity</dd>
+
+        <dt>
+
+          <code><a href="compute_gazepoint_sequence_recurrence.html">compute_gazepoint_sequence_recurrence()</a></code>
+
+        </dt>
+        <dd>Compute simple categorical sequence recurrence metrics</dd>
+
+        <dt>
+
+          <code><a href="compute_gazepoint_saccade_metrics.html">compute_gazepoint_saccade_metrics()</a></code>
+
+        </dt>
+        <dd>Compute basic saccade metrics from fixation coordinates</dd>
+
+        <dt>
+
+          <code><a href="flag_gazepoint_sequence_anomalies.html">flag_gazepoint_sequence_anomalies()</a></code>
+
+        </dt>
+        <dd>Flag unusual AOI sequences</dd>
 
         <dt>
 
@@ -821,122 +975,10 @@
 
         <dt>
 
-          <code><a href="plot_gazepoint_aoi_verification.html">plot_gazepoint_aoi_verification()</a></code>
+          <code><a href="plot_transition_heatmap.html">plot_transition_heatmap()</a></code>
 
         </dt>
-        <dd>Plot AOI geometry for visual verification</dd>
-
-        <dt>
-
-          <code><a href="plot_gazepoint_cluster_null_distribution.html">plot_gazepoint_cluster_null_distribution()</a></code>
-
-        </dt>
-        <dd>Plot the cluster-permutation null distribution</dd>
-
-        <dt>
-
-          <code><a href="plot_gazepoint_cluster_permutation.html">plot_gazepoint_cluster_permutation()</a></code>
-
-        </dt>
-        <dd>Plot a Gazepoint cluster-permutation result</dd>
-
-        <dt>
-
-          <code><a href="plot_gazepoint_cluster_results.html">plot_gazepoint_cluster_results()</a></code>
-
-        </dt>
-        <dd>Plot cluster-based permutation results</dd>
-
-        <dt>
-
-          <code><a href="plot_gazepoint_face_quality.html">plot_gazepoint_face_quality()</a></code>
-
-        </dt>
-        <dd>Plot external facial-behaviour data quality</dd>
-
-        <dt>
-
-          <code><a href="plot_gazepoint_gca.html">plot_gazepoint_gca()</a></code>
-
-        </dt>
-        <dd>Plot observed and fitted Growth Curve Analysis trajectories</dd>
-
-        <dt>
-
-          <code><a href="plot_gazepoint_heatmap.html">plot_gazepoint_heatmap()</a></code>
-
-        </dt>
-        <dd>Plot a Gazepoint gaze or fixation heatmap</dd>
-
-        <dt>
-
-          <code><a href="plot_gazepoint_heatmap_overlay.html">plot_gazepoint_heatmap_overlay()</a></code>
-
-        </dt>
-        <dd>Plot a Gazepoint heatmap over a background image</dd>
-
-        <dt>
-
-          <code><a href="plot_gazepoint_missingness_profile.html">plot_gazepoint_missingness_profile()</a></code>
-
-        </dt>
-        <dd>Plot a Gazepoint missingness profile</dd>
-
-        <dt>
-
-          <code><a href="plot_gazepoint_model_predictions.html">plot_gazepoint_model_predictions()</a></code>
-
-        </dt>
-        <dd>Plot observed summaries and model-implied predictions</dd>
-
-        <dt>
-
-          <code><a href="plot_gazepoint_model_residuals.html">plot_gazepoint_model_residuals()</a></code>
-
-        </dt>
-        <dd>Plot model residual diagnostics</dd>
-
-        <dt>
-
-          <code><a href="plot_gazepoint_multiverse_results.html">plot_gazepoint_multiverse_results()</a></code>
-
-        </dt>
-        <dd>Plot Gazepoint preprocessing multiverse results</dd>
-
-        <dt>
-
-          <code><a href="plot_gazepoint_phase_timeline.html">plot_gazepoint_phase_timeline()</a></code>
-
-        </dt>
-        <dd>Plot a Gazepoint task-phase timeline</dd>
-
-        <dt>
-
-          <code><a href="plot_gazepoint_pupil_preprocessing.html">plot_gazepoint_pupil_preprocessing()</a></code>
-
-        </dt>
-        <dd>Plot Gazepoint pupil preprocessing for one trial</dd>
-
-        <dt>
-
-          <code><a href="plot_gazepoint_pupil_status.html">plot_gazepoint_pupil_status()</a></code>
-
-        </dt>
-        <dd>Plot Gazepoint pupil preprocessing status</dd>
-
-        <dt>
-
-          <code><a href="plot_gazepoint_pupil_timecourse.html">plot_gazepoint_pupil_timecourse()</a></code>
-
-        </dt>
-        <dd>Plot Gazepoint pupil time course</dd>
-
-        <dt>
-
-          <code><a href="plot_gazepoint_qc_overview.html">plot_gazepoint_qc_overview()</a></code>
-
-        </dt>
-        <dd>Plot a Gazepoint QC overview</dd>
+        <dd>Plot an AOI transition heatmap</dd>
 
         <dt>
 
@@ -951,265 +993,22 @@
 
         </dt>
         <dd>Plot multiple Gazepoint scanpaths</dd>
+      </dl></div><div class="section level2">
+      <h2 id="cluster-permutation-and-advanced-time-course-inference">Cluster permutation and advanced time-course inference<a class="anchor" aria-label="anchor" href="#cluster-permutation-and-advanced-time-course-inference"></a></h2>
 
-        <dt>
+      <div class="section-desc"><p>Prepare, run, summarise, plot, and export cluster-based time-course analyses.</p></div>
 
-          <code><a href="plot_gazepoint_stimulus_layout_qc.html">plot_gazepoint_stimulus_layout_qc()</a></code>
+      <dl></dl></div><div class="section level2">
 
-        </dt>
-        <dd>Plot stimulus-layout quality control</dd>
 
-        <dt>
 
-          <code><a href="plot_gazepoint_time_series.html">plot_gazepoint_time_series()</a></code>
 
-        </dt>
-        <dd>Plot a Gazepoint-style time series</dd>
-
-        <dt>
-
-          <code><a href="plot_gazepoint_time_varying_effect.html">plot_gazepoint_time_varying_effect()</a></code>
-
-        </dt>
-        <dd>Plot a time-varying effect curve</dd>
-
-        <dt>
-
-          <code><a href="plot_sampling_rate.html">plot_sampling_rate()</a></code>
-
-        </dt>
-        <dd>Plot Gazepoint sampling-rate diagnostics</dd>
-
-        <dt>
-
-          <code><a href="plot_tracking_quality.html">plot_tracking_quality()</a></code>
-
-        </dt>
-        <dd>Plot Gazepoint tracking-quality diagnostics</dd>
-
-        <dt>
-
-          <code><a href="plot_transition_heatmap.html">plot_transition_heatmap()</a></code>
-
-        </dt>
-        <dd>Plot an AOI transition heatmap</dd>
-
-        <dt>
-
-          <code><a href="prepare_gazepoint_aoi_gamm_data.html">prepare_gazepoint_aoi_gamm_data()</a></code>
-
-        </dt>
-        <dd>Prepare AOI time-course data for GAMM analysis</dd>
-
-        <dt>
-
-          <code><a href="prepare_gazepoint_aoi_glmm_data.html">prepare_gazepoint_aoi_glmm_data()</a></code>
-
-        </dt>
-        <dd>Prepare AOI-window data for binomial GLMMs</dd>
-
-        <dt>
-
-          <code><a href="prepare_gazepoint_aoi_sequences.html">prepare_gazepoint_aoi_sequences()</a></code>
-
-        </dt>
-        <dd>Prepare Gazepoint AOI sequences</dd>
-
-        <dt>
+      <dl><dt>
 
           <code><a href="prepare_gazepoint_cluster_data.html">prepare_gazepoint_cluster_data()</a></code>
 
         </dt>
         <dd>Prepare time-course data for cluster-based permutation tests</dd>
-
-        <dt>
-
-          <code><a href="prepare_gazepoint_eyetools_data.html">prepare_gazepoint_eyetools_data()</a></code>
-
-        </dt>
-        <dd>Prepare Gazepoint master data for eyetools-style workflows</dd>
-
-        <dt>
-
-          <code><a href="prepare_gazepoint_eyetrackingr_data.html">prepare_gazepoint_eyetrackingr_data()</a></code>
-
-        </dt>
-        <dd>Prepare Gazepoint master data for eyetrackingR-style workflows</dd>
-
-        <dt>
-
-          <code><a href="prepare_gazepoint_fixation_aligned_data.html">prepare_gazepoint_fixation_aligned_data()</a></code>
-
-        </dt>
-        <dd>Prepare fixation- or saccade-contingent aligned Gazepoint data</dd>
-
-        <dt>
-
-          <code><a href="prepare_gazepoint_gazer_data.html">prepare_gazepoint_gazer_data()</a></code>
-
-        </dt>
-        <dd>Prepare Gazepoint master data for gazer-style workflows</dd>
-
-        <dt>
-
-          <code><a href="prepare_gazepoint_gca_data.html">prepare_gazepoint_gca_data()</a></code>
-
-        </dt>
-        <dd>Prepare Gazepoint Growth Curve Analysis data</dd>
-
-        <dt>
-
-          <code><a href="prepare_gazepoint_heatmap_data.html">prepare_gazepoint_heatmap_data()</a></code>
-
-        </dt>
-        <dd>Prepare gaze or fixation coordinates for heatmap plotting</dd>
-
-        <dt>
-
-          <code><a href="prepare_gazepoint_hmm_data.html">prepare_gazepoint_hmm_data()</a></code>
-
-        </dt>
-        <dd>Prepare Gazepoint AOI/state sequences for HMM-style workflows</dd>
-
-        <dt>
-
-          <code><a href="prepare_gazepoint_multimodal_data.html">prepare_gazepoint_multimodal_data()</a></code>
-
-        </dt>
-        <dd>Prepare multimodal Gazepoint and external face-window data</dd>
-
-        <dt>
-
-          <code><a href="prepare_gazepoint_pupil_gamm_data.html">prepare_gazepoint_pupil_gamm_data()</a></code>
-
-        </dt>
-        <dd>Prepare Gazepoint pupil GAMM data</dd>
-
-        <dt>
-
-          <code><a href="prepare_gazepoint_pupil_window_model_data.html">prepare_gazepoint_pupil_window_model_data()</a></code>
-
-        </dt>
-        <dd>Prepare pupil-window data for confirmatory mixed models</dd>
-
-        <dt>
-
-          <code><a href="prepare_gazepoint_pupillometryr_data.html">prepare_gazepoint_pupillometryr_data()</a></code>
-
-        </dt>
-        <dd>Prepare Gazepoint master data for pupillometryR-style workflows</dd>
-
-        <dt>
-
-          <code><a href="prepare_gazepoint_semimarkov_data.html">prepare_gazepoint_semimarkov_data()</a></code>
-
-        </dt>
-        <dd>Prepare Gazepoint AOI sequences for semi-Markov modelling</dd>
-
-        <dt>
-
-          <code><a href="prepare_gazepoint_timecourse_test_data.html">prepare_gazepoint_timecourse_test_data()</a></code>
-
-        </dt>
-        <dd>Prepare time-course data for Gazepoint cluster-permutation testing</dd>
-
-        <dt>
-
-          <code><a href="prepare_gazepoint_traminer_data.html">prepare_gazepoint_traminer_data()</a></code>
-
-        </dt>
-        <dd>Prepare AOI sequences for TraMineR-style workflows</dd>
-
-        <dt>
-
-          <code><a href="read_gazepoint.html">read_gazepoint()</a></code>
-
-        </dt>
-        <dd>Read a Gazepoint all-gaze or fixation CSV export</dd>
-
-        <dt>
-
-          <code><a href="read_gazepoint_face_export.html">read_gazepoint_face_export()</a></code>
-
-        </dt>
-        <dd>Read external facial-analysis exports</dd>
-
-        <dt>
-
-          <code><a href="read_gazepoint_folder.html">read_gazepoint_folder()</a></code>
-
-        </dt>
-        <dd>Read multiple Gazepoint CSV exports from a folder</dd>
-
-        <dt>
-
-          <code><a href="read_gazepoint_summary.html">read_gazepoint_summary()</a></code>
-
-        </dt>
-        <dd>Read a Gazepoint Analysis Data Summary export</dd>
-
-        <dt>
-
-          <code><a href="recalibrate_gazepoint_gaze.html">recalibrate_gazepoint_gaze()</a></code>
-
-        </dt>
-        <dd>Offline gaze recalibration using known target coordinates</dd>
-
-        <dt>
-
-          <code><a href="recommend_gazepoint_exclusions.html">recommend_gazepoint_exclusions()</a></code>
-
-        </dt>
-        <dd>Recommend trial and participant exclusions</dd>
-
-        <dt>
-
-          <code><a href="report_gazepoint_cluster_permutation.html">report_gazepoint_cluster_permutation()</a></code>
-
-        </dt>
-        <dd>Report a Gazepoint cluster-permutation result</dd>
-
-        <dt>
-
-          <code><a href="report_gazepoint_face_qc.html">report_gazepoint_face_qc()</a></code>
-
-        </dt>
-        <dd>Report external facial-behaviour QC and reporting readiness</dd>
-
-        <dt>
-
-          <code><a href="report_gazepoint_missingness.html">report_gazepoint_missingness()</a></code>
-
-        </dt>
-        <dd>Report Gazepoint missingness</dd>
-
-        <dt>
-
-          <code><a href="report_gazepoint_multiverse.html">report_gazepoint_multiverse()</a></code>
-
-        </dt>
-        <dd>Report multiverse-analysis results</dd>
-
-        <dt>
-
-          <code><a href="report_gazepoint_phase_coverage.html">report_gazepoint_phase_coverage()</a></code>
-
-        </dt>
-        <dd>Report task-phase coverage</dd>
-
-        <dt>
-
-          <code><a href="report_gazepoint_qc_overview.html">report_gazepoint_qc_overview()</a></code>
-
-        </dt>
-        <dd>Report Gazepoint QC overview</dd>
-
-        <dt>
-
-          <code><a href="run_gazepoint_aoi_multiverse.html">run_gazepoint_aoi_multiverse()</a></code>
-
-        </dt>
-        <dd>Run a Gazepoint AOI preprocessing multiverse</dd>
 
         <dt>
 
@@ -1248,34 +1047,6 @@
 
         <dt>
 
-          <code><a href="run_gazepoint_cluster_threshold_sensitivity.html">run_gazepoint_cluster_threshold_sensitivity()</a></code>
-
-        </dt>
-        <dd>Run threshold-sensitivity checks for Gazepoint cluster permutation</dd>
-
-        <dt>
-
-          <code><a href="run_gazepoint_eyetools_fixation_detection.html">run_gazepoint_eyetools_fixation_detection()</a></code>
-
-        </dt>
-        <dd>Run optional eyetools fixation and saccade detection</dd>
-
-        <dt>
-
-          <code><a href="run_gazepoint_gazer_crosscheck.html">run_gazepoint_gazer_crosscheck()</a></code>
-
-        </dt>
-        <dd>Run an optional gazeR pupil-preprocessing cross-check</dd>
-
-        <dt>
-
-          <code><a href="run_gazepoint_model_leave_one_out.html">run_gazepoint_model_leave_one_out()</a></code>
-
-        </dt>
-        <dd>Run leave-one-unit model sensitivity analysis</dd>
-
-        <dt>
-
           <code><a href="run_gazepoint_multidimensional_cluster_permutation.html">run_gazepoint_multidimensional_cluster_permutation()</a></code>
 
         </dt>
@@ -1283,10 +1054,10 @@
 
         <dt>
 
-          <code><a href="run_gazepoint_pupil_multiverse.html">run_gazepoint_pupil_multiverse()</a></code>
+          <code><a href="run_gazepoint_cluster_threshold_sensitivity.html">run_gazepoint_cluster_threshold_sensitivity()</a></code>
 
         </dt>
-        <dd>Run a Gazepoint pupil preprocessing multiverse</dd>
+        <dd>Run threshold-sensitivity checks for Gazepoint cluster permutation</dd>
 
         <dt>
 
@@ -1297,31 +1068,615 @@
 
         <dt>
 
-          <code><a href="run_gazepoint_workflow.html">run_gazepoint_workflow()</a></code>
+          <code><a href="summarise_gazepoint_clusters.html">summarise_gazepoint_clusters()</a></code>
 
         </dt>
-        <dd>Run a complete Gazepoint analysis workflow</dd>
+        <dd>Summarise cluster-based permutation results</dd>
 
         <dt>
 
-          <code><a href="save_gazepoint_plots.html">save_gazepoint_plots()</a></code>
+          <code><a href="summarize_gazepoint_time_clusters.html">summarize_gazepoint_time_clusters()</a></code>
 
         </dt>
-        <dd>Save standard Gazepoint diagnostic plots</dd>
+        <dd>Summarize Gazepoint time clusters</dd>
 
         <dt>
 
-          <code><a href="segment_gazepoint_task_phases.html">segment_gazepoint_task_phases()</a></code>
+          <code><a href="estimate_gazepoint_cluster_onset.html">estimate_gazepoint_cluster_onset()</a></code>
 
         </dt>
-        <dd>Segment Gazepoint-style data into task phases</dd>
+        <dd>Guardrail for exact cluster-onset estimation</dd>
 
         <dt>
 
-          <code><a href="simulate_gazepoint_cluster_timecourse_data.html">simulate_gazepoint_cluster_timecourse_data()</a></code>
+          <code><a href="estimate_gazepoint_cluster_offset.html">estimate_gazepoint_cluster_offset()</a></code>
 
         </dt>
-        <dd>Simulate simple Gazepoint cluster time-course data</dd>
+        <dd>Guardrail for exact cluster-offset estimation</dd>
+
+        <dt>
+
+          <code><a href="estimate_gazepoint_divergence_point.html">estimate_gazepoint_divergence_point()</a></code>
+
+        </dt>
+        <dd>Estimate a bootstrapped divergence point between two Gazepoint time courses</dd>
+
+        <dt>
+
+          <code><a href="bootstrap_gazepoint_timecourse.html">bootstrap_gazepoint_timecourse()</a></code>
+
+        </dt>
+        <dd>Bootstrap time-course summaries</dd>
+
+        <dt>
+
+          <code><a href="plot_gazepoint_cluster_results.html">plot_gazepoint_cluster_results()</a></code>
+
+        </dt>
+        <dd>Plot cluster-based permutation results</dd>
+
+        <dt>
+
+          <code><a href="plot_gazepoint_cluster_permutation.html">plot_gazepoint_cluster_permutation()</a></code>
+
+        </dt>
+        <dd>Plot a Gazepoint cluster-permutation result</dd>
+
+        <dt>
+
+          <code><a href="plot_gazepoint_cluster_null_distribution.html">plot_gazepoint_cluster_null_distribution()</a></code>
+
+        </dt>
+        <dd>Plot the cluster-permutation null distribution</dd>
+
+        <dt>
+
+          <code><a href="plot_gazepoint_time_varying_effect.html">plot_gazepoint_time_varying_effect()</a></code>
+
+        </dt>
+        <dd>Plot a time-varying effect curve</dd>
+
+        <dt>
+
+          <code><a href="report_gazepoint_cluster_permutation.html">report_gazepoint_cluster_permutation()</a></code>
+
+        </dt>
+        <dd>Report a Gazepoint cluster-permutation result</dd>
+
+        <dt>
+
+          <code><a href="export_gazepoint_cluster_results.html">export_gazepoint_cluster_results()</a></code>
+
+        </dt>
+        <dd>Export Gazepoint cluster-permutation results</dd>
+
+        <dt>
+
+          <code><a href="export_gazepoint_mne_cluster_input.html">export_gazepoint_mne_cluster_input()</a></code>
+
+        </dt>
+        <dd>Export Gazepoint time-course data for MNE-style cluster workflows</dd>
+
+        <dt>
+
+          <code><a href="export_gazepoint_permuco_cluster_input.html">export_gazepoint_permuco_cluster_input()</a></code>
+
+        </dt>
+        <dd>Export Gazepoint time-course data for permuco-style cluster workflows</dd>
+
+        <dt>
+
+          <code><a href="export_gazepoint_permutes_cluster_input.html">export_gazepoint_permutes_cluster_input()</a></code>
+
+        </dt>
+        <dd>Export Gazepoint time-course data for permutes-style cluster workflows</dd>
+
+        <dt>
+
+          <code><a href="prepare_gazepoint_timecourse_test_data.html">prepare_gazepoint_timecourse_test_data()</a></code>
+
+        </dt>
+        <dd>Prepare time-course data for Gazepoint cluster-permutation testing</dd>
+      </dl></div><div class="section level2">
+      <h2 id="model-diagnostics-summaries-sensitivity-and-reporting">Model diagnostics, summaries, sensitivity, and reporting<a class="anchor" aria-label="anchor" href="#model-diagnostics-summaries-sensitivity-and-reporting"></a></h2>
+
+      <div class="section-desc"><p>Diagnose models, compare nested models, create model tables, and audit final analysis decisions.</p></div>
+
+      <dl></dl></div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="check_gazepoint_model_convergence.html">check_gazepoint_model_convergence()</a></code>
+
+        </dt>
+        <dd>Check model convergence</dd>
+
+        <dt>
+
+          <code><a href="check_gazepoint_model_singularity.html">check_gazepoint_model_singularity()</a></code>
+
+        </dt>
+        <dd>Check model singularity</dd>
+
+        <dt>
+
+          <code><a href="check_gazepoint_model_overdispersion.html">check_gazepoint_model_overdispersion()</a></code>
+
+        </dt>
+        <dd>Check model overdispersion</dd>
+
+        <dt>
+
+          <code><a href="diagnose_gazepoint_glmm.html">diagnose_gazepoint_glmm()</a></code>
+
+        </dt>
+        <dd>Diagnose GLMM, LMM, and GLM models</dd>
+
+        <dt>
+
+          <code><a href="diagnose_gazepoint_gamm.html">diagnose_gazepoint_gamm()</a></code>
+
+        </dt>
+        <dd>Diagnose GAM and BAM models</dd>
+
+        <dt>
+
+          <code><a href="compare_gazepoint_nested_models.html">compare_gazepoint_nested_models()</a></code>
+
+        </dt>
+        <dd>Compare nested Gazepoint models</dd>
+
+        <dt>
+
+          <code><a href="run_gazepoint_model_leave_one_out.html">run_gazepoint_model_leave_one_out()</a></code>
+
+        </dt>
+        <dd>Run leave-one-unit model sensitivity analysis</dd>
+
+        <dt>
+
+          <code><a href="plot_gazepoint_model_predictions.html">plot_gazepoint_model_predictions()</a></code>
+
+        </dt>
+        <dd>Plot observed summaries and model-implied predictions</dd>
+
+        <dt>
+
+          <code><a href="plot_gazepoint_model_residuals.html">plot_gazepoint_model_residuals()</a></code>
+
+        </dt>
+        <dd>Plot model residual diagnostics</dd>
+
+        <dt>
+
+          <code><a href="tidy_gazepoint_model_summary.html">tidy_gazepoint_model_summary()</a></code>
+
+        </dt>
+        <dd>Create a tidy model summary for manuscript tables</dd>
+
+        <dt>
+
+          <code><a href="summarise_gazepoint_fixed_effects.html">summarise_gazepoint_fixed_effects()</a></code>
+
+        </dt>
+        <dd>Summarise fixed effects from fitted models</dd>
+
+        <dt>
+
+          <code><a href="summarise_gazepoint_emmeans.html">summarise_gazepoint_emmeans()</a></code>
+
+        </dt>
+        <dd>Summarise estimated marginal means and contrasts</dd>
+
+        <dt>
+
+          <code><a href="export_gazepoint_model_tables.html">export_gazepoint_model_tables()</a></code>
+
+        </dt>
+        <dd>Export manuscript-ready model tables</dd>
+
+        <dt>
+
+          <code><a href="check_gazepoint_real_data_readiness.html">check_gazepoint_real_data_readiness()</a></code>
+
+        </dt>
+        <dd>Check real-data readiness before Gazepoint analysis</dd>
+
+        <dt>
+
+          <code><a href="recommend_gazepoint_exclusions.html">recommend_gazepoint_exclusions()</a></code>
+
+        </dt>
+        <dd>Recommend trial and participant exclusions</dd>
+
+        <dt>
+
+          <code><a href="create_gazepoint_reporting_checklist.html">create_gazepoint_reporting_checklist()</a></code>
+
+        </dt>
+        <dd>Create a Gazepoint reporting checklist</dd>
+
+        <dt>
+
+          <code><a href="create_gazepoint_analysis_decision_audit.html">create_gazepoint_analysis_decision_audit()</a></code>
+
+        </dt>
+        <dd>Create a final Gazepoint analysis-decision audit</dd>
+
+        <dt>
+
+          <code><a href="report_gazepoint_multiverse.html">report_gazepoint_multiverse()</a></code>
+
+        </dt>
+        <dd>Report multiverse-analysis results</dd>
+
+        <dt>
+
+          <code><a href="plot_gazepoint_multiverse_results.html">plot_gazepoint_multiverse_results()</a></code>
+
+        </dt>
+        <dd>Plot Gazepoint preprocessing multiverse results</dd>
+
+        <dt>
+
+          <code><a href="summarise_gazepoint_multiverse_results.html">summarise_gazepoint_multiverse_results()</a></code>
+
+        </dt>
+        <dd>Summarise Gazepoint preprocessing multiverse results</dd>
+
+        <dt>
+
+          <code><a href="audit_gazepoint_condition_quality_imbalance.html">audit_gazepoint_condition_quality_imbalance()</a></code>
+
+        </dt>
+        <dd>Audit condition-level quality imbalance</dd>
+
+        <dt>
+
+          <code><a href="audit_gazepoint_design_balance.html">audit_gazepoint_design_balance()</a></code>
+
+        </dt>
+        <dd>Audit Gazepoint experimental design balance</dd>
+
+        <dt>
+
+          <code><a href="audit_gazepoint_event_sync.html">audit_gazepoint_event_sync()</a></code>
+
+        </dt>
+        <dd>Audit Gazepoint event and timing synchronisation</dd>
+
+        <dt>
+
+          <code><a href="audit_gazepoint_exclusion_flow.html">audit_gazepoint_exclusion_flow()</a></code>
+
+        </dt>
+        <dd>Audit Gazepoint exclusion and retention flow</dd>
+
+        <dt>
+
+          <code><a href="audit_gazepoint_post_exclusion_balance.html">audit_gazepoint_post_exclusion_balance()</a></code>
+
+        </dt>
+        <dd>Audit post-exclusion condition balance</dd>
+
+        <dt>
+
+          <code><a href="audit_gazepoint_timecourse_grid.html">audit_gazepoint_timecourse_grid()</a></code>
+
+        </dt>
+        <dd>Audit a Gazepoint time-course grid for cluster-permutation readiness</dd>
+
+        <dt>
+
+          <code><a href="diagnose_gazepoint_cluster_design.html">diagnose_gazepoint_cluster_design()</a></code>
+
+        </dt>
+        <dd>Diagnose the design assumptions of a Gazepoint cluster-permutation workflow</dd>
+
+        <dt>
+
+          <code><a href="recalibrate_gazepoint_gaze.html">recalibrate_gazepoint_gaze()</a></code>
+
+        </dt>
+        <dd>Offline gaze recalibration using known target coordinates</dd>
+      </dl></div><div class="section level2">
+      <h2 id="external-face-data-and-multimodal-workflows">External face-data and multimodal workflows<a class="anchor" aria-label="anchor" href="#external-face-data-and-multimodal-workflows"></a></h2>
+
+      <div class="section-desc"><p>Work with externally generated face-analysis outputs and multimodal response models.</p></div>
+
+      <dl></dl></div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="read_gazepoint_face_export.html">read_gazepoint_face_export()</a></code>
+
+        </dt>
+        <dd>Read external facial-analysis exports</dd>
+
+        <dt>
+
+          <code><a href="standardize_gazepoint_face_columns.html">standardize_gazepoint_face_columns()</a></code>
+
+        </dt>
+        <dd>Standardise external facial-analysis columns</dd>
+
+        <dt>
+
+          <code><a href="audit_gazepoint_face_quality.html">audit_gazepoint_face_quality()</a></code>
+
+        </dt>
+        <dd>Audit external facial-behaviour data quality</dd>
+
+        <dt>
+
+          <code><a href="summarize_gazepoint_face_quality.html">summarize_gazepoint_face_quality()</a></code> <code><a href="summarize_gazepoint_face_quality.html">summarise_gazepoint_face_quality()</a></code>
+
+        </dt>
+        <dd>Summarise external facial-behaviour data quality</dd>
+
+        <dt>
+
+          <code><a href="plot_gazepoint_face_quality.html">plot_gazepoint_face_quality()</a></code>
+
+        </dt>
+        <dd>Plot external facial-behaviour data quality</dd>
+
+        <dt>
+
+          <code><a href="sync_gazepoint_face_data.html">sync_gazepoint_face_data()</a></code>
+
+        </dt>
+        <dd>Synchronise external facial-behaviour data with Gazepoint data</dd>
+
+        <dt>
+
+          <code><a href="audit_gazepoint_face_sync.html">audit_gazepoint_face_sync()</a></code>
+
+        </dt>
+        <dd>Audit synchronisation between Gazepoint and external facial-behaviour data</dd>
+
+        <dt>
+
+          <code><a href="summarize_gazepoint_face_windows.html">summarize_gazepoint_face_windows()</a></code>
+
+        </dt>
+        <dd>Summarise external facial-behaviour data within analysis windows</dd>
+
+        <dt>
+
+          <code><a href="summarize_gazepoint_face_reactivity.html">summarize_gazepoint_face_reactivity()</a></code>
+
+        </dt>
+        <dd>Summarise facial-behaviour reactivity between two windows</dd>
+
+        <dt>
+
+          <code><a href="prepare_gazepoint_multimodal_data.html">prepare_gazepoint_multimodal_data()</a></code>
+
+        </dt>
+        <dd>Prepare multimodal Gazepoint and external face-window data</dd>
+
+        <dt>
+
+          <code><a href="fit_gazepoint_face_window_lmm.html">fit_gazepoint_face_window_lmm()</a></code>
+
+        </dt>
+        <dd>Fit a facial-behaviour window mixed or linear model</dd>
+
+        <dt>
+
+          <code><a href="fit_gazepoint_multimodal_response_model.html">fit_gazepoint_multimodal_response_model()</a></code>
+
+        </dt>
+        <dd>Fit a multimodal response model</dd>
+
+        <dt>
+
+          <code><a href="create_gazepoint_face_reporting_checklist.html">create_gazepoint_face_reporting_checklist()</a></code>
+
+        </dt>
+        <dd>Create a reporting checklist for external facial-behaviour workflows</dd>
+
+        <dt>
+
+          <code><a href="report_gazepoint_face_qc.html">report_gazepoint_face_qc()</a></code>
+
+        </dt>
+        <dd>Report external facial-behaviour QC and reporting readiness</dd>
+      </dl></div><div class="section level2">
+      <h2 id="ecosystem-adapters-and-external-package-bridges">Ecosystem adapters and external package bridges<a class="anchor" aria-label="anchor" href="#ecosystem-adapters-and-external-package-bridges"></a></h2>
+
+      <div class="section-desc"><p>Prepare Gazepoint data for other R eye-tracking, pupil, sequence, and export ecosystems.</p></div>
+
+      <dl></dl></div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="prepare_gazepoint_eyetrackingr_data.html">prepare_gazepoint_eyetrackingr_data()</a></code>
+
+        </dt>
+        <dd>Prepare Gazepoint master data for eyetrackingR-style workflows</dd>
+
+        <dt>
+
+          <code><a href="prepare_gazepoint_pupillometryr_data.html">prepare_gazepoint_pupillometryr_data()</a></code>
+
+        </dt>
+        <dd>Prepare Gazepoint master data for pupillometryR-style workflows</dd>
+
+        <dt>
+
+          <code><a href="prepare_gazepoint_gazer_data.html">prepare_gazepoint_gazer_data()</a></code>
+
+        </dt>
+        <dd>Prepare Gazepoint master data for gazer-style workflows</dd>
+
+        <dt>
+
+          <code><a href="prepare_gazepoint_eyetools_data.html">prepare_gazepoint_eyetools_data()</a></code>
+
+        </dt>
+        <dd>Prepare Gazepoint master data for eyetools-style workflows</dd>
+
+        <dt>
+
+          <code><a href="run_gazepoint_gazer_crosscheck.html">run_gazepoint_gazer_crosscheck()</a></code>
+
+        </dt>
+        <dd>Run an optional gazeR pupil-preprocessing cross-check</dd>
+
+        <dt>
+
+          <code><a href="run_gazepoint_eyetools_fixation_detection.html">run_gazepoint_eyetools_fixation_detection()</a></code>
+
+        </dt>
+        <dd>Run optional eyetools fixation and saccade detection</dd>
+
+        <dt>
+
+          <code><a href="prepare_gazepoint_traminer_data.html">prepare_gazepoint_traminer_data()</a></code>
+
+        </dt>
+        <dd>Prepare AOI sequences for TraMineR-style workflows</dd>
+
+        <dt>
+
+          <code><a href="prepare_gazepoint_semimarkov_data.html">prepare_gazepoint_semimarkov_data()</a></code>
+
+        </dt>
+        <dd>Prepare Gazepoint AOI sequences for semi-Markov modelling</dd>
+
+        <dt>
+
+          <code><a href="prepare_gazepoint_hmm_data.html">prepare_gazepoint_hmm_data()</a></code>
+
+        </dt>
+        <dd>Prepare Gazepoint AOI/state sequences for HMM-style workflows</dd>
+
+        <dt>
+
+          <code><a href="create_gazepoint_markovchain_object.html">create_gazepoint_markovchain_object()</a></code>
+
+        </dt>
+        <dd>Create a Gazepoint AOI Markov-chain object</dd>
+
+        <dt>
+
+          <code><a href="summarise_gazepoint_markovchain.html">summarise_gazepoint_markovchain()</a></code>
+
+        </dt>
+        <dd>Summarise a Gazepoint Markov-chain object</dd>
+
+        <dt>
+
+          <code><a href="summarise_gazepoint_semimarkov.html">summarise_gazepoint_semimarkov()</a></code>
+
+        </dt>
+        <dd>Summarise Gazepoint semi-Markov data</dd>
+
+        <dt>
+
+          <code><a href="export_gazepoint_to_bids.html">export_gazepoint_to_bids()</a></code>
+
+        </dt>
+        <dd>Export Gazepoint data to a lightweight BIDS-style folder</dd>
+      </dl></div><div class="section level2">
+      <h2 id="plotting-and-visual-diagnostics">Plotting and visual diagnostics<a class="anchor" aria-label="anchor" href="#plotting-and-visual-diagnostics"></a></h2>
+
+      <div class="section-desc"><p>General-purpose visual diagnostics for time series, heatmaps, AOIs, and spatial outputs.</p></div>
+
+      <dl></dl></div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="plot_gazepoint_time_series.html">plot_gazepoint_time_series()</a></code>
+
+        </dt>
+        <dd>Plot a Gazepoint-style time series</dd>
+
+        <dt>
+
+          <code><a href="prepare_gazepoint_heatmap_data.html">prepare_gazepoint_heatmap_data()</a></code>
+
+        </dt>
+        <dd>Prepare gaze or fixation coordinates for heatmap plotting</dd>
+
+        <dt>
+
+          <code><a href="plot_gazepoint_heatmap.html">plot_gazepoint_heatmap()</a></code>
+
+        </dt>
+        <dd>Plot a Gazepoint gaze or fixation heatmap</dd>
+
+        <dt>
+
+          <code><a href="plot_gazepoint_heatmap_overlay.html">plot_gazepoint_heatmap_overlay()</a></code>
+
+        </dt>
+        <dd>Plot a Gazepoint heatmap over a background image</dd>
+
+        <dt>
+
+          <code><a href="export_gazepoint_heatmap_png.html">export_gazepoint_heatmap_png()</a></code>
+
+        </dt>
+        <dd>Export a Gazepoint heatmap plot to PNG</dd>
+      </dl></div><div class="section level2">
+      <h2 id="example-and-simulated-data">Example and simulated data<a class="anchor" aria-label="anchor" href="#example-and-simulated-data"></a></h2>
+
+      <div class="section-desc"><p>Synthetic data objects and simulation helpers for examples, vignettes, tests, and teaching.</p></div>
+
+      <dl></dl></div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="gazepoint_example_master.html">gazepoint_example_master</a></code>
+
+        </dt>
+        <dd>Example Gazepoint master table</dd>
+
+        <dt>
+
+          <code><a href="gazepoint_example_fixations.html">gazepoint_example_fixations</a></code>
+
+        </dt>
+        <dd>Example Gazepoint fixation table</dd>
+
+        <dt>
+
+          <code><a href="gazepoint_example_aoi_geometry.html">gazepoint_example_aoi_geometry</a></code>
+
+        </dt>
+        <dd>Example AOI geometry table</dd>
+
+        <dt>
+
+          <code><a href="gazepoint_example_aoi_windows.html">gazepoint_example_aoi_windows</a></code>
+
+        </dt>
+        <dd>Example AOI-window summary table</dd>
+
+        <dt>
+
+          <code><a href="gazepoint_example_pupil_windows.html">gazepoint_example_pupil_windows</a></code>
+
+        </dt>
+        <dd>Example pupil-window summary table</dd>
 
         <dt>
 
@@ -1339,250 +1694,13 @@
 
         <dt>
 
-          <code><a href="smooth_gazepoint_pupil.html">smooth_gazepoint_pupil()</a></code>
+          <code><a href="simulate_gazepoint_cluster_timecourse_data.html">simulate_gazepoint_cluster_timecourse_data()</a></code>
 
         </dt>
-        <dd>Smooth Gazepoint pupil data</dd>
-
-        <dt>
-
-          <code><a href="standardise_gazepoint_names.html">standardise_gazepoint_names()</a></code>
-
-        </dt>
-        <dd>Standardise Gazepoint column names</dd>
-
-        <dt>
-
-          <code><a href="standardize_gazepoint_face_columns.html">standardize_gazepoint_face_columns()</a></code>
-
-        </dt>
-        <dd>Standardise external facial-analysis columns</dd>
-
-        <dt>
-
-          <code><a href="summarise_aoi_samples.html">summarise_aoi_samples()</a></code>
-
-        </dt>
-        <dd>Summarise sample-level AOI viewing</dd>
-
-        <dt>
-
-          <code><a href="summarise_fixations.html">summarise_fixations()</a></code>
-
-        </dt>
-        <dd>Summarise fixation-level AOI metrics</dd>
-
-        <dt>
-
-          <code><a href="summarise_gazepoint_aoi.html">summarise_gazepoint_aoi()</a></code>
-
-        </dt>
-        <dd>Summarise Gazepoint AOI metrics from gaze and fixation exports</dd>
-
-        <dt>
-
-          <code><a href="summarise_gazepoint_aoi_entries.html">summarise_gazepoint_aoi_entries()</a></code>
-
-        </dt>
-        <dd>Summarise Gazepoint AOI entry episodes</dd>
-
-        <dt>
-
-          <code><a href="summarise_gazepoint_aoi_transitions.html">summarise_gazepoint_aoi_transitions()</a></code>
-
-        </dt>
-        <dd>Summarise Gazepoint AOI transition features</dd>
-
-        <dt>
-
-          <code><a href="summarise_gazepoint_aoi_trial_features.html">summarise_gazepoint_aoi_trial_features()</a></code>
-
-        </dt>
-        <dd>Summarise Gazepoint AOI trial features</dd>
-
-        <dt>
-
-          <code><a href="summarise_gazepoint_aoi_windows.html">summarise_gazepoint_aoi_windows()</a></code>
-
-        </dt>
-        <dd>Summarise Gazepoint AOI samples within predefined time windows</dd>
-
-        <dt>
-
-          <code><a href="summarise_gazepoint_clusters.html">summarise_gazepoint_clusters()</a></code>
-
-        </dt>
-        <dd>Summarise cluster-based permutation results</dd>
-
-        <dt>
-
-          <code><a href="summarise_gazepoint_emmeans.html">summarise_gazepoint_emmeans()</a></code>
-
-        </dt>
-        <dd>Summarise estimated marginal means and contrasts</dd>
-
-        <dt>
-
-          <code><a href="summarise_gazepoint_fixation_trials.html">summarise_gazepoint_fixation_trials()</a></code>
-
-        </dt>
-        <dd>Summarise Gazepoint fixation trial features</dd>
-
-        <dt>
-
-          <code><a href="summarise_gazepoint_fixed_effects.html">summarise_gazepoint_fixed_effects()</a></code>
-
-        </dt>
-        <dd>Summarise fixed effects from fitted models</dd>
-
-        <dt>
-
-          <code><a href="summarise_gazepoint_markovchain.html">summarise_gazepoint_markovchain()</a></code>
-
-        </dt>
-        <dd>Summarise a Gazepoint Markov-chain object</dd>
-
-        <dt>
-
-          <code><a href="summarise_gazepoint_multiverse_results.html">summarise_gazepoint_multiverse_results()</a></code>
-
-        </dt>
-        <dd>Summarise Gazepoint preprocessing multiverse results</dd>
-
-        <dt>
-
-          <code><a href="summarise_gazepoint_pupil.html">summarise_gazepoint_pupil()</a></code>
-
-        </dt>
-        <dd>Summarise Gazepoint pupil data</dd>
-
-        <dt>
-
-          <code><a href="summarise_gazepoint_pupil_trial_features.html">summarise_gazepoint_pupil_trial_features()</a></code>
-
-        </dt>
-        <dd>Summarise Gazepoint pupil trial-level features</dd>
-
-        <dt>
-
-          <code><a href="summarise_gazepoint_pupil_windows.html">summarise_gazepoint_pupil_windows()</a></code>
-
-        </dt>
-        <dd>Summarise Gazepoint pupil responses within time windows</dd>
-
-        <dt>
-
-          <code><a href="summarise_gazepoint_semimarkov.html">summarise_gazepoint_semimarkov()</a></code>
-
-        </dt>
-        <dd>Summarise Gazepoint semi-Markov data</dd>
-
-        <dt>
-
-          <code><a href="summarise_gazepoint_workflow.html">summarise_gazepoint_workflow()</a></code>
-
-        </dt>
-        <dd>Summarise a Gazepoint workflow result</dd>
-
-        <dt>
-
-          <code><a href="summarise_tracking_quality.html">summarise_tracking_quality()</a></code>
-
-        </dt>
-        <dd>Summarise Gazepoint tracking quality</dd>
-
-        <dt>
-
-          <code><a href="summarize_gazepoint_coordinate_coverage.html">summarize_gazepoint_coordinate_coverage()</a></code>
-
-        </dt>
-        <dd>Summarize gaze-coordinate coverage over a screen grid</dd>
-
-        <dt>
-
-          <code><a href="summarize_gazepoint_face_quality.html">summarize_gazepoint_face_quality()</a></code> <code><a href="summarize_gazepoint_face_quality.html">summarise_gazepoint_face_quality()</a></code>
-
-        </dt>
-        <dd>Summarise external facial-behaviour data quality</dd>
-
-        <dt>
-
-          <code><a href="summarize_gazepoint_face_reactivity.html">summarize_gazepoint_face_reactivity()</a></code>
-
-        </dt>
-        <dd>Summarise facial-behaviour reactivity between two windows</dd>
-
-        <dt>
-
-          <code><a href="summarize_gazepoint_face_windows.html">summarize_gazepoint_face_windows()</a></code>
-
-        </dt>
-        <dd>Summarise external facial-behaviour data within analysis windows</dd>
-
-        <dt>
-
-          <code><a href="summarize_gazepoint_missingness.html">summarize_gazepoint_missingness()</a></code> <code><a href="summarize_gazepoint_missingness.html">summarise_gazepoint_missingness()</a></code>
-
-        </dt>
-        <dd>Summarize missingness in Gazepoint-style data</dd>
-
-        <dt>
-
-          <code><a href="summarize_gazepoint_phase_coverage.html">summarize_gazepoint_phase_coverage()</a></code> <code><a href="summarize_gazepoint_phase_coverage.html">summarise_gazepoint_phase_coverage()</a></code>
-
-        </dt>
-        <dd>Summarize task-phase coverage</dd>
-
-        <dt>
-
-          <code><a href="summarize_gazepoint_qc_status.html">summarize_gazepoint_qc_status()</a></code> <code><a href="summarize_gazepoint_qc_status.html">summarise_gazepoint_qc_status()</a></code>
-
-        </dt>
-        <dd>Summarize Gazepoint QC status</dd>
-
-        <dt>
-
-          <code><a href="summarize_gazepoint_time_clusters.html">summarize_gazepoint_time_clusters()</a></code>
-
-        </dt>
-        <dd>Summarize Gazepoint time clusters</dd>
-
-        <dt>
-
-          <code><a href="sync_gazepoint_face_data.html">sync_gazepoint_face_data()</a></code>
-
-        </dt>
-        <dd>Synchronise external facial-behaviour data with Gazepoint data</dd>
-
-        <dt>
-
-          <code><a href="tidy_gazepoint_model_summary.html">tidy_gazepoint_model_summary()</a></code>
-
-        </dt>
-        <dd>Create a tidy model summary for manuscript tables</dd>
-
-        <dt>
-
-          <code><a href="transform_gazepoint_aoi_empirical_logit.html">transform_gazepoint_aoi_empirical_logit()</a></code>
-
-        </dt>
-        <dd>Transform AOI proportions to empirical logits</dd>
-
-        <dt>
-
-          <code><a href="validate_gazepoint_master.html">validate_gazepoint_master()</a></code>
-
-        </dt>
-        <dd>Validate a Gazepoint master sample table</dd>
-
-        <dt>
-
-          <code><a href="write_gazepoint_outputs.html">write_gazepoint_outputs()</a></code>
-
-        </dt>
-        <dd>Write standard Gazepoint analysis outputs</dd>
+        <dd>Simulate simple Gazepoint cluster time-course data</dd>
       </dl></div>
-  </main></div>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
+    </nav></aside></div>
 
 
     <footer><div class="pkgdown-footer-left">
