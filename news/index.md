@@ -1,6 +1,6 @@
 # Changelog
 
-## gp3tools 1.0.2.9000
+## gp3tools 2.0.0
 
 - Added external facial-behaviour reporting helpers
   [`create_gazepoint_face_reporting_checklist()`](https://stefanosbalaskas.github.io/gp3tools/reference/create_gazepoint_face_reporting_checklist.md)
