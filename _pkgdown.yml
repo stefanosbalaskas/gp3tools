@@ -74,3 +74,274 @@ articles:
     navbar: Ecosystem bridges
     contents:
     - articles/ecosystem-exports
+
+reference:
+  - title: Import, file checks, and master data
+    desc: Read Gazepoint exports, inspect columns, create master tables, and validate analysis-ready data.
+    contents:
+    - read_gazepoint
+    - read_gazepoint_folder
+    - read_gazepoint_summary
+    - classify_gazepoint_export
+    - inspect_gazepoint_columns
+    - standardise_gazepoint_names
+    - check_gazepoint_file_pairs
+    - create_gazepoint_master
+    - as_gazepoint_master
+    - audit_gazepoint_master
+    - validate_gazepoint_master
+    - export_gazepoint_master_audit
+
+  - title: Quick workflows, reports, and outputs
+    desc: Run folder-level workflows, create reports, save plots, and write standard output tables.
+    contents:
+    - run_gazepoint_workflow
+    - summarise_gazepoint_workflow
+    - create_gazepoint_report
+    - write_gazepoint_outputs
+    - export_gazepoint_tables
+    - save_gazepoint_plots
+
+  - title: Sampling, tracking quality, and QC summaries
+    desc: Check sampling rate, tracking quality, screen bounds, coordinate coverage, missingness, and task-phase coverage.
+    contents:
+    - check_sampling_rate
+    - plot_sampling_rate
+    - summarise_tracking_quality
+    - flag_tracking_quality
+    - clean_gazepoint_by_trackloss
+    - plot_tracking_quality
+    - audit_gazepoint_gaze_signal_quality
+    - audit_gazepoint_screen_bounds
+    - harmonize_gazepoint_screen_coordinates
+    - summarize_gazepoint_coordinate_coverage
+    - summarize_gazepoint_missingness
+    - plot_gazepoint_missingness_profile
+    - report_gazepoint_missingness
+    - segment_gazepoint_task_phases
+    - summarize_gazepoint_phase_coverage
+    - report_gazepoint_phase_coverage
+    - plot_gazepoint_phase_timeline
+    - collect_gazepoint_qc_summaries
+    - summarize_gazepoint_qc_status
+    - report_gazepoint_qc_overview
+    - plot_gazepoint_qc_overview
+    - launch_gazepoint_qc_dashboard
+
+  - title: Stimulus layout and AOI geometry QC
+    desc: Audit AOI geometry, screen coverage, overlap, margins, and stimulus-layout quality.
+    contents:
+    - audit_gazepoint_aoi_geometry
+    - audit_gazepoint_aoi_overlap
+    - audit_gazepoint_aoi_margin_sensitivity
+    - audit_gazepoint_aoi_screen_coverage
+    - audit_gazepoint_aoi_coding_matrix
+    - plot_gazepoint_aoi_verification
+    - plot_gazepoint_stimulus_layout_qc
+
+  - title: Pupil preprocessing, audits, and windows
+    desc: Flag, interpolate, baseline-correct, smooth, audit, and summarise pupil data.
+    contents:
+    - summarise_gazepoint_pupil
+    - flag_gazepoint_pupil
+    - combine_gazepoint_eyes
+    - flag_gazepoint_pupil_artifacts
+    - flag_gazepoint_pupil_hampel
+    - interpolate_gazepoint_pupil
+    - interpolate_gazepoint_pupil_pchip
+    - baseline_correct_gazepoint_pupil
+    - smooth_gazepoint_pupil
+    - create_gazepoint_preprocessing_registry
+    - create_gazepoint_preprocessing_multiverse
+    - run_gazepoint_pupil_multiverse
+    - audit_gazepoint_pupil_gaps
+    - audit_gazepoint_pupil_baseline
+    - audit_gazepoint_pupil_drift
+    - audit_gazepoint_pupil_imbalance
+    - audit_gazepoint_pupil_overlap_risk
+    - audit_gazepoint_pupil_reliability
+    - audit_gazepoint_stimulus_luminance
+    - summarise_gazepoint_pupil_windows
+    - summarise_gazepoint_pupil_trial_features
+    - plot_gazepoint_pupil_status
+    - plot_gazepoint_pupil_preprocessing
+    - plot_gazepoint_pupil_timecourse
+
+  - title: Pupil modelling and time-course data
+    desc: Prepare and fit pupil-window, GAMM, PFE-GAMM, and growth-curve models.
+    contents:
+    - prepare_gazepoint_pupil_window_model_data
+    - fit_gazepoint_pupil_window_lmm
+    - fit_gazepoint_pupil_window_sensitivity
+    - prepare_gazepoint_pupil_gamm_data
+    - fit_gazepoint_pupil_gamm
+    - fit_gazepoint_pupil_pfe_gamm
+    - prepare_gazepoint_gca_data
+    - fit_gazepoint_gca
+    - plot_gazepoint_gca
+
+  - title: AOI summaries and AOI modelling
+    desc: Summarise AOI behaviour, prepare AOI-window data, and fit GLMM/GAMM/sensitivity models.
+    contents:
+    - summarise_aoi_samples
+    - summarise_gazepoint_aoi
+    - summarise_gazepoint_aoi_entries
+    - summarise_gazepoint_aoi_windows
+    - summarise_gazepoint_aoi_trial_features
+    - audit_gazepoint_aoi_window_denominators
+    - prepare_gazepoint_aoi_glmm_data
+    - fit_gazepoint_aoi_window_glmm
+    - transform_gazepoint_aoi_empirical_logit
+    - fit_gazepoint_aoi_model_sensitivity
+    - run_gazepoint_aoi_multiverse
+    - prepare_gazepoint_aoi_gamm_data
+    - fit_gazepoint_aoi_gamm
+    - plot_gazepoint_aoi_gamm
+    - fit_gazepoint_aoi_brms
+
+  - title: Fixations, AOI sequences, transitions, and scanpaths
+    desc: Summarise fixation data, AOI sequences, transition matrices, scanpaths, and sequence reliability.
+    contents:
+    - summarise_fixations
+    - summarise_gazepoint_fixation_trials
+    - audit_gazepoint_fixation_reliability
+    - detect_gazepoint_fixations_ivt
+    - prepare_gazepoint_fixation_aligned_data
+    - prepare_gazepoint_aoi_sequences
+    - summarise_gazepoint_aoi_transitions
+    - compute_transition_matrix
+    - compute_gazepoint_aoi_transition_matrix
+    - compute_gazepoint_time_varying_transition_matrix
+    - compute_gazepoint_transition_network_metrics
+    - fit_gazepoint_transition_count_nb_sensitivity
+    - compute_gazepoint_aoi_entropy
+    - compute_gazepoint_aoi_sequence_metrics
+    - compute_gazepoint_sequence_complexity
+    - compute_gazepoint_sequence_distance
+    - compute_gazepoint_scanpath_similarity
+    - compute_gazepoint_sequence_recurrence
+    - compute_gazepoint_saccade_metrics
+    - flag_gazepoint_sequence_anomalies
+    - plot_gazepoint_aoi_timeline
+    - plot_gazepoint_aoi_transition_matrix
+    - plot_transition_heatmap
+    - plot_gazepoint_scanpath
+    - plot_gazepoint_scanpaths
+
+  - title: Cluster permutation and advanced time-course inference
+    desc: Prepare, run, summarise, plot, and export cluster-based time-course analyses.
+    contents:
+    - prepare_gazepoint_cluster_data
+    - run_gazepoint_cluster_permutation
+    - run_gazepoint_cluster_permutation_anova
+    - run_gazepoint_cluster_permutation_covariate_adjusted
+    - run_gazepoint_cluster_permutation_lmer
+    - run_gazepoint_cluster_permutation_parallel
+    - run_gazepoint_multidimensional_cluster_permutation
+    - run_gazepoint_cluster_threshold_sensitivity
+    - run_gazepoint_tfce
+    - summarise_gazepoint_clusters
+    - summarize_gazepoint_time_clusters
+    - estimate_gazepoint_cluster_onset
+    - estimate_gazepoint_cluster_offset
+    - estimate_gazepoint_divergence_point
+    - bootstrap_gazepoint_timecourse
+    - plot_gazepoint_cluster_results
+    - plot_gazepoint_cluster_permutation
+    - plot_gazepoint_cluster_null_distribution
+    - plot_gazepoint_time_varying_effect
+    - report_gazepoint_cluster_permutation
+    - export_gazepoint_cluster_results
+    - export_gazepoint_mne_cluster_input
+    - export_gazepoint_permuco_cluster_input
+    - export_gazepoint_permutes_cluster_input
+    - prepare_gazepoint_timecourse_test_data
+
+  - title: Model diagnostics, summaries, sensitivity, and reporting
+    desc: Diagnose models, compare nested models, create model tables, and audit final analysis decisions.
+    contents:
+    - check_gazepoint_model_convergence
+    - check_gazepoint_model_singularity
+    - check_gazepoint_model_overdispersion
+    - diagnose_gazepoint_glmm
+    - diagnose_gazepoint_gamm
+    - compare_gazepoint_nested_models
+    - run_gazepoint_model_leave_one_out
+    - plot_gazepoint_model_predictions
+    - plot_gazepoint_model_residuals
+    - tidy_gazepoint_model_summary
+    - summarise_gazepoint_fixed_effects
+    - summarise_gazepoint_emmeans
+    - export_gazepoint_model_tables
+    - check_gazepoint_real_data_readiness
+    - recommend_gazepoint_exclusions
+    - create_gazepoint_reporting_checklist
+    - create_gazepoint_analysis_decision_audit
+    - report_gazepoint_multiverse
+    - plot_gazepoint_multiverse_results
+    - summarise_gazepoint_multiverse_results
+    - audit_gazepoint_condition_quality_imbalance
+    - audit_gazepoint_design_balance
+    - audit_gazepoint_event_sync
+    - audit_gazepoint_exclusion_flow
+    - audit_gazepoint_post_exclusion_balance
+    - audit_gazepoint_timecourse_grid
+    - diagnose_gazepoint_cluster_design
+    - recalibrate_gazepoint_gaze
+
+  - title: External face-data and multimodal workflows
+    desc: Work with externally generated face-analysis outputs and multimodal response models.
+    contents:
+    - read_gazepoint_face_export
+    - standardize_gazepoint_face_columns
+    - audit_gazepoint_face_quality
+    - summarize_gazepoint_face_quality
+    - summarise_gazepoint_face_quality
+    - plot_gazepoint_face_quality
+    - sync_gazepoint_face_data
+    - audit_gazepoint_face_sync
+    - summarize_gazepoint_face_windows
+    - summarize_gazepoint_face_reactivity
+    - prepare_gazepoint_multimodal_data
+    - fit_gazepoint_face_window_lmm
+    - fit_gazepoint_multimodal_response_model
+    - create_gazepoint_face_reporting_checklist
+    - report_gazepoint_face_qc
+
+  - title: Ecosystem adapters and external package bridges
+    desc: Prepare Gazepoint data for other R eye-tracking, pupil, sequence, and export ecosystems.
+    contents:
+    - prepare_gazepoint_eyetrackingr_data
+    - prepare_gazepoint_pupillometryr_data
+    - prepare_gazepoint_gazer_data
+    - prepare_gazepoint_eyetools_data
+    - run_gazepoint_gazer_crosscheck
+    - run_gazepoint_eyetools_fixation_detection
+    - prepare_gazepoint_traminer_data
+    - prepare_gazepoint_semimarkov_data
+    - prepare_gazepoint_hmm_data
+    - create_gazepoint_markovchain_object
+    - summarise_gazepoint_markovchain
+    - summarise_gazepoint_semimarkov
+    - export_gazepoint_to_bids
+
+  - title: Plotting and visual diagnostics
+    desc: General-purpose visual diagnostics for time series, heatmaps, AOIs, and spatial outputs.
+    contents:
+    - plot_gazepoint_time_series
+    - prepare_gazepoint_heatmap_data
+    - plot_gazepoint_heatmap
+    - plot_gazepoint_heatmap_overlay
+    - export_gazepoint_heatmap_png
+
+  - title: Example and simulated data
+    desc: Synthetic data objects and simulation helpers for examples, vignettes, tests, and teaching.
+    contents:
+    - gazepoint_example_master
+    - gazepoint_example_fixations
+    - gazepoint_example_aoi_geometry
+    - gazepoint_example_aoi_windows
+    - gazepoint_example_pupil_windows
+    - simulate_gazepoint_data
+    - simulate_gazepoint_pupil_data
+    - simulate_gazepoint_cluster_timecourse_data
