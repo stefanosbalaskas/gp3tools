@@ -24,6 +24,7 @@ articles:
     contents:
     - articles/end-to-end-workflow
     - articles/paper-grade-synthetic-showcase
+    - articles/private-data-safety
 
   - title: Core gaze and pupil workflows
     navbar: Core workflows

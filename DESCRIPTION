@@ -41,6 +41,8 @@ Suggests:
 VignetteBuilder: knitr
 Config/testthat/edition: 3
 Config/roxygen2/version: 8.0.0
-URL: https://github.com/stefanosbalaskas/gp3tools, https://stefanosbalaskas.github.io/gp3tools/
+URL: https://github.com/stefanosbalaskas/gp3tools,
+    https://stefanosbalaskas.github.io/gp3tools/,
+    https://doi.org/10.5281/zenodo.21292384
 BugReports: https://github.com/stefanosbalaskas/gp3tools/issues
 Config/Needs/website: rmarkdown
