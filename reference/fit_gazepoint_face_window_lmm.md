@@ -84,7 +84,7 @@ fit_gazepoint_face_window_lmm(
 #> 
 #> $formula
 #> rating ~ AU12_r_mean
-#> <environment: 0x562a4cc8b8b8>
+#> <environment: 0x5614f1011108>
 #> 
 #> $data
 #> # A tibble: 3 × 3

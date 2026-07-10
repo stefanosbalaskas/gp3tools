@@ -2,6 +2,9 @@
 
 ## gp3tools 2.0.0
 
+- Added Zenodo DOI `10.5281/zenodo.21292384` to package citation
+  metadata.
+
 - Added external facial-behaviour reporting helpers
   [`create_gazepoint_face_reporting_checklist()`](https://stefanosbalaskas.github.io/gp3tools/reference/create_gazepoint_face_reporting_checklist.md)
   and
