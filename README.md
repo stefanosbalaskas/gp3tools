@@ -125,7 +125,7 @@ citation("gp3tools")
 
 Current citation:
 
-> Balaskas, S. (2026). `gp3tools`: Import, Inspect, Analyse, and Report Gazepoint GP3 Exports. R package version 1.0.2.9000. https://github.com/stefanosbalaskas/gp3tools
+> Balaskas, S. (2026). `gp3tools`: Import, Inspect, Analyse, and Report Gazepoint GP3 Exports. R package version 2.0.0. https://github.com/stefanosbalaskas/gp3tools
 
 A formal software DOI will be added after a stable GitHub release is archived through Zenodo.
 
