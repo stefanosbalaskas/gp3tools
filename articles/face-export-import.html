@@ -43,6 +43,7 @@
     <li><h6 class="dropdown-header" data-toc-skip>Getting started</h6></li>
     <li><a class="dropdown-item" href="../articles/end-to-end-workflow.html">End-to-end Gazepoint analysis workflow</a></li>
     <li><a class="dropdown-item" href="../articles/paper-grade-synthetic-showcase.html">Paper-grade synthetic showcase</a></li>
+    <li><a class="dropdown-item" href="../articles/private-data-safety.html">Working safely with private Gazepoint exports</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Core workflows</h6></li>
     <li><a class="dropdown-item" href="../articles/pupil_workflow.html">Pupil preprocessing and analysis workflow</a></li>
@@ -168,10 +169,10 @@ attempts to detect the likely source format when
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 4 × 15</span></span></span>
 <span><span class="co">#&gt;   gp3_face_file        gp3_face_path      gp3_face_source gp3_face_participant…¹</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> file3a7967e33552.csv /tmp/RtmpUkYXXb/f… openface        P001                  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> file3a7967e33552.csv /tmp/RtmpUkYXXb/f… openface        P001                  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> file3a7967e33552.csv /tmp/RtmpUkYXXb/f… openface        P001                  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> file3a7967e33552.csv /tmp/RtmpUkYXXb/f… openface        P001                  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> file3a89666d5fc2.csv /tmp/RtmpCtxpBv/f… openface        P001                  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> file3a89666d5fc2.csv /tmp/RtmpCtxpBv/f… openface        P001                  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> file3a89666d5fc2.csv /tmp/RtmpCtxpBv/f… openface        P001                  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> file3a89666d5fc2.csv /tmp/RtmpCtxpBv/f… openface        P001                  </span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ abbreviated name: ¹​gp3_face_participant_id</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 11 more variables: gp3_face_session_id &lt;chr&gt;, frame &lt;int&gt;, timestamp &lt;dbl&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   confidence &lt;dbl&gt;, success &lt;int&gt;, gaze_0_x &lt;dbl&gt;, pose_Tx &lt;dbl&gt;,</span></span></span>
@@ -218,10 +219,10 @@ for later auditing and synchronisation.</p>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 4 × 14</span></span></span>
 <span><span class="co">#&gt;   face_source face_file     participant_id face_frame face_time_sec face_time_ms</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> openface    file3a7967e3… P001                    1         0                0</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> openface    file3a7967e3… P001                    2         0.033           33</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> openface    file3a7967e3… P001                    3         0.066           66</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> openface    file3a7967e3… P001                    4         0.099           99</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> openface    file3a89666d… P001                    1         0                0</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> openface    file3a89666d… P001                    2         0.033           33</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> openface    file3a89666d… P001                    3         0.066           66</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> openface    file3a89666d… P001                    4         0.099           99</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 8 more variables: face_confidence &lt;dbl&gt;, face_success &lt;lgl&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   face_valid &lt;lgl&gt;, face_pose_tx &lt;dbl&gt;, face_pose_rx &lt;dbl&gt;, AU04_r &lt;dbl&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   AU12_r &lt;dbl&gt;, AU12_c &lt;int&gt;</span></span></span></code></pre></div>

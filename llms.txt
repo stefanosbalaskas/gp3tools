@@ -1,6 +1,15 @@
 # gp3tools
 
 [![R-CMD-check](https://github.com/stefanosbalaskas/gp3tools/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/stefanosbalaskas/gp3tools/actions/workflows/R-CMD-check.yaml)
+[![GitHub
+release](https://img.shields.io/github/v/release/stefanosbalaskas/gp3tools?label=GitHub%20release)](https://github.com/stefanosbalaskas/gp3tools/releases/latest)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21292384.svg)](https://doi.org/10.5281/zenodo.21292384)
+[![License:
+MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://stefanosbalaskas.github.io/gp3tools/LICENSE)
+[![Lifecycle:
+stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
+
+[![R-CMD-check](https://github.com/stefanosbalaskas/gp3tools/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/stefanosbalaskas/gp3tools/actions/workflows/R-CMD-check.yaml)
 
 `gp3tools` provides tools for importing, checking, summarising,
 exporting, visualising, preprocessing, and modelling Gazepoint GP3 /
@@ -2878,6 +2887,8 @@ tests, and teaching.
   workflow](https://stefanosbalaskas.github.io/gp3tools/articles/end-to-end-workflow.md):
 - [Paper-grade synthetic
   showcase](https://stefanosbalaskas.github.io/gp3tools/articles/paper-grade-synthetic-showcase.md):
+- [Working safely with private Gazepoint
+  exports](https://stefanosbalaskas.github.io/gp3tools/articles/private-data-safety.md):
 
 ### Core gaze and pupil workflows
 

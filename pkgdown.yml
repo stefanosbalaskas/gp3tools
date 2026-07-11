@@ -22,6 +22,7 @@ articles:
   articles/phase-segmentation-reporting: phase-segmentation-reporting.html
   articles/plot-gallery-expanded: plot-gallery-expanded.html
   articles/plot-gallery: plot-gallery.html
+  articles/private-data-safety: private-data-safety.html
   pupil_workflow: pupil_workflow.html
   articles/pupil-preprocessing-baseline-audit: pupil-preprocessing-baseline-audit.html
   articles/qc-dashboard-workflow: qc-dashboard-workflow.html
@@ -30,7 +31,7 @@ articles:
   articles/sequence-reliability: sequence-reliability.html
   articles/statistical-extensions-plots: statistical-extensions-plots.html
   articles/stimulus-layout-qc: stimulus-layout-qc.html
-last_built: 2026-07-10T22:37Z
+last_built: 2026-07-11T00:04Z
 urls:
   reference: https://stefanosbalaskas.github.io/gp3tools/reference
   article: https://stefanosbalaskas.github.io/gp3tools/articles

@@ -6,6 +6,8 @@
   workflow](https://stefanosbalaskas.github.io/gp3tools/articles/end-to-end-workflow.md):
 - [Paper-grade synthetic
   showcase](https://stefanosbalaskas.github.io/gp3tools/articles/paper-grade-synthetic-showcase.md):
+- [Working safely with private Gazepoint
+  exports](https://stefanosbalaskas.github.io/gp3tools/articles/private-data-safety.md):
 
 ### Core gaze and pupil workflows
 
