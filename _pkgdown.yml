@@ -10,6 +10,7 @@ template:
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
         gtag('config', 'G-7151LKSRMN');
+        gtag('config', 'G-LXC4VF0RT1');
       </script>
   bootstrap: 5
 
