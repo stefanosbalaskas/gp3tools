@@ -291,6 +291,16 @@ reference:
     - diagnose_gazepoint_cluster_design
     - recalibrate_gazepoint_gaze
 
+  - title: Bayesian planning and advanced model preparation
+    contents:
+    - recommend_gazepoint_model_family
+    - check_gazepoint_bayesian_readiness
+    - create_gazepoint_bayesian_sap
+    - create_gazepoint_brms_template
+    - prepare_gazepoint_hddm_export
+    - summarize_gazepoint_pupil_response_features
+    - compute_gazepoint_scanpath_geometry
+
   - title: External face-data and multimodal workflows
     desc: Work with externally generated face-analysis outputs and multimodal response models.
     contents:
