@@ -1,4 +1,4 @@
-# gp3tools
+# gp3tools <img src="man/figures/logo.png" align="right" height="140" alt="gp3tools logo" />
 [![R-CMD-check](https://github.com/stefanosbalaskas/gp3tools/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/stefanosbalaskas/gp3tools/actions/workflows/R-CMD-check.yaml)
 [![GitHub release](https://img.shields.io/github/v/release/stefanosbalaskas/gp3tools?label=GitHub%20release)](https://github.com/stefanosbalaskas/gp3tools/releases/latest)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21292384.svg)](https://doi.org/10.5281/zenodo.21292384)
