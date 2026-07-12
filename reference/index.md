@@ -413,6 +413,25 @@ final analysis decisions.
 - [`recalibrate_gazepoint_gaze()`](https://stefanosbalaskas.github.io/gp3tools/reference/recalibrate_gazepoint_gaze.md)
   : Offline gaze recalibration using known target coordinates
 
+## Bayesian planning and advanced model preparation
+
+- [`recommend_gazepoint_model_family()`](https://stefanosbalaskas.github.io/gp3tools/reference/recommend_gazepoint_model_family.md)
+  : Recommend model families for Gazepoint-derived metrics
+- [`check_gazepoint_bayesian_readiness()`](https://stefanosbalaskas.github.io/gp3tools/reference/check_gazepoint_bayesian_readiness.md)
+  : Check readiness of a Gazepoint-derived dataset for Bayesian or
+  advanced models
+- [`create_gazepoint_bayesian_sap()`](https://stefanosbalaskas.github.io/gp3tools/reference/create_gazepoint_bayesian_sap.md)
+  : Create a Bayesian ocular Statistical Analysis Plan checklist
+- [`create_gazepoint_brms_template()`](https://stefanosbalaskas.github.io/gp3tools/reference/create_gazepoint_brms_template.md)
+  : Create brms formula and prior templates for Gazepoint-derived
+  metrics
+- [`prepare_gazepoint_hddm_export()`](https://stefanosbalaskas.github.io/gp3tools/reference/prepare_gazepoint_hddm_export.md)
+  : Prepare a trial-level export for Python HDDM
+- [`summarize_gazepoint_pupil_response_features()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarize_gazepoint_pupil_response_features.md)
+  : Summarize pupil response features by subject and trial
+- [`compute_gazepoint_scanpath_geometry()`](https://stefanosbalaskas.github.io/gp3tools/reference/compute_gazepoint_scanpath_geometry.md)
+  : Compute scanpath geometry features by subject and trial
+
 ## External face-data and multimodal workflows
 
 Work with externally generated face-analysis outputs and multimodal

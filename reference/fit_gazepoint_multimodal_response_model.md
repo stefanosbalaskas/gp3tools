@@ -94,12 +94,12 @@ fit_gazepoint_multimodal_response_model(
 #> 
 #> Coefficients:
 #> (Intercept)  AU12_r_mean   dwell_time  
-#>   2.000e+00    1.000e+01   -1.088e-15  
+#>    2.00e+00     1.00e+01    -2.93e-15  
 #> 
 #> 
 #> $formula
 #> rating ~ AU12_r_mean + dwell_time
-#> <environment: 0x560b5b41d620>
+#> <environment: 0x55b291622b48>
 #> 
 #> $data
 #> # A tibble: 3 × 4
