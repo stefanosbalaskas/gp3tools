@@ -1,0 +1,514 @@
+---
+title: "Bayesian planning workflow"
+description: "Choose model families, check Bayesian readiness, extract pupil and scanpath features, and prepare external Bayesian analyses."
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 7,
+  fig.height = 4.5,
+  fig.retina = 2
+)
+```
+
+
+This article demonstrates how the Bayesian-planning helpers in `gp3tools`
+can be used before committing to a full Bayesian model. The workflow covers
+model-family selection, structural readiness checks, pupil-response feature
+extraction, scanpath geometry, HDDM export preparation, and `brms` template
+generation.
+
+The helpers support analysis planning and reproducible preparation. They do
+not require Stan, `brms`, HDDM, or Python unless the user subsequently chooses
+to fit an external model.
+
+```{r load-package}
+library(gp3tools)
+
+set.seed(42)
+```
+
+## Choose an outcome family before fitting
+
+The statistical family should follow the scale and distribution of the
+outcome rather than being selected after inspecting significance.
+
+```{r model-family-table}
+families <- recommend_gazepoint_model_family()
+
+selected_metrics <- c(
+  "fixation_duration",
+  "dwell_time",
+  "fixation_count",
+  "aoi_proportion",
+  "pupil_timecourse",
+  "scanpath_length",
+  "binary_choice"
+)
+
+families[
+  families$metric %in% selected_metrics,
+  ,
+  drop = FALSE
+]
+```
+
+The recommendations are planning guidance. Distributional shape, zero values,
+boundary values, overdispersion, hierarchical structure, and study design
+still need to be inspected in the actual dataset.
+
+## Simulate a compact pupil time course
+
+The following synthetic dataset represents eight participants completing six
+trials each. Negative times form a prestimulus baseline, and positive times
+form the response window.
+
+```{r simulate-pupil}
+pupil <- expand.grid(
+  subject = paste0(
+    "S",
+    sprintf("%02d", 1:8)
+  ),
+  trial = 1:6,
+  time_ms = seq(
+    -200,
+    1000,
+    by = 50
+  )
+)
+
+pupil$condition <- ifelse(
+  pupil$trial %% 2 == 0,
+  "specific_claim",
+  "vague_claim"
+)
+
+response_shape <- exp(
+  -((pupil$time_ms - 450) / 260)^2
+)
+
+condition_shift <- ifelse(
+  pupil$condition == "vague_claim",
+  0.12,
+  0.04
+)
+
+subject_effects <- setNames(
+  rnorm(
+    8,
+    mean = 0,
+    sd = 0.025
+  ),
+  paste0(
+    "S",
+    sprintf("%02d", 1:8)
+  )
+)
+
+pupil$pupil_mm <- 3 +
+  unname(
+    subject_effects[pupil$subject]
+  ) +
+  condition_shift * response_shape +
+  rnorm(
+    nrow(pupil),
+    mean = 0,
+    sd = 0.025
+  )
+
+set.seed(123)
+
+missing_rows <- sample(
+  seq_len(nrow(pupil)),
+  30
+)
+
+pupil$pupil_mm[missing_rows] <- NA_real_
+
+head(pupil)
+```
+
+## Plot the synthetic pupil time course
+
+```{r pupil-timecourse-plot}
+tc <- aggregate(
+  pupil_mm ~ time_ms + condition,
+  data = pupil,
+  FUN = function(x) {
+    mean(
+      x,
+      na.rm = TRUE
+    )
+  }
+)
+
+specific_tc <- tc[
+  tc$condition == "specific_claim",
+  ,
+  drop = FALSE
+]
+
+vague_tc <- tc[
+  tc$condition == "vague_claim",
+  ,
+  drop = FALSE
+]
+
+plot(
+  specific_tc$time_ms,
+  specific_tc$pupil_mm,
+  type = "l",
+  lwd = 2,
+  ylim = range(
+    tc$pupil_mm,
+    na.rm = TRUE
+  ),
+  xlab = "Time from stimulus onset (ms)",
+  ylab = "Mean pupil size (mm)",
+  main = "Synthetic pupil time course"
+)
+
+lines(
+  vague_tc$time_ms,
+  vague_tc$pupil_mm,
+  lty = 2,
+  lwd = 2
+)
+
+abline(
+  v = 0,
+  lty = 3
+)
+
+legend(
+  "topright",
+  legend = c(
+    "Specific claim",
+    "Vague claim",
+    "Stimulus onset"
+  ),
+  lty = c(
+    1,
+    2,
+    3
+  ),
+  lwd = c(
+    2,
+    2,
+    1
+  ),
+  bty = "n"
+)
+```
+
+## Extract trial-level pupil-response features
+
+`summarize_gazepoint_pupil_response_features()` calculates transparent
+trial-level summaries from sample-level pupil data. The baseline and response
+windows are specified explicitly.
+
+```{r pupil-feature-extraction}
+pupil_features <- summarize_gazepoint_pupil_response_features(
+  data = pupil,
+  pupil = "pupil_mm",
+  time = "time_ms",
+  subject = "subject",
+  trial = "trial",
+  baseline_window = c(
+    -200,
+    0
+  ),
+  response_window = c(
+    0,
+    1000
+  ),
+  condition = "condition"
+)
+
+head(pupil_features)
+```
+
+The returned table includes the baseline mean, peak dilation, latency to peak,
+area under the baseline-corrected curve, and response-window missingness.
+
+```{r pupil-feature-plot}
+boxplot(
+  peak_dilation ~ condition,
+  data = pupil_features,
+  xlab = "Condition",
+  ylab = "Peak dilation from baseline",
+  main = "Trial-level pupil-response feature"
+)
+
+stripchart(
+  peak_dilation ~ condition,
+  data = pupil_features,
+  vertical = TRUE,
+  method = "jitter",
+  pch = 16,
+  add = TRUE
+)
+```
+
+## Check readiness before modelling
+
+`check_gazepoint_bayesian_readiness()` performs lightweight structural checks.
+It can identify missing columns, insufficient within-participant observations,
+missing condition variation, and problematic outcome values.
+
+```{r bayesian-readiness}
+readiness <- check_gazepoint_bayesian_readiness(
+  data = pupil_features,
+  outcome = "peak_dilation",
+  subject = "subject",
+  trial = "trial",
+  condition = "condition",
+  metric_type = "continuous",
+  min_observations_per_subject = 4
+)
+
+readiness
+```
+
+A warning is a prompt for review rather than an automatic exclusion decision.
+The appropriate threshold depends on the study design, outcome, planned model,
+and sensitivity analyses.
+
+## Create a statistical analysis plan checklist
+
+```{r bayesian-sap}
+sap <- create_gazepoint_bayesian_sap(
+  outcome = "Peak pupil dilation",
+  design = paste(
+    "Within-participant contrast between",
+    "specific-claim and vague-claim trials"
+  ),
+  primary_model = "Bayesian hierarchical Gaussian model",
+  baseline_window = c(
+    -200,
+    0
+  ),
+  analysis_window = c(
+    0,
+    1000
+  ),
+  missingness_threshold = 0.20,
+  blink_padding_ms = 50,
+  output = "data.frame"
+)
+
+sap
+```
+
+The checklist makes preprocessing, exclusion, prior, hierarchical-structure,
+convergence, and reporting decisions explicit before the main analysis.
+
+## Prepare an HDDM export
+
+HDDM requires one row per decision trial with a participant identifier,
+positive response time, and binary response. Continuous predictors can be
+standardized within participant.
+
+```{r hddm-export}
+choice_data <- pupil_features
+
+set.seed(456)
+
+choice_data$rt <- runif(
+  nrow(choice_data),
+  min = 0.45,
+  max = 1.40
+)
+
+choice_data$response <- sample(
+  c(
+    0,
+    1
+  ),
+  nrow(choice_data),
+  replace = TRUE
+)
+
+hddm_ready <- prepare_gazepoint_hddm_export(
+  data = choice_data,
+  subject = "subject",
+  rt = "rt",
+  response = "response",
+  predictors = c(
+    "peak_dilation",
+    "auc"
+  )
+)
+
+head(hddm_ready)
+```
+
+The helper does not fit a drift-diffusion model. The returned table can be
+written to CSV and analysed in a separately documented Python/HDDM
+environment.
+
+## Create a `brms` model template without fitting
+
+```{r brms-template}
+pupil_template <- create_gazepoint_brms_template(
+  metric_type = "pupil_timecourse",
+  outcome = "pupil_bc",
+  time = "time_ms",
+  condition = "condition",
+  subject = "subject"
+)
+
+pupil_template
+```
+
+The output contains a candidate formula, family, prior text, and reporting
+notes. It is deliberately a template rather than a fitted model.
+
+## Extract scanpath geometry
+
+The next example creates synthetic sequential gaze coordinates and extracts
+trial-level scanpath geometry.
+
+```{r simulate-scanpath}
+set.seed(789)
+
+scanpath <- do.call(
+  rbind,
+  lapply(
+    1:10,
+    function(trial_id) {
+      n <- 25
+
+      data.frame(
+        subject = paste0(
+          "S",
+          sprintf(
+            "%02d",
+            ceiling(trial_id / 2)
+          )
+        ),
+        trial = trial_id,
+        condition = ifelse(
+          trial_id %% 2 == 0,
+          "specific_claim",
+          "vague_claim"
+        ),
+        time_ms = seq_len(n) * 40,
+        x = cumsum(
+          rnorm(
+            n,
+            mean = ifelse(
+              trial_id %% 2 == 0,
+              9,
+              13
+            ),
+            sd = 8
+          )
+        ) + 400,
+        y = cumsum(
+          rnorm(
+            n,
+            mean = 4,
+            sd = 6
+          )
+        ) + 300
+      )
+    }
+  )
+)
+
+head(scanpath)
+```
+
+```{r scanpath-features}
+scan_features <- compute_gazepoint_scanpath_geometry(
+  data = scanpath,
+  x = "x",
+  y = "y",
+  subject = "subject",
+  trial = "trial",
+  time = "time_ms",
+  condition = "condition"
+)
+
+head(scan_features)
+```
+
+The output includes scanpath length, straight-line distance, path efficiency,
+convex-hull area, spatial dispersion, and the number of valid points.
+
+```{r scanpath-plot}
+one_trial <- scanpath[
+  scanpath$trial == 1,
+  ,
+  drop = FALSE
+]
+
+plot(
+  one_trial$x,
+  one_trial$y,
+  type = "b",
+  pch = 16,
+  xlab = "Screen x-coordinate",
+  ylab = "Screen y-coordinate",
+  main = "Example synthetic scanpath"
+)
+
+text(
+  one_trial$x[
+    c(
+      1,
+      nrow(one_trial)
+    )
+  ],
+  one_trial$y[
+    c(
+      1,
+      nrow(one_trial)
+    )
+  ],
+  labels = c(
+    "Start",
+    "End"
+  ),
+  pos = c(
+    2,
+    4
+  )
+)
+```
+
+```{r scanpath-feature-plot}
+boxplot(
+  scanpath_length ~ condition,
+  data = scan_features,
+  xlab = "Condition",
+  ylab = "Scanpath length",
+  main = "Extracted scanpath-length feature"
+)
+
+stripchart(
+  scanpath_length ~ condition,
+  data = scan_features,
+  vertical = TRUE,
+  method = "jitter",
+  pch = 16,
+  add = TRUE
+)
+```
+
+## Interpretation boundary
+
+The helpers above produce model-ready quantities and reproducible planning
+objects. They do not independently establish deeper cognition, critical
+evaluation, comprehension, credibility assessment, or a causal psychological
+mechanism.
+
+Eye-movement measures can support claims about visual allocation, timing,
+sequence, and movement geometry. Pupil measures can support claims about
+pupil dynamics under documented preprocessing and luminance control.
+Stronger psychological interpretations require an explicit experimental
+design, preregistered contrasts, validated complementary measures, suitable
+models, and appropriately cautious language.
