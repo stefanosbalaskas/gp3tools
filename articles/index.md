@@ -68,6 +68,26 @@
 
 - [Model-readiness and sensitivity
   analysis](https://stefanosbalaskas.github.io/gp3tools/articles/model-readiness-sensitivity.md):
+
+- [Bayesian planning
+  workflow](https://stefanosbalaskas.github.io/gp3tools/articles/bayesian-planning-workflow.md):
+
+  Choose model families, check Bayesian readiness, extract pupil and
+  scanpath features, and prepare external Bayesian analyses.
+
+- [Experimental Bayesian bridge
+  helpers](https://stefanosbalaskas.github.io/gp3tools/articles/experimental-bayesian-bridges.md):
+
+  Optional workflows for brms, HDDM scripts, adaptive trial selection,
+  HMM event classification, Gaussian-process pupil imputation, and CNN
+  uncertainty filtering.
+
+- [Metric extraction and model-boundary
+  guidance](https://stefanosbalaskas.github.io/gp3tools/articles/metric-extraction-model-boundaries.md):
+
+  Extract eye-tracking and pupil metrics while keeping modelling and
+  interpretation aligned with what the measures support.
+
 - [Cluster-permutation time-course
   workflow](https://stefanosbalaskas.github.io/gp3tools/articles/cluster-permutation-workflow.md):
 

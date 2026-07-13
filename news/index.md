@@ -2,6 +2,10 @@
 
 ## gp3tools 2.0.0
 
+- Added three plot-rich workflow articles covering Bayesian planning,
+  experimental Bayesian bridges, and metric-extraction/model-boundary
+  guidance.
+
 - Added Zenodo DOI `10.5281/zenodo.21292384` to package citation
   metadata.
 

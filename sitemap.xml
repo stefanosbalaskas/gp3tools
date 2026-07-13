@@ -4,9 +4,11 @@
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/LICENSE-text.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/aoi-modelling-workflow.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/aoi_workflow.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/bayesian-planning-workflow.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/cluster-permutation-workflow.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/ecosystem-exports.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/end-to-end-workflow.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/experimental-bayesian-bridges.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/external-face-complete-workflow.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/face-data-synchronisation.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/face-export-import.html</loc></url>
@@ -16,6 +18,7 @@
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/fixations-transitions-scanpaths.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/heatmap-spatial-visualisation.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/index.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/metric-extraction-model-boundaries.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/missingness-coverage-reporting.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/model-readiness-sensitivity.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/multimodal-modelling.html</loc></url>

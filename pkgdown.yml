@@ -4,9 +4,11 @@ pkgdown_sha: ~
 articles:
   aoi_workflow: aoi_workflow.html
   articles/aoi-modelling-workflow: aoi-modelling-workflow.html
+  articles/bayesian-planning-workflow: bayesian-planning-workflow.html
   articles/cluster-permutation-workflow: cluster-permutation-workflow.html
   articles/ecosystem-exports: ecosystem-exports.html
   articles/end-to-end-workflow: end-to-end-workflow.html
+  articles/experimental-bayesian-bridges: experimental-bayesian-bridges.html
   articles/external-face-complete-workflow: external-face-complete-workflow.html
   articles/face-data-synchronisation: face-data-synchronisation.html
   articles/face-export-import: face-export-import.html
@@ -15,6 +17,7 @@ articles:
   articles/face-window-summaries: face-window-summaries.html
   articles/fixations-transitions-scanpaths: fixations-transitions-scanpaths.html
   articles/heatmap-spatial-visualisation: heatmap-spatial-visualisation.html
+  articles/metric-extraction-model-boundaries: metric-extraction-model-boundaries.html
   articles/missingness-coverage-reporting: missingness-coverage-reporting.html
   articles/model-readiness-sensitivity: model-readiness-sensitivity.html
   articles/multimodal-modelling: multimodal-modelling.html
@@ -31,7 +34,7 @@ articles:
   articles/sequence-reliability: sequence-reliability.html
   articles/statistical-extensions-plots: statistical-extensions-plots.html
   articles/stimulus-layout-qc: stimulus-layout-qc.html
-last_built: 2026-07-13T01:05Z
+last_built: 2026-07-13T17:23Z
 urls:
   reference: https://stefanosbalaskas.github.io/gp3tools/reference
   article: https://stefanosbalaskas.github.io/gp3tools/articles
