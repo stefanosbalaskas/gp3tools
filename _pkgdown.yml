@@ -59,6 +59,9 @@ articles:
     navbar: Advanced modelling
     contents:
     - articles/model-readiness-sensitivity
+    - articles/bayesian-planning-workflow
+    - articles/experimental-bayesian-bridges
+    - articles/metric-extraction-model-boundaries
     - articles/cluster-permutation-workflow
 
   - title: External face and multimodal workflows
