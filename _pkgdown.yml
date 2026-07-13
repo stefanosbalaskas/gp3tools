@@ -300,6 +300,12 @@ reference:
     - prepare_gazepoint_hddm_export
     - summarize_gazepoint_pupil_response_features
     - compute_gazepoint_scanpath_geometry
+    - fit_gazepoint_brms_model
+    - create_gazepoint_hddm_fit_script
+    - select_gazepoint_adaptive_trial
+    - classify_gazepoint_events_hmm
+    - impute_gazepoint_pupil_gp
+    - filter_gazepoint_cnn_uncertainty
 
   - title: External face-data and multimodal workflows
     desc: Work with externally generated face-analysis outputs and multimodal response models.
