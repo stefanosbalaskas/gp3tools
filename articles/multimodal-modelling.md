@@ -170,7 +170,7 @@ face_fit <- fit_gazepoint_face_window_lmm(
 
 face_fit$formula
 #> rating ~ AU04_r_mean_z + AU12_r_mean_z
-#> <environment: 0x559a64599c38>
+#> <environment: 0x5649e8e99670>
 ```
 
 ``` r
@@ -224,7 +224,7 @@ multi_fit <- fit_gazepoint_multimodal_response_model(
 multi_fit$formula
 #> rating ~ AU04_r_mean_z + AU12_r_mean_z + claim_dwell_time_z + 
 #>     pupil_mean_z
-#> <environment: 0x559a6546f2a8>
+#> <environment: 0x5649e9d363b0>
 ```
 
 ``` r
@@ -236,21 +236,21 @@ summary(multi_fit$model)
 #> 
 #> Residuals:
 #>          1          2          3          4          5          6 
-#>  5.776e-16  5.776e-16 -2.310e-15 -4.981e-29  1.733e-15 -5.776e-16 
+#>  5.875e-16  5.875e-16 -2.350e-15 -5.317e-29  1.762e-15 -5.875e-16 
 #> 
 #> Coefficients:
 #>                      Estimate Std. Error    t value Pr(>|t|)    
-#> (Intercept)         4.250e+00  1.248e-15  3.406e+15  < 2e-16 ***
-#> AU04_r_mean_z      -1.292e-15  1.069e-14 -1.210e-01    0.923    
-#> AU12_r_mean_z       1.048e-15  1.867e-14  5.600e-02    0.964    
-#> claim_dwell_time_z -2.083e-15  1.060e-14 -1.960e-01    0.877    
-#> pupil_mean_z        9.354e-01  2.256e-14  4.147e+13 1.54e-14 ***
+#> (Intercept)         4.250e+00  1.269e-15  3.349e+15  < 2e-16 ***
+#> AU04_r_mean_z      -9.749e-16  1.087e-14 -9.000e-02    0.943    
+#> AU12_r_mean_z      -2.636e-16  1.899e-14 -1.400e-02    0.991    
+#> claim_dwell_time_z -5.614e-16  1.079e-14 -5.200e-02    0.967    
+#> pupil_mean_z        9.354e-01  2.294e-14  4.077e+13 1.56e-14 ***
 #> ---
 #> Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 #> 
-#> Residual standard error: 3.056e-15 on 1 degrees of freedom
+#> Residual standard error: 3.109e-15 on 1 degrees of freedom
 #> Multiple R-squared:      1,  Adjusted R-squared:      1 
-#> F-statistic: 1.171e+29 on 4 and 1 DF,  p-value: 2.192e-15
+#> F-statistic: 1.132e+29 on 4 and 1 DF,  p-value: 2.229e-15
 ```
 
 ## Generalised response model
@@ -269,7 +269,7 @@ choice_fit <- fit_gazepoint_multimodal_response_model(
 
 choice_fit$formula
 #> choice ~ AU12_r_mean_z + claim_dwell_time_z
-#> <environment: 0x559a65eded78>
+#> <environment: 0x5649ea8820f0>
 ```
 
 ``` r

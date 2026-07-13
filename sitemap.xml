@@ -70,6 +70,7 @@
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/check_gazepoint_model_singularity.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/check_gazepoint_real_data_readiness.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/check_sampling_rate.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/classify_gazepoint_events_hmm.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/classify_gazepoint_export.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/clean_gazepoint_by_trackloss.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/collect_gazepoint_qc_summaries.html</loc></url>
@@ -91,6 +92,7 @@
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/create_gazepoint_bayesian_sap.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/create_gazepoint_brms_template.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/create_gazepoint_face_reporting_checklist.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/create_gazepoint_hddm_fit_script.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/create_gazepoint_markovchain_object.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/create_gazepoint_master.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/create_gazepoint_preprocessing_multiverse.html</loc></url>
@@ -113,10 +115,12 @@
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/export_gazepoint_permutes_cluster_input.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/export_gazepoint_tables.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/export_gazepoint_to_bids.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/filter_gazepoint_cnn_uncertainty.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/fit_gazepoint_aoi_brms.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/fit_gazepoint_aoi_gamm.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/fit_gazepoint_aoi_model_sensitivity.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/fit_gazepoint_aoi_window_glmm.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/fit_gazepoint_brms_model.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/fit_gazepoint_face_window_lmm.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/fit_gazepoint_gca.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/fit_gazepoint_multimodal_response_model.html</loc></url>
@@ -136,6 +140,7 @@
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/gazepoint_example_master.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/gazepoint_example_pupil_windows.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/harmonize_gazepoint_screen_coordinates.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/impute_gazepoint_pupil_gp.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/index.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/inspect_gazepoint_columns.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/interpolate_gazepoint_pupil.html</loc></url>
@@ -217,6 +222,7 @@
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/run_gazepoint_workflow.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/save_gazepoint_plots.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/segment_gazepoint_task_phases.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/select_gazepoint_adaptive_trial.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/simulate_gazepoint_cluster_timecourse_data.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/simulate_gazepoint_data.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/simulate_gazepoint_pupil_data.html</loc></url>

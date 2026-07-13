@@ -431,6 +431,19 @@ final analysis decisions.
   : Summarize pupil response features by subject and trial
 - [`compute_gazepoint_scanpath_geometry()`](https://stefanosbalaskas.github.io/gp3tools/reference/compute_gazepoint_scanpath_geometry.md)
   : Compute scanpath geometry features by subject and trial
+- [`fit_gazepoint_brms_model()`](https://stefanosbalaskas.github.io/gp3tools/reference/fit_gazepoint_brms_model.md)
+  : Fit an optional brms model for Gazepoint-derived data
+- [`create_gazepoint_hddm_fit_script()`](https://stefanosbalaskas.github.io/gp3tools/reference/create_gazepoint_hddm_fit_script.md)
+  : Create a Python HDDM fitting script from a Gazepoint HDDM export
+- [`select_gazepoint_adaptive_trial()`](https://stefanosbalaskas.github.io/gp3tools/reference/select_gazepoint_adaptive_trial.md)
+  : Select the next adaptive trial from candidate stimuli
+- [`classify_gazepoint_events_hmm()`](https://stefanosbalaskas.github.io/gp3tools/reference/classify_gazepoint_events_hmm.md)
+  : Classify gaze events with a lightweight unsupervised HMM
+- [`impute_gazepoint_pupil_gp()`](https://stefanosbalaskas.github.io/gp3tools/reference/impute_gazepoint_pupil_gp.md)
+  : Impute missing pupil samples with a lightweight Gaussian-process
+  smoother
+- [`filter_gazepoint_cnn_uncertainty()`](https://stefanosbalaskas.github.io/gp3tools/reference/filter_gazepoint_cnn_uncertainty.md)
+  : Apply uncertainty filtering to Bayesian CNN or webcam gaze outputs
 
 ## External face-data and multimodal workflows
 
