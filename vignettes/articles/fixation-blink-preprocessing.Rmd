@@ -1,0 +1,163 @@
+---
+title: "Velocity Fixations, Blink Detection, and Blink-Aware Interpolation"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Velocity Fixations, Blink Detection, and Blink-Aware Interpolation}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 8,
+  fig.height = 4.5
+)
+library(gp3tools)
+library(ggplot2)
+```
+
+## Purpose
+
+This article demonstrates a transparent event-preprocessing branch for
+sample-level gaze and pupil data:
+
+1. smooth noisy gaze coordinates;
+2. derive fixation events with a velocity threshold;
+3. detect blink-like pupil intervals;
+4. interpolate only short, internally bounded blink gaps.
+
+The velocity threshold is expressed in scaled coordinate units per second.
+When gaze coordinates are already expressed in visual degrees, `vmax` is in
+degrees per second. For normalized or pixel coordinates, use `x_scale` and
+`y_scale` when an appropriate conversion is available.
+
+## Simulated sample trace
+
+```{r simulate}
+set.seed(2026)
+
+time <- seq(0, 2.99, by = 0.01)
+n <- length(time)
+
+trace <- data.frame(
+  USER_ID = "P01",
+  trial = "T01",
+  TIME = time,
+  FPOGX = c(
+    rep(0.25, 100),
+    seq(0.25, 0.75, length.out = 10),
+    rep(0.75, n - 110)
+  ) + rnorm(n, 0, 0.003),
+  FPOGY = 0.50 + rnorm(n, 0, 0.003),
+  mean_pupil = 3.2 + 0.15 * sin(2 * pi * time / 3)
+)
+
+trace$mean_pupil[121:135] <- NA_real_
+```
+
+## Smooth gaze coordinates
+
+```{r smooth}
+smoothed <- smooth_gazepoint_coordinate(
+  trace,
+  method = "median",
+  window = 5,
+  group_cols = "trial"
+)
+
+ggplot(smoothed, aes(TIME)) +
+  geom_line(aes(y = FPOGX, linewidth = "raw"), alpha = 0.45) +
+  geom_line(aes(y = FPOGX_smooth, linewidth = "smoothed")) +
+  scale_linewidth_manual(values = c(raw = 0.4, smoothed = 0.9)) +
+  labs(
+    x = "Time (s)",
+    y = "Horizontal gaze coordinate",
+    linewidth = NULL,
+    title = "Raw and median-smoothed gaze coordinates"
+  ) +
+  theme_minimal()
+```
+
+## Detect velocity-defined fixations
+
+```{r fixations}
+fixation_result <- detect_gazepoint_fixations_velocity(
+  smoothed,
+  x_col = "FPOGX_smooth",
+  y_col = "FPOGY_smooth",
+  group_cols = "trial",
+  vmax = 5,
+  min_duration = 80,
+  return = "both"
+)
+
+fixation_result$events
+```
+
+```{r fixation-plot}
+fixation_samples <- fixation_result$samples
+
+ggplot(fixation_samples, aes(TIME, FPOGX_smooth)) +
+  geom_line() +
+  geom_point(
+    aes(shape = velocity_fixation),
+    size = 1.4,
+    alpha = 0.8
+  ) +
+  labs(
+    x = "Time (s)",
+    y = "Smoothed horizontal coordinate",
+    shape = "Fixation",
+    title = "Velocity-threshold sample labels"
+  ) +
+  theme_minimal()
+```
+
+## Detect blink intervals
+
+```{r blinks}
+blinks <- detect_gazepoint_blinks(
+  trace,
+  pupil_col = "mean_pupil",
+  group_cols = "trial",
+  min_duration = 50,
+  merge_gap_ms = 20
+)
+
+blinks
+```
+
+## Interpolate eligible blink gaps
+
+```{r interpolate}
+interpolated <- interpolate_gazepoint_blinks(
+  trace,
+  blinks,
+  pupil_cols = "mean_pupil",
+  group_cols = "trial",
+  method = "linear",
+  max_gap_ms = 500
+)
+
+ggplot(interpolated, aes(TIME)) +
+  geom_line(aes(y = mean_pupil, linetype = "observed")) +
+  geom_line(
+    aes(y = mean_pupil_blink_interp, linetype = "blink-interpolated")
+  ) +
+  labs(
+    x = "Time (s)",
+    y = "Pupil size",
+    linetype = NULL,
+    title = "Blink-aware pupil interpolation"
+  ) +
+  theme_minimal()
+```
+
+## Recommended reporting
+
+Report the coordinate unit, conversion to visual angle when used, velocity
+threshold, minimum fixation duration, blink definition, interpolation method,
+maximum interpolated gap, and whether leading or trailing gaps remained
+missing.

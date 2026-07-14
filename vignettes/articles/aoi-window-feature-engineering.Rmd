@@ -1,0 +1,153 @@
+---
+title: "AOI Labelling, Sliding Windows, and Fixation Simulation"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{AOI Labelling, Sliding Windows, and Fixation Simulation}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 8,
+  fig.height = 4.5
+)
+library(gp3tools)
+library(ggplot2)
+```
+
+## Purpose
+
+This article combines three reusable feature-engineering helpers:
+
+1. simulate Gazepoint-like fixation events;
+2. add rectangular AOI membership to sample-level coordinates;
+3. summarise gaze and pupil measures in sliding time windows.
+
+## Simulate fixation events
+
+```{r fixation-simulation}
+fixations <- simulate_gazepoint_fixations(
+  n_subjects = 4,
+  n_fix = 30,
+  coordinate_system = "pixels",
+  screen_width = 1280,
+  screen_height = 720,
+  sd = 45,
+  seed = 2026
+)
+
+fixations
+```
+
+```{r fixation-plot}
+ggplot(fixations, aes(x, y, group = USER_ID)) +
+  geom_path(alpha = 0.5) +
+  geom_point(aes(size = duration_ms), alpha = 0.7) +
+  scale_y_reverse() +
+  facet_wrap(~ USER_ID) +
+  coord_fixed() +
+  labs(
+    x = "Screen x (pixels)",
+    y = "Screen y (pixels)",
+    size = "Duration (ms)",
+    title = "Simulated fixation paths"
+  ) +
+  theme_minimal()
+```
+
+## Create a sample-level trace
+
+```{r sample-trace}
+set.seed(2026)
+
+n <- 500
+samples <- data.frame(
+  USER_ID = rep(c("P01", "P02"), each = n / 2),
+  trial = rep(c("T01", "T02"), each = n / 2),
+  TIME = rep(seq(0, 2.49, by = 0.01), 2),
+  FPOGX = c(
+    seq(0.15, 0.85, length.out = n / 2),
+    seq(0.85, 0.15, length.out = n / 2)
+  ) + rnorm(n, 0, 0.015),
+  FPOGY = 0.50 + rnorm(n, 0, 0.06),
+  mean_pupil = 3.3 + rnorm(n, 0, 0.05)
+)
+
+aoi_defs <- data.frame(
+  name = c("left", "right"),
+  L = c(0.00, 0.55),
+  R = c(0.45, 1.00),
+  T = c(0.20, 0.20),
+  B = c(0.80, 0.80)
+)
+```
+
+## Add AOI membership
+
+```{r aoi}
+labelled <- add_gazepoint_aoi(
+  samples,
+  aoi_defs,
+  output = "both",
+  overlap = "error"
+)
+
+table(labelled$aoi_current, useNA = "ifany")
+```
+
+```{r aoi-plot}
+ggplot(labelled, aes(FPOGX, FPOGY, shape = aoi_current)) +
+  geom_point(alpha = 0.45) +
+  scale_y_reverse() +
+  facet_wrap(~ USER_ID) +
+  coord_fixed() +
+  labs(
+    x = "Normalized x",
+    y = "Normalized y",
+    shape = "AOI",
+    title = "Rectangular AOI classification"
+  ) +
+  theme_minimal()
+```
+
+## Sliding-window summaries
+
+```{r windows}
+labelled$right_aoi_numeric <- as.numeric(labelled$aoi_right)
+
+windows <- analyze_gazepoint_window(
+  labelled,
+  window_size = 250,
+  step = 100,
+  summary_stats = c("mean", "sd", "valid_prop"),
+  by = c("USER_ID", "trial"),
+  value_cols = c("mean_pupil", "right_aoi_numeric")
+)
+
+windows
+```
+
+```{r window-plot}
+ggplot(
+  windows,
+  aes(window_mid, right_aoi_numeric_mean, group = USER_ID)
+) +
+  geom_line() +
+  geom_point() +
+  facet_wrap(~ USER_ID) +
+  labs(
+    x = "Window midpoint (s)",
+    y = "Proportion in right AOI",
+    title = "Sliding-window AOI summaries"
+  ) +
+  theme_minimal()
+```
+
+## Recommended reporting
+
+Report AOI coordinate units and boundaries, boundary inclusion rules, overlap
+handling, the window width and step, whether windows overlap, the timestamp
+unit, and the summary statistics calculated within each window.
