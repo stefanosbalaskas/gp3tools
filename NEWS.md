@@ -1,3 +1,22 @@
+# gp3tools 2.0.1.9000
+
+## High-priority signal preprocessing and feature engineering
+
+* Added `detect_gazepoint_fixations_velocity()` for event-level
+  velocity-threshold fixation extraction.
+* Added `detect_gazepoint_blinks()` and
+  `interpolate_gazepoint_blinks()` for blink-aware pupil processing.
+* Added `mean_gazepoint_pupil()`, `regress_gazepoint_pupils()`,
+  and `downsample_gazepoint_pupil()` for binocular pupil processing.
+* Added `smooth_gazepoint_coordinate()` for rolling gaze smoothing.
+* Added `add_gazepoint_aoi()` for rectangular AOI classification.
+* Added `analyze_gazepoint_window()` for sliding-window summaries.
+* Added `simulate_gazepoint_fixations()` for reproducible examples
+  and workflow testing.
+* Added three plot-rich workflow articles covering fixation and blink
+  preprocessing, binocular pupil processing, and AOI/window feature
+  engineering.
+
 # gp3tools 2.0.1
 
 - Added the peer-reviewed software-paper citation: gp3tools: An R Package for Reproducible Analysis and Reporting of Gazepoint GP3 Eye-Tracking Exports (Journal of Eye Movement Research, 2026; doi:10.3390/jemr19040076).

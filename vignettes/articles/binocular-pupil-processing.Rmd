@@ -1,0 +1,139 @@
+---
+title: "Binocular Pupil Fusion and Downsampling"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Binocular Pupil Fusion and Downsampling}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 8,
+  fig.height = 4.5
+)
+library(gp3tools)
+library(ggplot2)
+```
+
+## Purpose
+
+This article demonstrates three lightweight binocular pupil operations:
+
+- sample-wise left/right averaging;
+- cross-eye regression as a diagnostic smoothing and fusion method;
+- integer-factor aggregation for lower-frequency analysis tables.
+
+Regression-based fusion is a preprocessing device, not a causal model. It
+should be compared with the simple binocular mean and inspected visually.
+
+## Simulate binocular pupil measurements
+
+```{r simulate}
+set.seed(2026)
+
+n <- 400
+pupil <- data.frame(
+  USER_ID = "P01",
+  trial = rep(c("T01", "T02"), each = n / 2),
+  TIME = rep(seq(0, 1.99, by = 0.01), 2)
+)
+
+latent <- 3.4 +
+  0.20 * sin(2 * pi * pupil$TIME / 2) +
+  ifelse(pupil$trial == "T02", 0.12, 0)
+
+pupil$LPupil <- latent + rnorm(n, 0, 0.035)
+pupil$RPupil <- 0.10 + 0.97 * latent + rnorm(n, 0, 0.045)
+
+pupil$LPupil[85:90] <- NA_real_
+pupil$RPupil[250:255] <- NA_real_
+```
+
+## Mean binocular pupil
+
+```{r mean}
+pupil_mean <- mean_gazepoint_pupil(
+  pupil,
+  lp_col = "LPupil",
+  rp_col = "RPupil"
+)
+
+head(pupil_mean)
+```
+
+## Regression-smoothed binocular trace
+
+```{r regression}
+pupil_regressed <- regress_gazepoint_pupils(
+  pupil_mean,
+  lp_col = "LPupil",
+  rp_col = "RPupil",
+  group_cols = "trial",
+  direction = "bidirectional",
+  min_complete = 20
+)
+
+ggplot(pupil_regressed, aes(TIME)) +
+  geom_line(aes(y = mean_pupil, linetype = "binocular mean")) +
+  geom_line(
+    aes(y = pupil_regressed, linetype = "regression-smoothed")
+  ) +
+  facet_wrap(~ trial) +
+  labs(
+    x = "Time (s)",
+    y = "Pupil size",
+    linetype = NULL,
+    title = "Simple mean and bidirectional regression fusion"
+  ) +
+  theme_minimal()
+```
+
+## Downsample by aggregation
+
+```{r downsample}
+downsampled <- downsample_gazepoint_pupil(
+  pupil_regressed,
+  factor = 5,
+  pupil_cols = c("mean_pupil", "pupil_regressed"),
+  group_cols = "trial",
+  method = "mean"
+)
+
+downsampled[c(
+  "USER_ID", "trial", "TIME", "mean_pupil",
+  "pupil_regressed", "n_samples_aggregated"
+)]
+```
+
+```{r downsample-plot}
+ggplot() +
+  geom_line(
+    data = pupil_regressed,
+    aes(TIME, pupil_regressed, linetype = "original"),
+    alpha = 0.55
+  ) +
+  geom_point(
+    data = downsampled,
+    aes(TIME, pupil_regressed, shape = "aggregated"),
+    size = 1.5
+  ) +
+  facet_wrap(~ trial) +
+  labs(
+    x = "Time (s)",
+    y = "Regression-smoothed pupil",
+    linetype = NULL,
+    shape = NULL,
+    title = "Original and factor-five aggregated pupil traces"
+  ) +
+  theme_minimal()
+```
+
+## Recommended reporting
+
+Report which eye columns were used, how missing monocular values were handled,
+the regression direction, the minimum complete binocular samples required,
+the fallback rule, the downsampling factor, and whether samples were averaged
+or decimated.

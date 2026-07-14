@@ -80,6 +80,13 @@ articles:
     contents:
     - articles/ecosystem-exports
 
+  - title: Signal preprocessing and feature engineering
+    navbar: Signal extensions
+    contents:
+      - articles/fixation-blink-preprocessing
+      - articles/binocular-pupil-processing
+      - articles/aoi-window-feature-engineering
+
 reference:
   - title: Import, file checks, and master data
     desc: Read Gazepoint exports, inspect columns, create master tables, and validate analysis-ready data.
@@ -354,6 +361,20 @@ reference:
     - plot_gazepoint_heatmap
     - plot_gazepoint_heatmap_overlay
     - export_gazepoint_heatmap_png
+
+  - title: Signal preprocessing extensions
+    desc: Detect fixation and blink events, process binocular pupil signals, smooth coordinates, label AOIs, create sliding-window summaries, and simulate fixation data.
+    contents:
+    - detect_gazepoint_fixations_velocity
+    - detect_gazepoint_blinks
+    - interpolate_gazepoint_blinks
+    - regress_gazepoint_pupils
+    - mean_gazepoint_pupil
+    - downsample_gazepoint_pupil
+    - smooth_gazepoint_coordinate
+    - add_gazepoint_aoi
+    - analyze_gazepoint_window
+    - simulate_gazepoint_fixations
 
   - title: Example and simulated data
     desc: Synthetic data objects and simulation helpers for examples, vignettes, tests, and teaching.
