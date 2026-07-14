@@ -529,6 +529,33 @@ spatial outputs.
 - [`export_gazepoint_heatmap_png()`](https://stefanosbalaskas.github.io/gp3tools/reference/export_gazepoint_heatmap_png.md)
   : Export a Gazepoint heatmap plot to PNG
 
+## Signal preprocessing extensions
+
+Detect fixation and blink events, process binocular pupil signals,
+smooth coordinates, label AOIs, create sliding-window summaries, and
+simulate fixation data.
+
+- [`detect_gazepoint_fixations_velocity()`](https://stefanosbalaskas.github.io/gp3tools/reference/detect_gazepoint_fixations_velocity.md)
+  : Detect fixations with a velocity-threshold algorithm
+- [`detect_gazepoint_blinks()`](https://stefanosbalaskas.github.io/gp3tools/reference/detect_gazepoint_blinks.md)
+  : Detect blink intervals from pupil measurements
+- [`interpolate_gazepoint_blinks()`](https://stefanosbalaskas.github.io/gp3tools/reference/interpolate_gazepoint_blinks.md)
+  : Interpolate pupil values across detected blink intervals
+- [`regress_gazepoint_pupils()`](https://stefanosbalaskas.github.io/gp3tools/reference/regress_gazepoint_pupils.md)
+  : Fuse binocular pupil traces using cross-eye regression
+- [`mean_gazepoint_pupil()`](https://stefanosbalaskas.github.io/gp3tools/reference/mean_gazepoint_pupil.md)
+  : Calculate mean binocular pupil size
+- [`downsample_gazepoint_pupil()`](https://stefanosbalaskas.github.io/gp3tools/reference/downsample_gazepoint_pupil.md)
+  : Downsample pupil data by integer-factor aggregation
+- [`smooth_gazepoint_coordinate()`](https://stefanosbalaskas.github.io/gp3tools/reference/smooth_gazepoint_coordinate.md)
+  : Smooth gaze coordinates within independent sequences
+- [`add_gazepoint_aoi()`](https://stefanosbalaskas.github.io/gp3tools/reference/add_gazepoint_aoi.md)
+  : Add rectangular AOI membership to gaze data
+- [`analyze_gazepoint_window()`](https://stefanosbalaskas.github.io/gp3tools/reference/analyze_gazepoint_window.md)
+  : Summarise gaze or pupil measures in sliding time windows
+- [`simulate_gazepoint_fixations()`](https://stefanosbalaskas.github.io/gp3tools/reference/simulate_gazepoint_fixations.md)
+  : Simulate Gazepoint-like fixation events
+
 ## Example and simulated data
 
 Synthetic data objects and simulation helpers for examples, vignettes,

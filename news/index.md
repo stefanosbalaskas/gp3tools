@@ -1,6 +1,42 @@
 # Changelog
 
+## gp3tools 2.0.1.9000
+
+### High-priority signal preprocessing and feature engineering
+
+- Added
+  [`detect_gazepoint_fixations_velocity()`](https://stefanosbalaskas.github.io/gp3tools/reference/detect_gazepoint_fixations_velocity.md)
+  for event-level velocity-threshold fixation extraction.
+- Added
+  [`detect_gazepoint_blinks()`](https://stefanosbalaskas.github.io/gp3tools/reference/detect_gazepoint_blinks.md)
+  and
+  [`interpolate_gazepoint_blinks()`](https://stefanosbalaskas.github.io/gp3tools/reference/interpolate_gazepoint_blinks.md)
+  for blink-aware pupil processing.
+- Added
+  [`mean_gazepoint_pupil()`](https://stefanosbalaskas.github.io/gp3tools/reference/mean_gazepoint_pupil.md),
+  [`regress_gazepoint_pupils()`](https://stefanosbalaskas.github.io/gp3tools/reference/regress_gazepoint_pupils.md),
+  and
+  [`downsample_gazepoint_pupil()`](https://stefanosbalaskas.github.io/gp3tools/reference/downsample_gazepoint_pupil.md)
+  for binocular pupil processing.
+- Added
+  [`smooth_gazepoint_coordinate()`](https://stefanosbalaskas.github.io/gp3tools/reference/smooth_gazepoint_coordinate.md)
+  for rolling gaze smoothing.
+- Added
+  [`add_gazepoint_aoi()`](https://stefanosbalaskas.github.io/gp3tools/reference/add_gazepoint_aoi.md)
+  for rectangular AOI classification.
+- Added
+  [`analyze_gazepoint_window()`](https://stefanosbalaskas.github.io/gp3tools/reference/analyze_gazepoint_window.md)
+  for sliding-window summaries.
+- Added
+  [`simulate_gazepoint_fixations()`](https://stefanosbalaskas.github.io/gp3tools/reference/simulate_gazepoint_fixations.md)
+  for reproducible examples and workflow testing.
+- Added three plot-rich workflow articles covering fixation and blink
+  preprocessing, binocular pupil processing, and AOI/window feature
+  engineering.
+
 ## gp3tools 2.0.1
+
+CRAN release: 2026-07-14
 
 - Added the peer-reviewed software-paper citation: gp3tools: An R
   Package for Reproducible Analysis and Reporting of Gazepoint GP3

@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">gp3tools</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.1.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -70,6 +70,11 @@
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Ecosystem bridges</h6></li>
     <li><a class="dropdown-item" href="../articles/ecosystem-exports.html">Exporting to other ecosystems</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Signal extensions</h6></li>
+    <li><a class="dropdown-item" href="../articles/fixation-blink-preprocessing.html">Velocity Fixations, Blink Detection, and Blink-Aware Interpolation</a></li>
+    <li><a class="dropdown-item" href="../articles/binocular-pupil-processing.html">Binocular Pupil Fusion and Downsampling</a></li>
+    <li><a class="dropdown-item" href="../articles/aoi-window-feature-engineering.html">AOI Labelling, Sliding Windows, and Fixation Simulation</a></li>
   </ul></li>
 <li class="active nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
@@ -87,7 +92,21 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="2.0.1" id="gp3tools-201">gp3tools 2.0.1<a class="anchor" aria-label="anchor" href="#gp3tools-201"></a></h2>
+<h2 class="pkg-version" data-toc-text="2.0.1.9000" id="gp3tools-2019000">gp3tools 2.0.1.9000<a class="anchor" aria-label="anchor" href="#gp3tools-2019000"></a></h2>
+<div class="section level3">
+<h3 id="high-priority-signal-preprocessing-and-feature-engineering-2-0-1-9000">High-priority signal preprocessing and feature engineering<a class="anchor" aria-label="anchor" href="#high-priority-signal-preprocessing-and-feature-engineering-2-0-1-9000"></a></h3>
+<ul><li>Added <code><a href="../reference/detect_gazepoint_fixations_velocity.html">detect_gazepoint_fixations_velocity()</a></code> for event-level velocity-threshold fixation extraction.</li>
+<li>Added <code><a href="../reference/detect_gazepoint_blinks.html">detect_gazepoint_blinks()</a></code> and <code><a href="../reference/interpolate_gazepoint_blinks.html">interpolate_gazepoint_blinks()</a></code> for blink-aware pupil processing.</li>
+<li>Added <code><a href="../reference/mean_gazepoint_pupil.html">mean_gazepoint_pupil()</a></code>, <code><a href="../reference/regress_gazepoint_pupils.html">regress_gazepoint_pupils()</a></code>, and <code><a href="../reference/downsample_gazepoint_pupil.html">downsample_gazepoint_pupil()</a></code> for binocular pupil processing.</li>
+<li>Added <code><a href="../reference/smooth_gazepoint_coordinate.html">smooth_gazepoint_coordinate()</a></code> for rolling gaze smoothing.</li>
+<li>Added <code><a href="../reference/add_gazepoint_aoi.html">add_gazepoint_aoi()</a></code> for rectangular AOI classification.</li>
+<li>Added <code><a href="../reference/analyze_gazepoint_window.html">analyze_gazepoint_window()</a></code> for sliding-window summaries.</li>
+<li>Added <code><a href="../reference/simulate_gazepoint_fixations.html">simulate_gazepoint_fixations()</a></code> for reproducible examples and workflow testing.</li>
+<li>Added three plot-rich workflow articles covering fixation and blink preprocessing, binocular pupil processing, and AOI/window feature engineering.</li>
+</ul></div>
+</div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="2.0.1" id="gp3tools-201">gp3tools 2.0.1<a class="anchor" aria-label="anchor" href="#gp3tools-201"></a></h2><p class="text-muted">CRAN release: 2026-07-14</p>
 <ul><li>Added the peer-reviewed software-paper citation: gp3tools: An R Package for Reproducible Analysis and Reporting of Gazepoint GP3 Eye-Tracking Exports (Journal of Eye Movement Research, 2026; <a href="doi:10.3390/jemr19040076" class="uri">doi:10.3390/jemr19040076</a>).</li>
 <li>Updated <code>DESCRIPTION</code>, <code>README.md</code>, <code>inst/CITATION</code>, and <code>CITATION.cff</code> with the publication metadata.</li>
 <li>Prepared version 2.0.1 for website, GitHub, Zenodo, and CRAN release workflows.</li>

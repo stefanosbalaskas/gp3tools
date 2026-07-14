@@ -92,8 +92,8 @@ read_gazepoint_face_export(tmp)
 #> # A tibble: 2 × 10
 #>   gp3_face_file        gp3_face_path      gp3_face_source gp3_face_participant…¹
 #>   <chr>                <chr>              <chr>           <chr>                 
-#> 1 file1bfa50e13d20.csv /tmp/RtmpqDyvjI/f… openface        NA                    
-#> 2 file1bfa50e13d20.csv /tmp/RtmpqDyvjI/f… openface        NA                    
+#> 1 file1c9a3c40b2e1.csv /tmp/RtmpsYjygL/f… openface        NA                    
+#> 2 file1c9a3c40b2e1.csv /tmp/RtmpsYjygL/f… openface        NA                    
 #> # ℹ abbreviated name: ¹​gp3_face_participant_id
 #> # ℹ 6 more variables: gp3_face_session_id <chr>, frame <int>, timestamp <dbl>,
 #> #   confidence <dbl>, success <int>, AU12_r <dbl>

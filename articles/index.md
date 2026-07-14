@@ -112,3 +112,12 @@
 
 - [Exporting to other
   ecosystems](https://stefanosbalaskas.github.io/gp3tools/articles/ecosystem-exports.md):
+
+### Signal preprocessing and feature engineering
+
+- [Velocity Fixations, Blink Detection, and Blink-Aware
+  Interpolation](https://stefanosbalaskas.github.io/gp3tools/articles/fixation-blink-preprocessing.md):
+- [Binocular Pupil Fusion and
+  Downsampling](https://stefanosbalaskas.github.io/gp3tools/articles/binocular-pupil-processing.md):
+- [AOI Labelling, Sliding Windows, and Fixation
+  Simulation](https://stefanosbalaskas.github.io/gp3tools/articles/aoi-window-feature-engineering.md):
