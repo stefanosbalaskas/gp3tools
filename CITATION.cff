@@ -1,18 +1,30 @@
 cff-version: 1.2.0
-message: "If you use gp3tools, please cite it as below."
+message: "If you use gp3tools, please cite the peer-reviewed software paper and identify the package version used."
 title: "gp3tools: Import, Inspect, Analyse, and Report Gazepoint GP3 Exports"
 type: software
 authors:
-  - family-names: Balaskas
-    given-names: Stefanos
-    email: s.balaskas@ac.upatras.gr
+  - family-names: "Balaskas"
+    given-names: "Stefanos"
+    email: "s.balaskas@ac.upatras.gr"
+    orcid: "https://orcid.org/0000-0003-2444-9796"
 repository-code: "https://github.com/stefanosbalaskas/gp3tools"
-url: "https://github.com/stefanosbalaskas/gp3tools"
+url: "https://stefanosbalaskas.github.io/gp3tools/"
 license: MIT
-version: 2.0.0
-date-released: "2026-07-10"
-doi: "10.5281/zenodo.21292384"
+version: "2.0.1"
+date-released: "2026-07-14"
 abstract: >-
-  gp3tools provides tools for importing, checking, summarising, exporting,
-  visualising, preprocessing, modelling, and reporting Gazepoint GP3 and
-  Gazepoint Analysis export files in R.
+  gp3tools provides tools for importing, checking, summarising, exporting, visualising, preprocessing, modelling, and reporting Gazepoint GP3 and Gazepoint Analysis export files in R.
+preferred-citation:
+  type: article
+  authors:
+    - family-names: "Balaskas"
+      given-names: "Stefanos"
+      orcid: "https://orcid.org/0000-0003-2444-9796"
+  title: "gp3tools: An R Package for Reproducible Analysis and Reporting of Gazepoint GP3 Eye-Tracking Exports"
+  journal: "Journal of Eye Movement Research"
+  year: 2026
+  volume: "19"
+  issue: "4"
+  start: "76"
+  doi: "10.3390/jemr19040076"
+  url: "https://doi.org/10.3390/jemr19040076"
