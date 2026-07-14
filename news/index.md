@@ -1,5 +1,18 @@
 # Changelog
 
+## gp3tools 2.0.1
+
+- Added the peer-reviewed software-paper citation: gp3tools: An R
+  Package for Reproducible Analysis and Reporting of Gazepoint GP3
+  Eye-Tracking Exports (Journal of Eye Movement Research, 2026;
+  <doi:10.3390/jemr19040076>).
+- Updated `DESCRIPTION`, `README.md`, `inst/CITATION`, and
+  `CITATION.cff` with the publication metadata.
+- Prepared version 2.0.1 for website, GitHub, Zenodo, and CRAN release
+  workflows.
+- Retained the existing 2.0.0 Zenodo DOI as a prior-release archive
+  rather than assigning it to version 2.0.1.
+
 ## gp3tools 2.0.0
 
 - Added three plot-rich workflow articles covering Bayesian planning,

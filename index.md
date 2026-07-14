@@ -4,6 +4,8 @@
 [![GitHub
 release](https://img.shields.io/github/v/release/stefanosbalaskas/gp3tools?label=GitHub%20release)](https://github.com/stefanosbalaskas/gp3tools/releases/latest)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21292384.svg)](https://doi.org/10.5281/zenodo.21292384)
+[![Software
+paper](https://img.shields.io/badge/Software%20paper-10.3390%2Fjemr19040076-blue.svg)](https://doi.org/10.3390/jemr19040076)
 [![License:
 MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://stefanosbalaskas.github.io/gp3tools/LICENSE)
 [![Lifecycle:
@@ -214,22 +216,32 @@ The rendered site includes a plot-first article for these additions:
 
 ## Citation
 
-If you use `gp3tools` in research, teaching, reports, or software
-workflows, please cite the package:
+When `gp3tools` supports a publication, cite the peer-reviewed software
+paper and report the package version used in the analysis.
+
+### Peer-reviewed software paper
+
+> Balaskas, S. (2026). gp3tools: An R Package for Reproducible Analysis
+> and Reporting of Gazepoint GP3 Eye-Tracking Exports. Journal of Eye
+> Movement Research, 19(4), 76. <https://doi.org/10.3390/jemr19040076>
+
+### R package
+
+> Balaskas, S. (2026). `gp3tools`: Import, Inspect, Analyse, and Report
+> Gazepoint GP3 Exports. R package version 2.0.1.
+> <https://github.com/stefanosbalaskas/gp3tools>
+
+The complete citation entries are available directly from R:
 
 ``` r
 
 citation("gp3tools")
 ```
 
-Current citation:
-
-> Balaskas, S. (2026). `gp3tools`: Import, Inspect, Analyse, and Report
-> Gazepoint GP3 Exports. R package version 2.0.0.
-> <https://doi.org/10.5281/zenodo.21292384>
-
-The 2.0.0 software release is archived on Zenodo with DOI
-`10.5281/zenodo.21292384`.
+The previously released 2.0.0 software archive remains available at
+<https://doi.org/10.5281/zenodo.21292384>. A new version-specific
+archive DOI should be added after the 2.0.1 GitHub/Zenodo release is
+created.
 
 ## Installation
 
