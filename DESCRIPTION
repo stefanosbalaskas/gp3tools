@@ -1,13 +1,23 @@
 Package: gp3tools
 Type: Package
 Title: Import, Inspect, Analyse, and Report Gazepoint GP3 Exports
-Version: 2.0.0
-Authors@R: person("Stefanos", "Balaskas", email = "s.balaskas@ac.upatras.gr", role = c("aut", "cre"))
+Version: 2.0.1
+Authors@R: c(
+    person(
+      given = "Stefanos",
+      family = "Balaskas",
+      email = "s.balaskas@ac.upatras.gr",
+      role = c("aut", "cre"),
+      comment = c(ORCID = "0000-0003-2444-9796")
+    )
+  )
 Description: Tools for importing, inspecting, cleaning, summarising,
     modelling, and reporting Gazepoint GP3 and Gazepoint Analysis CSV
     exports. The package supports offline workflows for all-gaze,
     fixation, pupil, area-of-interest, transition, time-course, quality-audit, and
     manuscript-reporting analyses.
+    The package methodology is described in the peer-reviewed
+    software paper <doi:10.3390/jemr19040076>.
 License: MIT + file LICENSE
 LazyData: true
 Encoding: UTF-8
@@ -43,6 +53,7 @@ Config/testthat/edition: 3
 Config/roxygen2/version: 8.0.0
 URL: https://github.com/stefanosbalaskas/gp3tools,
     https://stefanosbalaskas.github.io/gp3tools/,
-    https://doi.org/10.5281/zenodo.21292384
+    https://doi.org/10.5281/zenodo.21292384,
+    https://doi.org/10.3390/jemr19040076
 BugReports: https://github.com/stefanosbalaskas/gp3tools/issues
 Config/Needs/website: rmarkdown

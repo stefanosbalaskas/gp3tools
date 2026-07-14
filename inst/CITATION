@@ -1,3 +1,22 @@
+citHeader(
+  "To cite gp3tools in publications, cite the peer-reviewed software paper and identify the package version used:"
+)
+
+bibentry(
+  bibtype = "Article",
+  title = "gp3tools: An R Package for Reproducible Analysis and Reporting of Gazepoint GP3 Eye-Tracking Exports",
+  author = c(
+    person(given = "Stefanos", family = "Balaskas")
+  ),
+  journal = "Journal of Eye Movement Research",
+  year = "2026",
+  volume = "19",
+  number = "4",
+  pages = "76",
+  doi = "10.3390/jemr19040076",
+  url = "https://doi.org/10.3390/jemr19040076"
+)
+
 bibentry(
   bibtype = "Manual",
   title = "gp3tools: Import, Inspect, Analyse, and Report Gazepoint GP3 Exports",
@@ -5,7 +24,6 @@ bibentry(
     person(given = "Stefanos", family = "Balaskas")
   ),
   year = "2026",
-  note = "R package version 2.0.0",
-  doi = "10.5281/zenodo.21292384",
+  note = "R package version 2.0.1",
   url = "https://github.com/stefanosbalaskas/gp3tools"
 )
