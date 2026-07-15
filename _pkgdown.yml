@@ -87,6 +87,7 @@ articles:
       - articles/binocular-pupil-processing
       - articles/aoi-window-feature-engineering
       - articles/scanpath-clustering-workflow
+      - articles/signal-preprocessing-workflow
 
 reference:
   - title: Import, file checks, and master data
@@ -380,6 +381,7 @@ reference:
     - add_gazepoint_aoi
     - analyze_gazepoint_window
     - simulate_gazepoint_fixations
+    - preprocess_gazepoint_signals
 
   - title: Example and simulated data
     desc: Synthetic data objects and simulation helpers for examples, vignettes, tests, and teaching.
