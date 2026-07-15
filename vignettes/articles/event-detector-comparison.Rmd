@@ -1,0 +1,167 @@
+---
+title: "Event-detector comparison workflow"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Event-detector comparison workflow}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 8,
+  fig.height = 5
+)
+```
+
+## Scope
+
+Different event detectors implement different definitions and thresholds.
+`compare_gazepoint_event_detectors()` places native velocity-threshold,
+lightweight HMM, and optional eyetools outputs into a common event table.
+
+Agreement indicates methodological convergence between detector definitions.
+It does not establish that one detector recovers a uniquely true cognitive
+event sequence.
+
+```{r load-package}
+library(gp3tools)
+```
+
+## Synthetic gaze trace
+
+```{r synthetic-data}
+n <- 180L
+
+gaze <- data.frame(
+  USER_ID = rep("P01", n),
+  trial = rep(c("T01", "T02"), each = n / 2),
+  TIME = seq(0, by = 1 / 60, length.out = n),
+  FPOGX = c(
+    rep(0.20, 55),
+    seq(0.20, 0.80, length.out = 10),
+    rep(0.80, 55),
+    seq(0.80, 0.35, length.out = 10),
+    rep(0.35, 50)
+  ),
+  FPOGY = 0.50,
+  stringsAsFactors = FALSE
+)
+
+utils::head(gaze)
+```
+
+## Compare velocity thresholds and the HMM branch
+
+```{r compare-detectors}
+comparison <- compare_gazepoint_event_detectors(
+  data = gaze,
+  id_col = "USER_ID",
+  trial_col = "trial",
+  x_col = "FPOGX",
+  y_col = "FPOGY",
+  time_col = "TIME",
+  methods = c("velocity", "hmm"),
+  velocity_thresholds = c(5, 10, 20),
+  min_duration = 60,
+  hmm_states = 3,
+  min_overlap = 0.5
+)
+
+comparison$runs
+```
+
+A detector branch that cannot be fitted is recorded in `runs` while successful
+branches remain available for review.
+
+## Detector-level summaries
+
+```{r detector-summary}
+comparison$detector_summary
+```
+
+The summary reports fixation counts and duration distributions. Large
+differences indicate sensitivity to event-definition choices.
+
+```{r count-plot}
+plot_gazepoint_event_detector_agreement(
+  comparison,
+  plot = "counts"
+)
+```
+
+```{r duration-plot}
+plot_gazepoint_event_detector_agreement(
+  comparison,
+  plot = "durations"
+)
+```
+
+## Pairwise interval agreement
+
+```{r agreement-summary}
+comparison$pairwise_agreement
+```
+
+Events are compared by interval intersection-over-union. The directional
+agreement columns distinguish the proportion of events from detector A that
+match detector B from the reverse comparison.
+
+```{r agreement-plot}
+if (nrow(comparison$pairwise_agreement)) {
+  plot_gazepoint_event_detector_agreement(
+    comparison,
+    plot = "agreement"
+  )
+}
+```
+
+## Unmatched events
+
+```{r unmatched-events}
+utils::head(comparison$unmatched_events)
+```
+
+Unmatched events support targeted review of threshold sensitivity, boundary
+differences, short events, and detector-specific segmentation.
+
+## Optional eyetools branch
+
+The external branch remains optional and is never a required package
+dependency.
+
+```{r eyetools-example, eval=FALSE}
+comparison_external <- compare_gazepoint_event_detectors(
+  data = gaze,
+  id_col = "USER_ID",
+  trial_col = "trial",
+  x_col = "FPOGX",
+  y_col = "FPOGY",
+  time_col = "TIME",
+  methods = c("velocity", "hmm", "eyetools"),
+  run_optional_eyetools = TRUE,
+  eyetools_method = "vti"
+)
+```
+
+When `eyetools` is unavailable or the optional branch is disabled, the run
+table records an explicit skip status.
+
+## Reporting
+
+Report:
+
+- coordinate units and any conversion to visual degrees;
+- sampling rate and timestamp units;
+- velocity thresholds;
+- minimum event durations;
+- HMM state count;
+- eyetools method and parameters when used;
+- interval-overlap criterion;
+- detector-specific event counts and durations;
+- pairwise agreement and unmatched-event rates.
+
+Treat detector comparison as a sensitivity and validation exercise rather than
+as evidence that one algorithm captures the only valid event structure.

@@ -88,6 +88,7 @@ articles:
       - articles/aoi-window-feature-engineering
       - articles/scanpath-clustering-workflow
       - articles/signal-preprocessing-workflow
+      - articles/event-detector-comparison
 
 reference:
   - title: Import, file checks, and master data
@@ -382,6 +383,9 @@ reference:
     - analyze_gazepoint_window
     - simulate_gazepoint_fixations
     - preprocess_gazepoint_signals
+    - compare_gazepoint_event_detectors
+    - summarise_gazepoint_event_detector_agreement
+    - plot_gazepoint_event_detector_agreement
 
   - title: Example and simulated data
     desc: Synthetic data objects and simulation helpers for examples, vignettes, tests, and teaching.
