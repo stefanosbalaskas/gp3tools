@@ -86,6 +86,7 @@ articles:
       - articles/fixation-blink-preprocessing
       - articles/binocular-pupil-processing
       - articles/aoi-window-feature-engineering
+      - articles/scanpath-clustering-workflow
 
 reference:
   - title: Import, file checks, and master data
@@ -232,6 +233,9 @@ reference:
     - compute_gazepoint_sequence_distance
     - compute_gazepoint_scanpath_similarity
     - cluster_gazepoint_scanpaths
+    - select_gazepoint_scanpath_clusters
+    - extract_gazepoint_representative_scanpaths
+    - plot_gazepoint_scanpath_clusters
     - compute_gazepoint_sequence_recurrence
     - compute_gazepoint_saccade_metrics
     - flag_gazepoint_sequence_anomalies

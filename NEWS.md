@@ -2,6 +2,16 @@
 
 ## Scanpath clustering
 
+* Added `select_gazepoint_scanpath_clusters()` for comparing candidate
+  cluster counts using mean silhouette width.
+* Added `extract_gazepoint_representative_scanpaths()` for selecting
+  central observed scanpaths within fitted clusters.
+* Added `plot_gazepoint_scanpath_clusters()` for base-R dendrogram, MDS,
+  and silhouette diagnostics.
+* Added a synthetic article covering cluster selection, representative
+  scanpaths, hierarchical clustering, PAM sensitivity, and conservative
+  interpretation.
+
 * Added `cluster_gazepoint_scanpaths()` for clustering AOI scanpaths
   from long-format AOI data, pairwise distance tables, numeric distance
   matrices, or `dist` objects.
