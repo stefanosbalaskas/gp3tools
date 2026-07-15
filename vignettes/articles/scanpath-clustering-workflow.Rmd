@@ -1,0 +1,224 @@
+---
+title: "Scanpath clustering, selection, and visual diagnostics"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Scanpath clustering, selection, and visual diagnostics}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 7,
+  fig.height = 5
+)
+```
+
+## Scope
+
+This article demonstrates a lightweight workflow for grouping AOI
+fixation sequences according to pairwise sequence dissimilarity.
+
+The clusters describe similarity in observed AOI ordering and transition
+structure. They should not automatically be interpreted as distinct
+cognitive strategies, intentions, or psychological states.
+
+```{r load-package}
+library(gp3tools)
+```
+
+## Synthetic AOI sequences
+
+The example contains nine synthetic scanpaths organised around three
+different AOI-sequence patterns.
+
+```{r synthetic-data}
+sequence_list <- list(
+  navigation_01 = c("map", "world", "map", "world", "map"),
+  navigation_02 = c("map", "world", "map", "world", "world"),
+  navigation_03 = c("map", "map", "world", "map", "world"),
+  evidence_01 = c("header", "claim", "evidence", "claim", "evidence"),
+  evidence_02 = c("header", "claim", "evidence", "evidence", "claim"),
+  evidence_03 = c("claim", "header", "claim", "evidence", "claim"),
+  action_01 = c("image", "cta", "image", "cta", "cta"),
+  action_02 = c("image", "cta", "cta", "image", "cta"),
+  action_03 = c("cta", "image", "cta", "image", "cta")
+)
+
+scanpath_data <- do.call(
+  rbind,
+  lapply(
+    names(sequence_list),
+    function(sequence_id) {
+      sequence <- sequence_list[[sequence_id]]
+
+      data.frame(
+        sequence_id = sequence_id,
+        fixation_order = seq_along(sequence),
+        aoi = sequence,
+        stringsAsFactors = FALSE
+      )
+    }
+  )
+)
+
+rownames(scanpath_data) <- NULL
+utils::head(scanpath_data, 12)
+```
+
+## Pairwise sequence distances
+
+```{r pairwise-distances}
+pairwise_distances <- compute_gazepoint_scanpath_similarity(
+  data = scanpath_data,
+  aoi_col = "aoi",
+  group_cols = "sequence_id",
+  time_col = "fixation_order"
+)
+
+utils::head(pairwise_distances, 12)
+```
+
+## Compare candidate cluster counts
+
+Silhouette-based comparison requires the optional `cluster` package.
+
+```{r select-clusters}
+cluster_available <- requireNamespace(
+  "cluster",
+  quietly = TRUE
+)
+
+if (cluster_available) {
+  selection <- select_gazepoint_scanpath_clusters(
+    x = pairwise_distances,
+    k_values = 2:5,
+    method = "hierarchical",
+    linkage = "average"
+  )
+
+  selection$diagnostics
+}
+```
+
+```{r fit-clusters}
+if (cluster_available) {
+  recommended_k <- selection$recommended_k
+  hierarchical_fit <- selection$recommended_fit
+} else {
+  recommended_k <- 3L
+
+  hierarchical_fit <- cluster_gazepoint_scanpaths(
+    x = pairwise_distances,
+    k = recommended_k,
+    method = "hierarchical",
+    linkage = "average"
+  )
+}
+
+hierarchical_fit$assignments
+```
+
+The largest mean silhouette width identifies the strongest candidate
+among the evaluated values. It does not prove that the selected number
+of clusters is uniquely correct.
+
+## Hierarchical dendrogram
+
+```{r hierarchical-dendrogram}
+plot_gazepoint_scanpath_clusters(
+  hierarchical_fit,
+  plot = "dendrogram",
+  main = "Synthetic AOI scanpath hierarchy"
+)
+```
+
+## MDS distance representation
+
+```{r scanpath-mds}
+plot_gazepoint_scanpath_clusters(
+  hierarchical_fit,
+  plot = "mds",
+  main = "Synthetic scanpath-distance structure"
+)
+```
+
+The MDS display is a two-dimensional approximation of the complete
+distance object.
+
+## Silhouette diagnostics
+
+```{r scanpath-silhouette}
+if (cluster_available) {
+  plot_gazepoint_scanpath_clusters(
+    hierarchical_fit,
+    plot = "silhouette",
+    main = "Synthetic scanpath silhouette widths"
+  )
+}
+```
+
+Small or negative silhouette widths identify assignments that require
+additional review.
+
+## Representative scanpaths
+
+```{r representative-scanpaths}
+representatives <-
+  extract_gazepoint_representative_scanpaths(
+    hierarchical_fit,
+    n_per_cluster = 1
+  )
+
+representatives
+```
+
+Representative identifiers can be joined back to the long-format
+observations for sequence timelines or qualitative inspection.
+
+```{r representative-rows}
+representative_rows <- scanpath_data[
+  scanpath_data$sequence_id %in%
+    representatives$sequence_id,
+]
+
+representative_rows
+```
+
+## PAM sensitivity analysis
+
+PAM represents each cluster using an observed medoid scanpath.
+
+```{r pam-fit}
+if (cluster_available) {
+  pam_fit <- cluster_gazepoint_scanpaths(
+    x = hierarchical_fit$distance,
+    k = recommended_k,
+    method = "pam"
+  )
+
+  pam_fit$assignments
+  pam_fit$medoids
+}
+```
+
+```{r pam-mds}
+if (cluster_available) {
+  plot_gazepoint_scanpath_clusters(
+    pam_fit,
+    plot = "mds",
+    main = "PAM scanpath clusters and medoids"
+  )
+}
+```
+
+Stars identify PAM medoids in the MDS representation.
+
+## Reporting
+
+Report the AOI sequence definition, ordering variable, treatment of
+repeated and missing states, distance definition, clustering method,
+linkage, candidate values of `k`, cluster sizes, silhouette widths, and
+sensitivity to alternative clustering specifications.
