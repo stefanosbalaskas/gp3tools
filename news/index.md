@@ -2,6 +2,20 @@
 
 ## gp3tools 2.0.1.9000
 
+### Event-detector comparison workflow
+
+- Added
+  [`compare_gazepoint_event_detectors()`](https://stefanosbalaskas.github.io/gp3tools/reference/compare_gazepoint_event_detectors.md)
+  for standardized comparison of native velocity, HMM, and optional
+  [eyetools](https://tombeesley.github.io/eyetools/) event definitions.
+- Added
+  [`summarise_gazepoint_event_detector_agreement()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarise_gazepoint_event_detector_agreement.md)
+  and
+  [`plot_gazepoint_event_detector_agreement()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_event_detector_agreement.md)
+  for event counts, duration summaries, temporal overlap, unmatched
+  events, and threshold sensitivity diagnostics.
+- Added a synthetic event-detector comparison article and focused tests.
+
 ### Integrated signal preprocessing workflow
 
 - Added

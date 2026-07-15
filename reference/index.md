@@ -565,6 +565,12 @@ simulate fixation data.
   : Simulate Gazepoint-like fixation events
 - [`preprocess_gazepoint_signals()`](https://stefanosbalaskas.github.io/gp3tools/reference/preprocess_gazepoint_signals.md)
   : Run an integrated Gazepoint signal-preprocessing workflow
+- [`compare_gazepoint_event_detectors()`](https://stefanosbalaskas.github.io/gp3tools/reference/compare_gazepoint_event_detectors.md)
+  : Compare Gazepoint event-detection workflows
+- [`summarise_gazepoint_event_detector_agreement()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarise_gazepoint_event_detector_agreement.md)
+  : Summarise agreement between event detectors
+- [`plot_gazepoint_event_detector_agreement()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_event_detector_agreement.md)
+  : Plot event-detector comparison diagnostics
 
 ## Example and simulated data
 

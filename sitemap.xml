@@ -10,6 +10,7 @@
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/cluster-permutation-workflow.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/ecosystem-exports.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/end-to-end-workflow.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/event-detector-comparison.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/experimental-bayesian-bridges.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/external-face-complete-workflow.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/face-data-synchronisation.html</loc></url>
@@ -86,6 +87,7 @@
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/cluster_gazepoint_scanpaths.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/collect_gazepoint_qc_summaries.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/combine_gazepoint_eyes.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/compare_gazepoint_event_detectors.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/compare_gazepoint_nested_models.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/compute_gazepoint_aoi_entropy.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/compute_gazepoint_aoi_sequence_metrics.html</loc></url>
@@ -170,6 +172,7 @@
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_cluster_null_distribution.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_cluster_permutation.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_cluster_results.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_event_detector_agreement.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_face_quality.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_gca.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_heatmap.html</loc></url>
@@ -261,6 +264,7 @@
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/summarise_gazepoint_aoi_windows.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/summarise_gazepoint_clusters.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/summarise_gazepoint_emmeans.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/summarise_gazepoint_event_detector_agreement.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/summarise_gazepoint_fixation_trials.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/summarise_gazepoint_fixed_effects.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/summarise_gazepoint_markovchain.html</loc></url>

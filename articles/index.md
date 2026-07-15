@@ -125,3 +125,5 @@
   diagnostics](https://stefanosbalaskas.github.io/gp3tools/articles/scanpath-clustering-workflow.md):
 - [Integrated signal-preprocessing
   workflow](https://stefanosbalaskas.github.io/gp3tools/articles/signal-preprocessing-workflow.md):
+- [Event-detector comparison
+  workflow](https://stefanosbalaskas.github.io/gp3tools/articles/event-detector-comparison.md):
