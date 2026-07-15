@@ -81,6 +81,7 @@
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/classify_gazepoint_events_hmm.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/classify_gazepoint_export.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/clean_gazepoint_by_trackloss.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/cluster_gazepoint_scanpaths.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/collect_gazepoint_qc_summaries.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/combine_gazepoint_eyes.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/compare_gazepoint_nested_models.html</loc></url>

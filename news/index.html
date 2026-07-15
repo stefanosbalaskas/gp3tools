@@ -94,6 +94,11 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="2.0.1.9000" id="gp3tools-2019000">gp3tools 2.0.1.9000<a class="anchor" aria-label="anchor" href="#gp3tools-2019000"></a></h2>
 <div class="section level3">
+<h3 id="scanpath-clustering-2-0-1-9000">Scanpath clustering<a class="anchor" aria-label="anchor" href="#scanpath-clustering-2-0-1-9000"></a></h3>
+<ul><li>Added <code><a href="../reference/cluster_gazepoint_scanpaths.html">cluster_gazepoint_scanpaths()</a></code> for clustering AOI scanpaths from long-format AOI data, pairwise distance tables, numeric distance matrices, or <code>dist</code> objects.</li>
+<li>Added base-R hierarchical clustering and optional PAM clustering through the suggested <a href="https://svn.r-project.org/R-packages/trunk/cluster/" class="external-link">cluster</a> package, with cluster assignments, medoids, and silhouette diagnostics.</li>
+</ul></div>
+<div class="section level3">
 <h3 id="high-priority-signal-preprocessing-and-feature-engineering-2-0-1-9000">High-priority signal preprocessing and feature engineering<a class="anchor" aria-label="anchor" href="#high-priority-signal-preprocessing-and-feature-engineering-2-0-1-9000"></a></h3>
 <ul><li>Added <code><a href="../reference/detect_gazepoint_fixations_velocity.html">detect_gazepoint_fixations_velocity()</a></code> for event-level velocity-threshold fixation extraction.</li>
 <li>Added <code><a href="../reference/detect_gazepoint_blinks.html">detect_gazepoint_blinks()</a></code> and <code><a href="../reference/interpolate_gazepoint_blinks.html">interpolate_gazepoint_blinks()</a></code> for blink-aware pupil processing.</li>

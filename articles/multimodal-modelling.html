@@ -279,7 +279,7 @@ omitted, the helper uses <code><a href="https://rdrr.io/r/stats/lm.html" class="
 <span></span>
 <span><span class="va">face_fit</span><span class="op">$</span><span class="va">formula</span></span>
 <span><span class="co">#&gt; rating ~ AU04_r_mean_z + AU12_r_mean_z</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x556cd7007888&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt; &lt;environment: 0x55d76c5f7a58&gt;</span></span></code></pre></div>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">face_fit</span><span class="op">$</span><span class="va">model</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -327,7 +327,7 @@ response predictors.</p>
 <span><span class="va">multi_fit</span><span class="op">$</span><span class="va">formula</span></span>
 <span><span class="co">#&gt; rating ~ AU04_r_mean_z + AU12_r_mean_z + claim_dwell_time_z + </span></span>
 <span><span class="co">#&gt;     pupil_mean_z</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x556cd7c3f228&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt; &lt;environment: 0x55d76d0a5cb0&gt;</span></span></code></pre></div>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">multi_fit</span><span class="op">$</span><span class="va">model</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -336,21 +336,21 @@ response predictors.</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Residuals:</span></span>
 <span><span class="co">#&gt;          1          2          3          4          5          6 </span></span>
-<span><span class="co">#&gt;  5.776e-16  5.776e-16 -2.310e-15 -4.981e-29  1.733e-15 -5.776e-16 </span></span>
+<span><span class="co">#&gt;  5.875e-16  5.875e-16 -2.350e-15 -5.317e-29  1.762e-15 -5.875e-16 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Coefficients:</span></span>
 <span><span class="co">#&gt;                      Estimate Std. Error    t value Pr(&gt;|t|)    </span></span>
-<span><span class="co">#&gt; (Intercept)         4.250e+00  1.248e-15  3.406e+15  &lt; 2e-16 ***</span></span>
-<span><span class="co">#&gt; AU04_r_mean_z      -1.292e-15  1.069e-14 -1.210e-01    0.923    </span></span>
-<span><span class="co">#&gt; AU12_r_mean_z       1.048e-15  1.867e-14  5.600e-02    0.964    </span></span>
-<span><span class="co">#&gt; claim_dwell_time_z -2.083e-15  1.060e-14 -1.960e-01    0.877    </span></span>
-<span><span class="co">#&gt; pupil_mean_z        9.354e-01  2.256e-14  4.147e+13 1.54e-14 ***</span></span>
+<span><span class="co">#&gt; (Intercept)         4.250e+00  1.269e-15  3.349e+15  &lt; 2e-16 ***</span></span>
+<span><span class="co">#&gt; AU04_r_mean_z      -9.749e-16  1.087e-14 -9.000e-02    0.943    </span></span>
+<span><span class="co">#&gt; AU12_r_mean_z      -2.636e-16  1.899e-14 -1.400e-02    0.991    </span></span>
+<span><span class="co">#&gt; claim_dwell_time_z -5.614e-16  1.079e-14 -5.200e-02    0.967    </span></span>
+<span><span class="co">#&gt; pupil_mean_z        9.354e-01  2.294e-14  4.077e+13 1.56e-14 ***</span></span>
 <span><span class="co">#&gt; ---</span></span>
 <span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Residual standard error: 3.056e-15 on 1 degrees of freedom</span></span>
+<span><span class="co">#&gt; Residual standard error: 3.109e-15 on 1 degrees of freedom</span></span>
 <span><span class="co">#&gt; Multiple R-squared:      1,  Adjusted R-squared:      1 </span></span>
-<span><span class="co">#&gt; F-statistic: 1.171e+29 on 4 and 1 DF,  p-value: 2.192e-15</span></span></code></pre></div>
+<span><span class="co">#&gt; F-statistic: 1.132e+29 on 4 and 1 DF,  p-value: 2.229e-15</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="generalised-response-model">Generalised response model<a class="anchor" aria-label="anchor" href="#generalised-response-model"></a>
@@ -367,7 +367,7 @@ linear model unless random effects are requested.</p>
 <span></span>
 <span><span class="va">choice_fit</span><span class="op">$</span><span class="va">formula</span></span>
 <span><span class="co">#&gt; choice ~ AU12_r_mean_z + claim_dwell_time_z</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x556cd8cca3a0&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt; &lt;environment: 0x55d76e184600&gt;</span></span></code></pre></div>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">choice_fit</span><span class="op">$</span><span class="va">model</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
