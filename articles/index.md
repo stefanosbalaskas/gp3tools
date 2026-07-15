@@ -121,3 +121,5 @@
   Downsampling](https://stefanosbalaskas.github.io/gp3tools/articles/binocular-pupil-processing.md):
 - [AOI Labelling, Sliding Windows, and Fixation
   Simulation](https://stefanosbalaskas.github.io/gp3tools/articles/aoi-window-feature-engineering.md):
+- [Scanpath clustering, selection, and visual
+  diagnostics](https://stefanosbalaskas.github.io/gp3tools/articles/scanpath-clustering-workflow.md):

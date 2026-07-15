@@ -5,9 +5,26 @@
 ### Scanpath clustering
 
 - Added
+  [`select_gazepoint_scanpath_clusters()`](https://stefanosbalaskas.github.io/gp3tools/reference/select_gazepoint_scanpath_clusters.md)
+  for comparing candidate cluster counts using mean silhouette width.
+
+- Added
+  [`extract_gazepoint_representative_scanpaths()`](https://stefanosbalaskas.github.io/gp3tools/reference/extract_gazepoint_representative_scanpaths.md)
+  for selecting central observed scanpaths within fitted clusters.
+
+- Added
+  [`plot_gazepoint_scanpath_clusters()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_scanpath_clusters.md)
+  for base-R dendrogram, MDS, and silhouette diagnostics.
+
+- Added a synthetic article covering cluster selection, representative
+  scanpaths, hierarchical clustering, PAM sensitivity, and conservative
+  interpretation.
+
+- Added
   [`cluster_gazepoint_scanpaths()`](https://stefanosbalaskas.github.io/gp3tools/reference/cluster_gazepoint_scanpaths.md)
   for clustering AOI scanpaths from long-format AOI data, pairwise
   distance tables, numeric distance matrices, or `dist` objects.
+
 - Added base-R hierarchical clustering and optional PAM clustering
   through the suggested
   [cluster](https://svn.r-project.org/R-packages/trunk/cluster/)

@@ -75,6 +75,7 @@
     <li><a class="dropdown-item" href="../articles/fixation-blink-preprocessing.html">Velocity Fixations, Blink Detection, and Blink-Aware Interpolation</a></li>
     <li><a class="dropdown-item" href="../articles/binocular-pupil-processing.html">Binocular Pupil Fusion and Downsampling</a></li>
     <li><a class="dropdown-item" href="../articles/aoi-window-feature-engineering.html">AOI Labelling, Sliding Windows, and Fixation Simulation</a></li>
+    <li><a class="dropdown-item" href="../articles/scanpath-clustering-workflow.html">Scanpath clustering, selection, and visual diagnostics</a></li>
   </ul></li>
 <li class="active nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
@@ -95,8 +96,12 @@
 <h2 class="pkg-version" data-toc-text="2.0.1.9000" id="gp3tools-2019000">gp3tools 2.0.1.9000<a class="anchor" aria-label="anchor" href="#gp3tools-2019000"></a></h2>
 <div class="section level3">
 <h3 id="scanpath-clustering-2-0-1-9000">Scanpath clustering<a class="anchor" aria-label="anchor" href="#scanpath-clustering-2-0-1-9000"></a></h3>
-<ul><li>Added <code><a href="../reference/cluster_gazepoint_scanpaths.html">cluster_gazepoint_scanpaths()</a></code> for clustering AOI scanpaths from long-format AOI data, pairwise distance tables, numeric distance matrices, or <code>dist</code> objects.</li>
-<li>Added base-R hierarchical clustering and optional PAM clustering through the suggested <a href="https://svn.r-project.org/R-packages/trunk/cluster/" class="external-link">cluster</a> package, with cluster assignments, medoids, and silhouette diagnostics.</li>
+<ul><li><p>Added <code><a href="../reference/select_gazepoint_scanpath_clusters.html">select_gazepoint_scanpath_clusters()</a></code> for comparing candidate cluster counts using mean silhouette width.</p></li>
+<li><p>Added <code><a href="../reference/extract_gazepoint_representative_scanpaths.html">extract_gazepoint_representative_scanpaths()</a></code> for selecting central observed scanpaths within fitted clusters.</p></li>
+<li><p>Added <code><a href="../reference/plot_gazepoint_scanpath_clusters.html">plot_gazepoint_scanpath_clusters()</a></code> for base-R dendrogram, MDS, and silhouette diagnostics.</p></li>
+<li><p>Added a synthetic article covering cluster selection, representative scanpaths, hierarchical clustering, PAM sensitivity, and conservative interpretation.</p></li>
+<li><p>Added <code><a href="../reference/cluster_gazepoint_scanpaths.html">cluster_gazepoint_scanpaths()</a></code> for clustering AOI scanpaths from long-format AOI data, pairwise distance tables, numeric distance matrices, or <code>dist</code> objects.</p></li>
+<li><p>Added base-R hierarchical clustering and optional PAM clustering through the suggested <a href="https://svn.r-project.org/R-packages/trunk/cluster/" class="external-link">cluster</a> package, with cluster assignments, medoids, and silhouette diagnostics.</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="high-priority-signal-preprocessing-and-feature-engineering-2-0-1-9000">High-priority signal preprocessing and feature engineering<a class="anchor" aria-label="anchor" href="#high-priority-signal-preprocessing-and-feature-engineering-2-0-1-9000"></a></h3>

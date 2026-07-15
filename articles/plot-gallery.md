@@ -42,13 +42,14 @@ sample-level and fixation-level summary functions.
     #> 19          plot_gazepoint_pupil_timecourse
     #> 20               plot_gazepoint_qc_overview
     #> 21                  plot_gazepoint_scanpath
-    #> 22                 plot_gazepoint_scanpaths
-    #> 23        plot_gazepoint_stimulus_layout_qc
-    #> 24               plot_gazepoint_time_series
-    #> 25       plot_gazepoint_time_varying_effect
-    #> 26                       plot_sampling_rate
-    #> 27                    plot_tracking_quality
-    #> 28                  plot_transition_heatmap
+    #> 22         plot_gazepoint_scanpath_clusters
+    #> 23                 plot_gazepoint_scanpaths
+    #> 24        plot_gazepoint_stimulus_layout_qc
+    #> 25               plot_gazepoint_time_series
+    #> 26       plot_gazepoint_time_varying_effect
+    #> 27                       plot_sampling_rate
+    #> 28                    plot_tracking_quality
+    #> 29                  plot_transition_heatmap
 
 ## Sampling rate
 

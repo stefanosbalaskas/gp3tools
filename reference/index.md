@@ -276,6 +276,12 @@ and sequence reliability.
   : Compute AOI scanpath similarity
 - [`cluster_gazepoint_scanpaths()`](https://stefanosbalaskas.github.io/gp3tools/reference/cluster_gazepoint_scanpaths.md)
   : Cluster Gazepoint AOI scanpaths
+- [`select_gazepoint_scanpath_clusters()`](https://stefanosbalaskas.github.io/gp3tools/reference/select_gazepoint_scanpath_clusters.md)
+  : Select the number of scanpath clusters
+- [`extract_gazepoint_representative_scanpaths()`](https://stefanosbalaskas.github.io/gp3tools/reference/extract_gazepoint_representative_scanpaths.md)
+  : Extract representative scanpaths
+- [`plot_gazepoint_scanpath_clusters()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_scanpath_clusters.md)
+  : Plot fitted scanpath clusters
 - [`compute_gazepoint_sequence_recurrence()`](https://stefanosbalaskas.github.io/gp3tools/reference/compute_gazepoint_sequence_recurrence.md)
   : Compute simple categorical sequence recurrence metrics
 - [`compute_gazepoint_saccade_metrics()`](https://stefanosbalaskas.github.io/gp3tools/reference/compute_gazepoint_saccade_metrics.md)
