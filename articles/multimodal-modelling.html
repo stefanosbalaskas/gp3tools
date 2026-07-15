@@ -97,6 +97,7 @@
     <li><a class="dropdown-item" href="../articles/binocular-pupil-processing.html">Binocular Pupil Fusion and Downsampling</a></li>
     <li><a class="dropdown-item" href="../articles/aoi-window-feature-engineering.html">AOI Labelling, Sliding Windows, and Fixation Simulation</a></li>
     <li><a class="dropdown-item" href="../articles/scanpath-clustering-workflow.html">Scanpath clustering, selection, and visual diagnostics</a></li>
+    <li><a class="dropdown-item" href="../articles/signal-preprocessing-workflow.html">Integrated signal-preprocessing workflow</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -280,7 +281,7 @@ omitted, the helper uses <code><a href="https://rdrr.io/r/stats/lm.html" class="
 <span></span>
 <span><span class="va">face_fit</span><span class="op">$</span><span class="va">formula</span></span>
 <span><span class="co">#&gt; rating ~ AU04_r_mean_z + AU12_r_mean_z</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x558f5fb88f30&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt; &lt;environment: 0x56543fad9ad0&gt;</span></span></code></pre></div>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">face_fit</span><span class="op">$</span><span class="va">model</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -328,7 +329,7 @@ response predictors.</p>
 <span><span class="va">multi_fit</span><span class="op">$</span><span class="va">formula</span></span>
 <span><span class="co">#&gt; rating ~ AU04_r_mean_z + AU12_r_mean_z + claim_dwell_time_z + </span></span>
 <span><span class="co">#&gt;     pupil_mean_z</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x558f6054c678&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt; &lt;environment: 0x565440485d38&gt;</span></span></code></pre></div>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">multi_fit</span><span class="op">$</span><span class="va">model</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -368,7 +369,7 @@ linear model unless random effects are requested.</p>
 <span></span>
 <span><span class="va">choice_fit</span><span class="op">$</span><span class="va">formula</span></span>
 <span><span class="co">#&gt; choice ~ AU12_r_mean_z + claim_dwell_time_z</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x558f60f5e1e0&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt; &lt;environment: 0x565440eb6960&gt;</span></span></code></pre></div>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">choice_fit</span><span class="op">$</span><span class="va">model</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>

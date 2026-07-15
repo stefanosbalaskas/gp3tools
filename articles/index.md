@@ -123,3 +123,5 @@
   Simulation](https://stefanosbalaskas.github.io/gp3tools/articles/aoi-window-feature-engineering.md):
 - [Scanpath clustering, selection, and visual
   diagnostics](https://stefanosbalaskas.github.io/gp3tools/articles/scanpath-clustering-workflow.md):
+- [Integrated signal-preprocessing
+  workflow](https://stefanosbalaskas.github.io/gp3tools/articles/signal-preprocessing-workflow.md):

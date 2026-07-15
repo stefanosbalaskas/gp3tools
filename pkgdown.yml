@@ -36,9 +36,10 @@ articles:
   articles/scanpath-clustering-workflow: scanpath-clustering-workflow.html
   articles/scanpath-qc-quick-wins: scanpath-qc-quick-wins.html
   articles/sequence-reliability: sequence-reliability.html
+  articles/signal-preprocessing-workflow: signal-preprocessing-workflow.html
   articles/statistical-extensions-plots: statistical-extensions-plots.html
   articles/stimulus-layout-qc: stimulus-layout-qc.html
-last_built: 2026-07-15T10:24Z
+last_built: 2026-07-15T21:26Z
 urls:
   reference: https://stefanosbalaskas.github.io/gp3tools/reference
   article: https://stefanosbalaskas.github.io/gp3tools/articles

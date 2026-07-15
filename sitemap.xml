@@ -37,6 +37,7 @@
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/scanpath-clustering-workflow.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/scanpath-qc-quick-wins.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/sequence-reliability.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/signal-preprocessing-workflow.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/statistical-extensions-plots.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/stimulus-layout-qc.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/authors.html</loc></url>
@@ -210,6 +211,7 @@
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/prepare_gazepoint_semimarkov_data.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/prepare_gazepoint_timecourse_test_data.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/prepare_gazepoint_traminer_data.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/preprocess_gazepoint_signals.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/read_gazepoint.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/read_gazepoint_face_export.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/read_gazepoint_folder.html</loc></url>

@@ -563,6 +563,8 @@ simulate fixation data.
   : Summarise gaze or pupil measures in sliding time windows
 - [`simulate_gazepoint_fixations()`](https://stefanosbalaskas.github.io/gp3tools/reference/simulate_gazepoint_fixations.md)
   : Simulate Gazepoint-like fixation events
+- [`preprocess_gazepoint_signals()`](https://stefanosbalaskas.github.io/gp3tools/reference/preprocess_gazepoint_signals.md)
+  : Run an integrated Gazepoint signal-preprocessing workflow
 
 ## Example and simulated data
 

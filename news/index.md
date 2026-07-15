@@ -2,6 +2,18 @@
 
 ## gp3tools 2.0.1.9000
 
+### Integrated signal preprocessing workflow
+
+- Added
+  [`preprocess_gazepoint_signals()`](https://stefanosbalaskas.github.io/gp3tools/reference/preprocess_gazepoint_signals.md)
+  as an auditable orchestration layer for blink detection and
+  interpolation, binocular pupil fusion, pupil and coordinate smoothing,
+  downsampling, and velocity-based fixation detection.
+- The workflow preserves original columns and returns processed data,
+  detected events, diagnostics, a decision log, and resolved settings.
+- Added a synthetic signal-preprocessing workflow article and focused
+  tests.
+
 ### Scanpath clustering
 
 - Added
