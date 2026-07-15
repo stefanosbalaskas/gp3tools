@@ -1,5 +1,14 @@
 # gp3tools 2.0.1.9000
 
+## Scanpath clustering
+
+* Added `cluster_gazepoint_scanpaths()` for clustering AOI scanpaths
+  from long-format AOI data, pairwise distance tables, numeric distance
+  matrices, or `dist` objects.
+* Added base-R hierarchical clustering and optional PAM clustering
+  through the suggested `{cluster}` package, with cluster assignments,
+  medoids, and silhouette diagnostics.
+
 ## High-priority signal preprocessing and feature engineering
 
 * Added `detect_gazepoint_fixations_velocity()` for event-level

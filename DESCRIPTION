@@ -34,6 +34,7 @@ Imports:
     tidyr
 Suggests:
     brms,
+    cluster,
     DHARMa,
     emmeans,
     eyetools,

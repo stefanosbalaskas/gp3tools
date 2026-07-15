@@ -231,6 +231,7 @@ reference:
     - compute_gazepoint_sequence_complexity
     - compute_gazepoint_sequence_distance
     - compute_gazepoint_scanpath_similarity
+    - cluster_gazepoint_scanpaths
     - compute_gazepoint_sequence_recurrence
     - compute_gazepoint_saccade_metrics
     - flag_gazepoint_sequence_anomalies
