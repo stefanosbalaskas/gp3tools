@@ -44,6 +44,7 @@ articles:
     - articles/phase-segmentation-reporting
     - articles/qc-reporting-bundle
     - articles/stimulus-layout-qc
+    - articles/advanced-aoi-assignment
     - articles/scanpath-qc-quick-wins
 
   - title: Plots and visual diagnostics
@@ -153,6 +154,9 @@ reference:
     - audit_gazepoint_aoi_coding_matrix
     - plot_gazepoint_aoi_verification
     - plot_gazepoint_stimulus_layout_qc
+    - add_gazepoint_polygon_aoi
+    - add_gazepoint_dynamic_aoi
+    - audit_gazepoint_dynamic_aoi_coverage
 
   - title: Pupil preprocessing, audits, and windows
     desc: Flag, interpolate, baseline-correct, smooth, audit, and summarise pupil data.
