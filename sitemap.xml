@@ -11,7 +11,6 @@
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/cluster-permutation-workflow.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/ecosystem-exports.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/end-to-end-workflow.html</loc></url>
-<url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/event-detector-benchmarking.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/event-detector-comparison.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/experimental-bayesian-bridges.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/external-face-complete-workflow.html</loc></url>
@@ -79,7 +78,6 @@
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_stimulus_luminance.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_timecourse_grid.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/baseline_correct_gazepoint_pupil.html</loc></url>
-<url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/benchmark_gazepoint_event_detectors.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/bootstrap_gazepoint_scanpath_clusters.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/bootstrap_gazepoint_timecourse.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/check_gazepoint_bayesian_readiness.html</loc></url>
@@ -112,7 +110,6 @@
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/create_gazepoint_analysis_decision_audit.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/create_gazepoint_bayesian_sap.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/create_gazepoint_brms_template.html</loc></url>
-<url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/create_gazepoint_event_review_template.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/create_gazepoint_face_reporting_checklist.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/create_gazepoint_hddm_fit_script.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/create_gazepoint_markovchain_object.html</loc></url>
@@ -182,7 +179,6 @@
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_cluster_permutation.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_cluster_results.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_event_detector_agreement.html</loc></url>
-<url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_event_detector_benchmark.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_face_quality.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_gca.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_heatmap.html</loc></url>
@@ -276,7 +272,6 @@
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/summarise_gazepoint_clusters.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/summarise_gazepoint_emmeans.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/summarise_gazepoint_event_detector_agreement.html</loc></url>
-<url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/summarise_gazepoint_event_detector_benchmark.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/summarise_gazepoint_fixation_trials.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/summarise_gazepoint_fixed_effects.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/summarise_gazepoint_markovchain.html</loc></url>

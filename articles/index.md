@@ -131,5 +131,3 @@
   workflow](https://stefanosbalaskas.github.io/gp3tools/articles/signal-preprocessing-workflow.md):
 - [Event-detector comparison
   workflow](https://stefanosbalaskas.github.io/gp3tools/articles/event-detector-comparison.md):
-- [Benchmarking gaze-event detectors against reviewed
-  intervals](https://stefanosbalaskas.github.io/gp3tools/articles/event-detector-benchmarking.md):

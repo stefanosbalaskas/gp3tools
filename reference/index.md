@@ -583,14 +583,6 @@ simulate fixation data.
   : Summarise agreement between event detectors
 - [`plot_gazepoint_event_detector_agreement()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_event_detector_agreement.md)
   : Plot event-detector comparison diagnostics
-- [`create_gazepoint_event_review_template()`](https://stefanosbalaskas.github.io/gp3tools/reference/create_gazepoint_event_review_template.md)
-  : Create a manual event-review template
-- [`benchmark_gazepoint_event_detectors()`](https://stefanosbalaskas.github.io/gp3tools/reference/benchmark_gazepoint_event_detectors.md)
-  : Benchmark Gazepoint event detectors against reviewed events
-- [`summarise_gazepoint_event_detector_benchmark()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarise_gazepoint_event_detector_benchmark.md)
-  : Summarise an event-detector benchmark
-- [`plot_gazepoint_event_detector_benchmark()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_event_detector_benchmark.md)
-  : Plot event-detector benchmark diagnostics
 
 ## Example and simulated data
 
