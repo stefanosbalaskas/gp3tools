@@ -1,4 +1,11 @@
-# gp3tools 2.0.1.9000
+# gp3tools 2.1.0
+
+## Release overview
+
+* This minor release consolidates signal preprocessing, event-detector comparison, advanced AOI assignment, and scanpath-cluster stability workflows.
+* Added auditable orchestration, standardized detector-agreement outputs, base-R polygon and dynamic AOI geometry, and subsampling-based cluster diagnostics.
+* Added four synthetic workflow articles, focused deterministic tests, curated reference topics, and README coverage.
+* No new mandatory dependencies were introduced, and existing function behavior remains unchanged.
 
 ## Scanpath-cluster stability
 
