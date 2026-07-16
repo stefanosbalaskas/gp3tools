@@ -11,6 +11,7 @@ articles:
   articles/cluster-permutation-workflow: cluster-permutation-workflow.html
   articles/ecosystem-exports: ecosystem-exports.html
   articles/end-to-end-workflow: end-to-end-workflow.html
+  articles/event-detector-benchmarking: event-detector-benchmarking.html
   articles/event-detector-comparison: event-detector-comparison.html
   articles/experimental-bayesian-bridges: experimental-bayesian-bridges.html
   articles/external-face-complete-workflow: external-face-complete-workflow.html
@@ -42,7 +43,7 @@ articles:
   articles/signal-preprocessing-workflow: signal-preprocessing-workflow.html
   articles/statistical-extensions-plots: statistical-extensions-plots.html
   articles/stimulus-layout-qc: stimulus-layout-qc.html
-last_built: 2026-07-16T08:13Z
+last_built: 2026-07-16T21:28Z
 urls:
   reference: https://stefanosbalaskas.github.io/gp3tools/reference
   article: https://stefanosbalaskas.github.io/gp3tools/articles

@@ -8,7 +8,7 @@
 ## Citation
 
 Source:
-[`inst/CITATION`](https://github.com/stefanosbalaskas/gp3tools/blob/v2.1.0/inst/CITATION)
+[`inst/CITATION`](https://github.com/stefanosbalaskas/gp3tools/blob/master/inst/CITATION)
 
 Balaskas S (2026). “gp3tools: An R Package for Reproducible Analysis and
 Reporting of Gazepoint GP3 Eye-Tracking Exports.” *Journal of Eye

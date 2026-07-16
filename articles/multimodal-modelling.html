@@ -32,7 +32,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">gp3tools</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.0.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -101,6 +101,7 @@
     <li><a class="dropdown-item" href="../articles/scanpath-cluster-stability.html">Scanpath-cluster stability and sensitivity</a></li>
     <li><a class="dropdown-item" href="../articles/signal-preprocessing-workflow.html">Integrated signal-preprocessing workflow</a></li>
     <li><a class="dropdown-item" href="../articles/event-detector-comparison.html">Event-detector comparison workflow</a></li>
+    <li><a class="dropdown-item" href="../articles/event-detector-benchmarking.html">Benchmarking gaze-event detectors against reviewed intervals</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -125,7 +126,7 @@
       <img src="../logo.png" class="logo" alt=""><h1>Multimodal modelling with external face-window summaries</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/stefanosbalaskas/gp3tools/blob/v2.1.0/vignettes/articles/multimodal-modelling.Rmd" class="external-link"><code>vignettes/articles/multimodal-modelling.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/stefanosbalaskas/gp3tools/blob/master/vignettes/articles/multimodal-modelling.Rmd" class="external-link"><code>vignettes/articles/multimodal-modelling.Rmd</code></a></small>
       <div class="d-none name"><code>multimodal-modelling.Rmd</code></div>
     </div>
 
@@ -284,7 +285,7 @@ omitted, the helper uses <code><a href="https://rdrr.io/r/stats/lm.html" class="
 <span></span>
 <span><span class="va">face_fit</span><span class="op">$</span><span class="va">formula</span></span>
 <span><span class="co">#&gt; rating ~ AU04_r_mean_z + AU12_r_mean_z</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x55a0b089d8a8&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt; &lt;environment: 0x55e2b9f796d8&gt;</span></span></code></pre></div>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">face_fit</span><span class="op">$</span><span class="va">model</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -332,7 +333,7 @@ response predictors.</p>
 <span><span class="va">multi_fit</span><span class="op">$</span><span class="va">formula</span></span>
 <span><span class="co">#&gt; rating ~ AU04_r_mean_z + AU12_r_mean_z + claim_dwell_time_z + </span></span>
 <span><span class="co">#&gt;     pupil_mean_z</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x55a0b1434be0&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt; &lt;environment: 0x55e2bac1d4c0&gt;</span></span></code></pre></div>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">multi_fit</span><span class="op">$</span><span class="va">model</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -372,7 +373,7 @@ linear model unless random effects are requested.</p>
 <span></span>
 <span><span class="va">choice_fit</span><span class="op">$</span><span class="va">formula</span></span>
 <span><span class="co">#&gt; choice ~ AU12_r_mean_z + claim_dwell_time_z</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x55a0b1a915e0&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt; &lt;environment: 0x55e2bbfb7818&gt;</span></span></code></pre></div>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">choice_fit</span><span class="op">$</span><span class="va">model</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
