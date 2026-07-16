@@ -88,6 +88,7 @@ articles:
       - articles/binocular-pupil-processing
       - articles/aoi-window-feature-engineering
       - articles/scanpath-clustering-workflow
+      - articles/scanpath-cluster-stability
       - articles/signal-preprocessing-workflow
       - articles/event-detector-comparison
 
@@ -242,6 +243,9 @@ reference:
     - select_gazepoint_scanpath_clusters
     - extract_gazepoint_representative_scanpaths
     - plot_gazepoint_scanpath_clusters
+    - bootstrap_gazepoint_scanpath_clusters
+    - summarise_gazepoint_scanpath_cluster_stability
+    - plot_gazepoint_scanpath_cluster_stability
     - compute_gazepoint_sequence_recurrence
     - compute_gazepoint_saccade_metrics
     - flag_gazepoint_sequence_anomalies
