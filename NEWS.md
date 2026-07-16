@@ -1,3 +1,13 @@
+# gp3tools 2.1.0.9000
+
+## Post-2.1.0 validation and interoperability
+
+* Started the post-release validation cycle covering event-detector
+  benchmarking, large-export performance, gpbiometrics interoperability,
+  API naming consistency, and user-feedback collection.
+* Bayesian and machine-learning orchestration remain outside the core
+  package unless supported by a clearly defined validation use case.
+
 # gp3tools 2.1.0
 
 ## Release overview
