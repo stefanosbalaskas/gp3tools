@@ -1,0 +1,272 @@
+---
+title: "Scanpath-cluster stability and sensitivity"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Scanpath-cluster stability and sensitivity}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 7,
+  fig.height = 5
+)
+```
+
+## Scope
+
+Cluster assignments can change when scanpaths, linkage methods, or distance
+definitions change. This article demonstrates a lightweight subsampling
+workflow for evaluating that sensitivity.
+
+The workflow records:
+
+- full-data reference solutions;
+- iteration-level adjusted Rand agreement;
+- pairwise co-clustering probabilities;
+- pair-coverage rates;
+- sequence-level within-cluster stability;
+- representative-scanpath selection rates;
+- sensitivity across hierarchical linkage methods.
+
+These diagnostics quantify reproducibility under the specified resampling
+scheme. They do not prove that a cluster solution represents a true latent
+cognitive strategy.
+
+```{r load-package}
+library(gp3tools)
+```
+
+## Synthetic distance structure
+
+The example contains nine scanpaths arranged around three synthetic sequence
+patterns. Within-pattern distances are small and between-pattern distances are
+larger, with modest deterministic variation.
+
+```{r synthetic-distance}
+sequence_ids <- paste0("scanpath_", sprintf("%02d", 1:9))
+latent_cluster <- rep(1:3, each = 3)
+
+distance_matrix <- outer(
+  seq_along(sequence_ids),
+  seq_along(sequence_ids),
+  FUN = function(i, j) {
+    ifelse(
+      latent_cluster[i] == latent_cluster[j],
+      0.08 + 0.01 * abs(i - j),
+      0.85 + 0.02 * abs(i - j)
+    )
+  }
+)
+
+diag(distance_matrix) <- 0
+
+dimnames(distance_matrix) <- list(
+  sequence_ids,
+  sequence_ids
+)
+
+round(distance_matrix, 2)
+```
+
+## Reference clustering
+
+```{r reference-fit}
+reference_fit <- cluster_gazepoint_scanpaths(
+  distance_matrix,
+  k = 3,
+  method = "hierarchical",
+  linkage = "average"
+)
+
+reference_fit$assignments
+```
+
+```{r reference-mds}
+plot_gazepoint_scanpath_clusters(
+  reference_fit,
+  plot = "mds",
+  main = "Synthetic scanpath-distance structure"
+)
+```
+
+## Subsampling stability
+
+Each iteration retains 80% of scanpaths without replacement, refits the
+three-cluster solution, and compares it with the corresponding full-data
+reference partition.
+
+```{r bootstrap-stability}
+stability <- bootstrap_gazepoint_scanpath_clusters(
+  distance_matrix,
+  k = 3,
+  n_boot = 100,
+  sample_fraction = 0.8,
+  method = "hierarchical",
+  linkages = c("average", "complete", "ward.D2"),
+  seed = 20260715
+)
+
+utils::head(stability$iteration_summary)
+```
+
+The seed is local to the helper: the caller's random-number state is restored
+after the routine finishes.
+
+## Adjusted Rand agreement
+
+```{r ari-distribution}
+plot_gazepoint_scanpath_cluster_stability(
+  stability,
+  plot = "ari",
+  specification = "hierarchical_average"
+)
+```
+
+The adjusted Rand index compares a subsampled partition with the full-data
+reference partition after restricting both to the sampled scanpaths. Values
+near one indicate strong agreement; lower values identify sensitivity to the
+particular scanpaths retained.
+
+## Co-clustering probabilities
+
+```{r coclustering-plot}
+plot_gazepoint_scanpath_cluster_stability(
+  stability,
+  plot = "coclustering",
+  specification = "hierarchical_average"
+)
+```
+
+Each cell reports the proportion of iterations in which two observed
+scanpaths were assigned to the same cluster, conditional on both being
+sampled. Pair coverage is retained separately because some pairs may co-occur
+less often than others.
+
+```{r pair-coverage}
+round(
+  stability$pair_coverage$hierarchical_average,
+  2
+)
+```
+
+## Compact stability summaries
+
+```{r stability-summary}
+stability_summary <-
+  summarise_gazepoint_scanpath_cluster_stability(
+    stability,
+    min_pair_coverage = 0.50,
+    stable_threshold = 0.75
+  )
+
+stability_summary$overview
+```
+
+```{r sequence-summary}
+stability_summary$sequence_summary
+```
+
+Within-cluster stability is the mean co-clustering probability between a
+scanpath and the other members of its full-data reference cluster. Between-
+cluster co-clustering provides a complementary separation diagnostic.
+
+```{r sequence-plot}
+plot_gazepoint_scanpath_cluster_stability(
+  stability,
+  plot = "sequence",
+  specification = "hierarchical_average",
+  min_pair_coverage = 0.50,
+  stable_threshold = 0.75
+)
+```
+
+The dashed line marks the reporting threshold supplied to the plot. It is a
+review threshold, not a universal inferential cutoff.
+
+## Representative-scanpath stability
+
+```{r representative-stability}
+representative_table <-
+  stability_summary$representative_stability
+
+representative_table[
+  order(
+    representative_table$specification,
+    representative_table$reference_cluster,
+    -representative_table$
+      representative_rate_when_included
+  ),
+]
+```
+
+`representative_rate_when_included` reports how often an observed scanpath was
+selected as the central representative for its mapped reference cluster,
+conditional on that scanpath being included in the iteration.
+
+## Linkage sensitivity
+
+```{r linkage-comparison}
+stability_summary$overview[
+  ,
+  c(
+    "specification",
+    "mean_adjusted_rand_index",
+    "mean_within_cluster_coclustering",
+    "mean_between_cluster_coclustering",
+    "min_sequence_stability",
+    "stability_status"
+  )
+]
+```
+
+Agreement across linkage methods supports robustness to that analytical
+choice. Divergence indicates that the cluster geometry or distance structure
+requires closer inspection.
+
+## PAM sensitivity
+
+PAM stability can be evaluated with the same interface when the optional
+`cluster` package is available.
+
+```{r pam-stability}
+if (requireNamespace("cluster", quietly = TRUE)) {
+  pam_stability <-
+    bootstrap_gazepoint_scanpath_clusters(
+      distance_matrix,
+      k = 3,
+      n_boot = 50,
+      sample_fraction = 0.8,
+      method = "pam",
+      seed = 20260715
+    )
+
+  summarise_gazepoint_scanpath_cluster_stability(
+    pam_stability
+  )$overview
+}
+```
+
+## Recommended reporting
+
+Report:
+
+- distance definition and sequence preprocessing;
+- clustering method and linkage;
+- full-data cluster count and sizes;
+- number of resamples;
+- retained sample fraction and resolved sample size;
+- random seed;
+- mean, variability, and minimum adjusted Rand agreement;
+- within- and between-cluster co-clustering;
+- pair-coverage threshold;
+- sequence-level stability;
+- representative-scanpath stability;
+- sensitivity across linkage or clustering methods.
+
+The resampling design assesses procedural stability under the observed
+distance structure. It does not replace external validation or substantive
+review of the representative scanpaths.
