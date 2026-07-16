@@ -91,6 +91,7 @@ articles:
       - articles/scanpath-cluster-stability
       - articles/signal-preprocessing-workflow
       - articles/event-detector-comparison
+      - articles/event-detector-benchmarking
 
 reference:
   - title: Import, file checks, and master data
@@ -394,6 +395,10 @@ reference:
     - compare_gazepoint_event_detectors
     - summarise_gazepoint_event_detector_agreement
     - plot_gazepoint_event_detector_agreement
+    - create_gazepoint_event_review_template
+    - benchmark_gazepoint_event_detectors
+    - summarise_gazepoint_event_detector_benchmark
+    - plot_gazepoint_event_detector_benchmark
 
   - title: Example and simulated data
     desc: Synthetic data objects and simulation helpers for examples, vignettes, tests, and teaching.
