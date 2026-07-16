@@ -229,7 +229,7 @@ paper and report the package version used in the analysis.
 ### R package
 
 > Balaskas, S. (2026). `gp3tools`: Import, Inspect, Analyse, and Report
-> Gazepoint GP3 Exports. R package version 2.0.1.
+> Gazepoint GP3 Exports. R package version 2.1.0.
 > <https://github.com/stefanosbalaskas/gp3tools>
 
 The complete citation entries are available directly from R:

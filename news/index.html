@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">gp3tools</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.1.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -97,34 +97,41 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="2.0.1.9000" id="gp3tools-2019000">gp3tools 2.0.1.9000<a class="anchor" aria-label="anchor" href="#gp3tools-2019000"></a></h2>
+<h2 class="pkg-version" data-toc-text="2.1.0" id="gp3tools-210">gp3tools 2.1.0<a class="anchor" aria-label="anchor" href="#gp3tools-210"></a></h2>
 <div class="section level3">
-<h3 id="scanpath-cluster-stability-2-0-1-9000">Scanpath-cluster stability<a class="anchor" aria-label="anchor" href="#scanpath-cluster-stability-2-0-1-9000"></a></h3>
+<h3 id="release-overview-2-1-0">Release overview<a class="anchor" aria-label="anchor" href="#release-overview-2-1-0"></a></h3>
+<ul><li>This minor release consolidates signal preprocessing, event-detector comparison, advanced AOI assignment, and scanpath-cluster stability workflows.</li>
+<li>Added auditable orchestration, standardized detector-agreement outputs, base-R polygon and dynamic AOI geometry, and subsampling-based cluster diagnostics.</li>
+<li>Added four synthetic workflow articles, focused deterministic tests, curated reference topics, and README coverage.</li>
+<li>No new mandatory dependencies were introduced, and existing function behavior remains unchanged.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="scanpath-cluster-stability-2-1-0">Scanpath-cluster stability<a class="anchor" aria-label="anchor" href="#scanpath-cluster-stability-2-1-0"></a></h3>
 <ul><li>Added <code><a href="../reference/bootstrap_gazepoint_scanpath_clusters.html">bootstrap_gazepoint_scanpath_clusters()</a></code> for subsampling-based co-clustering, adjusted Rand, representative-scanpath, and linkage-sensitivity diagnostics.</li>
 <li>Added <code><a href="../reference/summarise_gazepoint_scanpath_cluster_stability.html">summarise_gazepoint_scanpath_cluster_stability()</a></code> and <code><a href="../reference/plot_gazepoint_scanpath_cluster_stability.html">plot_gazepoint_scanpath_cluster_stability()</a></code> for compact stability tables and base-R visual diagnostics.</li>
 <li>Added a synthetic scanpath-cluster stability article and focused tests.</li>
 </ul></div>
 <div class="section level3">
-<h3 id="advanced-aoi-assignment-2-0-1-9000">Advanced AOI assignment<a class="anchor" aria-label="anchor" href="#advanced-aoi-assignment-2-0-1-9000"></a></h3>
+<h3 id="advanced-aoi-assignment-2-1-0">Advanced AOI assignment<a class="anchor" aria-label="anchor" href="#advanced-aoi-assignment-2-1-0"></a></h3>
 <ul><li>Added <code><a href="../reference/add_gazepoint_polygon_aoi.html">add_gazepoint_polygon_aoi()</a></code> for base-R assignment of gaze samples to non-rectangular polygon AOIs.</li>
 <li>Added <code><a href="../reference/add_gazepoint_dynamic_aoi.html">add_gazepoint_dynamic_aoi()</a></code> for time-varying rectangular or polygonal AOIs with explicit definition-time matching.</li>
 <li>Added <code><a href="../reference/audit_gazepoint_dynamic_aoi_coverage.html">audit_gazepoint_dynamic_aoi_coverage()</a></code> for definition coverage, matching-gap, inside/outside, and missing-gaze diagnostics.</li>
 <li>Added a synthetic advanced AOI assignment article and focused tests.</li>
 </ul></div>
 <div class="section level3">
-<h3 id="event-detector-comparison-workflow-2-0-1-9000">Event-detector comparison workflow<a class="anchor" aria-label="anchor" href="#event-detector-comparison-workflow-2-0-1-9000"></a></h3>
+<h3 id="event-detector-comparison-workflow-2-1-0">Event-detector comparison workflow<a class="anchor" aria-label="anchor" href="#event-detector-comparison-workflow-2-1-0"></a></h3>
 <ul><li>Added <code><a href="../reference/compare_gazepoint_event_detectors.html">compare_gazepoint_event_detectors()</a></code> for standardized comparison of native velocity, HMM, and optional <a href="https://tombeesley.github.io/eyetools/" class="external-link">eyetools</a> event definitions.</li>
 <li>Added <code><a href="../reference/summarise_gazepoint_event_detector_agreement.html">summarise_gazepoint_event_detector_agreement()</a></code> and <code><a href="../reference/plot_gazepoint_event_detector_agreement.html">plot_gazepoint_event_detector_agreement()</a></code> for event counts, duration summaries, temporal overlap, unmatched events, and threshold sensitivity diagnostics.</li>
 <li>Added a synthetic event-detector comparison article and focused tests.</li>
 </ul></div>
 <div class="section level3">
-<h3 id="integrated-signal-preprocessing-workflow-2-0-1-9000">Integrated signal preprocessing workflow<a class="anchor" aria-label="anchor" href="#integrated-signal-preprocessing-workflow-2-0-1-9000"></a></h3>
+<h3 id="integrated-signal-preprocessing-workflow-2-1-0">Integrated signal preprocessing workflow<a class="anchor" aria-label="anchor" href="#integrated-signal-preprocessing-workflow-2-1-0"></a></h3>
 <ul><li>Added <code><a href="../reference/preprocess_gazepoint_signals.html">preprocess_gazepoint_signals()</a></code> as an auditable orchestration layer for blink detection and interpolation, binocular pupil fusion, pupil and coordinate smoothing, downsampling, and velocity-based fixation detection.</li>
 <li>The workflow preserves original columns and returns processed data, detected events, diagnostics, a decision log, and resolved settings.</li>
 <li>Added a synthetic signal-preprocessing workflow article and focused tests.</li>
 </ul></div>
 <div class="section level3">
-<h3 id="scanpath-clustering-2-0-1-9000">Scanpath clustering<a class="anchor" aria-label="anchor" href="#scanpath-clustering-2-0-1-9000"></a></h3>
+<h3 id="scanpath-clustering-2-1-0">Scanpath clustering<a class="anchor" aria-label="anchor" href="#scanpath-clustering-2-1-0"></a></h3>
 <ul><li><p>Added <code><a href="../reference/select_gazepoint_scanpath_clusters.html">select_gazepoint_scanpath_clusters()</a></code> for comparing candidate cluster counts using mean silhouette width.</p></li>
 <li><p>Added <code><a href="../reference/extract_gazepoint_representative_scanpaths.html">extract_gazepoint_representative_scanpaths()</a></code> for selecting central observed scanpaths within fitted clusters.</p></li>
 <li><p>Added <code><a href="../reference/plot_gazepoint_scanpath_clusters.html">plot_gazepoint_scanpath_clusters()</a></code> for base-R dendrogram, MDS, and silhouette diagnostics.</p></li>
@@ -133,7 +140,7 @@
 <li><p>Added base-R hierarchical clustering and optional PAM clustering through the suggested <a href="https://svn.r-project.org/R-packages/trunk/cluster/" class="external-link">cluster</a> package, with cluster assignments, medoids, and silhouette diagnostics.</p></li>
 </ul></div>
 <div class="section level3">
-<h3 id="high-priority-signal-preprocessing-and-feature-engineering-2-0-1-9000">High-priority signal preprocessing and feature engineering<a class="anchor" aria-label="anchor" href="#high-priority-signal-preprocessing-and-feature-engineering-2-0-1-9000"></a></h3>
+<h3 id="high-priority-signal-preprocessing-and-feature-engineering-2-1-0">High-priority signal preprocessing and feature engineering<a class="anchor" aria-label="anchor" href="#high-priority-signal-preprocessing-and-feature-engineering-2-1-0"></a></h3>
 <ul><li>Added <code><a href="../reference/detect_gazepoint_fixations_velocity.html">detect_gazepoint_fixations_velocity()</a></code> for event-level velocity-threshold fixation extraction.</li>
 <li>Added <code><a href="../reference/detect_gazepoint_blinks.html">detect_gazepoint_blinks()</a></code> and <code><a href="../reference/interpolate_gazepoint_blinks.html">interpolate_gazepoint_blinks()</a></code> for blink-aware pupil processing.</li>
 <li>Added <code><a href="../reference/mean_gazepoint_pupil.html">mean_gazepoint_pupil()</a></code>, <code><a href="../reference/regress_gazepoint_pupils.html">regress_gazepoint_pupils()</a></code>, and <code><a href="../reference/downsample_gazepoint_pupil.html">downsample_gazepoint_pupil()</a></code> for binocular pupil processing.</li>
