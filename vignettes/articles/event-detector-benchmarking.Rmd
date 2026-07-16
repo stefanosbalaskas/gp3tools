@@ -1,0 +1,282 @@
+---
+title: "Benchmarking gaze-event detectors against reviewed intervals"
+output:
+  rmarkdown::html_vignette:
+    toc: true
+    fig_width: 7
+    fig_height: 4.5
+vignette: >
+  %\VignetteIndexEntry{Benchmarking gaze-event detectors against reviewed intervals}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+library(gp3tools)
+
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.align = "center"
+)
+```
+
+## Purpose
+
+Event detectors can disagree because they use different definitions, thresholds,
+and model assumptions. `gp3tools` therefore separates two questions:
+
+1. How do detector outputs agree with one another?
+2. How closely does each detector reproduce a specified set of reviewed or
+   synthetic reference intervals?
+
+The first question is addressed by `compare_gazepoint_event_detectors()`. This
+article addresses the second with:
+
+- `create_gazepoint_event_review_template()`;
+- `benchmark_gazepoint_event_detectors()`;
+- `summarise_gazepoint_event_detector_benchmark()`;
+- `plot_gazepoint_event_detector_benchmark()`.
+
+The reviewed intervals are a reference standard for a particular audit, not a
+claim that one event definition is universally correct.
+
+## Synthetic trace with known fixation intervals
+
+The example below creates three stable gaze periods separated by rapid
+transitions. The reference table records the intervals used to generate the
+trace.
+
+```{r synthetic-data}
+set.seed(20260716)
+
+sample_rate <- 100
+sample_time <- seq(0, 2.39, by = 1 / sample_rate)
+
+x <- c(
+  rep(0.20, 80),
+  seq(0.20, 0.50, length.out = 10),
+  rep(0.50, 70),
+  seq(0.50, 0.80, length.out = 10),
+  rep(0.80, 70)
+)
+
+gaze <- data.frame(
+  USER_ID = "P01",
+  trial = "T01",
+  TIME = sample_time,
+  FPOGX = x + rnorm(length(x), sd = 0.0015),
+  FPOGY = 0.50 + rnorm(length(x), sd = 0.0015)
+)
+
+reviewed <- data.frame(
+  USER_ID = "P01",
+  trial = "T01",
+  review_event_id = 1:3,
+  start_time = c(0.00, 0.90, 1.70),
+  end_time = c(0.79, 1.59, 2.39),
+  event_type = "fixation",
+  review_status = "accepted"
+)
+
+head(gaze)
+reviewed
+```
+
+A simple trace plot helps verify that the reviewed intervals correspond to the
+intended stable periods.
+
+```{r synthetic-trace, fig.cap="Synthetic gaze trace and reviewed fixation intervals."}
+plot(
+  gaze$TIME,
+  gaze$FPOGX,
+  type = "l",
+  xlab = "Time (s)",
+  ylab = "Horizontal gaze coordinate",
+  main = "Synthetic fixation and transition structure"
+)
+
+for (i in seq_len(nrow(reviewed))) {
+  rect(
+    reviewed$start_time[i],
+    par("usr")[3],
+    reviewed$end_time[i],
+    par("usr")[4],
+    border = NA,
+    density = 12,
+    angle = 45
+  )
+}
+
+lines(gaze$TIME, gaze$FPOGX)
+```
+
+## Run native velocity, HMM, and optional external branches
+
+The comparison layer runs all requested methods on the same sample-level data.
+The optional external branch is recorded as disabled unless explicitly enabled
+and `{eyetools}` is installed.
+
+```{r detector-comparison}
+comparison <- compare_gazepoint_event_detectors(
+  gaze,
+  trial_col = "trial",
+  methods = c("velocity", "hmm", "eyetools"),
+  velocity_thresholds = c(5, 10, 20),
+  min_duration = 50,
+  hmm_states = 3,
+  run_optional_eyetools = FALSE
+)
+
+comparison$runs
+comparison$detector_summary
+```
+
+Detector failures do not discard successful branches. The benchmark uses only
+successful detector outputs retained in the comparison object.
+
+## Benchmark against the synthetic reference
+
+```{r benchmark}
+benchmark <- benchmark_gazepoint_event_detectors(
+  comparison,
+  reviewed,
+  min_overlap = 0.50,
+  time_unit = "seconds"
+)
+
+summarise_gazepoint_event_detector_benchmark(
+  benchmark,
+  level = "detector"
+)
+```
+
+The detector-level table reports:
+
+- reviewed and detected event counts;
+- true positives, false positives, and false negatives;
+- precision, recall, and F1;
+- matched-event intersection-over-union;
+- onset, offset, and duration error in milliseconds;
+- detected-minus-reviewed count bias.
+
+Matching is one-to-one within each participant/trial sequence. Candidate pairs
+are ordered by decreasing interval intersection-over-union and retained only
+when neither event has already been matched.
+
+## Inspect sequence-level and event-level diagnostics
+
+```{r detailed-results}
+head(
+  summarise_gazepoint_event_detector_benchmark(
+    benchmark,
+    level = "sequence"
+  )
+)
+
+head(
+  summarise_gazepoint_event_detector_benchmark(
+    benchmark,
+    level = "matches"
+  )
+)
+
+summarise_gazepoint_event_detector_benchmark(
+  benchmark,
+  level = "errors"
+)
+```
+
+The unmatched-event table distinguishes false positives from false negatives,
+which is useful when reviewing threshold sensitivity or detector-specific
+failure modes.
+
+## Plot benchmark diagnostics
+
+```{r benchmark-f1, fig.cap="Event-level F1 scores against the reviewed intervals."}
+plot_gazepoint_event_detector_benchmark(
+  benchmark,
+  plot = "f1"
+)
+```
+
+```{r benchmark-pr, fig.cap="Precision and recall against the reviewed intervals."}
+plot_gazepoint_event_detector_benchmark(
+  benchmark,
+  plot = "precision_recall"
+)
+```
+
+```{r benchmark-overlap, fig.cap="Mean interval overlap among matched events."}
+plot_gazepoint_event_detector_benchmark(
+  benchmark,
+  plot = "overlap"
+)
+```
+
+```{r benchmark-timing, fig.cap="Absolute onset, offset, and duration errors."}
+plot_gazepoint_event_detector_benchmark(
+  benchmark,
+  plot = "timing_error"
+)
+```
+
+## Prepare manually reviewed data
+
+Create a CSV-ready template from the sample-level data. One placeholder row is
+created per sequence by default; reviewers can duplicate rows for additional
+fixations.
+
+```{r review-template}
+review_template <- create_gazepoint_event_review_template(
+  gaze,
+  trial_col = "trial",
+  rows_per_sequence = 1,
+  reviewer = "reviewer_1"
+)
+
+review_template
+```
+
+A real review workflow can keep the annotation file outside the package
+repository:
+
+```{r manual-review-files, eval=FALSE}
+write.csv(
+  review_template,
+  "C:/path/outside/repository/event_review.csv",
+  row.names = FALSE
+)
+
+reviewed_real <- read.csv(
+  "C:/path/outside/repository/event_review.csv",
+  stringsAsFactors = FALSE
+)
+
+benchmark_real <- benchmark_gazepoint_event_detectors(
+  comparison_real,
+  reviewed_real,
+  min_overlap = 0.50,
+  time_unit = "seconds"
+)
+```
+
+For each accepted event, fill `start_time` and `end_time`, preserve the sequence
+identifiers, and set `review_status` to `"accepted"`. Pending or rejected rows
+are excluded from the benchmark.
+
+## Recommended reporting
+
+A transparent methods supplement should report:
+
+- how reviewed intervals were produced;
+- the number of reviewers and any adjudication procedure;
+- the overlap threshold used for matching;
+- detector settings and sampling rate;
+- precision, recall, F1, overlap, and timing error;
+- the number and type of failed or skipped detector runs;
+- whether conclusions changed across plausible detector definitions.
+
+Benchmark results support sensitivity assessment. They should not be used to
+claim that a detector uniquely identifies cognitive states or exact mental-event
+onsets.

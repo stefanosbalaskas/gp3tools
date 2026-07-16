@@ -1,3 +1,25 @@
+# gp3tools 2.1.0.9000
+
+## Event-detector benchmarking
+
+* Added `create_gazepoint_event_review_template()` for CSV-ready
+  participant/trial event-annotation templates.
+* Added `benchmark_gazepoint_event_detectors()` for one-to-one
+  comparison of standardized detector events with synthetic or manually
+  reviewed reference intervals.
+* Added detector-, sequence-, match-, and error-level summaries covering
+  precision, recall, F1, interval overlap, timing error, and event-count
+  bias, together with base-R diagnostic plots.
+* Added a synthetic benchmarking article and focused deterministic tests.
+
+## Post-2.1.0 validation and interoperability
+
+* Started the post-release validation cycle covering event-detector
+  benchmarking, large-export performance, gpbiometrics interoperability,
+  API naming consistency, and user-feedback collection.
+* Bayesian and machine-learning orchestration remain outside the core
+  package unless supported by a clearly defined validation use case.
+
 # gp3tools 2.1.0
 
 ## Release overview
