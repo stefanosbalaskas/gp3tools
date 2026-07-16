@@ -2,6 +2,21 @@
 
 ## gp3tools 2.0.1.9000
 
+### Advanced AOI assignment
+
+- Added
+  [`add_gazepoint_polygon_aoi()`](https://stefanosbalaskas.github.io/gp3tools/reference/add_gazepoint_polygon_aoi.md)
+  for base-R assignment of gaze samples to non-rectangular polygon AOIs.
+- Added
+  [`add_gazepoint_dynamic_aoi()`](https://stefanosbalaskas.github.io/gp3tools/reference/add_gazepoint_dynamic_aoi.md)
+  for time-varying rectangular or polygonal AOIs with explicit
+  definition-time matching.
+- Added
+  [`audit_gazepoint_dynamic_aoi_coverage()`](https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_dynamic_aoi_coverage.md)
+  for definition coverage, matching-gap, inside/outside, and
+  missing-gaze diagnostics.
+- Added a synthetic advanced AOI assignment article and focused tests.
+
 ### Event-detector comparison workflow
 
 - Added

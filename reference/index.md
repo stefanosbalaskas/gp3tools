@@ -120,6 +120,12 @@ stimulus-layout quality.
   : Plot AOI geometry for visual verification
 - [`plot_gazepoint_stimulus_layout_qc()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_stimulus_layout_qc.md)
   : Plot stimulus-layout quality control
+- [`add_gazepoint_polygon_aoi()`](https://stefanosbalaskas.github.io/gp3tools/reference/add_gazepoint_polygon_aoi.md)
+  : Add polygon AOI membership to Gazepoint data
+- [`add_gazepoint_dynamic_aoi()`](https://stefanosbalaskas.github.io/gp3tools/reference/add_gazepoint_dynamic_aoi.md)
+  : Add time-varying AOI membership to Gazepoint data
+- [`audit_gazepoint_dynamic_aoi_coverage()`](https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_dynamic_aoi_coverage.md)
+  : Audit time-varying AOI coverage
 
 ## Pupil preprocessing, audits, and windows
 

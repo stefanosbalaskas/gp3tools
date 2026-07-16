@@ -34,6 +34,8 @@
   bundle](https://stefanosbalaskas.github.io/gp3tools/articles/qc-reporting-bundle.md):
 - [Stimulus-layout quality
   control](https://stefanosbalaskas.github.io/gp3tools/articles/stimulus-layout-qc.md):
+- [Advanced static and dynamic AOI
+  assignment](https://stefanosbalaskas.github.io/gp3tools/articles/advanced-aoi-assignment.md):
 - [Scanpath and quality-control quick
   wins](https://stefanosbalaskas.github.io/gp3tools/articles/scanpath-qc-quick-wins.md):
 

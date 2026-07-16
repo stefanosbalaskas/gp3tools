@@ -2,6 +2,7 @@
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/404.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/CONTRIBUTING.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/LICENSE-text.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/advanced-aoi-assignment.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/aoi-modelling-workflow.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/aoi-window-feature-engineering.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/aoi_workflow.html</loc></url>
@@ -45,6 +46,8 @@
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/index.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/news/index.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/add_gazepoint_aoi.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/add_gazepoint_dynamic_aoi.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/add_gazepoint_polygon_aoi.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/analyze_gazepoint_window.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/as_gazepoint_master.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_aoi_coding_matrix.html</loc></url>
@@ -55,6 +58,7 @@
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_aoi_window_denominators.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_condition_quality_imbalance.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_design_balance.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_dynamic_aoi_coverage.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_event_sync.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_exclusion_flow.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_face_quality.html</loc></url>

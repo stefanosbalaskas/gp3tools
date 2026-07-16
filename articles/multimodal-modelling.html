@@ -64,6 +64,7 @@
     <li><a class="dropdown-item" href="../articles/phase-segmentation-reporting.html">Task-phase segmentation and coverage reporting</a></li>
     <li><a class="dropdown-item" href="../articles/qc-reporting-bundle.html">QC reporting bundle</a></li>
     <li><a class="dropdown-item" href="../articles/stimulus-layout-qc.html">Stimulus-layout quality control</a></li>
+    <li><a class="dropdown-item" href="../articles/advanced-aoi-assignment.html">Advanced static and dynamic AOI assignment</a></li>
     <li><a class="dropdown-item" href="../articles/scanpath-qc-quick-wins.html">Scanpath and quality-control quick wins</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Plots and diagnostics</h6></li>
@@ -282,7 +283,7 @@ omitted, the helper uses <code><a href="https://rdrr.io/r/stats/lm.html" class="
 <span></span>
 <span><span class="va">face_fit</span><span class="op">$</span><span class="va">formula</span></span>
 <span><span class="co">#&gt; rating ~ AU04_r_mean_z + AU12_r_mean_z</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x55c58e259ac8&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt; &lt;environment: 0x55d4d04e3a18&gt;</span></span></code></pre></div>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">face_fit</span><span class="op">$</span><span class="va">model</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -330,7 +331,7 @@ response predictors.</p>
 <span><span class="va">multi_fit</span><span class="op">$</span><span class="va">formula</span></span>
 <span><span class="co">#&gt; rating ~ AU04_r_mean_z + AU12_r_mean_z + claim_dwell_time_z + </span></span>
 <span><span class="co">#&gt;     pupil_mean_z</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x55c58ebc6620&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt; &lt;environment: 0x55d4d1029480&gt;</span></span></code></pre></div>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">multi_fit</span><span class="op">$</span><span class="va">model</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -370,7 +371,7 @@ linear model unless random effects are requested.</p>
 <span></span>
 <span><span class="va">choice_fit</span><span class="op">$</span><span class="va">formula</span></span>
 <span><span class="co">#&gt; choice ~ AU12_r_mean_z + claim_dwell_time_z</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x55c58f655f48&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt; &lt;environment: 0x55d4d192d810&gt;</span></span></code></pre></div>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">choice_fit</span><span class="op">$</span><span class="va">model</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>

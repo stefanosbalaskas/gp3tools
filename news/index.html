@@ -43,6 +43,7 @@
     <li><a class="dropdown-item" href="../articles/phase-segmentation-reporting.html">Task-phase segmentation and coverage reporting</a></li>
     <li><a class="dropdown-item" href="../articles/qc-reporting-bundle.html">QC reporting bundle</a></li>
     <li><a class="dropdown-item" href="../articles/stimulus-layout-qc.html">Stimulus-layout quality control</a></li>
+    <li><a class="dropdown-item" href="../articles/advanced-aoi-assignment.html">Advanced static and dynamic AOI assignment</a></li>
     <li><a class="dropdown-item" href="../articles/scanpath-qc-quick-wins.html">Scanpath and quality-control quick wins</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Plots and diagnostics</h6></li>
@@ -96,6 +97,13 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="2.0.1.9000" id="gp3tools-2019000">gp3tools 2.0.1.9000<a class="anchor" aria-label="anchor" href="#gp3tools-2019000"></a></h2>
+<div class="section level3">
+<h3 id="advanced-aoi-assignment-2-0-1-9000">Advanced AOI assignment<a class="anchor" aria-label="anchor" href="#advanced-aoi-assignment-2-0-1-9000"></a></h3>
+<ul><li>Added <code><a href="../reference/add_gazepoint_polygon_aoi.html">add_gazepoint_polygon_aoi()</a></code> for base-R assignment of gaze samples to non-rectangular polygon AOIs.</li>
+<li>Added <code><a href="../reference/add_gazepoint_dynamic_aoi.html">add_gazepoint_dynamic_aoi()</a></code> for time-varying rectangular or polygonal AOIs with explicit definition-time matching.</li>
+<li>Added <code><a href="../reference/audit_gazepoint_dynamic_aoi_coverage.html">audit_gazepoint_dynamic_aoi_coverage()</a></code> for definition coverage, matching-gap, inside/outside, and missing-gaze diagnostics.</li>
+<li>Added a synthetic advanced AOI assignment article and focused tests.</li>
+</ul></div>
 <div class="section level3">
 <h3 id="event-detector-comparison-workflow-2-0-1-9000">Event-detector comparison workflow<a class="anchor" aria-label="anchor" href="#event-detector-comparison-workflow-2-0-1-9000"></a></h3>
 <ul><li>Added <code><a href="../reference/compare_gazepoint_event_detectors.html">compare_gazepoint_event_detectors()</a></code> for standardized comparison of native velocity, HMM, and optional <a href="https://tombeesley.github.io/eyetools/" class="external-link">eyetools</a> event definitions.</li>
