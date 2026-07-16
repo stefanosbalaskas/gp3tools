@@ -77,6 +77,7 @@
     <li><a class="dropdown-item" href="../articles/binocular-pupil-processing.html">Binocular Pupil Fusion and Downsampling</a></li>
     <li><a class="dropdown-item" href="../articles/aoi-window-feature-engineering.html">AOI Labelling, Sliding Windows, and Fixation Simulation</a></li>
     <li><a class="dropdown-item" href="../articles/scanpath-clustering-workflow.html">Scanpath clustering, selection, and visual diagnostics</a></li>
+    <li><a class="dropdown-item" href="../articles/scanpath-cluster-stability.html">Scanpath-cluster stability and sensitivity</a></li>
     <li><a class="dropdown-item" href="../articles/signal-preprocessing-workflow.html">Integrated signal-preprocessing workflow</a></li>
     <li><a class="dropdown-item" href="../articles/event-detector-comparison.html">Event-detector comparison workflow</a></li>
   </ul></li>
@@ -97,6 +98,12 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="2.0.1.9000" id="gp3tools-2019000">gp3tools 2.0.1.9000<a class="anchor" aria-label="anchor" href="#gp3tools-2019000"></a></h2>
+<div class="section level3">
+<h3 id="scanpath-cluster-stability-2-0-1-9000">Scanpath-cluster stability<a class="anchor" aria-label="anchor" href="#scanpath-cluster-stability-2-0-1-9000"></a></h3>
+<ul><li>Added <code><a href="../reference/bootstrap_gazepoint_scanpath_clusters.html">bootstrap_gazepoint_scanpath_clusters()</a></code> for subsampling-based co-clustering, adjusted Rand, representative-scanpath, and linkage-sensitivity diagnostics.</li>
+<li>Added <code><a href="../reference/summarise_gazepoint_scanpath_cluster_stability.html">summarise_gazepoint_scanpath_cluster_stability()</a></code> and <code><a href="../reference/plot_gazepoint_scanpath_cluster_stability.html">plot_gazepoint_scanpath_cluster_stability()</a></code> for compact stability tables and base-R visual diagnostics.</li>
+<li>Added a synthetic scanpath-cluster stability article and focused tests.</li>
+</ul></div>
 <div class="section level3">
 <h3 id="advanced-aoi-assignment-2-0-1-9000">Advanced AOI assignment<a class="anchor" aria-label="anchor" href="#advanced-aoi-assignment-2-0-1-9000"></a></h3>
 <ul><li>Added <code><a href="../reference/add_gazepoint_polygon_aoi.html">add_gazepoint_polygon_aoi()</a></code> for base-R assignment of gaze samples to non-rectangular polygon AOIs.</li>

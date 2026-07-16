@@ -2,6 +2,20 @@
 
 ## gp3tools 2.0.1.9000
 
+### Scanpath-cluster stability
+
+- Added
+  [`bootstrap_gazepoint_scanpath_clusters()`](https://stefanosbalaskas.github.io/gp3tools/reference/bootstrap_gazepoint_scanpath_clusters.md)
+  for subsampling-based co-clustering, adjusted Rand,
+  representative-scanpath, and linkage-sensitivity diagnostics.
+- Added
+  [`summarise_gazepoint_scanpath_cluster_stability()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarise_gazepoint_scanpath_cluster_stability.md)
+  and
+  [`plot_gazepoint_scanpath_cluster_stability()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_scanpath_cluster_stability.md)
+  for compact stability tables and base-R visual diagnostics.
+- Added a synthetic scanpath-cluster stability article and focused
+  tests.
+
 ### Advanced AOI assignment
 
 - Added

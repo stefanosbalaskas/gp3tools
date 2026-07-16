@@ -288,6 +288,12 @@ and sequence reliability.
   : Extract representative scanpaths
 - [`plot_gazepoint_scanpath_clusters()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_scanpath_clusters.md)
   : Plot fitted scanpath clusters
+- [`bootstrap_gazepoint_scanpath_clusters()`](https://stefanosbalaskas.github.io/gp3tools/reference/bootstrap_gazepoint_scanpath_clusters.md)
+  : Bootstrap scanpath-cluster stability
+- [`summarise_gazepoint_scanpath_cluster_stability()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarise_gazepoint_scanpath_cluster_stability.md)
+  : Summarise scanpath-cluster stability
+- [`plot_gazepoint_scanpath_cluster_stability()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_scanpath_cluster_stability.md)
+  : Plot scanpath-cluster stability
 - [`compute_gazepoint_sequence_recurrence()`](https://stefanosbalaskas.github.io/gp3tools/reference/compute_gazepoint_sequence_recurrence.md)
   : Compute simple categorical sequence recurrence metrics
 - [`compute_gazepoint_saccade_metrics()`](https://stefanosbalaskas.github.io/gp3tools/reference/compute_gazepoint_saccade_metrics.md)
