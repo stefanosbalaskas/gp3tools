@@ -1,4 +1,4 @@
-# gp3tools 2.1.0.9000
+# gp3tools 2.2.0
 
 ## User-facing naming policy
 

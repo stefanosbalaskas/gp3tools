@@ -12,7 +12,7 @@ gp3tools_naming_policy <- function() {
       language = "British English",
       canonical_prefix = "summarise_",
       compatibility_prefix = "summarize_",
-      effective_development_version = "2.1.0.9000",
+      effective_development_version = "2.2.0",
       rules = data.frame(
         rule = c(
           "new_summary_helpers",
