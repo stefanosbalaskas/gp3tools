@@ -1,5 +1,18 @@
 # gp3tools 2.1.0.9000
 
+## gpbiometrics integration workflow
+
+* Added `prepare_gazepoint_gpbiometrics_bridge()` for standardizing
+  gaze outputs into participant, trial, time, coordinate, AOI, pupil,
+  and validity fields suitable for cross-package synchronization.
+* Added `run_gazepoint_gpbiometrics_workflow()` for native nearest-time
+  alignment of gaze and biometric signals, with configurable timing
+  tolerance, unmatched-row handling, signal summaries, and an optional
+  external adapter contract.
+* Added `create_gazepoint_cross_package_report()` for compact alignment
+  reporting with explicit interpretation guardrails.
+* Added dependency-free focused tests and a synthetic workflow article.
+
 ## Large-export performance benchmarking
 
 * Added `gp3tools_performance_limits()` for explicit, configurable

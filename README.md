@@ -2061,3 +2061,25 @@ regression limits and `write_gazepoint_performance_benchmark()` to
 export the resulting audit tables. Performance depends on hardware,
 software versions, file structure, and selected operations; the limits
 are configurable regression guards rather than universal guarantees.
+
+## gpbiometrics integration
+
+`gp3tools` includes a dependency-free synchronization layer for combining
+standardized gaze samples with time-aligned biometric signal tables.
+
+```r
+workflow <- run_gazepoint_gpbiometrics_workflow(
+  gaze_data = gaze_data,
+  biometrics_data = biometrics_data,
+  signal_cols = c("GSR", "HR"),
+  tolerance_s = 0.01
+)
+
+workflow$audit
+workflow$signal_summary
+```
+
+The workflow reports matching coverage and timing differences and supports
+an optional external adapter. Its signal summaries describe recorded
+measurements and temporal alignment; they do not independently establish
+emotion, stress, preference, cognition, comprehension, or diagnosis.
