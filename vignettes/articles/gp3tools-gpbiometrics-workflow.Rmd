@@ -1,0 +1,105 @@
+---
+title: "gp3tools to gpbiometrics workflow"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{gp3tools to gpbiometrics workflow}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+library(gp3tools)
+```
+
+## Workflow
+
+The integration contract is:
+
+```text
+gp3tools gaze import and QC
+  -> standardized gaze/master output
+  -> gpbiometrics biometric import and preprocessing
+  -> timestamp alignment
+  -> AOI/event-contingent biometric summaries
+  -> combined audit and report
+```
+
+The bridge does not infer emotion, stress, preference, cognition,
+comprehension, health status, or diagnosis.
+
+## Prepare gp3tools gaze output
+
+```{r}
+gaze <- data.frame(
+  USER_ID = rep("P01", 6),
+  MEDIA_ID = rep("T01", 6),
+  MSTIMER = seq(0, 100, by = 20),
+  BPOGX = c(0.2, 0.3, 0.4, 0.7, 0.8, 0.9),
+  BPOGY = c(0.4, 0.4, 0.5, 0.5, 0.6, 0.6),
+  BPOGV = 1,
+  AOI = c("claim", "claim", "claim", "evidence", "evidence", "evidence"),
+  LPD = c(3.10, 3.12, 3.11, 3.15, 3.16, 3.17)
+)
+
+gaze_bridge <- prepare_gazepoint_gpbiometrics_bridge(gaze)
+gaze_bridge
+```
+
+In a real project, `gaze` would normally be produced by
+`read_gazepoint_folder()` and `create_gazepoint_master()` after gp3tools QC.
+
+## Connect biometric output
+
+The following data frame represents the stable table returned after
+gpbiometrics import and preprocessing:
+
+```{r}
+biometrics <- data.frame(
+  participant_id = rep("P01", 6),
+  trial_id = rep("T01", 6),
+  time_s = seq(0.001, 0.101, by = 0.02),
+  GSR = c(1.00, 1.02, 1.03, 1.06, 1.05, 1.07),
+  HR = c(70, 70, 71, 72, 72, 73),
+  event = c("trial_start", "", "", "cta", "", "trial_end")
+)
+```
+
+A real gpbiometrics import can be substituted directly:
+
+```{r, eval=FALSE}
+biometrics <- getExportedValue(
+  "gpbiometrics",
+  "import_gazepoint_biometrics"
+)("path/to/biometric_export.csv")
+```
+
+## Synchronize and summarise
+
+```{r}
+workflow <- run_gazepoint_gpbiometrics_workflow(
+  gaze_bridge,
+  biometrics,
+  signal_cols = c("GSR", "HR"),
+  event_col = "event",
+  tolerance_s = 0.01
+)
+
+workflow
+workflow$audit
+workflow$signal_summary
+```
+
+The native engine performs an explicit nearest-timestamp match within
+participant and trial. A study-specific or gpbiometrics adapter can be supplied
+through the `adapter` argument and is tested through the same return contract.
+
+## Combined report
+
+```{r}
+report <- create_gazepoint_cross_package_report(workflow)
+cat(report, sep = "\n")
+```
+
+The report records match coverage and timing error before any substantive
+interpretation.

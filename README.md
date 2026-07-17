@@ -97,7 +97,7 @@ Use `summarize_gazepoint_missingness()`, `segment_gazepoint_task_phases()`, `col
 | Summarise missingness and task-phase coverage | `summarize_gazepoint_missingness()`, `plot_gazepoint_missingness_profile()`, `report_gazepoint_missingness()`, `segment_gazepoint_task_phases()`, `summarize_gazepoint_phase_coverage()`, `plot_gazepoint_phase_timeline()` |
 | Collect QC outputs for reporting | `collect_gazepoint_qc_summaries()`, `summarize_gazepoint_qc_status()`, `report_gazepoint_qc_overview()`, `plot_gazepoint_qc_overview()` |
 | Preprocess pupil data | `flag_gazepoint_pupil()`, `flag_gazepoint_pupil_artifacts()`, `flag_gazepoint_pupil_hampel()`, `interpolate_gazepoint_pupil()`, `smooth_gazepoint_pupil()`, `baseline_correct_gazepoint_pupil()`, `preprocess_gazepoint_signals()` |
-| Compare gaze-event detectors | `compare_gazepoint_event_detectors()`, `summarise_gazepoint_event_detector_agreement()`, `plot_gazepoint_event_detector_agreement()` |
+| Compare and benchmark gaze-event detectors | `compare_gazepoint_event_detectors()`, `summarise_gazepoint_event_detector_agreement()`, `plot_gazepoint_event_detector_agreement()`, `create_gazepoint_event_review_template()`, `benchmark_gazepoint_event_detectors()`, `summarise_gazepoint_event_detector_benchmark()`, `plot_gazepoint_event_detector_benchmark()` |
 | Audit pupil reliability and preprocessing choices | `audit_gazepoint_pupil_gaps()`, `audit_gazepoint_pupil_baseline()`, `audit_gazepoint_pupil_drift()`, `audit_gazepoint_pupil_reliability()`, `audit_gazepoint_pupil_overlap_risk()` |
 | Summarise and model pupil outcomes | `summarise_gazepoint_pupil()`, `summarise_gazepoint_pupil_windows()`, `summarise_gazepoint_pupil_trial_features()`, `fit_gazepoint_pupil_window_lmm()`, `fit_gazepoint_pupil_gamm()` |
 | Summarise AOI behaviour | `summarise_gazepoint_aoi_windows()`, `summarise_gazepoint_aoi_entries()`, `summarise_gazepoint_aoi_trial_features()`, `summarise_gazepoint_fixation_trials()` |
@@ -2036,3 +2036,68 @@ Use these objects when you want to try core workflows without first importing pr
 ## Important note
 
 `gp3tools` can parse official Gazepoint Analysis summary exports, but metrics recomputed from all-gaze and fixation files may not always exactly reproduce Gazepoint’s internal summary calculations. For official Gazepoint summary values, use `read_gazepoint_summary()`. For transparent reproducible calculations from exported rows, use the sample-level and fixation-level summary functions.
+
+## Large-export performance benchmarking
+
+`gp3tools` includes an auditable framework for measuring selected
+operations across synthetic export sizes and file counts.
+
+```r
+performance <- benchmark_gazepoint_export_performance(
+  scales = data.frame(
+    total_rows = c(10000L, 50000L),
+    n_files = c(1L, 4L)
+  ),
+  operations = c("generate", "import"),
+  trials = 3L
+)
+
+performance$summary
+performance$regression$overall
+```
+
+Use `gp3tools_performance_limits()` to inspect or customize the
+regression limits and `write_gazepoint_performance_benchmark()` to
+export the resulting audit tables. Performance depends on hardware,
+software versions, file structure, and selected operations; the limits
+are configurable regression guards rather than universal guarantees.
+
+## gpbiometrics integration
+
+`gp3tools` includes a dependency-free synchronization layer for combining
+standardized gaze samples with time-aligned biometric signal tables.
+
+```r
+workflow <- run_gazepoint_gpbiometrics_workflow(
+  gaze_data = gaze_data,
+  biometrics_data = biometrics_data,
+  signal_cols = c("GSR", "HR"),
+  tolerance_s = 0.01
+)
+
+workflow$audit
+workflow$signal_summary
+```
+
+The workflow reports matching coverage and timing differences and supports
+an optional external adapter. Its signal summaries describe recorded
+measurements and temporal alignment; they do not independently establish
+emotion, stress, preference, cognition, comprehension, or diagnosis.
+
+## User-facing naming policy
+
+`gp3tools` uses British English `summarise_*` names as the canonical
+spelling for new user-facing summary helpers. Existing American English
+`summarize_*` exports remain available for backward compatibility.
+
+```r
+policy <- gp3tools_naming_policy()
+audit <- audit_gazepoint_naming_consistency()
+
+policy$rules
+audit$summary
+```
+
+Compatibility aliases call the same underlying analytical implementation;
+they do not alter calculations or remove established function names.
+The complete policy is documented in `NAMING_CONVENTIONS.md`.

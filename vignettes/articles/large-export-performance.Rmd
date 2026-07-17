@@ -1,0 +1,80 @@
+---
+title: "Large-export performance benchmarking"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Large-export performance benchmarking}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+library(gp3tools)
+```
+
+## Purpose
+
+This workflow measures elapsed time, approximate R-heap growth, output size,
+and empirical scaling across increasing Gazepoint export sizes. It is a
+regression framework rather than a hardware-independent speed claim.
+
+```{r}
+gp3tools_performance_limits()
+```
+
+The default limits are deliberately conservative. Projects can supply a
+machine-specific baseline and stricter ratio limits after collecting stable
+measurements on the same system.
+
+## Fast contract run
+
+A small run verifies the complete benchmark contract without slowing package
+checks.
+
+```{r}
+small <- benchmark_gazepoint_export_performance(
+  scales = data.frame(
+    total_rows = c(1000L, 5000L),
+    n_files = c(1L, 2L)
+  ),
+  operations = "generate",
+  trials = 1L
+)
+
+small$summary
+small$regression$overall
+```
+
+## Large-export profile
+
+The installed script uses 60,000, 240,000, and 960,000 rows distributed across
+1, 4, and 16 files, respectively. Run it outside ordinary R CMD checks:
+
+```{r, eval=FALSE}
+source(
+  system.file(
+    "benchmarks",
+    "run-large-export-performance.R",
+    package = "gp3tools"
+  )
+)
+```
+
+On Windows CMD, set `GP3TOOLS_BENCHMARK_OUTPUT` to an external folder before
+running the script. Benchmark outputs should not be committed when they contain
+machine-specific paths or private export data.
+
+## Baseline-relative regression checks
+
+A saved result can be used as a baseline:
+
+```{r, eval=FALSE}
+current_audit <- check_gazepoint_performance_regression(
+  current_benchmark,
+  baseline = previous_benchmark,
+  elapsed_ratio_limit = 1.25,
+  memory_ratio_limit = 1.25
+)
+```
+
+Absolute and baseline-relative failures remain visible in the audit table.

@@ -16,3 +16,4 @@
 ^CONTRIBUTING\.md$
 ^gp3tools_[0-9.]+\.tar\.gz$
 ^gp3tools\.Rcheck$
+^NAMING_CONVENTIONS\.md$

@@ -90,7 +90,11 @@ articles:
       - articles/scanpath-clustering-workflow
       - articles/scanpath-cluster-stability
       - articles/signal-preprocessing-workflow
+      - articles/large-export-performance
+      - articles/gp3tools-gpbiometrics-workflow
+      - articles/naming-policy
       - articles/event-detector-comparison
+      - articles/event-detector-benchmarking
 
 reference:
   - title: Import, file checks, and master data
@@ -367,6 +371,21 @@ reference:
     - summarise_gazepoint_markovchain
     - summarise_gazepoint_semimarkov
     - export_gazepoint_to_bids
+    - prepare_gazepoint_gpbiometrics_bridge
+    - run_gazepoint_gpbiometrics_workflow
+    - create_gazepoint_cross_package_report
+
+  - title: Naming and compatibility
+    desc: User-facing spelling policy, API audits, and compatibility aliases.
+    contents:
+    - gp3tools_naming_policy
+    - audit_gazepoint_naming_consistency
+    - write_gazepoint_naming_audit
+    - summarise_gazepoint_coordinate_coverage
+    - summarise_gazepoint_face_reactivity
+    - summarise_gazepoint_face_windows
+    - summarise_gazepoint_pupil_response_features
+    - summarise_gazepoint_time_clusters
 
   - title: Plotting and visual diagnostics
     desc: General-purpose visual diagnostics for time series, heatmaps, AOIs, and spatial outputs.
@@ -392,8 +411,16 @@ reference:
     - simulate_gazepoint_fixations
     - preprocess_gazepoint_signals
     - compare_gazepoint_event_detectors
+    - gp3tools_performance_limits
+    - benchmark_gazepoint_export_performance
+    - check_gazepoint_performance_regression
+    - write_gazepoint_performance_benchmark
     - summarise_gazepoint_event_detector_agreement
     - plot_gazepoint_event_detector_agreement
+    - create_gazepoint_event_review_template
+    - benchmark_gazepoint_event_detectors
+    - summarise_gazepoint_event_detector_benchmark
+    - plot_gazepoint_event_detector_benchmark
 
   - title: Example and simulated data
     desc: Synthetic data objects and simulation helpers for examples, vignettes, tests, and teaching.

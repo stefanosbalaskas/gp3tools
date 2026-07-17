@@ -1,0 +1,44 @@
+---
+title: "User-facing naming policy"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{User-facing naming policy}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+library(gp3tools)
+```
+
+## Canonical spelling
+
+gp3tools uses British English `summarise_*` names as the canonical spelling for
+new user-facing summary helpers.
+
+```{r}
+gp3tools_naming_policy()
+```
+
+Existing exported American English `summarize_*` functions remain available for
+backward compatibility. The development installer creates a British alias when
+an established American export does not yet have one. No existing user code is
+removed or silently redirected to a different analytical implementation.
+
+## Audit the exported API
+
+```{r}
+naming_audit <- audit_gazepoint_naming_consistency()
+naming_audit
+naming_audit$pairs
+```
+
+The audit distinguishes:
+
+- `paired`: both spellings are exported;
+- `canonical_only`: only the British canonical name exists;
+- `missing_british_alias`: an established American export lacks its British
+  counterpart.
+
+The final development state should contain no `missing_british_alias` rows.

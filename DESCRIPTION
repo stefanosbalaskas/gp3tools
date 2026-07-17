@@ -1,7 +1,7 @@
 Package: gp3tools
 Type: Package
 Title: Import, Inspect, Analyse, and Report Gazepoint GP3 Exports
-Version: 2.1.0
+Version: 2.2.0
 Authors@R: c(
     person(
       given = "Stefanos",
