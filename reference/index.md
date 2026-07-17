@@ -532,6 +532,55 @@ export ecosystems.
   : Summarise Gazepoint semi-Markov data
 - [`export_gazepoint_to_bids()`](https://stefanosbalaskas.github.io/gp3tools/reference/export_gazepoint_to_bids.md)
   : Export Gazepoint data to a lightweight BIDS-style folder
+- [`prepare_gazepoint_gpbiometrics_bridge()`](https://stefanosbalaskas.github.io/gp3tools/reference/prepare_gazepoint_gpbiometrics_bridge.md)
+  : Prepare gp3tools gaze output for a gpbiometrics workflow
+- [`run_gazepoint_gpbiometrics_workflow()`](https://stefanosbalaskas.github.io/gp3tools/reference/run_gazepoint_gpbiometrics_workflow.md)
+  : Run a tested gp3tools-to-gpbiometrics integration workflow
+- [`create_gazepoint_cross_package_report()`](https://stefanosbalaskas.github.io/gp3tools/reference/create_gazepoint_cross_package_report.md)
+  : Create a combined gp3tools-gpbiometrics workflow report
+
+## Naming and compatibility
+
+User-facing spelling policy, API audits, and compatibility aliases.
+
+- [`gp3tools_naming_policy()`](https://stefanosbalaskas.github.io/gp3tools/reference/gp3tools_naming_policy.md)
+  : gp3tools user-facing naming policy
+
+- [`audit_gazepoint_naming_consistency()`](https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_naming_consistency.md)
+  : Audit British and American summary-function spellings
+
+- [`write_gazepoint_naming_audit()`](https://stefanosbalaskas.github.io/gp3tools/reference/write_gazepoint_naming_audit.md)
+  : Write a gp3tools naming-consistency audit
+
+- [`summarise_gazepoint_coordinate_coverage()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarise_gazepoint_coordinate_coverage.md)
+  :
+
+  British-spelling alias for
+  [`summarize_gazepoint_coordinate_coverage()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarize_gazepoint_coordinate_coverage.md)
+
+- [`summarise_gazepoint_face_reactivity()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarise_gazepoint_face_reactivity.md)
+  :
+
+  British-spelling alias for
+  [`summarize_gazepoint_face_reactivity()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarize_gazepoint_face_reactivity.md)
+
+- [`summarise_gazepoint_face_windows()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarise_gazepoint_face_windows.md)
+  :
+
+  British-spelling alias for
+  [`summarize_gazepoint_face_windows()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarize_gazepoint_face_windows.md)
+
+- [`summarise_gazepoint_pupil_response_features()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarise_gazepoint_pupil_response_features.md)
+  :
+
+  British-spelling alias for
+  [`summarize_gazepoint_pupil_response_features()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarize_gazepoint_pupil_response_features.md)
+
+- [`summarise_gazepoint_time_clusters()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarise_gazepoint_time_clusters.md)
+  :
+
+  British-spelling alias for
+  [`summarize_gazepoint_time_clusters()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarize_gazepoint_time_clusters.md)
 
 ## Plotting and visual diagnostics
 
@@ -579,10 +628,26 @@ simulate fixation data.
   : Run an integrated Gazepoint signal-preprocessing workflow
 - [`compare_gazepoint_event_detectors()`](https://stefanosbalaskas.github.io/gp3tools/reference/compare_gazepoint_event_detectors.md)
   : Compare Gazepoint event-detection workflows
+- [`gp3tools_performance_limits()`](https://stefanosbalaskas.github.io/gp3tools/reference/gp3tools_performance_limits.md)
+  : Default performance limits for gp3tools export workflows
+- [`benchmark_gazepoint_export_performance()`](https://stefanosbalaskas.github.io/gp3tools/reference/benchmark_gazepoint_export_performance.md)
+  : Benchmark gp3tools on increasingly large Gazepoint exports
+- [`check_gazepoint_performance_regression()`](https://stefanosbalaskas.github.io/gp3tools/reference/check_gazepoint_performance_regression.md)
+  : Check gp3tools performance results against regression limits
+- [`write_gazepoint_performance_benchmark()`](https://stefanosbalaskas.github.io/gp3tools/reference/write_gazepoint_performance_benchmark.md)
+  : Write gp3tools performance benchmark tables
 - [`summarise_gazepoint_event_detector_agreement()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarise_gazepoint_event_detector_agreement.md)
   : Summarise agreement between event detectors
 - [`plot_gazepoint_event_detector_agreement()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_event_detector_agreement.md)
   : Plot event-detector comparison diagnostics
+- [`create_gazepoint_event_review_template()`](https://stefanosbalaskas.github.io/gp3tools/reference/create_gazepoint_event_review_template.md)
+  : Create a manual event-review template
+- [`benchmark_gazepoint_event_detectors()`](https://stefanosbalaskas.github.io/gp3tools/reference/benchmark_gazepoint_event_detectors.md)
+  : Benchmark Gazepoint event detectors against reviewed events
+- [`summarise_gazepoint_event_detector_benchmark()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarise_gazepoint_event_detector_benchmark.md)
+  : Summarise an event-detector benchmark
+- [`plot_gazepoint_event_detector_benchmark()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_event_detector_benchmark.md)
+  : Plot event-detector benchmark diagnostics
 
 ## Example and simulated data
 

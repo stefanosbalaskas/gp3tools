@@ -129,5 +129,13 @@
   sensitivity](https://stefanosbalaskas.github.io/gp3tools/articles/scanpath-cluster-stability.md):
 - [Integrated signal-preprocessing
   workflow](https://stefanosbalaskas.github.io/gp3tools/articles/signal-preprocessing-workflow.md):
+- [Large-export performance
+  benchmarking](https://stefanosbalaskas.github.io/gp3tools/articles/large-export-performance.md):
+- [gp3tools to gpbiometrics
+  workflow](https://stefanosbalaskas.github.io/gp3tools/articles/gp3tools-gpbiometrics-workflow.md):
+- [User-facing naming
+  policy](https://stefanosbalaskas.github.io/gp3tools/articles/naming-policy.md):
 - [Event-detector comparison
   workflow](https://stefanosbalaskas.github.io/gp3tools/articles/event-detector-comparison.md):
+- [Benchmarking gaze-event detectors against reviewed
+  intervals](https://stefanosbalaskas.github.io/gp3tools/articles/event-detector-benchmarking.md):

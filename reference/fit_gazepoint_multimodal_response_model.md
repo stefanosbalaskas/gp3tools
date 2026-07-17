@@ -99,7 +99,7 @@ fit_gazepoint_multimodal_response_model(
 #> 
 #> $formula
 #> rating ~ AU12_r_mean + dwell_time
-#> <environment: 0x55ab8f7c8a70>
+#> <environment: 0x55ebe486cc90>
 #> 
 #> $data
 #> # A tibble: 3 × 4

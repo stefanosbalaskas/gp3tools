@@ -1,5 +1,87 @@
 # Changelog
 
+## gp3tools 2.2.0
+
+### User-facing naming policy
+
+- Established British English `summarise_*` as the canonical spelling
+  for new user-facing summary helpers.
+- Retained existing American English `summarize_*` functions for
+  backward compatibility.
+- Added five British English compatibility aliases for established
+  American-only summary functions without changing their analytical
+  implementations.
+- Added
+  [`gp3tools_naming_policy()`](https://stefanosbalaskas.github.io/gp3tools/reference/gp3tools_naming_policy.md),
+  [`audit_gazepoint_naming_consistency()`](https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_naming_consistency.md),
+  and
+  [`write_gazepoint_naming_audit()`](https://stefanosbalaskas.github.io/gp3tools/reference/write_gazepoint_naming_audit.md)
+  for documenting and auditing the exported naming contract.
+- Added naming conventions, focused tests, generated documentation, and
+  a user-facing naming-policy article.
+
+### gpbiometrics integration workflow
+
+- Added
+  [`prepare_gazepoint_gpbiometrics_bridge()`](https://stefanosbalaskas.github.io/gp3tools/reference/prepare_gazepoint_gpbiometrics_bridge.md)
+  for standardizing gaze outputs into participant, trial, time,
+  coordinate, AOI, pupil, and validity fields suitable for cross-package
+  synchronization.
+- Added
+  [`run_gazepoint_gpbiometrics_workflow()`](https://stefanosbalaskas.github.io/gp3tools/reference/run_gazepoint_gpbiometrics_workflow.md)
+  for native nearest-time alignment of gaze and biometric signals, with
+  configurable timing tolerance, unmatched-row handling, signal
+  summaries, and an optional external adapter contract.
+- Added
+  [`create_gazepoint_cross_package_report()`](https://stefanosbalaskas.github.io/gp3tools/reference/create_gazepoint_cross_package_report.md)
+  for compact alignment reporting with explicit interpretation
+  guardrails.
+- Added dependency-free focused tests and a synthetic workflow article.
+
+### Large-export performance benchmarking
+
+- Added
+  [`gp3tools_performance_limits()`](https://stefanosbalaskas.github.io/gp3tools/reference/gp3tools_performance_limits.md)
+  for explicit, configurable elapsed-time, memory, and scaling-exponent
+  regression limits.
+- Added
+  [`benchmark_gazepoint_export_performance()`](https://stefanosbalaskas.github.io/gp3tools/reference/benchmark_gazepoint_export_performance.md)
+  for deterministic synthetic benchmarking of generation, import,
+  master-data creation, sampling-rate checks, and tracking-quality
+  summaries across selected export sizes and file counts.
+- Added
+  [`check_gazepoint_performance_regression()`](https://stefanosbalaskas.github.io/gp3tools/reference/check_gazepoint_performance_regression.md)
+  for absolute and baseline-relative performance checks.
+- Added
+  [`write_gazepoint_performance_benchmark()`](https://stefanosbalaskas.github.io/gp3tools/reference/write_gazepoint_performance_benchmark.md)
+  for exporting trial, summary, regression-check, and evaluated-result
+  tables.
+- Added focused tests, reusable benchmark assets, and a large-export
+  performance article.
+
+### Event-detector benchmarking
+
+- Added
+  [`create_gazepoint_event_review_template()`](https://stefanosbalaskas.github.io/gp3tools/reference/create_gazepoint_event_review_template.md)
+  for CSV-ready participant/trial event-annotation templates.
+- Added
+  [`benchmark_gazepoint_event_detectors()`](https://stefanosbalaskas.github.io/gp3tools/reference/benchmark_gazepoint_event_detectors.md)
+  for one-to-one comparison of standardized detector events with
+  synthetic or manually reviewed reference intervals.
+- Added detector-, sequence-, match-, and error-level summaries covering
+  precision, recall, F1, interval overlap, timing error, and event-count
+  bias, together with base-R diagnostic plots.
+- Added a synthetic benchmarking article and focused deterministic
+  tests.
+
+### Post-2.1.0 validation and interoperability
+
+- Started the post-release validation cycle covering event-detector
+  benchmarking, large-export performance, gpbiometrics interoperability,
+  API naming consistency, and user-feedback collection.
+- Bayesian and machine-learning orchestration remain outside the core
+  package unless supported by a clearly defined validation use case.
+
 ## gp3tools 2.1.0
 
 ### Release overview

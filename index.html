@@ -35,7 +35,7 @@
 
     <a class="navbar-brand me-2" href="index.html">gp3tools</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -103,7 +103,11 @@
     <li><a class="dropdown-item" href="articles/scanpath-clustering-workflow.html">Scanpath clustering, selection, and visual diagnostics</a></li>
     <li><a class="dropdown-item" href="articles/scanpath-cluster-stability.html">Scanpath-cluster stability and sensitivity</a></li>
     <li><a class="dropdown-item" href="articles/signal-preprocessing-workflow.html">Integrated signal-preprocessing workflow</a></li>
+    <li><a class="dropdown-item" href="articles/large-export-performance.html">Large-export performance benchmarking</a></li>
+    <li><a class="dropdown-item" href="articles/gp3tools-gpbiometrics-workflow.html">gp3tools to gpbiometrics workflow</a></li>
+    <li><a class="dropdown-item" href="articles/naming-policy.html">User-facing naming policy</a></li>
     <li><a class="dropdown-item" href="articles/event-detector-comparison.html">Event-detector comparison workflow</a></li>
+    <li><a class="dropdown-item" href="articles/event-detector-benchmarking.html">Benchmarking gaze-event detectors against reviewed intervals</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="news/index.html">Changelog</a></li>
@@ -249,9 +253,9 @@
 </td>
 </tr>
 <tr>
-<td>Compare gaze-event detectors</td>
+<td>Compare and benchmark gaze-event detectors</td>
 <td>
-<code><a href="reference/compare_gazepoint_event_detectors.html">compare_gazepoint_event_detectors()</a></code>, <code><a href="reference/summarise_gazepoint_event_detector_agreement.html">summarise_gazepoint_event_detector_agreement()</a></code>, <code><a href="reference/plot_gazepoint_event_detector_agreement.html">plot_gazepoint_event_detector_agreement()</a></code>
+<code><a href="reference/compare_gazepoint_event_detectors.html">compare_gazepoint_event_detectors()</a></code>, <code><a href="reference/summarise_gazepoint_event_detector_agreement.html">summarise_gazepoint_event_detector_agreement()</a></code>, <code><a href="reference/plot_gazepoint_event_detector_agreement.html">plot_gazepoint_event_detector_agreement()</a></code>, <code><a href="reference/create_gazepoint_event_review_template.html">create_gazepoint_event_review_template()</a></code>, <code><a href="reference/benchmark_gazepoint_event_detectors.html">benchmark_gazepoint_event_detectors()</a></code>, <code><a href="reference/summarise_gazepoint_event_detector_benchmark.html">summarise_gazepoint_event_detector_benchmark()</a></code>, <code><a href="reference/plot_gazepoint_event_detector_benchmark.html">plot_gazepoint_event_detector_benchmark()</a></code>
 </td>
 </tr>
 <tr>
@@ -1892,6 +1896,52 @@
 <h2 id="important-note">Important note<a class="anchor" aria-label="anchor" href="#important-note"></a>
 </h2>
 <p><code>gp3tools</code> can parse official Gazepoint Analysis summary exports, but metrics recomputed from all-gaze and fixation files may not always exactly reproduce Gazepoint’s internal summary calculations. For official Gazepoint summary values, use <code><a href="reference/read_gazepoint_summary.html">read_gazepoint_summary()</a></code>. For transparent reproducible calculations from exported rows, use the sample-level and fixation-level summary functions.</p>
+</div>
+<div class="section level2">
+<h2 id="large-export-performance-benchmarking">Large-export performance benchmarking<a class="anchor" aria-label="anchor" href="#large-export-performance-benchmarking"></a>
+</h2>
+<p><code>gp3tools</code> includes an auditable framework for measuring selected operations across synthetic export sizes and file counts.</p>
+<div class="sourceCode" id="cb125"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">performance</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/benchmark_gazepoint_export_performance.html">benchmark_gazepoint_export_performance</a></span><span class="op">(</span></span>
+<span>  scales <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<span>    total_rows <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10000L</span>, <span class="fl">50000L</span><span class="op">)</span>,</span>
+<span>    n_files <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1L</span>, <span class="fl">4L</span><span class="op">)</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  operations <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"generate"</span>, <span class="st">"import"</span><span class="op">)</span>,</span>
+<span>  trials <span class="op">=</span> <span class="fl">3L</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">performance</span><span class="op">$</span><span class="va">summary</span></span>
+<span><span class="va">performance</span><span class="op">$</span><span class="va">regression</span><span class="op">$</span><span class="va">overall</span></span></code></pre></div>
+<p>Use <code><a href="reference/gp3tools_performance_limits.html">gp3tools_performance_limits()</a></code> to inspect or customize the regression limits and <code><a href="reference/write_gazepoint_performance_benchmark.html">write_gazepoint_performance_benchmark()</a></code> to export the resulting audit tables. Performance depends on hardware, software versions, file structure, and selected operations; the limits are configurable regression guards rather than universal guarantees.</p>
+</div>
+<div class="section level2">
+<h2 id="gpbiometrics-integration">gpbiometrics integration<a class="anchor" aria-label="anchor" href="#gpbiometrics-integration"></a>
+</h2>
+<p><code>gp3tools</code> includes a dependency-free synchronization layer for combining standardized gaze samples with time-aligned biometric signal tables.</p>
+<div class="sourceCode" id="cb126"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">workflow</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/run_gazepoint_gpbiometrics_workflow.html">run_gazepoint_gpbiometrics_workflow</a></span><span class="op">(</span></span>
+<span>  gaze_data <span class="op">=</span> <span class="va">gaze_data</span>,</span>
+<span>  biometrics_data <span class="op">=</span> <span class="va">biometrics_data</span>,</span>
+<span>  signal_cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"GSR"</span>, <span class="st">"HR"</span><span class="op">)</span>,</span>
+<span>  tolerance_s <span class="op">=</span> <span class="fl">0.01</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">workflow</span><span class="op">$</span><span class="va">audit</span></span>
+<span><span class="va">workflow</span><span class="op">$</span><span class="va">signal_summary</span></span></code></pre></div>
+<p>The workflow reports matching coverage and timing differences and supports an optional external adapter. Its signal summaries describe recorded measurements and temporal alignment; they do not independently establish emotion, stress, preference, cognition, comprehension, or diagnosis.</p>
+</div>
+<div class="section level2">
+<h2 id="user-facing-naming-policy">User-facing naming policy<a class="anchor" aria-label="anchor" href="#user-facing-naming-policy"></a>
+</h2>
+<p><code>gp3tools</code> uses British English <code>summarise_*</code> names as the canonical spelling for new user-facing summary helpers. Existing American English <code>summarize_*</code> exports remain available for backward compatibility.</p>
+<div class="sourceCode" id="cb127"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">policy</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/gp3tools_naming_policy.html">gp3tools_naming_policy</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">audit</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/audit_gazepoint_naming_consistency.html">audit_gazepoint_naming_consistency</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">policy</span><span class="op">$</span><span class="va">rules</span></span>
+<span><span class="va">audit</span><span class="op">$</span><span class="va">summary</span></span></code></pre></div>
+<p>Compatibility aliases call the same underlying analytical implementation; they do not alter calculations or remove established function names. The complete policy is documented in <code>NAMING_CONVENTIONS.md</code>.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">

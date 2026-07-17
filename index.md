@@ -151,7 +151,7 @@ when preparing transparent data-coverage and QC-reporting summaries.
 | Summarise missingness and task-phase coverage | [`summarize_gazepoint_missingness()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarize_gazepoint_missingness.md), [`plot_gazepoint_missingness_profile()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_missingness_profile.md), [`report_gazepoint_missingness()`](https://stefanosbalaskas.github.io/gp3tools/reference/report_gazepoint_missingness.md), [`segment_gazepoint_task_phases()`](https://stefanosbalaskas.github.io/gp3tools/reference/segment_gazepoint_task_phases.md), [`summarize_gazepoint_phase_coverage()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarize_gazepoint_phase_coverage.md), [`plot_gazepoint_phase_timeline()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_phase_timeline.md) |
 | Collect QC outputs for reporting | [`collect_gazepoint_qc_summaries()`](https://stefanosbalaskas.github.io/gp3tools/reference/collect_gazepoint_qc_summaries.md), [`summarize_gazepoint_qc_status()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarize_gazepoint_qc_status.md), [`report_gazepoint_qc_overview()`](https://stefanosbalaskas.github.io/gp3tools/reference/report_gazepoint_qc_overview.md), [`plot_gazepoint_qc_overview()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_qc_overview.md) |
 | Preprocess pupil data | [`flag_gazepoint_pupil()`](https://stefanosbalaskas.github.io/gp3tools/reference/flag_gazepoint_pupil.md), [`flag_gazepoint_pupil_artifacts()`](https://stefanosbalaskas.github.io/gp3tools/reference/flag_gazepoint_pupil_artifacts.md), [`flag_gazepoint_pupil_hampel()`](https://stefanosbalaskas.github.io/gp3tools/reference/flag_gazepoint_pupil_hampel.md), [`interpolate_gazepoint_pupil()`](https://stefanosbalaskas.github.io/gp3tools/reference/interpolate_gazepoint_pupil.md), [`smooth_gazepoint_pupil()`](https://stefanosbalaskas.github.io/gp3tools/reference/smooth_gazepoint_pupil.md), [`baseline_correct_gazepoint_pupil()`](https://stefanosbalaskas.github.io/gp3tools/reference/baseline_correct_gazepoint_pupil.md), [`preprocess_gazepoint_signals()`](https://stefanosbalaskas.github.io/gp3tools/reference/preprocess_gazepoint_signals.md) |
-| Compare gaze-event detectors | [`compare_gazepoint_event_detectors()`](https://stefanosbalaskas.github.io/gp3tools/reference/compare_gazepoint_event_detectors.md), [`summarise_gazepoint_event_detector_agreement()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarise_gazepoint_event_detector_agreement.md), [`plot_gazepoint_event_detector_agreement()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_event_detector_agreement.md) |
+| Compare and benchmark gaze-event detectors | [`compare_gazepoint_event_detectors()`](https://stefanosbalaskas.github.io/gp3tools/reference/compare_gazepoint_event_detectors.md), [`summarise_gazepoint_event_detector_agreement()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarise_gazepoint_event_detector_agreement.md), [`plot_gazepoint_event_detector_agreement()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_event_detector_agreement.md), [`create_gazepoint_event_review_template()`](https://stefanosbalaskas.github.io/gp3tools/reference/create_gazepoint_event_review_template.md), [`benchmark_gazepoint_event_detectors()`](https://stefanosbalaskas.github.io/gp3tools/reference/benchmark_gazepoint_event_detectors.md), [`summarise_gazepoint_event_detector_benchmark()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarise_gazepoint_event_detector_benchmark.md), [`plot_gazepoint_event_detector_benchmark()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_event_detector_benchmark.md) |
 | Audit pupil reliability and preprocessing choices | [`audit_gazepoint_pupil_gaps()`](https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_pupil_gaps.md), [`audit_gazepoint_pupil_baseline()`](https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_pupil_baseline.md), [`audit_gazepoint_pupil_drift()`](https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_pupil_drift.md), [`audit_gazepoint_pupil_reliability()`](https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_pupil_reliability.md), [`audit_gazepoint_pupil_overlap_risk()`](https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_pupil_overlap_risk.md) |
 | Summarise and model pupil outcomes | [`summarise_gazepoint_pupil()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarise_gazepoint_pupil.md), [`summarise_gazepoint_pupil_windows()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarise_gazepoint_pupil_windows.md), [`summarise_gazepoint_pupil_trial_features()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarise_gazepoint_pupil_trial_features.md), [`fit_gazepoint_pupil_window_lmm()`](https://stefanosbalaskas.github.io/gp3tools/reference/fit_gazepoint_pupil_window_lmm.md), [`fit_gazepoint_pupil_gamm()`](https://stefanosbalaskas.github.io/gp3tools/reference/fit_gazepoint_pupil_gamm.md) |
 | Summarise AOI behaviour | [`summarise_gazepoint_aoi_windows()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarise_gazepoint_aoi_windows.md), [`summarise_gazepoint_aoi_entries()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarise_gazepoint_aoi_entries.md), [`summarise_gazepoint_aoi_trial_features()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarise_gazepoint_aoi_trial_features.md), [`summarise_gazepoint_fixation_trials()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarise_gazepoint_fixation_trials.md) |
@@ -2370,3 +2370,76 @@ official Gazepoint summary values, use
 [`read_gazepoint_summary()`](https://stefanosbalaskas.github.io/gp3tools/reference/read_gazepoint_summary.md).
 For transparent reproducible calculations from exported rows, use the
 sample-level and fixation-level summary functions.
+
+## Large-export performance benchmarking
+
+`gp3tools` includes an auditable framework for measuring selected
+operations across synthetic export sizes and file counts.
+
+``` r
+
+performance <- benchmark_gazepoint_export_performance(
+  scales = data.frame(
+    total_rows = c(10000L, 50000L),
+    n_files = c(1L, 4L)
+  ),
+  operations = c("generate", "import"),
+  trials = 3L
+)
+
+performance$summary
+performance$regression$overall
+```
+
+Use
+[`gp3tools_performance_limits()`](https://stefanosbalaskas.github.io/gp3tools/reference/gp3tools_performance_limits.md)
+to inspect or customize the regression limits and
+[`write_gazepoint_performance_benchmark()`](https://stefanosbalaskas.github.io/gp3tools/reference/write_gazepoint_performance_benchmark.md)
+to export the resulting audit tables. Performance depends on hardware,
+software versions, file structure, and selected operations; the limits
+are configurable regression guards rather than universal guarantees.
+
+## gpbiometrics integration
+
+`gp3tools` includes a dependency-free synchronization layer for
+combining standardized gaze samples with time-aligned biometric signal
+tables.
+
+``` r
+
+workflow <- run_gazepoint_gpbiometrics_workflow(
+  gaze_data = gaze_data,
+  biometrics_data = biometrics_data,
+  signal_cols = c("GSR", "HR"),
+  tolerance_s = 0.01
+)
+
+workflow$audit
+workflow$signal_summary
+```
+
+The workflow reports matching coverage and timing differences and
+supports an optional external adapter. Its signal summaries describe
+recorded measurements and temporal alignment; they do not independently
+establish emotion, stress, preference, cognition, comprehension, or
+diagnosis.
+
+## User-facing naming policy
+
+`gp3tools` uses British English `summarise_*` names as the canonical
+spelling for new user-facing summary helpers. Existing American English
+`summarize_*` exports remain available for backward compatibility.
+
+``` r
+
+policy <- gp3tools_naming_policy()
+audit <- audit_gazepoint_naming_consistency()
+
+policy$rules
+audit$summary
+```
+
+Compatibility aliases call the same underlying analytical
+implementation; they do not alter calculations or remove established
+function names. The complete policy is documented in
+`NAMING_CONVENTIONS.md`.

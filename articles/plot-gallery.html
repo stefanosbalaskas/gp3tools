@@ -35,7 +35,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">gp3tools</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -103,7 +103,11 @@
     <li><a class="dropdown-item" href="../articles/scanpath-clustering-workflow.html">Scanpath clustering, selection, and visual diagnostics</a></li>
     <li><a class="dropdown-item" href="../articles/scanpath-cluster-stability.html">Scanpath-cluster stability and sensitivity</a></li>
     <li><a class="dropdown-item" href="../articles/signal-preprocessing-workflow.html">Integrated signal-preprocessing workflow</a></li>
+    <li><a class="dropdown-item" href="../articles/large-export-performance.html">Large-export performance benchmarking</a></li>
+    <li><a class="dropdown-item" href="../articles/gp3tools-gpbiometrics-workflow.html">gp3tools to gpbiometrics workflow</a></li>
+    <li><a class="dropdown-item" href="../articles/naming-policy.html">User-facing naming policy</a></li>
     <li><a class="dropdown-item" href="../articles/event-detector-comparison.html">Event-detector comparison workflow</a></li>
+    <li><a class="dropdown-item" href="../articles/event-detector-benchmarking.html">Benchmarking gaze-event detectors against reviewed intervals</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -163,29 +167,30 @@ summary functions.</p>
 <span><span class="co">#&gt; 6         plot_gazepoint_cluster_permutation</span></span>
 <span><span class="co">#&gt; 7             plot_gazepoint_cluster_results</span></span>
 <span><span class="co">#&gt; 8    plot_gazepoint_event_detector_agreement</span></span>
-<span><span class="co">#&gt; 9                plot_gazepoint_face_quality</span></span>
-<span><span class="co">#&gt; 10                        plot_gazepoint_gca</span></span>
-<span><span class="co">#&gt; 11                    plot_gazepoint_heatmap</span></span>
-<span><span class="co">#&gt; 12            plot_gazepoint_heatmap_overlay</span></span>
-<span><span class="co">#&gt; 13        plot_gazepoint_missingness_profile</span></span>
-<span><span class="co">#&gt; 14          plot_gazepoint_model_predictions</span></span>
-<span><span class="co">#&gt; 15            plot_gazepoint_model_residuals</span></span>
-<span><span class="co">#&gt; 16         plot_gazepoint_multiverse_results</span></span>
-<span><span class="co">#&gt; 17             plot_gazepoint_phase_timeline</span></span>
-<span><span class="co">#&gt; 18        plot_gazepoint_pupil_preprocessing</span></span>
-<span><span class="co">#&gt; 19               plot_gazepoint_pupil_status</span></span>
-<span><span class="co">#&gt; 20           plot_gazepoint_pupil_timecourse</span></span>
-<span><span class="co">#&gt; 21                plot_gazepoint_qc_overview</span></span>
-<span><span class="co">#&gt; 22                   plot_gazepoint_scanpath</span></span>
-<span><span class="co">#&gt; 23 plot_gazepoint_scanpath_cluster_stability</span></span>
-<span><span class="co">#&gt; 24          plot_gazepoint_scanpath_clusters</span></span>
-<span><span class="co">#&gt; 25                  plot_gazepoint_scanpaths</span></span>
-<span><span class="co">#&gt; 26         plot_gazepoint_stimulus_layout_qc</span></span>
-<span><span class="co">#&gt; 27                plot_gazepoint_time_series</span></span>
-<span><span class="co">#&gt; 28        plot_gazepoint_time_varying_effect</span></span>
-<span><span class="co">#&gt; 29                        plot_sampling_rate</span></span>
-<span><span class="co">#&gt; 30                     plot_tracking_quality</span></span>
-<span><span class="co">#&gt; 31                   plot_transition_heatmap</span></span></code></pre>
+<span><span class="co">#&gt; 9    plot_gazepoint_event_detector_benchmark</span></span>
+<span><span class="co">#&gt; 10               plot_gazepoint_face_quality</span></span>
+<span><span class="co">#&gt; 11                        plot_gazepoint_gca</span></span>
+<span><span class="co">#&gt; 12                    plot_gazepoint_heatmap</span></span>
+<span><span class="co">#&gt; 13            plot_gazepoint_heatmap_overlay</span></span>
+<span><span class="co">#&gt; 14        plot_gazepoint_missingness_profile</span></span>
+<span><span class="co">#&gt; 15          plot_gazepoint_model_predictions</span></span>
+<span><span class="co">#&gt; 16            plot_gazepoint_model_residuals</span></span>
+<span><span class="co">#&gt; 17         plot_gazepoint_multiverse_results</span></span>
+<span><span class="co">#&gt; 18             plot_gazepoint_phase_timeline</span></span>
+<span><span class="co">#&gt; 19        plot_gazepoint_pupil_preprocessing</span></span>
+<span><span class="co">#&gt; 20               plot_gazepoint_pupil_status</span></span>
+<span><span class="co">#&gt; 21           plot_gazepoint_pupil_timecourse</span></span>
+<span><span class="co">#&gt; 22                plot_gazepoint_qc_overview</span></span>
+<span><span class="co">#&gt; 23                   plot_gazepoint_scanpath</span></span>
+<span><span class="co">#&gt; 24 plot_gazepoint_scanpath_cluster_stability</span></span>
+<span><span class="co">#&gt; 25          plot_gazepoint_scanpath_clusters</span></span>
+<span><span class="co">#&gt; 26                  plot_gazepoint_scanpaths</span></span>
+<span><span class="co">#&gt; 27         plot_gazepoint_stimulus_layout_qc</span></span>
+<span><span class="co">#&gt; 28                plot_gazepoint_time_series</span></span>
+<span><span class="co">#&gt; 29        plot_gazepoint_time_varying_effect</span></span>
+<span><span class="co">#&gt; 30                        plot_sampling_rate</span></span>
+<span><span class="co">#&gt; 31                     plot_tracking_quality</span></span>
+<span><span class="co">#&gt; 32                   plot_transition_heatmap</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="sampling-rate">Sampling rate<a class="anchor" aria-label="anchor" href="#sampling-rate"></a>
