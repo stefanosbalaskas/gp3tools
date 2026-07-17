@@ -2036,3 +2036,28 @@ Use these objects when you want to try core workflows without first importing pr
 ## Important note
 
 `gp3tools` can parse official Gazepoint Analysis summary exports, but metrics recomputed from all-gaze and fixation files may not always exactly reproduce Gazepoint’s internal summary calculations. For official Gazepoint summary values, use `read_gazepoint_summary()`. For transparent reproducible calculations from exported rows, use the sample-level and fixation-level summary functions.
+
+## Large-export performance benchmarking
+
+`gp3tools` includes an auditable framework for measuring selected
+operations across synthetic export sizes and file counts.
+
+```r
+performance <- benchmark_gazepoint_export_performance(
+  scales = data.frame(
+    total_rows = c(10000L, 50000L),
+    n_files = c(1L, 4L)
+  ),
+  operations = c("generate", "import"),
+  trials = 3L
+)
+
+performance$summary
+performance$regression$overall
+```
+
+Use `gp3tools_performance_limits()` to inspect or customize the
+regression limits and `write_gazepoint_performance_benchmark()` to
+export the resulting audit tables. Performance depends on hardware,
+software versions, file structure, and selected operations; the limits
+are configurable regression guards rather than universal guarantees.

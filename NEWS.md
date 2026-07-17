@@ -1,5 +1,20 @@
 # gp3tools 2.1.0.9000
 
+## Large-export performance benchmarking
+
+* Added `gp3tools_performance_limits()` for explicit, configurable
+  elapsed-time, memory, and scaling-exponent regression limits.
+* Added `benchmark_gazepoint_export_performance()` for deterministic
+  synthetic benchmarking of generation, import, master-data creation,
+  sampling-rate checks, and tracking-quality summaries across selected
+  export sizes and file counts.
+* Added `check_gazepoint_performance_regression()` for absolute and
+  baseline-relative performance checks.
+* Added `write_gazepoint_performance_benchmark()` for exporting trial,
+  summary, regression-check, and evaluated-result tables.
+* Added focused tests, reusable benchmark assets, and a large-export
+  performance article.
+
 ## Event-detector benchmarking
 
 * Added `create_gazepoint_event_review_template()` for CSV-ready

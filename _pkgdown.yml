@@ -90,6 +90,7 @@ articles:
       - articles/scanpath-clustering-workflow
       - articles/scanpath-cluster-stability
       - articles/signal-preprocessing-workflow
+      - articles/large-export-performance
       - articles/event-detector-comparison
       - articles/event-detector-benchmarking
 
@@ -393,6 +394,10 @@ reference:
     - simulate_gazepoint_fixations
     - preprocess_gazepoint_signals
     - compare_gazepoint_event_detectors
+    - gp3tools_performance_limits
+    - benchmark_gazepoint_export_performance
+    - check_gazepoint_performance_regression
+    - write_gazepoint_performance_benchmark
     - summarise_gazepoint_event_detector_agreement
     - plot_gazepoint_event_detector_agreement
     - create_gazepoint_event_review_template

@@ -1,0 +1,6 @@
+operation,max_seconds_per_million_rows,max_heap_delta_mb_per_million_rows,max_scaling_exponent
+generate,90,1200,1.60
+import,240,1800,1.60
+master,240,1800,1.60
+sampling,180,1200,1.60
+quality,180,1200,1.60
