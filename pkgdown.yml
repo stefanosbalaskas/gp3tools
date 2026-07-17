@@ -46,7 +46,7 @@ articles:
   articles/signal-preprocessing-workflow: signal-preprocessing-workflow.html
   articles/statistical-extensions-plots: statistical-extensions-plots.html
   articles/stimulus-layout-qc: stimulus-layout-qc.html
-last_built: 2026-07-17T18:51Z
+last_built: 2026-07-17T18:57Z
 urls:
   reference: https://stefanosbalaskas.github.io/gp3tools/reference
   article: https://stefanosbalaskas.github.io/gp3tools/articles
