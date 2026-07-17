@@ -92,6 +92,7 @@ articles:
       - articles/signal-preprocessing-workflow
       - articles/large-export-performance
       - articles/gp3tools-gpbiometrics-workflow
+      - articles/naming-policy
       - articles/event-detector-comparison
       - articles/event-detector-benchmarking
 
@@ -373,6 +374,18 @@ reference:
     - prepare_gazepoint_gpbiometrics_bridge
     - run_gazepoint_gpbiometrics_workflow
     - create_gazepoint_cross_package_report
+
+  - title: Naming and compatibility
+    desc: User-facing spelling policy, API audits, and compatibility aliases.
+    contents:
+    - gp3tools_naming_policy
+    - audit_gazepoint_naming_consistency
+    - write_gazepoint_naming_audit
+    - summarise_gazepoint_coordinate_coverage
+    - summarise_gazepoint_face_reactivity
+    - summarise_gazepoint_face_windows
+    - summarise_gazepoint_pupil_response_features
+    - summarise_gazepoint_time_clusters
 
   - title: Plotting and visual diagnostics
     desc: General-purpose visual diagnostics for time series, heatmaps, AOIs, and spatial outputs.
