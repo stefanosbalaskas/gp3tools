@@ -91,6 +91,7 @@ articles:
       - articles/scanpath-cluster-stability
       - articles/signal-preprocessing-workflow
       - articles/large-export-performance
+      - articles/gp3tools-gpbiometrics-workflow
       - articles/event-detector-comparison
       - articles/event-detector-benchmarking
 
@@ -369,6 +370,9 @@ reference:
     - summarise_gazepoint_markovchain
     - summarise_gazepoint_semimarkov
     - export_gazepoint_to_bids
+    - prepare_gazepoint_gpbiometrics_bridge
+    - run_gazepoint_gpbiometrics_workflow
+    - create_gazepoint_cross_package_report
 
   - title: Plotting and visual diagnostics
     desc: General-purpose visual diagnostics for time series, heatmaps, AOIs, and spatial outputs.
