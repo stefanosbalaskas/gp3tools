@@ -1,5 +1,21 @@
 # gp3tools 2.1.0.9000
 
+## User-facing naming policy
+
+* Established British English `summarise_*` as the canonical spelling
+  for new user-facing summary helpers.
+* Retained existing American English `summarize_*` functions for
+  backward compatibility.
+* Added five British English compatibility aliases for established
+  American-only summary functions without changing their analytical
+  implementations.
+* Added `gp3tools_naming_policy()`,
+  `audit_gazepoint_naming_consistency()`, and
+  `write_gazepoint_naming_audit()` for documenting and auditing the
+  exported naming contract.
+* Added naming conventions, focused tests, generated documentation,
+  and a user-facing naming-policy article.
+
 ## gpbiometrics integration workflow
 
 * Added `prepare_gazepoint_gpbiometrics_bridge()` for standardizing

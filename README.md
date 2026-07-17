@@ -2083,3 +2083,21 @@ The workflow reports matching coverage and timing differences and supports
 an optional external adapter. Its signal summaries describe recorded
 measurements and temporal alignment; they do not independently establish
 emotion, stress, preference, cognition, comprehension, or diagnosis.
+
+## User-facing naming policy
+
+`gp3tools` uses British English `summarise_*` names as the canonical
+spelling for new user-facing summary helpers. Existing American English
+`summarize_*` exports remain available for backward compatibility.
+
+```r
+policy <- gp3tools_naming_policy()
+audit <- audit_gazepoint_naming_consistency()
+
+policy$rules
+audit$summary
+```
+
+Compatibility aliases call the same underlying analytical implementation;
+they do not alter calculations or remove established function names.
+The complete policy is documented in `NAMING_CONVENTIONS.md`.
