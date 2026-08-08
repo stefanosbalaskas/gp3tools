@@ -3,6 +3,8 @@
 [![R-CMD-check](https://github.com/stefanosbalaskas/gp3tools/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/stefanosbalaskas/gp3tools/actions/workflows/R-CMD-check.yaml)
 [![GitHub
 release](https://img.shields.io/github/v/release/stefanosbalaskas/gp3tools?label=GitHub%20release)](https://github.com/stefanosbalaskas/gp3tools/releases/latest)
+[![CRAN RStudio mirror
+downloads](https://cranlogs.r-pkg.org/badges/grand-total/gp3tools?color=blue)](https://r-pkg.org/pkg/gp3tools)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21292384.svg)](https://doi.org/10.5281/zenodo.21292384)
 [![Software
 paper](https://img.shields.io/badge/Software%20paper-10.3390%2Fjemr19040076-blue.svg)](https://doi.org/10.3390/jemr19040076)
