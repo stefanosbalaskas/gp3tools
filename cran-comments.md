@@ -4,10 +4,11 @@
 
 ## Changes in this release
 
-- Updates gp3tools from the current CRAN release to version 2.0.1.
-- Adds the published peer-reviewed software-paper citation (doi:10.3390/jemr19040076).
-- Includes the expanded import, quality-control, pupil, AOI, sequence, modelling, reporting, Bayesian-planning, and interoperability workflows developed since the previous CRAN release.
-- Adds no new mandatory system requirements and preserves the existing public package interface.
+- Updates gp3tools from the current CRAN release 2.0.1 to version 2.2.1.
+- Synchronizes the CRAN release with the validated 2.2.x GitHub source line.
+- Includes the expanded quality-control, preprocessing, modelling, sequence, reporting, interoperability, and audit workflows introduced since 2.0.1.
+- Adds no new mandatory system requirements.
+- Preserves established interfaces while including the documented additions from the 2.1.x and 2.2.x development cycles.
 
 ## Downstream dependencies
 

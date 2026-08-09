@@ -1,3 +1,9 @@
+# gp3tools 2.2.1
+
+- Synchronizes CRAN-facing release metadata and documentation with the current 2.2.x source line.
+- Adds the lifetime CRAN downloads badge to the repository README.
+- Contains no package-code or public-API changes relative to the published 2.2.0 GitHub release.
+
 # gp3tools 2.2.0
 
 ## User-facing naming policy
