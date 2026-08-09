@@ -231,7 +231,7 @@ paper and report the package version used in the analysis.
 ### R package
 
 > Balaskas, S. (2026). `gp3tools`: Import, Inspect, Analyse, and Report
-> Gazepoint GP3 Exports. R package version 2.1.0.
+> Gazepoint GP3 Exports. R package version 2.2.1.
 > <https://github.com/stefanosbalaskas/gp3tools>
 
 The complete citation entries are available directly from R:
@@ -242,9 +242,9 @@ citation("gp3tools")
 ```
 
 The previously released 2.0.0 software archive remains available at
-<https://doi.org/10.5281/zenodo.21292384>. A new version-specific
-archive DOI should be added after the 2.0.1 GitHub/Zenodo release is
-created.
+<https://doi.org/10.5281/zenodo.21292384>. A version-specific archive
+DOI for 2.2.1 can be added after the corresponding GitHub/Zenodo release
+is created.
 
 ## Installation
 
@@ -2300,12 +2300,12 @@ status fields, and metadata attributes.
 
 ## Current package status
 
-Version 2.0.0 includes the core Gazepoint import, quality-control,
+Version 2.2.1 includes the core Gazepoint import, quality-control,
 pupil, AOI, fixation/transition, time-course, model-diagnostics,
 reporting, ecosystem-adapter, external face-data, and
 workflow-documentation layers.
 
-Recent local validation for version 2.0.0 should end with:
+Release validation for version 2.2.1 should end with:
 
 ``` r
 
