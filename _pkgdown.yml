@@ -13,7 +13,6 @@ template:
         gtag('config', 'G-LXC4VF0RT1');
       </script>
   bootstrap: 5
-
 navbar:
   structure:
     left: [reference, articles, news]
@@ -26,7 +25,6 @@ articles:
     - articles/end-to-end-workflow
     - articles/paper-grade-synthetic-showcase
     - articles/private-data-safety
-
   - title: Core gaze and pupil workflows
     navbar: Core workflows
     contents:
@@ -35,7 +33,6 @@ articles:
     - aoi_workflow
     - articles/aoi-modelling-workflow
     - articles/fixations-transitions-scanpaths
-
   - title: Quality control and reporting
     navbar: QC and reporting
     contents:
@@ -46,7 +43,6 @@ articles:
     - articles/stimulus-layout-qc
     - articles/advanced-aoi-assignment
     - articles/scanpath-qc-quick-wins
-
   - title: Plots and visual diagnostics
     navbar: Plots and diagnostics
     contents:
@@ -55,7 +51,6 @@ articles:
     - articles/sequence-reliability
     - articles/statistical-extensions-plots
     - articles/heatmap-spatial-visualisation
-
   - title: Advanced modelling and sensitivity
     navbar: Advanced modelling
     contents:
@@ -64,7 +59,6 @@ articles:
     - articles/experimental-bayesian-bridges
     - articles/metric-extraction-model-boundaries
     - articles/cluster-permutation-workflow
-
   - title: External face and multimodal workflows
     navbar: Face and multimodal
     contents:
@@ -80,12 +74,13 @@ articles:
     navbar: Ecosystem bridges
     contents:
     - articles/ecosystem-exports
-
   - title: Signal preprocessing and feature engineering
     navbar: Signal extensions
     contents:
       - articles/fixation-blink-preprocessing
       - articles/binocular-pupil-processing
+      - articles/auditable-binocular-pupil-reconstruction
+      - articles/validating-binocular-reconstruction
       - articles/aoi-window-feature-engineering
       - articles/scanpath-clustering-workflow
       - articles/scanpath-cluster-stability
@@ -95,7 +90,6 @@ articles:
       - articles/naming-policy
       - articles/event-detector-comparison
       - articles/event-detector-benchmarking
-
 reference:
   - title: Import, file checks, and master data
     desc: Read Gazepoint exports, inspect columns, create master tables, and validate analysis-ready data.
@@ -112,7 +106,6 @@ reference:
     - audit_gazepoint_master
     - validate_gazepoint_master
     - export_gazepoint_master_audit
-
   - title: Quick workflows, reports, and outputs
     desc: Run folder-level workflows, create reports, save plots, and write standard output tables.
     contents:
@@ -122,7 +115,6 @@ reference:
     - write_gazepoint_outputs
     - export_gazepoint_tables
     - save_gazepoint_plots
-
   - title: Sampling, tracking quality, and QC summaries
     desc: Check sampling rate, tracking quality, screen bounds, coordinate coverage, missingness, and task-phase coverage.
     contents:
@@ -148,7 +140,6 @@ reference:
     - report_gazepoint_qc_overview
     - plot_gazepoint_qc_overview
     - launch_gazepoint_qc_dashboard
-
   - title: Stimulus layout and AOI geometry QC
     desc: Audit AOI geometry, screen coverage, overlap, margins, and stimulus-layout quality.
     contents:
@@ -162,13 +153,22 @@ reference:
     - add_gazepoint_polygon_aoi
     - add_gazepoint_dynamic_aoi
     - audit_gazepoint_dynamic_aoi_coverage
-
   - title: Pupil preprocessing, audits, and windows
-    desc: Flag, interpolate, baseline-correct, smooth, audit, and summarise pupil data.
+    desc: Flag, interpolate, baseline-correct, smooth, audit, reconstruct, validate, and summarise pupil data.
     contents:
     - summarise_gazepoint_pupil
     - flag_gazepoint_pupil
     - combine_gazepoint_eyes
+    - diagnose_gazepoint_binocular_pupil
+    - fit_gazepoint_binocular_calibration
+    - reconstruct_gazepoint_binocular_pupil
+    - construct_gazepoint_combined_pupil
+    - validate_gazepoint_binocular_reconstruction
+    - stress_test_gazepoint_binocular_reconstruction
+    - audit_gazepoint_binocular_reconstruction
+    - analyse_gazepoint_binocular_sensitivity
+    - summarise_gazepoint_binocular_reporting
+    - plot_gazepoint_binocular_diagnostics
     - flag_gazepoint_pupil_artifacts
     - flag_gazepoint_pupil_hampel
     - interpolate_gazepoint_pupil
@@ -190,7 +190,6 @@ reference:
     - plot_gazepoint_pupil_status
     - plot_gazepoint_pupil_preprocessing
     - plot_gazepoint_pupil_timecourse
-
   - title: Pupil modelling and time-course data
     desc: Prepare and fit pupil-window, GAMM, PFE-GAMM, and growth-curve models.
     contents:
@@ -203,7 +202,6 @@ reference:
     - prepare_gazepoint_gca_data
     - fit_gazepoint_gca
     - plot_gazepoint_gca
-
   - title: AOI summaries and AOI modelling
     desc: Summarise AOI behaviour, prepare AOI-window data, and fit GLMM/GAMM/sensitivity models.
     contents:
@@ -222,7 +220,6 @@ reference:
     - fit_gazepoint_aoi_gamm
     - plot_gazepoint_aoi_gamm
     - fit_gazepoint_aoi_brms
-
   - title: Fixations, AOI sequences, transitions, and scanpaths
     desc: Summarise fixation data, AOI sequences, transition matrices, scanpaths, and sequence reliability.
     contents:
@@ -258,7 +255,6 @@ reference:
     - plot_transition_heatmap
     - plot_gazepoint_scanpath
     - plot_gazepoint_scanpaths
-
   - title: Cluster permutation and advanced time-course inference
     desc: Prepare, run, summarise, plot, and export cluster-based time-course analyses.
     contents:
@@ -287,7 +283,6 @@ reference:
     - export_gazepoint_permuco_cluster_input
     - export_gazepoint_permutes_cluster_input
     - prepare_gazepoint_timecourse_test_data
-
   - title: Model diagnostics, summaries, sensitivity, and reporting
     desc: Diagnose models, compare nested models, create model tables, and audit final analysis decisions.
     contents:
@@ -319,7 +314,6 @@ reference:
     - audit_gazepoint_timecourse_grid
     - diagnose_gazepoint_cluster_design
     - recalibrate_gazepoint_gaze
-
   - title: Bayesian planning and advanced model preparation
     contents:
     - recommend_gazepoint_model_family
@@ -335,7 +329,6 @@ reference:
     - classify_gazepoint_events_hmm
     - impute_gazepoint_pupil_gp
     - filter_gazepoint_cnn_uncertainty
-
   - title: External face-data and multimodal workflows
     desc: Work with externally generated face-analysis outputs and multimodal response models.
     contents:
@@ -354,7 +347,6 @@ reference:
     - fit_gazepoint_multimodal_response_model
     - create_gazepoint_face_reporting_checklist
     - report_gazepoint_face_qc
-
   - title: Ecosystem adapters and external package bridges
     desc: Prepare Gazepoint data for other R eye-tracking, pupil, sequence, and export ecosystems.
     contents:
@@ -374,7 +366,6 @@ reference:
     - prepare_gazepoint_gpbiometrics_bridge
     - run_gazepoint_gpbiometrics_workflow
     - create_gazepoint_cross_package_report
-
   - title: Naming and compatibility
     desc: User-facing spelling policy, API audits, and compatibility aliases.
     contents:
@@ -386,7 +377,6 @@ reference:
     - summarise_gazepoint_face_windows
     - summarise_gazepoint_pupil_response_features
     - summarise_gazepoint_time_clusters
-
   - title: Plotting and visual diagnostics
     desc: General-purpose visual diagnostics for time series, heatmaps, AOIs, and spatial outputs.
     contents:
@@ -395,7 +385,6 @@ reference:
     - plot_gazepoint_heatmap
     - plot_gazepoint_heatmap_overlay
     - export_gazepoint_heatmap_png
-
   - title: Signal preprocessing extensions
     desc: Detect fixation and blink events, process binocular pupil signals, smooth coordinates, label AOIs, create sliding-window summaries, and simulate fixation data.
     contents:
@@ -421,7 +410,6 @@ reference:
     - benchmark_gazepoint_event_detectors
     - summarise_gazepoint_event_detector_benchmark
     - plot_gazepoint_event_detector_benchmark
-
   - title: Example and simulated data
     desc: Synthetic data objects and simulation helpers for examples, vignettes, tests, and teaching.
     contents:

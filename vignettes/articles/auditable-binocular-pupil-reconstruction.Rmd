@@ -1,0 +1,485 @@
+---
+title: "Auditable Binocular Pupil Reconstruction and Sensitivity Analysis"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Auditable Binocular Pupil Reconstruction and Sensitivity Analysis}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 8,
+  fig.height = 4.5
+)
+library(gp3tools)
+library(ggplot2)
+```
+
+## Why a separate reconstruction workflow?
+
+Binocular pupil channels are related but not interchangeable. A tracker may temporarily
+retain one eye while the other eye is unavailable, and a simple sample-wise mean can
+therefore change its measurement basis from two eyes to one without making that change
+visible in the analysis table. Conversely, filling a missing eye with a prediction can
+increase continuity while introducing model error.
+
+`gp3tools` already provides lightweight binocular fusion with
+`combine_gazepoint_eyes()`, a regression-oriented fusion helper with
+`regress_gazepoint_pupils()`, pupil artifact detection, PCHIP interpolation, baseline
+correction, preprocessing audits, and sensitivity workflows. The functions in this
+article add a stricter layer for **model-based missing-eye reconstruction**. Their design
+principle is simple: a predicted pupil value must never become indistinguishable from an
+observed pupil value.
+
+The workflow was motivated in part by Ong et al. (2025), who reconstructed a missing
+left or right pupil value from the other eye with linear regression when estimating a
+mean pupil series. Their paper also makes clear that regression can introduce bias when
+pupil variation is rapid or irregular. `gp3tools` therefore treats cross-eye
+reconstruction as a declared policy that should be validated and sensitivity-checked,
+not as a universally correct replacement for missing measurements.
+
+## What reconstruction does and does not mean
+
+The workflow can estimate a temporarily unavailable pupil channel from the
+simultaneously observed contralateral channel. It can answer questions such as:
+
+- how much bilateral information is actually available;
+- whether a participant/session has enough paired samples for calibration;
+- how accurately an eye can be predicted when its true value is deliberately hidden;
+- how much of a final analysis series depends on predicted values;
+- whether reconstruction is concentrated in one experimental condition;
+- whether conclusions are sensitive to using complete cases, available-eye values, or
+  regression-supported reconstruction.
+
+It does **not** establish that a predicted value is the unobserved biological truth, that
+naturally missing values are missing at random, or that a high cross-eye correlation is
+sufficient evidence for unrestricted imputation.
+
+## Synthetic example
+
+The example is generated entirely in R and is not an empirical Gazepoint recording.
+We start with `simulate_gazepoint_pupil_data()` and introduce short monocular losses
+while retaining the generator's bilateral blink losses.
+
+```{r data}
+pupil <- simulate_gazepoint_pupil_data(
+  n_subjects = 6,
+  n_trials = 4,
+  n_time_bins = 120,
+  seed = 20260817
+)
+
+# Add a small deterministic between-eye calibration offset.
+pupil$pupil_right <- 0.08 + 0.98 * pupil$pupil_right
+
+# Introduce synthetic monocular losses. These are deliberately not labelled as blinks.
+left_loss <- c(80:84, 510:515, 1320:1324, 2110:2116)
+right_loss <- c(260:264, 890:894, 1690:1694, 2480:2485)
+pupil$pupil_left[left_loss] <- NA_real_
+pupil$pupil_right[right_loss] <- NA_real_
+
+pupil[75:90, c(
+  "subject", "trial", "condition", "timestamp_ms",
+  "pupil_left", "pupil_right", "blink"
+)]
+```
+
+## Recommended position in the preprocessing workflow
+
+Cross-eye reconstruction and temporal interpolation address different missing-data
+situations. A defensible order for a study that chooses to use reconstruction is:
+
+1. preserve raw eye-specific channels;
+2. identify invalid measurements, blinks, track loss, and other artifacts;
+3. create eye-specific cleaned channels;
+4. diagnose bilateral availability and agreement;
+5. fit and validate cross-eye calibration on directly observed bilateral samples;
+6. reconstruct eligible monocular gaps, if the study has declared that policy;
+7. construct the combined pupil signal under an explicit combination policy;
+8. if required, interpolate remaining *temporal* gaps under a separately declared rule;
+9. baseline-correct, smooth, summarise, and model;
+10. report reconstruction burden and run sensitivity analyses.
+
+This order is not a claim that every study should reconstruct. In many datasets the
+appropriate result of the diagnostic stage will be to retain available-eye or
+complete-case processing instead.
+
+## 1. Diagnose before reconstructing
+
+```{r diagnose}
+diagnostics <- diagnose_gazepoint_binocular_pupil(
+  pupil,
+  left_col = "pupil_left",
+  right_col = "pupil_right",
+  time_col = "timestamp_ms",
+  group_cols = c("subject", "trial"),
+  time_unit = "milliseconds",
+  valid_min = 1,
+  valid_max = 9,
+  min_pairs = 40
+)
+
+diagnostics$summary[c(
+  "subject", "trial", "n", "n_bilateral", "n_left_only",
+  "n_right_only", "prop_bilateral", "correlation",
+  "rmse_between_eyes", "calibration_eligible"
+)]
+```
+
+The diagnostic object also retains missing-eye run information.
+
+```{r diagnose-gaps}
+head(diagnostics$gaps)
+```
+
+Agreement is best inspected rather than reduced to one correlation coefficient.
+
+```{r agreement-plot, fig.cap="Observed left/right pupil agreement. The dashed identity line is distinct from the fitted descriptive relationship."}
+plot_gazepoint_binocular_diagnostics(
+  pupil,
+  type = "agreement",
+  left_col = "pupil_left",
+  right_col = "pupil_right"
+)
+```
+
+```{r bland-altman, fig.cap="Descriptive left-minus-right agreement across the observed pupil range."}
+plot_gazepoint_binocular_diagnostics(
+  pupil,
+  type = "bland_altman",
+  left_col = "pupil_left",
+  right_col = "pupil_right"
+)
+```
+
+The difference plot is descriptive. Its mean difference and +/-1.96 SD lines should not
+be interpreted as proof that the two eye channels are interchangeable.
+
+## 2. Fit auditable bidirectional calibration
+
+The calibration stage fits separate left-from-right and right-from-left models. Here the
+primary models are participant-specific and a pooled fallback is retained. Fallback is
+explicit in the returned model table.
+
+```{r calibration}
+calibration <- fit_gazepoint_binocular_calibration(
+  pupil,
+  left_col = "pupil_left",
+  right_col = "pupil_right",
+  group_cols = "subject",
+  # Default fallback is pooled when primary groups are supplied.
+  min_pairs = 80,
+  min_unique = 10,
+  min_r2 = NULL,
+  valid_min = 1,
+  valid_max = 9
+)
+
+calibration$models[c(
+  "model_id", "direction", "calibration_level", "n_pairs",
+  "intercept", "slope", "r_squared", "rmse", "mae",
+  "eligible", "reason"
+)]
+```
+
+`min_r2 = NULL` is intentional. R-squared is reported, but no universal R-squared
+threshold is presented as a validity rule. A study can declare a threshold if it has a
+substantive reason to do so.
+
+## 3. Validate by hiding values that are actually known
+
+Bilateral observations provide an unusually useful validation opportunity: one eye can
+be deliberately hidden and reconstructed from the other while its true observed value is
+retained outside the training data for error calculation.
+
+```{r validation}
+validation <- validate_gazepoint_binocular_reconstruction(
+  pupil,
+  left_col = "pupil_left",
+  right_col = "pupil_right",
+  time_col = "timestamp_ms",
+  group_cols = "subject",
+  gap_group_cols = c("subject", "trial"),
+  direction = "both",
+  mask_prop = 0.10,
+  mask_mode = "contiguous",
+  block_size = 5,
+  repeats = 3,
+  seed = 1729,
+  min_pairs = 80,
+  valid_min = 1,
+  valid_max = 9
+)
+
+validation$summary
+```
+
+The result reports the fraction of requested held-out samples that could actually be
+reconstructed, together with RMSE, MAE, bias, and correlation.
+
+```{r validation-plot, fig.cap="Observed versus reconstructed pupil values under artificial monocular loss."}
+plot_gazepoint_binocular_diagnostics(validation, type = "validation")
+```
+
+```{r validation-residuals, fig.cap="Prediction error as a function of reconstructed pupil diameter."}
+plot_gazepoint_binocular_diagnostics(validation, type = "residuals")
+```
+
+A good artificial-missingness result is evidence that the declared model predicts held-out
+bilateral samples well. It cannot show that naturally missing samples follow the same
+missingness process.
+
+## 4. Reconstruct under explicit gates
+
+The following policy allows regression reconstruction only for missing-eye runs no longer
+than 150 ms, disallows predictor extrapolation, and excludes any row that is already
+marked as a blink.
+
+```{r reconstruct}
+reconstructed <- reconstruct_gazepoint_binocular_pupil(
+  pupil,
+  left_col = "pupil_left",
+  right_col = "pupil_right",
+  time_col = "timestamp_ms",
+  group_cols = "subject",
+  gap_group_cols = c("subject", "trial"),
+  method = "linear_regression",
+  calibration = calibration,
+  time_unit = "milliseconds",
+  max_gap_ms = 150,
+  allow_edge_gaps = TRUE,
+  allow_extrapolation = FALSE,
+  valid_min = 1,
+  valid_max = 9,
+  exclude_flag_cols = "blink"
+)
+
+table(reconstructed$gp3_binocular_status)
+```
+
+The original columns are untouched. The added columns distinguish the observed and final
+channels, prediction direction, model identity, calibration level, model R-squared,
+extrapolation status, gap duration, and row-level outcome.
+
+```{r provenance-columns}
+reconstructed[75:90, c(
+  "pupil_left", "pupil_right",
+  "gp3_binocular_left_observed", "gp3_binocular_right_observed",
+  "gp3_binocular_left_final", "gp3_binocular_right_final",
+  "gp3_binocular_reconstructed", "gp3_binocular_model_id",
+  "gp3_binocular_gap_ms", "gp3_binocular_status"
+)]
+```
+
+## 5. Construct a combined signal as a separate decision
+
+Reconstruction does not silently create the outcome variable. The analyst chooses how a
+combined pupil signal should be constructed.
+
+```{r construct}
+combined <- construct_gazepoint_combined_pupil(
+  reconstructed,
+  left_col = "pupil_left",
+  right_col = "pupil_right",
+  policy = "reconstructed_mean",
+  output_col = "pupil_reconstruction_policy",
+  status_col = "pupil_reconstruction_source"
+)
+
+table(combined$pupil_reconstruction_source)
+```
+
+Alternative policies include `complete_case`, `available_eye`, `left_only`, and
+`right_only`.
+
+## 6. Inspect temporal provenance
+
+```{r trace, fig.cap="Observed binocular traces with reconstructed final values marked explicitly."}
+plot_gazepoint_binocular_diagnostics(reconstructed, type = "trace")
+```
+
+```{r timeline, fig.cap="Row-level binocular information status over time."}
+plot_gazepoint_binocular_diagnostics(reconstructed, type = "timeline")
+```
+
+```{r gaps, fig.cap="Duration of missing-eye runs that were reconstructed."}
+plot_gazepoint_binocular_diagnostics(reconstructed, type = "gaps", bins = 15)
+```
+
+The dashboard option returns a list of these ggplot objects rather than adding a layout
+dependency.
+
+```{r dashboard}
+dashboard <- plot_gazepoint_binocular_diagnostics(
+  reconstructed,
+  type = "dashboard"
+)
+names(dashboard)
+```
+
+## 7. Audit reconstruction burden and condition imbalance
+
+```{r audit}
+audit <- audit_gazepoint_binocular_reconstruction(
+  reconstructed,
+  by = "condition",
+  max_reconstruction_prop = 0.20,
+  max_group_rate_difference = 0.10
+)
+
+audit$overall
+audit$by_group
+audit$reconstruction_shift
+audit$audit
+```
+
+The thresholds above are governance flags. They are not universal statistical or
+physiological validity cutoffs.
+
+```{r burden-plot, fig.cap="Reconstruction burden by experimental condition."}
+plot_gazepoint_binocular_diagnostics(audit, type = "burden")
+```
+
+## 8. Compare alternative pupil-construction policies
+
+```{r sensitivity}
+sensitivity <- analyse_gazepoint_binocular_sensitivity(
+  reconstructed,
+  left_col = "pupil_left",
+  right_col = "pupil_right",
+  policies = c(
+    "complete_case",
+    "available_eye",
+    "reconstructed_mean",
+    "left_only",
+    "right_only"
+  ),
+  condition_col = "condition"
+)
+
+sensitivity$summary
+sensitivity$correlations
+sensitivity$condition_contrasts
+```
+
+The condition contrasts are descriptive mean differences only. The function deliberately
+does not generate a new p-value for every preprocessing policy.
+
+```{r sensitivity-plot, fig.cap="Mean pupil diameter under alternative binocular construction policies."}
+plot_gazepoint_binocular_diagnostics(sensitivity, type = "sensitivity")
+```
+
+## 9. Reconstruction and PCHIP are different decisions
+
+Ong et al. (2025) used PCHIP to create a common high-frequency time base, removed
+interpolated segments corresponding to original gaps longer than 250 ms, and then used
+cross-eye regression when one eye remained unavailable. `gp3tools` does not hard-code
+that study-specific sequence or cutoff.
+
+For a workflow that uses cross-eye reconstruction first, PCHIP can be applied afterwards
+to **remaining** short gaps in the explicitly constructed signal. This is useful when the
+analyst wants to keep model-based cross-eye support separate from temporal interpolation.
+
+```{r pchip, eval=TRUE}
+if (requireNamespace("pracma", quietly = TRUE)) {
+  pchip <- interpolate_gazepoint_pupil_pchip(
+    combined,
+    pupil_col = "pupil_reconstruction_policy",
+    time_col = "timestamp_ms",
+    grouping_cols = c("subject", "trial"),
+    max_gap_ms = 150,
+    output_col = "pupil_after_reconstruction_pchip",
+    flag_col = "pupil_pchip_after_reconstruction",
+    status_col = "pupil_pchip_status"
+  )
+
+  table(pchip$pupil_pchip_after_reconstruction)
+}
+```
+
+A study can reverse the order if its measurement and synchronization design requires it,
+but it should report the choice. The two operations should not be collapsed into an
+undocumented generic "imputation" step.
+
+## 10. Baseline correction follows the declared combined signal
+
+After choosing the pupil-construction policy, the resulting signal can enter the existing
+baseline and smoothing workflow. Baseline windows should be designed prospectively when
+possible. Ong et al. selected the first period with at least 400 ms of consecutive valid
+bilateral data because a controlled baseline had not been collected; the authors identify
+this as a limitation rather than a universal rule.
+
+A study with an experimental baseline can use the existing
+`baseline_correct_gazepoint_pupil()` interface on the declared combined column.
+
+```{r baseline-example, eval=FALSE}
+baseline_corrected <- baseline_correct_gazepoint_pupil(
+  combined,
+  pupil_col = "pupil_reconstruction_policy",
+  time_col = "timestamp_ms",
+  group_cols = c("subject", "trial"),
+  baseline_window = c(0, 200),
+  min_baseline_samples = 5
+)
+```
+
+The example is not executed because the synthetic trials are not designed as a real
+baseline experiment; the code illustrates where the existing function belongs in the
+workflow.
+
+## 11. Manuscript-ready reporting
+
+```{r reporting}
+reporting <- summarise_gazepoint_binocular_reporting(
+  reconstructed,
+  audit = audit,
+  validation = validation
+)
+
+reporting$summary
+cat(reporting$text)
+```
+
+The returned limitations can be reused when preparing a methods supplement or analysis
+decision log.
+
+```{r reporting-limitations}
+reporting$limitations
+```
+
+## 12. When reconstruction should not be used
+
+A conservative workflow should retain an explicit `reconstruction_ineligible` or
+`reconstruction_blocked_*` status when:
+
+- too few bilateral observations are available for calibration;
+- one eye has effectively no variance;
+- the fitted relationship is unstable or biologically implausible;
+- a prediction requires prohibited extrapolation;
+- the predicted diameter violates declared bounds;
+- the missing-eye run exceeds the declared duration limit;
+- a row is explicitly excluded because it is blink/artifact contaminated;
+- pseudo-missing validation shows unacceptable prediction error for the intended use;
+- reconstruction burden is so large or imbalanced that the downstream result is
+  materially policy-dependent.
+
+The framework therefore permits a scientifically meaningful outcome of **no
+reconstruction**.
+
+## 13. Relationship to the existing lightweight binocular helpers
+
+Use `combine_gazepoint_eyes()` when a transparent sample-wise fusion rule is all that is
+required. Use the existing `regress_gazepoint_pupils()` workflow when its documented
+regression-fusion behavior matches the analysis plan. Use the functions in this article
+when the goal is specifically to reconstruct a temporarily missing eye with explicit
+calibration eligibility, gap/extrapolation gates, pseudo-missing validation, row-level
+provenance, reconstruction burden, and sensitivity analysis.
+
+No existing function changes its default behavior.
+
+## References
+
+Ong, J., He, W., Maglanque, P., Jiang, X., Gillman, L. M., Vergis, A., & Hardy, K. (2025). A Preprocessing Pipeline for Pupillometry Signal from Multimodal iMotion Data. *Sensors*, 25(15), 4737. doi:10.3390/s25154737.
