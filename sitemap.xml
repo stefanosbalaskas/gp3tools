@@ -1,5 +1,8 @@
 <urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/404.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3tools/CONTRIBUTING.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3tools/LICENSE-text.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3tools/NAMING_CONVENTIONS.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/advanced-aoi-assignment.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/aoi-modelling-workflow.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/aoi-window-feature-engineering.html</loc></url>
@@ -48,10 +51,7 @@
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/stimulus-layout-qc.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/validating-binocular-reconstruction.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/authors.html</loc></url>
-<url><loc>https://stefanosbalaskas.github.io/gp3tools/CONTRIBUTING.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/index.html</loc></url>
-<url><loc>https://stefanosbalaskas.github.io/gp3tools/LICENSE-text.html</loc></url>
-<url><loc>https://stefanosbalaskas.github.io/gp3tools/NAMING_CONVENTIONS.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/news/index.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/add_gazepoint_aoi.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/add_gazepoint_dynamic_aoi.html</loc></url>
@@ -215,9 +215,9 @@
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_pupil_timecourse.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_qc_overview.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_scanpath.html</loc></url>
-<url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_scanpaths.html</loc></url>
-<url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_scanpath_clusters.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_scanpath_cluster_stability.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_scanpath_clusters.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_scanpaths.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_stimulus_layout_qc.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_time_series.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_time_varying_effect.html</loc></url>
@@ -238,9 +238,9 @@
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/prepare_gazepoint_heatmap_data.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/prepare_gazepoint_hmm_data.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/prepare_gazepoint_multimodal_data.html</loc></url>
-<url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/prepare_gazepoint_pupillometryr_data.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/prepare_gazepoint_pupil_gamm_data.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/prepare_gazepoint_pupil_window_model_data.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/prepare_gazepoint_pupillometryr_data.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/prepare_gazepoint_semimarkov_data.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/prepare_gazepoint_timecourse_test_data.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/prepare_gazepoint_traminer_data.html</loc></url>

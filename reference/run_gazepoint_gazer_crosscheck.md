@@ -84,32 +84,29 @@ run_gazepoint_gazer_crosscheck(
 - smooth_n:
 
   Smoothing window parameter passed to
-  [`gazer::smooth_interpolate_pupil()`](https://rdrr.io/pkg/gazer/man/smooth_interpolate_pupil.html).
+  `gazer::smooth_interpolate_pupil()`.
 
 - step_first:
 
-  Processing order passed to
-  [`gazer::smooth_interpolate_pupil()`](https://rdrr.io/pkg/gazer/man/smooth_interpolate_pupil.html).
+  Processing order passed to `gazer::smooth_interpolate_pupil()`.
 
 - interpolation_type:
 
-  Interpolation type passed to
-  [`gazer::smooth_interpolate_pupil()`](https://rdrr.io/pkg/gazer/man/smooth_interpolate_pupil.html).
+  Interpolation type passed to `gazer::smooth_interpolate_pupil()`.
 
 - maxgap:
 
-  Maximum gap passed to
-  [`gazer::smooth_interpolate_pupil()`](https://rdrr.io/pkg/gazer/man/smooth_interpolate_pupil.html).
+  Maximum gap passed to `gazer::smooth_interpolate_pupil()`.
 
 - baseline_window:
 
   Optional numeric vector of length 2 passed to
-  [`gazer::baseline_correction_pupil()`](https://rdrr.io/pkg/gazer/man/baseline_correction_pupil.html).
+  `gazer::baseline_correction_pupil()`.
 
 - baseline_event:
 
   Optional event label passed to
-  [`gazer::baseline_correction_pupil_msg()`](https://rdrr.io/pkg/gazer/man/baseline_correction_pupil_msg.html).
+  `gazer::baseline_correction_pupil_msg()`.
 
 - baseline_dur:
 
@@ -121,8 +118,7 @@ run_gazepoint_gazer_crosscheck(
 
 - bin_length:
 
-  Optional bin length passed to
-  [`gazer::downsample_gaze()`](https://rdrr.io/pkg/gazer/man/downsample_gaze.html).
+  Optional bin length passed to `gazer::downsample_gaze()`.
 
 - name:
 

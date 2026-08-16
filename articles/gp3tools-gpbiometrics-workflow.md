@@ -94,9 +94,9 @@ workflow$audit
 #>   unmatched_rows matched_rate tolerance_ms median_absolute_difference_ms
 #> 1              0            1           10                             1
 #>   maximum_absolute_difference_ms signal_count summary_rows gp3tools_version
-#> 1                              1            2           10       2.2.1.9000
+#> 1                              1            2           10            2.3.0
 #>   gpbiometrics_version
-#> 1                0.1.0
+#> 1                 <NA>
 workflow$signal_summary
 #>    participant_id trial_id      aoi       event signal n_rows n_nonmissing
 #> 1             P01      T01    claim                GSR      2            2
