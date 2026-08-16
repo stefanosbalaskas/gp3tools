@@ -25,6 +25,7 @@ It supports common Gazepoint workflows, including:
 * sample-level master-table creation, auditing, and validation;
 * light and conservative pupil preprocessing;
 * pupil preprocessing audits, reliability checks, interpolation sensitivity, and stimulus-luminance auditing;
+* auditable binocular pupil reconstruction, artificial-monocular-loss validation, sensitivity analysis, and reconstruction-burden reporting;
 * pupil-window confirmatory LMMs and model-family sensitivity checks;
 * AOI entries, AOI windows, AOI denominators, and AOI-window GLMMs;
 * AOI/fixation/transition feature extraction and time-varying transition matrices;
@@ -98,6 +99,7 @@ Use `summarize_gazepoint_missingness()`, `segment_gazepoint_task_phases()`, `col
 | Summarise missingness and task-phase coverage | `summarize_gazepoint_missingness()`, `plot_gazepoint_missingness_profile()`, `report_gazepoint_missingness()`, `segment_gazepoint_task_phases()`, `summarize_gazepoint_phase_coverage()`, `plot_gazepoint_phase_timeline()` |
 | Collect QC outputs for reporting | `collect_gazepoint_qc_summaries()`, `summarize_gazepoint_qc_status()`, `report_gazepoint_qc_overview()`, `plot_gazepoint_qc_overview()` |
 | Preprocess pupil data | `flag_gazepoint_pupil()`, `flag_gazepoint_pupil_artifacts()`, `flag_gazepoint_pupil_hampel()`, `interpolate_gazepoint_pupil()`, `smooth_gazepoint_pupil()`, `baseline_correct_gazepoint_pupil()`, `preprocess_gazepoint_signals()` |
+| Reconstruct and validate binocular pupil signals | `diagnose_gazepoint_binocular_pupil()`, `fit_gazepoint_binocular_calibration()`, `reconstruct_gazepoint_binocular_pupil()`, `construct_gazepoint_combined_pupil()`, `validate_gazepoint_binocular_reconstruction()`, `stress_test_gazepoint_binocular_reconstruction()`, `audit_gazepoint_binocular_reconstruction()`, `analyse_gazepoint_binocular_sensitivity()`, `summarise_gazepoint_binocular_reporting()`, `plot_gazepoint_binocular_diagnostics()` |
 | Compare and benchmark gaze-event detectors | `compare_gazepoint_event_detectors()`, `summarise_gazepoint_event_detector_agreement()`, `plot_gazepoint_event_detector_agreement()`, `create_gazepoint_event_review_template()`, `benchmark_gazepoint_event_detectors()`, `summarise_gazepoint_event_detector_benchmark()`, `plot_gazepoint_event_detector_benchmark()` |
 | Audit pupil reliability and preprocessing choices | `audit_gazepoint_pupil_gaps()`, `audit_gazepoint_pupil_baseline()`, `audit_gazepoint_pupil_drift()`, `audit_gazepoint_pupil_reliability()`, `audit_gazepoint_pupil_overlap_risk()` |
 | Summarise and model pupil outcomes | `summarise_gazepoint_pupil()`, `summarise_gazepoint_pupil_windows()`, `summarise_gazepoint_pupil_trial_features()`, `fit_gazepoint_pupil_window_lmm()`, `fit_gazepoint_pupil_gamm()` |
@@ -134,7 +136,7 @@ When `gp3tools` supports a publication, cite the peer-reviewed software paper an
 
 ### R package
 
-> Balaskas, S. (2026). `gp3tools`: Import, Inspect, Analyse, and Report Gazepoint GP3 Exports. R package version 2.2.1. https://github.com/stefanosbalaskas/gp3tools
+> Balaskas, S. (2026). `gp3tools`: Import, Inspect, Analyse, and Report Gazepoint GP3 Exports. R package version 2.3.0. https://github.com/stefanosbalaskas/gp3tools
 
 The complete citation entries are available directly from R:
 
@@ -142,7 +144,7 @@ The complete citation entries are available directly from R:
 citation("gp3tools")
 ```
 
-The previously released 2.0.0 software archive remains available at <https://doi.org/10.5281/zenodo.21292384>. A version-specific archive DOI for 2.2.1 can be added after the corresponding GitHub/Zenodo release is created.
+The previously released 2.0.0 software archive remains available at <https://doi.org/10.5281/zenodo.21292384>. A version-specific archive DOI for 2.3.0 can be added after the corresponding GitHub/Zenodo release is created.
 
 ## Installation
 
@@ -1989,9 +1991,9 @@ The adapter helpers do not import the external packages directly. Instead, they 
 
 ## Current package status
 
-Version 2.2.1 includes the core Gazepoint import, quality-control, pupil, AOI, fixation/transition, time-course, model-diagnostics, reporting, ecosystem-adapter, external face-data, and workflow-documentation layers.
+Version 2.3.0 includes the core Gazepoint import, quality-control, pupil, AOI, fixation/transition, time-course, model-diagnostics, reporting, ecosystem-adapter, external face-data, and workflow-documentation layers.
 
-Release validation for version 2.2.1 should end with:
+Release validation for version 2.3.0 should end with:
 
 ``` r
 devtools::check()

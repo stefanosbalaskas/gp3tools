@@ -4,11 +4,13 @@
 
 ## Changes in this release
 
-- Updates gp3tools from the current CRAN release 2.0.1 to version 2.2.1.
-- Synchronizes the CRAN release with the validated 2.2.x GitHub source line.
-- Includes the expanded quality-control, preprocessing, modelling, sequence, reporting, interoperability, and audit workflows introduced since 2.0.1.
-- Adds no new mandatory system requirements.
-- Preserves established interfaces while including the documented additions from the 2.1.x and 2.2.x development cycles.
+- Updates gp3tools from the current CRAN release 2.0.1 to version 2.3.0.
+- Includes the validated 2.1.x and 2.2.x quality-control, preprocessing, modelling, sequence, reporting, interoperability, and audit extensions.
+- Adds an auditable binocular pupil-reconstruction workflow with explicit bilateral diagnostics, cross-eye calibration, reconstruction, combination policies, artificial-monocular-loss validation, stress testing, sensitivity analysis, reconstruction-burden auditing, reporting, and diagnostic plots.
+- Adds 10 binocular reconstruction and validation functions and two executable articles.
+- Existing binocular helpers remain available and their established behaviour is unchanged.
+- Adds no new mandatory system requirements or mandatory package dependencies.
+- Preserves established public interfaces.
 
 ## Downstream dependencies
 
