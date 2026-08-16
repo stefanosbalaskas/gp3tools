@@ -90,10 +90,10 @@ write.csv(
 
 read_gazepoint_face_export(tmp)
 #> # A tibble: 2 × 10
-#>   gp3_face_file        gp3_face_path      gp3_face_source gp3_face_participant…¹
-#>   <chr>                <chr>              <chr>           <chr>                 
-#> 1 file1c2d1014e8cf.csv /tmp/Rtmp8SNo0A/f… openface        NA                    
-#> 2 file1c2d1014e8cf.csv /tmp/Rtmp8SNo0A/f… openface        NA                    
+#>   gp3_face_file       gp3_face_path       gp3_face_source gp3_face_participant…¹
+#>   <chr>               <chr>               <chr>           <chr>                 
+#> 1 file3ec560b7fba.csv C:/Users/Stefanos-… openface        NA                    
+#> 2 file3ec560b7fba.csv C:/Users/Stefanos-… openface        NA                    
 #> # ℹ abbreviated name: ¹​gp3_face_participant_id
 #> # ℹ 6 more variables: gp3_face_session_id <chr>, frame <int>, timestamp <dbl>,
 #> #   confidence <dbl>, success <int>, AU12_r <dbl>

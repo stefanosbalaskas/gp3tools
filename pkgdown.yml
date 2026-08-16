@@ -1,11 +1,11 @@
-pandoc: 3.8.3
+pandoc: '3.10'
 pkgdown: 2.2.1
 pkgdown_sha: ~
 articles:
   articles/advanced-aoi-assignment: advanced-aoi-assignment.html
-  aoi_workflow: aoi_workflow.html
   articles/aoi-modelling-workflow: aoi-modelling-workflow.html
   articles/aoi-window-feature-engineering: aoi-window-feature-engineering.html
+  aoi_workflow: aoi_workflow.html
   articles/auditable-binocular-pupil-reconstruction: auditable-binocular-pupil-reconstruction.html
   articles/bayesian-planning-workflow: bayesian-planning-workflow.html
   articles/binocular-pupil-processing: binocular-pupil-processing.html
@@ -36,8 +36,8 @@ articles:
   articles/plot-gallery-expanded: plot-gallery-expanded.html
   articles/plot-gallery: plot-gallery.html
   articles/private-data-safety: private-data-safety.html
-  pupil_workflow: pupil_workflow.html
   articles/pupil-preprocessing-baseline-audit: pupil-preprocessing-baseline-audit.html
+  pupil_workflow: pupil_workflow.html
   articles/qc-dashboard-workflow: qc-dashboard-workflow.html
   articles/qc-reporting-bundle: qc-reporting-bundle.html
   articles/scanpath-cluster-stability: scanpath-cluster-stability.html
@@ -48,7 +48,7 @@ articles:
   articles/statistical-extensions-plots: statistical-extensions-plots.html
   articles/stimulus-layout-qc: stimulus-layout-qc.html
   articles/validating-binocular-reconstruction: validating-binocular-reconstruction.html
-last_built: 2026-08-16T22:55Z
+last_built: 2026-08-16T23:07Z
 urls:
   reference: https://stefanosbalaskas.github.io/gp3tools/reference
   article: https://stefanosbalaskas.github.io/gp3tools/articles

@@ -370,7 +370,7 @@
 </h2>
 <p>During development, install the package locally from the package project folder:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install</span><span class="op">(</span>reload <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/install.html" class="external-link">install</a></span><span class="op">(</span>reload <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <p>Then restart RStudio and load the package:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/stefanosbalaskas/gp3tools" class="external-link">gp3tools</a></span><span class="op">)</span></span></code></pre></div>
@@ -1868,11 +1868,11 @@
 <p>Version 2.2.1 includes the core Gazepoint import, quality-control, pupil, AOI, fixation/transition, time-course, model-diagnostics, reporting, ecosystem-adapter, external face-data, and workflow-documentation layers.</p>
 <p>Release validation for version 2.2.1 should end with:</p>
 <div class="sourceCode" id="cb121"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">check</span><span class="op">(</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/check.html" class="external-link">check</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co"># 0 errors | 0 warnings | 0 notes</span></span></code></pre></div>
 <p>Focused tests for the recent external face-data, multimodal, reporting, and workflow-documentation branches have also passed with <code>FAIL 0</code>, <code>WARN 0</code>, and <code>SKIP 0</code>.</p>
 <p>During full tests, <code>boundary (singular) fit: see help('isSingular')</code> messages may appear in mixed-model diagnostic contexts. These are expected diagnostic messages from singular-fit test fixtures and are not package failures when the final test summary reports <code>FAIL 0 | WARN 0</code>.</p>
-<p>On some Windows systems, a Quarto/TMPDIR message may appear after <code>devtools::check()</code>. This is harmless when the final R CMD check results report:</p>
+<p>On some Windows systems, a Quarto/TMPDIR message may appear after <code><a href="https://devtools.r-lib.org/reference/check.html" class="external-link">devtools::check()</a></code>. This is harmless when the final R CMD check results report:</p>
 <pre class="text"><code>0 errors | 0 warnings | 0 notes</code></pre>
 <p>The build may show a message that the package depends on R <code>&gt;= 4.1.0</code> because native pipe syntax is used. This is expected.</p>
 </div>

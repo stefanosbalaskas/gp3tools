@@ -49,10 +49,10 @@ small$summary
 #> 1        1       1000       1          1000  generate        1         1
 #> 2        2       5000       2          2500  generate        1         1
 #>   median_elapsed_s minimum_elapsed_s maximum_elapsed_s median_heap_delta_mb
-#> 1            0.004             0.004             0.004             1.949699
-#> 2            0.007             0.007             0.007             3.578438
+#> 1             0.00              0.00              0.00             1.949364
+#> 2             0.01              0.01              0.01             3.578438
 #>   maximum_heap_delta_mb median_output_size_mb
-#> 1              1.949699             0.1873322
+#> 1              1.949364             0.1873322
 #> 2              3.578438             0.9200592
 small$regression$overall
 #>    pass n_checks n_pass n_fail

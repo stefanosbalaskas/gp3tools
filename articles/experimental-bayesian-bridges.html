@@ -45,7 +45,7 @@
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
 <li class="nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
-<li class="active nav-item dropdown">
+<li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><hr class="dropdown-divider"></li>
@@ -134,7 +134,7 @@
       <img src="../logo.png" class="logo" alt=""><h1>Experimental Bayesian bridge helpers</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/stefanosbalaskas/gp3tools/blob/master/vignettes/articles/experimental-bayesian-bridges.Rmd" class="external-link"><code>vignettes/articles/experimental-bayesian-bridges.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/stefanosbalaskas/gp3tools/blob/HEAD/vignettes/articles/experimental-bayesian-bridges.Rmd" class="external-link"><code>vignettes/articles/experimental-bayesian-bridges.Rmd</code></a></small>
       <div class="d-none name"><code>experimental-bayesian-bridges.Rmd</code></div>
     </div>
 
@@ -268,23 +268,23 @@ create a reproducible Python script from an HDDM-ready CSV export.</p>
 <span>  <span class="va">tmp_py</span>,</span>
 <span>  n <span class="op">=</span> <span class="fl">18</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt;  [1] "import hddm"                                                                 </span></span>
-<span><span class="co">#&gt;  [2] "import pandas as pd"                                                         </span></span>
-<span><span class="co">#&gt;  [3] ""                                                                            </span></span>
-<span><span class="co">#&gt;  [4] "data = pd.read_csv(r\"/tmp/RtmpiVoH7L/file59064e3d3276.csv\")"               </span></span>
-<span><span class="co">#&gt;  [5] ""                                                                            </span></span>
-<span><span class="co">#&gt;  [6] "reg_models = ["                                                              </span></span>
-<span><span class="co">#&gt;  [7] "    {\"model\": \"v ~ 1 + target_dwell_ms_z\", \"link_func\": lambda x: x}," </span></span>
-<span><span class="co">#&gt;  [8] "    {\"model\": \"a ~ 1 + pupil_peak_z\", \"link_func\": lambda x: x}"       </span></span>
-<span><span class="co">#&gt;  [9] "]"                                                                           </span></span>
-<span><span class="co">#&gt; [10] ""                                                                            </span></span>
-<span><span class="co">#&gt; [11] "model = hddm.HDDMRegressor("                                                 </span></span>
-<span><span class="co">#&gt; [12] "    data,"                                                                   </span></span>
-<span><span class="co">#&gt; [13] "    reg_models,"                                                             </span></span>
-<span><span class="co">#&gt; [14] "    include=[\"v\", \"a\", \"t\"],"                                          </span></span>
-<span><span class="co">#&gt; [15] "    group_only_regressors=False"                                             </span></span>
-<span><span class="co">#&gt; [16] ")"                                                                           </span></span>
-<span><span class="co">#&gt; [17] ""                                                                            </span></span>
+<span><span class="co">#&gt;  [1] "import hddm"                                                                                     </span></span>
+<span><span class="co">#&gt;  [2] "import pandas as pd"                                                                             </span></span>
+<span><span class="co">#&gt;  [3] ""                                                                                                </span></span>
+<span><span class="co">#&gt;  [4] "data = pd.read_csv(r\"C:/Users/Stefanos-PC/AppData/Local/Temp/RtmpWiFHps/fileda045c652bc5.csv\")"</span></span>
+<span><span class="co">#&gt;  [5] ""                                                                                                </span></span>
+<span><span class="co">#&gt;  [6] "reg_models = ["                                                                                  </span></span>
+<span><span class="co">#&gt;  [7] "    {\"model\": \"v ~ 1 + target_dwell_ms_z\", \"link_func\": lambda x: x},"                     </span></span>
+<span><span class="co">#&gt;  [8] "    {\"model\": \"a ~ 1 + pupil_peak_z\", \"link_func\": lambda x: x}"                           </span></span>
+<span><span class="co">#&gt;  [9] "]"                                                                                               </span></span>
+<span><span class="co">#&gt; [10] ""                                                                                                </span></span>
+<span><span class="co">#&gt; [11] "model = hddm.HDDMRegressor("                                                                     </span></span>
+<span><span class="co">#&gt; [12] "    data,"                                                                                       </span></span>
+<span><span class="co">#&gt; [13] "    reg_models,"                                                                                 </span></span>
+<span><span class="co">#&gt; [14] "    include=[\"v\", \"a\", \"t\"],"                                                              </span></span>
+<span><span class="co">#&gt; [15] "    group_only_regressors=False"                                                                 </span></span>
+<span><span class="co">#&gt; [16] ")"                                                                                               </span></span>
+<span><span class="co">#&gt; [17] ""                                                                                                </span></span>
 <span><span class="co">#&gt; [18] "model.sample(draws=1000, burn=500, dbname=\"hddm_traces.db\", db=\"pickle\")"</span></span></code></pre></div>
 <p>The generated script should be archived with the analysis and
 executed in a documented HDDM environment. The HDDM version, Python

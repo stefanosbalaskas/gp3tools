@@ -25,7 +25,9 @@ Pull requests should:
 - include tests for new user-facing behaviour;
 - update documentation when arguments or outputs change;
 - keep optional external-package workflows optional;
-- pass `devtools::check()` with 0 errors, 0 warnings, and 0 notes.
+- pass
+  [`devtools::check()`](https://devtools.r-lib.org/reference/check.html)
+  with 0 errors, 0 warnings, and 0 notes.
 
 ## Data privacy
 

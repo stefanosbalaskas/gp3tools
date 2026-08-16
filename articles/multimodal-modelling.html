@@ -42,7 +42,7 @@
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
 <li class="nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
-<li class="active nav-item dropdown">
+<li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><hr class="dropdown-divider"></li>
@@ -131,7 +131,7 @@
       <img src="../logo.png" class="logo" alt=""><h1>Multimodal modelling with external face-window summaries</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/stefanosbalaskas/gp3tools/blob/master/vignettes/articles/multimodal-modelling.Rmd" class="external-link"><code>vignettes/articles/multimodal-modelling.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/stefanosbalaskas/gp3tools/blob/HEAD/vignettes/articles/multimodal-modelling.Rmd" class="external-link"><code>vignettes/articles/multimodal-modelling.Rmd</code></a></small>
       <div class="d-none name"><code>multimodal-modelling.Rmd</code></div>
     </div>
 
@@ -290,7 +290,7 @@ omitted, the helper uses <code><a href="https://rdrr.io/r/stats/lm.html" class="
 <span></span>
 <span><span class="va">face_fit</span><span class="op">$</span><span class="va">formula</span></span>
 <span><span class="co">#&gt; rating ~ AU04_r_mean_z + AU12_r_mean_z</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x55e87fb624d0&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt; &lt;environment: 0x0000024f4c339a80&gt;</span></span></code></pre></div>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">face_fit</span><span class="op">$</span><span class="va">model</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -338,7 +338,7 @@ response predictors.</p>
 <span><span class="va">multi_fit</span><span class="op">$</span><span class="va">formula</span></span>
 <span><span class="co">#&gt; rating ~ AU04_r_mean_z + AU12_r_mean_z + claim_dwell_time_z + </span></span>
 <span><span class="co">#&gt;     pupil_mean_z</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x55e880578fa0&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt; &lt;environment: 0x0000024f4cc82268&gt;</span></span></code></pre></div>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">multi_fit</span><span class="op">$</span><span class="va">model</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -378,7 +378,7 @@ linear model unless random effects are requested.</p>
 <span></span>
 <span><span class="va">choice_fit</span><span class="op">$</span><span class="va">formula</span></span>
 <span><span class="co">#&gt; choice ~ AU12_r_mean_z + claim_dwell_time_z</span></span>
-<span><span class="co">#&gt; &lt;environment: 0x55e87b28d928&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt; &lt;environment: 0x0000024f49d16c80&gt;</span></span></code></pre></div>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">choice_fit</span><span class="op">$</span><span class="va">model</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
