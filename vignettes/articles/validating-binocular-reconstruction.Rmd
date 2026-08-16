@@ -1,0 +1,233 @@
+---
+title: "Validating Pupil Reconstruction with Artificial Monocular Loss"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Validating Pupil Reconstruction with Artificial Monocular Loss}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 8,
+  fig.height = 4.5
+)
+library(gp3tools)
+```
+
+## Purpose
+
+Cross-eye pupil reconstruction has a useful property that ordinary missing-data problems
+often lack: bilateral samples provide observable targets that can be hidden deliberately.
+This article uses that fact to test a reconstruction policy before it is applied to
+naturally missing eye measurements.
+
+Artificial monocular loss does not prove that naturally missing values behave in the same
+way. It does, however, directly answer a narrower and important question: **when one eye
+is known, how accurately does the declared calibration reconstruct the other eye in this
+dataset?**
+
+## Build a deterministic synthetic benchmark
+
+```{r data}
+dat <- simulate_gazepoint_pupil_data(
+  n_subjects = 8,
+  n_trials = 4,
+  n_time_bins = 120,
+  blink_probability = 0.01,
+  seed = 4102
+)
+
+# Give the right eye a reproducible affine offset.
+dat$pupil_right <- 0.06 + 0.985 * dat$pupil_right
+```
+
+## Random held-out samples
+
+Random masking tests local prediction when individual bilateral observations are hidden.
+
+```{r random-validation}
+random_validation <- validate_gazepoint_binocular_reconstruction(
+  dat,
+  left_col = "pupil_left",
+  right_col = "pupil_right",
+  time_col = "timestamp_ms",
+  group_cols = "subject",
+  gap_group_cols = c("subject", "trial"),
+  mask_prop = 0.10,
+  mask_mode = "random",
+  repeats = 5,
+  seed = 2026,
+  min_pairs = 80
+)
+
+random_validation$summary
+```
+
+```{r random-plot}
+plot_gazepoint_binocular_diagnostics(random_validation, "validation")
+```
+
+## Contiguous held-out runs
+
+Natural eye loss is often temporally clustered. Contiguous masking therefore asks a more
+demanding question than hiding independent samples.
+
+```{r contiguous-validation}
+contiguous_validation <- validate_gazepoint_binocular_reconstruction(
+  dat,
+  left_col = "pupil_left",
+  right_col = "pupil_right",
+  time_col = "timestamp_ms",
+  group_cols = "subject",
+  gap_group_cols = c("subject", "trial"),
+  mask_prop = 0.10,
+  mask_mode = "contiguous",
+  block_size = 8,
+  repeats = 5,
+  seed = 2027,
+  min_pairs = 80
+)
+
+contiguous_validation$summary
+```
+
+The row-level prediction table retains direction, model ID, calibration level, gap
+duration, extrapolation status, and reconstruction outcome.
+
+```{r prediction-table}
+head(contiguous_validation$predictions)
+```
+
+```{r residuals}
+plot_gazepoint_binocular_diagnostics(contiguous_validation, "residuals")
+```
+
+## Stress-test increasing monocular loss
+
+A single masking percentage can conceal a deterioration in calibration support. The
+stress-test helper repeats validation across a declared range of missingness.
+
+```{r stress}
+stress <- stress_test_gazepoint_binocular_reconstruction(
+  dat,
+  left_col = "pupil_left",
+  right_col = "pupil_right",
+  time_col = "timestamp_ms",
+  group_cols = "subject",
+  gap_group_cols = c("subject", "trial"),
+  missingness = c(0.05, 0.10, 0.20, 0.30),
+  mask_modes = c("random", "contiguous"),
+  block_size = 8,
+  repeats = 3,
+  seed = 2028,
+  min_pairs = 80
+)
+
+stress$results
+```
+
+Useful quantities include both error and **prediction rate**. A low RMSE among the few
+rows that remain eligible is not enough if the declared gates prevent reconstruction of
+most requested samples.
+
+## Evaluate a gap-duration policy directly
+
+The cross-eye model uses the contralateral eye at the same time point, so a gap-duration
+restriction is a governance choice rather than a mathematical requirement of linear
+regression. If a study chooses such a restriction, it can be tested explicitly.
+
+```{r gap-policy}
+short_gap_validation <- validate_gazepoint_binocular_reconstruction(
+  dat,
+  left_col = "pupil_left",
+  right_col = "pupil_right",
+  time_col = "timestamp_ms",
+  group_cols = "subject",
+  gap_group_cols = c("subject", "trial"),
+  mask_prop = 0.10,
+  mask_mode = "contiguous",
+  block_size = 8,
+  repeats = 3,
+  seed = 2029,
+  min_pairs = 80,
+  max_gap_ms = 100
+)
+
+short_gap_validation$summary
+```
+
+Compare the prediction rate and error with the unrestricted run. This separates the cost
+of a strict eligibility policy from the error of the regression model itself.
+
+## Compare directions
+
+Separate left-from-right and right-from-left models are retained because one direction
+can be better calibrated than the other.
+
+```{r directions}
+left_only_validation <- validate_gazepoint_binocular_reconstruction(
+  dat,
+  "pupil_left", "pupil_right",
+  time_col = "timestamp_ms",
+  group_cols = "subject",
+  gap_group_cols = c("subject", "trial"),
+  direction = "left_from_right",
+  mask_prop = 0.10,
+  repeats = 3,
+  seed = 2030,
+  min_pairs = 80
+)
+
+right_only_validation <- validate_gazepoint_binocular_reconstruction(
+  dat,
+  "pupil_left", "pupil_right",
+  time_col = "timestamp_ms",
+  group_cols = "subject",
+  gap_group_cols = c("subject", "trial"),
+  direction = "right_from_left",
+  mask_prop = 0.10,
+  repeats = 3,
+  seed = 2031,
+  min_pairs = 80
+)
+
+rbind(left_only_validation$summary, right_only_validation$summary)
+```
+
+## What to report
+
+At minimum report:
+
+- calibration level (for example participant, participant-session, or pooled);
+- minimum paired observations and any model-quality gate;
+- whether a pooled fallback was allowed;
+- whether extrapolation was permitted;
+- maximum reconstructed missing-eye run, if restricted;
+- artificial-missingness design (random or contiguous, proportion, repeats, seed);
+- prediction rate as well as RMSE/MAE/bias;
+- final reconstruction burden in the analysed data;
+- whether reconstruction rates differed across experimental groups;
+- whether downstream summaries were stable under alternative pupil-construction
+  policies.
+
+The reporting helper can combine validation with the realised reconstruction audit.
+
+```{r reporting, eval=FALSE}
+report <- summarise_gazepoint_binocular_reporting(
+  reconstructed,
+  audit = audit,
+  validation = contiguous_validation
+)
+cat(report$text)
+```
+
+## Interpretation boundary
+
+Artificial monocular loss is a validation device, not a missingness model. It evaluates
+prediction where ground truth is observed and then hidden. It cannot establish what an eye
+would have measured during naturally occurring loss, nor can it justify reconstruction
+through blinks, long bilateral loss, or other intervals where the contralateral signal is
+also unavailable or contaminated.
