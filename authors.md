@@ -29,13 +29,13 @@ Movement Research*, **19**(4), 76.
     }
 
 Balaskas S (2026). *gp3tools: Import, Inspect, Analyse, and Report
-Gazepoint GP3 Exports*. R package version 2.2.1,
+Gazepoint GP3 Exports*. R package version 2.3.0,
 <https://github.com/stefanosbalaskas/gp3tools>.
 
     @Manual{,
       title = {gp3tools: Import, Inspect, Analyse, and Report Gazepoint GP3 Exports},
       author = {Stefanos Balaskas},
       year = {2026},
-      note = {R package version 2.2.1},
+      note = {R package version 2.3.0},
       url = {https://github.com/stefanosbalaskas/gp3tools},
     }

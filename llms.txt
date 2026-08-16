@@ -33,6 +33,8 @@ It supports common Gazepoint workflows, including:
 - light and conservative pupil preprocessing;
 - pupil preprocessing audits, reliability checks, interpolation
   sensitivity, and stimulus-luminance auditing;
+- auditable binocular pupil reconstruction, artificial-monocular-loss
+  validation, sensitivity analysis, and reconstruction-burden reporting;
 - pupil-window confirmatory LMMs and model-family sensitivity checks;
 - AOI entries, AOI windows, AOI denominators, and AOI-window GLMMs;
 - AOI/fixation/transition feature extraction and time-varying transition
@@ -153,6 +155,7 @@ when preparing transparent data-coverage and QC-reporting summaries.
 | Summarise missingness and task-phase coverage | [`summarize_gazepoint_missingness()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarize_gazepoint_missingness.md), [`plot_gazepoint_missingness_profile()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_missingness_profile.md), [`report_gazepoint_missingness()`](https://stefanosbalaskas.github.io/gp3tools/reference/report_gazepoint_missingness.md), [`segment_gazepoint_task_phases()`](https://stefanosbalaskas.github.io/gp3tools/reference/segment_gazepoint_task_phases.md), [`summarize_gazepoint_phase_coverage()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarize_gazepoint_phase_coverage.md), [`plot_gazepoint_phase_timeline()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_phase_timeline.md) |
 | Collect QC outputs for reporting | [`collect_gazepoint_qc_summaries()`](https://stefanosbalaskas.github.io/gp3tools/reference/collect_gazepoint_qc_summaries.md), [`summarize_gazepoint_qc_status()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarize_gazepoint_qc_status.md), [`report_gazepoint_qc_overview()`](https://stefanosbalaskas.github.io/gp3tools/reference/report_gazepoint_qc_overview.md), [`plot_gazepoint_qc_overview()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_qc_overview.md) |
 | Preprocess pupil data | [`flag_gazepoint_pupil()`](https://stefanosbalaskas.github.io/gp3tools/reference/flag_gazepoint_pupil.md), [`flag_gazepoint_pupil_artifacts()`](https://stefanosbalaskas.github.io/gp3tools/reference/flag_gazepoint_pupil_artifacts.md), [`flag_gazepoint_pupil_hampel()`](https://stefanosbalaskas.github.io/gp3tools/reference/flag_gazepoint_pupil_hampel.md), [`interpolate_gazepoint_pupil()`](https://stefanosbalaskas.github.io/gp3tools/reference/interpolate_gazepoint_pupil.md), [`smooth_gazepoint_pupil()`](https://stefanosbalaskas.github.io/gp3tools/reference/smooth_gazepoint_pupil.md), [`baseline_correct_gazepoint_pupil()`](https://stefanosbalaskas.github.io/gp3tools/reference/baseline_correct_gazepoint_pupil.md), [`preprocess_gazepoint_signals()`](https://stefanosbalaskas.github.io/gp3tools/reference/preprocess_gazepoint_signals.md) |
+| Reconstruct and validate binocular pupil signals | [`diagnose_gazepoint_binocular_pupil()`](https://stefanosbalaskas.github.io/gp3tools/reference/diagnose_gazepoint_binocular_pupil.md), [`fit_gazepoint_binocular_calibration()`](https://stefanosbalaskas.github.io/gp3tools/reference/fit_gazepoint_binocular_calibration.md), [`reconstruct_gazepoint_binocular_pupil()`](https://stefanosbalaskas.github.io/gp3tools/reference/reconstruct_gazepoint_binocular_pupil.md), [`construct_gazepoint_combined_pupil()`](https://stefanosbalaskas.github.io/gp3tools/reference/construct_gazepoint_combined_pupil.md), [`validate_gazepoint_binocular_reconstruction()`](https://stefanosbalaskas.github.io/gp3tools/reference/validate_gazepoint_binocular_reconstruction.md), [`stress_test_gazepoint_binocular_reconstruction()`](https://stefanosbalaskas.github.io/gp3tools/reference/stress_test_gazepoint_binocular_reconstruction.md), [`audit_gazepoint_binocular_reconstruction()`](https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_binocular_reconstruction.md), [`analyse_gazepoint_binocular_sensitivity()`](https://stefanosbalaskas.github.io/gp3tools/reference/analyse_gazepoint_binocular_sensitivity.md), [`summarise_gazepoint_binocular_reporting()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarise_gazepoint_binocular_reporting.md), [`plot_gazepoint_binocular_diagnostics()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_binocular_diagnostics.md) |
 | Compare and benchmark gaze-event detectors | [`compare_gazepoint_event_detectors()`](https://stefanosbalaskas.github.io/gp3tools/reference/compare_gazepoint_event_detectors.md), [`summarise_gazepoint_event_detector_agreement()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarise_gazepoint_event_detector_agreement.md), [`plot_gazepoint_event_detector_agreement()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_event_detector_agreement.md), [`create_gazepoint_event_review_template()`](https://stefanosbalaskas.github.io/gp3tools/reference/create_gazepoint_event_review_template.md), [`benchmark_gazepoint_event_detectors()`](https://stefanosbalaskas.github.io/gp3tools/reference/benchmark_gazepoint_event_detectors.md), [`summarise_gazepoint_event_detector_benchmark()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarise_gazepoint_event_detector_benchmark.md), [`plot_gazepoint_event_detector_benchmark()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_event_detector_benchmark.md) |
 | Audit pupil reliability and preprocessing choices | [`audit_gazepoint_pupil_gaps()`](https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_pupil_gaps.md), [`audit_gazepoint_pupil_baseline()`](https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_pupil_baseline.md), [`audit_gazepoint_pupil_drift()`](https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_pupil_drift.md), [`audit_gazepoint_pupil_reliability()`](https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_pupil_reliability.md), [`audit_gazepoint_pupil_overlap_risk()`](https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_pupil_overlap_risk.md) |
 | Summarise and model pupil outcomes | [`summarise_gazepoint_pupil()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarise_gazepoint_pupil.md), [`summarise_gazepoint_pupil_windows()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarise_gazepoint_pupil_windows.md), [`summarise_gazepoint_pupil_trial_features()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarise_gazepoint_pupil_trial_features.md), [`fit_gazepoint_pupil_window_lmm()`](https://stefanosbalaskas.github.io/gp3tools/reference/fit_gazepoint_pupil_window_lmm.md), [`fit_gazepoint_pupil_gamm()`](https://stefanosbalaskas.github.io/gp3tools/reference/fit_gazepoint_pupil_gamm.md) |
@@ -231,7 +234,7 @@ paper and report the package version used in the analysis.
 ### R package
 
 > Balaskas, S. (2026). `gp3tools`: Import, Inspect, Analyse, and Report
-> Gazepoint GP3 Exports. R package version 2.2.1.
+> Gazepoint GP3 Exports. R package version 2.3.0.
 > <https://github.com/stefanosbalaskas/gp3tools>
 
 The complete citation entries are available directly from R:
@@ -243,7 +246,7 @@ citation("gp3tools")
 
 The previously released 2.0.0 software archive remains available at
 <https://doi.org/10.5281/zenodo.21292384>. A version-specific archive
-DOI for 2.2.1 can be added after the corresponding GitHub/Zenodo release
+DOI for 2.3.0 can be added after the corresponding GitHub/Zenodo release
 is created.
 
 ## Installation
@@ -2300,12 +2303,12 @@ status fields, and metadata attributes.
 
 ## Current package status
 
-Version 2.2.1 includes the core Gazepoint import, quality-control,
+Version 2.3.0 includes the core Gazepoint import, quality-control,
 pupil, AOI, fixation/transition, time-course, model-diagnostics,
 reporting, ecosystem-adapter, external face-data, and
 workflow-documentation layers.
 
-Release validation for version 2.2.1 should end with:
+Release validation for version 2.3.0 should end with:
 
 ``` r
 

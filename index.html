@@ -35,7 +35,7 @@
 
     <a class="navbar-brand me-2" href="index.html">gp3tools</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.2.1.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.3.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -147,6 +147,7 @@
 <li>sample-level master-table creation, auditing, and validation;</li>
 <li>light and conservative pupil preprocessing;</li>
 <li>pupil preprocessing audits, reliability checks, interpolation sensitivity, and stimulus-luminance auditing;</li>
+<li>auditable binocular pupil reconstruction, artificial-monocular-loss validation, sensitivity analysis, and reconstruction-burden reporting;</li>
 <li>pupil-window confirmatory LMMs and model-family sensitivity checks;</li>
 <li>AOI entries, AOI windows, AOI denominators, and AOI-window GLMMs;</li>
 <li>AOI/fixation/transition feature extraction and time-varying transition matrices;</li>
@@ -255,6 +256,12 @@
 </td>
 </tr>
 <tr>
+<td>Reconstruct and validate binocular pupil signals</td>
+<td>
+<code><a href="reference/diagnose_gazepoint_binocular_pupil.html">diagnose_gazepoint_binocular_pupil()</a></code>, <code><a href="reference/fit_gazepoint_binocular_calibration.html">fit_gazepoint_binocular_calibration()</a></code>, <code><a href="reference/reconstruct_gazepoint_binocular_pupil.html">reconstruct_gazepoint_binocular_pupil()</a></code>, <code><a href="reference/construct_gazepoint_combined_pupil.html">construct_gazepoint_combined_pupil()</a></code>, <code><a href="reference/validate_gazepoint_binocular_reconstruction.html">validate_gazepoint_binocular_reconstruction()</a></code>, <code><a href="reference/stress_test_gazepoint_binocular_reconstruction.html">stress_test_gazepoint_binocular_reconstruction()</a></code>, <code><a href="reference/audit_gazepoint_binocular_reconstruction.html">audit_gazepoint_binocular_reconstruction()</a></code>, <code><a href="reference/analyse_gazepoint_binocular_sensitivity.html">analyse_gazepoint_binocular_sensitivity()</a></code>, <code><a href="reference/summarise_gazepoint_binocular_reporting.html">summarise_gazepoint_binocular_reporting()</a></code>, <code><a href="reference/plot_gazepoint_binocular_diagnostics.html">plot_gazepoint_binocular_diagnostics()</a></code>
+</td>
+</tr>
+<tr>
 <td>Compare and benchmark gaze-event detectors</td>
 <td>
 <code><a href="reference/compare_gazepoint_event_detectors.html">compare_gazepoint_event_detectors()</a></code>, <code><a href="reference/summarise_gazepoint_event_detector_agreement.html">summarise_gazepoint_event_detector_agreement()</a></code>, <code><a href="reference/plot_gazepoint_event_detector_agreement.html">plot_gazepoint_event_detector_agreement()</a></code>, <code><a href="reference/create_gazepoint_event_review_template.html">create_gazepoint_event_review_template()</a></code>, <code><a href="reference/benchmark_gazepoint_event_detectors.html">benchmark_gazepoint_event_detectors()</a></code>, <code><a href="reference/summarise_gazepoint_event_detector_benchmark.html">summarise_gazepoint_event_detector_benchmark()</a></code>, <code><a href="reference/plot_gazepoint_event_detector_benchmark.html">plot_gazepoint_event_detector_benchmark()</a></code>
@@ -357,12 +364,12 @@
 <h3 id="r-package">R package<a class="anchor" aria-label="anchor" href="#r-package"></a>
 </h3>
 <blockquote>
-<p>Balaskas, S. (2026). <code>gp3tools</code>: Import, Inspect, Analyse, and Report Gazepoint GP3 Exports. R package version 2.2.1. <a href="https://github.com/stefanosbalaskas/gp3tools" class="external-link uri">https://github.com/stefanosbalaskas/gp3tools</a></p>
+<p>Balaskas, S. (2026). <code>gp3tools</code>: Import, Inspect, Analyse, and Report Gazepoint GP3 Exports. R package version 2.3.0. <a href="https://github.com/stefanosbalaskas/gp3tools" class="external-link uri">https://github.com/stefanosbalaskas/gp3tools</a></p>
 </blockquote>
 <p>The complete citation entries are available directly from R:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/citation.html" class="external-link">citation</a></span><span class="op">(</span><span class="st">"gp3tools"</span><span class="op">)</span></span></code></pre></div>
-<p>The previously released 2.0.0 software archive remains available at <a href="https://doi.org/10.5281/zenodo.21292384" class="external-link uri">https://doi.org/10.5281/zenodo.21292384</a>. A version-specific archive DOI for 2.2.1 can be added after the corresponding GitHub/Zenodo release is created.</p>
+<p>The previously released 2.0.0 software archive remains available at <a href="https://doi.org/10.5281/zenodo.21292384" class="external-link uri">https://doi.org/10.5281/zenodo.21292384</a>. A version-specific archive DOI for 2.3.0 can be added after the corresponding GitHub/Zenodo release is created.</p>
 </div>
 </div>
 <div class="section level2">
@@ -1865,8 +1872,8 @@
 <div class="section level2">
 <h2 id="current-package-status">Current package status<a class="anchor" aria-label="anchor" href="#current-package-status"></a>
 </h2>
-<p>Version 2.2.1 includes the core Gazepoint import, quality-control, pupil, AOI, fixation/transition, time-course, model-diagnostics, reporting, ecosystem-adapter, external face-data, and workflow-documentation layers.</p>
-<p>Release validation for version 2.2.1 should end with:</p>
+<p>Version 2.3.0 includes the core Gazepoint import, quality-control, pupil, AOI, fixation/transition, time-course, model-diagnostics, reporting, ecosystem-adapter, external face-data, and workflow-documentation layers.</p>
+<p>Release validation for version 2.3.0 should end with:</p>
 <div class="sourceCode" id="cb121"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/check.html" class="external-link">check</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co"># 0 errors | 0 warnings | 0 notes</span></span></code></pre></div>

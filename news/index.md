@@ -1,6 +1,6 @@
 # Changelog
 
-## gp3tools (development version)
+## gp3tools 2.3.0
 
 ### Auditable binocular pupil reconstruction
 
