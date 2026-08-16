@@ -6,6 +6,7 @@ articles:
   aoi_workflow: aoi_workflow.html
   articles/aoi-modelling-workflow: aoi-modelling-workflow.html
   articles/aoi-window-feature-engineering: aoi-window-feature-engineering.html
+  articles/auditable-binocular-pupil-reconstruction: auditable-binocular-pupil-reconstruction.html
   articles/bayesian-planning-workflow: bayesian-planning-workflow.html
   articles/binocular-pupil-processing: binocular-pupil-processing.html
   articles/cluster-permutation-workflow: cluster-permutation-workflow.html
@@ -46,7 +47,8 @@ articles:
   articles/signal-preprocessing-workflow: signal-preprocessing-workflow.html
   articles/statistical-extensions-plots: statistical-extensions-plots.html
   articles/stimulus-layout-qc: stimulus-layout-qc.html
-last_built: 2026-08-09T23:39Z
+  articles/validating-binocular-reconstruction: validating-binocular-reconstruction.html
+last_built: 2026-08-16T22:55Z
 urls:
   reference: https://stefanosbalaskas.github.io/gp3tools/reference
   article: https://stefanosbalaskas.github.io/gp3tools/articles

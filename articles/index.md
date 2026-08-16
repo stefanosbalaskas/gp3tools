@@ -121,6 +121,10 @@
   Interpolation](https://stefanosbalaskas.github.io/gp3tools/articles/fixation-blink-preprocessing.md):
 - [Binocular Pupil Fusion and
   Downsampling](https://stefanosbalaskas.github.io/gp3tools/articles/binocular-pupil-processing.md):
+- [Auditable Binocular Pupil Reconstruction and Sensitivity
+  Analysis](https://stefanosbalaskas.github.io/gp3tools/articles/auditable-binocular-pupil-reconstruction.md):
+- [Validating Pupil Reconstruction with Artificial Monocular
+  Loss](https://stefanosbalaskas.github.io/gp3tools/articles/validating-binocular-reconstruction.md):
 - [AOI Labelling, Sliding Windows, and Fixation
   Simulation](https://stefanosbalaskas.github.io/gp3tools/articles/aoi-window-feature-engineering.md):
 - [Scanpath clustering, selection, and visual

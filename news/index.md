@@ -1,5 +1,45 @@
 # Changelog
 
+## gp3tools (development version)
+
+### Auditable binocular pupil reconstruction
+
+- Added
+  [`diagnose_gazepoint_binocular_pupil()`](https://stefanosbalaskas.github.io/gp3tools/reference/diagnose_gazepoint_binocular_pupil.md)
+  and
+  [`fit_gazepoint_binocular_calibration()`](https://stefanosbalaskas.github.io/gp3tools/reference/fit_gazepoint_binocular_calibration.md)
+  for explicit bilateral-availability, agreement, and bidirectional
+  cross-eye calibration diagnostics.
+- Added
+  [`reconstruct_gazepoint_binocular_pupil()`](https://stefanosbalaskas.github.io/gp3tools/reference/reconstruct_gazepoint_binocular_pupil.md)
+  and
+  [`construct_gazepoint_combined_pupil()`](https://stefanosbalaskas.github.io/gp3tools/reference/construct_gazepoint_combined_pupil.md)
+  so model-based missing-eye predictions remain distinguishable from
+  observed pupil measurements and final combination policy remains an
+  explicit analytical decision.
+- Added artificial-monocular-loss validation and stress testing with
+  [`validate_gazepoint_binocular_reconstruction()`](https://stefanosbalaskas.github.io/gp3tools/reference/validate_gazepoint_binocular_reconstruction.md)
+  and
+  [`stress_test_gazepoint_binocular_reconstruction()`](https://stefanosbalaskas.github.io/gp3tools/reference/stress_test_gazepoint_binocular_reconstruction.md).
+- Added
+  [`audit_gazepoint_binocular_reconstruction()`](https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_binocular_reconstruction.md),
+  [`analyse_gazepoint_binocular_sensitivity()`](https://stefanosbalaskas.github.io/gp3tools/reference/analyse_gazepoint_binocular_sensitivity.md),
+  and
+  [`summarise_gazepoint_binocular_reporting()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarise_gazepoint_binocular_reporting.md)
+  for reconstruction burden, group imbalance, policy sensitivity, and
+  manuscript-ready provenance reporting.
+- Added
+  [`plot_gazepoint_binocular_diagnostics()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_binocular_diagnostics.md)
+  for agreement, Bland-Altman-style differences, reconstruction
+  validation, residuals, timelines, burden, sensitivity, gap-duration,
+  and trace diagnostics without introducing a new plotting dependency.
+- Added two executable articles covering auditable reconstruction and
+  artificial-monocular-loss validation. Existing
+  [`combine_gazepoint_eyes()`](https://stefanosbalaskas.github.io/gp3tools/reference/combine_gazepoint_eyes.md)
+  and
+  [`regress_gazepoint_pupils()`](https://stefanosbalaskas.github.io/gp3tools/reference/regress_gazepoint_pupils.md)
+  behavior is unchanged.
+
 ## gp3tools 2.2.1
 
 - Synchronizes CRAN-facing release metadata and documentation with the

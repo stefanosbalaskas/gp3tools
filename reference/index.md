@@ -129,8 +129,8 @@ stimulus-layout quality.
 
 ## Pupil preprocessing, audits, and windows
 
-Flag, interpolate, baseline-correct, smooth, audit, and summarise pupil
-data.
+Flag, interpolate, baseline-correct, smooth, audit, reconstruct,
+validate, and summarise pupil data.
 
 - [`summarise_gazepoint_pupil()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarise_gazepoint_pupil.md)
   : Summarise Gazepoint pupil data
@@ -139,6 +139,26 @@ data.
   samples
 - [`combine_gazepoint_eyes()`](https://stefanosbalaskas.github.io/gp3tools/reference/combine_gazepoint_eyes.md)
   : Combine left and right Gazepoint eye channels
+- [`diagnose_gazepoint_binocular_pupil()`](https://stefanosbalaskas.github.io/gp3tools/reference/diagnose_gazepoint_binocular_pupil.md)
+  : Diagnose binocular pupil quality and agreement
+- [`fit_gazepoint_binocular_calibration()`](https://stefanosbalaskas.github.io/gp3tools/reference/fit_gazepoint_binocular_calibration.md)
+  : Fit audited cross-eye pupil calibration models
+- [`reconstruct_gazepoint_binocular_pupil()`](https://stefanosbalaskas.github.io/gp3tools/reference/reconstruct_gazepoint_binocular_pupil.md)
+  : Reconstruct temporarily unavailable binocular pupil channels
+- [`construct_gazepoint_combined_pupil()`](https://stefanosbalaskas.github.io/gp3tools/reference/construct_gazepoint_combined_pupil.md)
+  : Construct an explicitly governed combined pupil signal
+- [`validate_gazepoint_binocular_reconstruction()`](https://stefanosbalaskas.github.io/gp3tools/reference/validate_gazepoint_binocular_reconstruction.md)
+  : Validate binocular reconstruction using artificial monocular loss
+- [`stress_test_gazepoint_binocular_reconstruction()`](https://stefanosbalaskas.github.io/gp3tools/reference/stress_test_gazepoint_binocular_reconstruction.md)
+  : Stress-test binocular reconstruction across missingness levels
+- [`audit_gazepoint_binocular_reconstruction()`](https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_binocular_reconstruction.md)
+  : Audit binocular reconstruction burden and imbalance
+- [`analyse_gazepoint_binocular_sensitivity()`](https://stefanosbalaskas.github.io/gp3tools/reference/analyse_gazepoint_binocular_sensitivity.md)
+  : Compare pupil-construction policies as a sensitivity analysis
+- [`summarise_gazepoint_binocular_reporting()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarise_gazepoint_binocular_reporting.md)
+  : Create manuscript-ready binocular reconstruction reporting
+- [`plot_gazepoint_binocular_diagnostics()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_binocular_diagnostics.md)
+  : Plot binocular pupil diagnostics, reconstruction, and sensitivity
 - [`flag_gazepoint_pupil_artifacts()`](https://stefanosbalaskas.github.io/gp3tools/reference/flag_gazepoint_pupil_artifacts.md)
   : Flag Gazepoint pupil artifacts before interpolation
 - [`flag_gazepoint_pupil_hampel()`](https://stefanosbalaskas.github.io/gp3tools/reference/flag_gazepoint_pupil_hampel.md)

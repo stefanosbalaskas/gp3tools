@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">gp3tools</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.2.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.2.1.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -75,6 +75,8 @@
     <li><h6 class="dropdown-header" data-toc-skip>Signal extensions</h6></li>
     <li><a class="dropdown-item" href="../articles/fixation-blink-preprocessing.html">Velocity Fixations, Blink Detection, and Blink-Aware Interpolation</a></li>
     <li><a class="dropdown-item" href="../articles/binocular-pupil-processing.html">Binocular Pupil Fusion and Downsampling</a></li>
+    <li><a class="dropdown-item" href="../articles/auditable-binocular-pupil-reconstruction.html">Auditable Binocular Pupil Reconstruction and Sensitivity Analysis</a></li>
+    <li><a class="dropdown-item" href="../articles/validating-binocular-reconstruction.html">Validating Pupil Reconstruction with Artificial Monocular Loss</a></li>
     <li><a class="dropdown-item" href="../articles/aoi-window-feature-engineering.html">AOI Labelling, Sliding Windows, and Fixation Simulation</a></li>
     <li><a class="dropdown-item" href="../articles/scanpath-clustering-workflow.html">Scanpath clustering, selection, and visual diagnostics</a></li>
     <li><a class="dropdown-item" href="../articles/scanpath-cluster-stability.html">Scanpath-cluster stability and sensitivity</a></li>
@@ -488,7 +490,7 @@
       </dl></div><div class="section level2">
       <h2 id="pupil-preprocessing-audits-and-windows">Pupil preprocessing, audits, and windows<a class="anchor" aria-label="anchor" href="#pupil-preprocessing-audits-and-windows"></a></h2>
 
-      <div class="section-desc"><p>Flag, interpolate, baseline-correct, smooth, audit, and summarise pupil data.</p></div>
+      <div class="section-desc"><p>Flag, interpolate, baseline-correct, smooth, audit, reconstruct, validate, and summarise pupil data.</p></div>
 
       <dl></dl></div><div class="section level2">
 
@@ -515,6 +517,76 @@
 
         </dt>
         <dd>Combine left and right Gazepoint eye channels</dd>
+
+        <dt>
+
+          <code><a href="diagnose_gazepoint_binocular_pupil.html">diagnose_gazepoint_binocular_pupil()</a></code>
+
+        </dt>
+        <dd>Diagnose binocular pupil quality and agreement</dd>
+
+        <dt>
+
+          <code><a href="fit_gazepoint_binocular_calibration.html">fit_gazepoint_binocular_calibration()</a></code>
+
+        </dt>
+        <dd>Fit audited cross-eye pupil calibration models</dd>
+
+        <dt>
+
+          <code><a href="reconstruct_gazepoint_binocular_pupil.html">reconstruct_gazepoint_binocular_pupil()</a></code>
+
+        </dt>
+        <dd>Reconstruct temporarily unavailable binocular pupil channels</dd>
+
+        <dt>
+
+          <code><a href="construct_gazepoint_combined_pupil.html">construct_gazepoint_combined_pupil()</a></code>
+
+        </dt>
+        <dd>Construct an explicitly governed combined pupil signal</dd>
+
+        <dt>
+
+          <code><a href="validate_gazepoint_binocular_reconstruction.html">validate_gazepoint_binocular_reconstruction()</a></code>
+
+        </dt>
+        <dd>Validate binocular reconstruction using artificial monocular loss</dd>
+
+        <dt>
+
+          <code><a href="stress_test_gazepoint_binocular_reconstruction.html">stress_test_gazepoint_binocular_reconstruction()</a></code>
+
+        </dt>
+        <dd>Stress-test binocular reconstruction across missingness levels</dd>
+
+        <dt>
+
+          <code><a href="audit_gazepoint_binocular_reconstruction.html">audit_gazepoint_binocular_reconstruction()</a></code>
+
+        </dt>
+        <dd>Audit binocular reconstruction burden and imbalance</dd>
+
+        <dt>
+
+          <code><a href="analyse_gazepoint_binocular_sensitivity.html">analyse_gazepoint_binocular_sensitivity()</a></code>
+
+        </dt>
+        <dd>Compare pupil-construction policies as a sensitivity analysis</dd>
+
+        <dt>
+
+          <code><a href="summarise_gazepoint_binocular_reporting.html">summarise_gazepoint_binocular_reporting()</a></code>
+
+        </dt>
+        <dd>Create manuscript-ready binocular reconstruction reporting</dd>
+
+        <dt>
+
+          <code><a href="plot_gazepoint_binocular_diagnostics.html">plot_gazepoint_binocular_diagnostics()</a></code>
+
+        </dt>
+        <dd>Plot binocular pupil diagnostics, reconstruction, and sensitivity</dd>
 
         <dt>
 

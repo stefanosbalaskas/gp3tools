@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">gp3tools</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.2.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.2.1.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -75,6 +75,8 @@
     <li><h6 class="dropdown-header" data-toc-skip>Signal extensions</h6></li>
     <li><a class="dropdown-item" href="../articles/fixation-blink-preprocessing.html">Velocity Fixations, Blink Detection, and Blink-Aware Interpolation</a></li>
     <li><a class="dropdown-item" href="../articles/binocular-pupil-processing.html">Binocular Pupil Fusion and Downsampling</a></li>
+    <li><a class="dropdown-item" href="../articles/auditable-binocular-pupil-reconstruction.html">Auditable Binocular Pupil Reconstruction and Sensitivity Analysis</a></li>
+    <li><a class="dropdown-item" href="../articles/validating-binocular-reconstruction.html">Validating Pupil Reconstruction with Artificial Monocular Loss</a></li>
     <li><a class="dropdown-item" href="../articles/aoi-window-feature-engineering.html">AOI Labelling, Sliding Windows, and Fixation Simulation</a></li>
     <li><a class="dropdown-item" href="../articles/scanpath-clustering-workflow.html">Scanpath clustering, selection, and visual diagnostics</a></li>
     <li><a class="dropdown-item" href="../articles/scanpath-cluster-stability.html">Scanpath-cluster stability and sensitivity</a></li>
@@ -100,6 +102,18 @@
       <small>Source: <a href="https://github.com/stefanosbalaskas/gp3tools/blob/master/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="development version" id="gp3tools-development-version">gp3tools (development version)<a class="anchor" aria-label="anchor" href="#gp3tools-development-version"></a></h2>
+<div class="section level3">
+<h3 id="auditable-binocular-pupil-reconstruction-development-version">Auditable binocular pupil reconstruction<a class="anchor" aria-label="anchor" href="#auditable-binocular-pupil-reconstruction-development-version"></a></h3>
+<ul><li>Added <code><a href="../reference/diagnose_gazepoint_binocular_pupil.html">diagnose_gazepoint_binocular_pupil()</a></code> and <code><a href="../reference/fit_gazepoint_binocular_calibration.html">fit_gazepoint_binocular_calibration()</a></code> for explicit bilateral-availability, agreement, and bidirectional cross-eye calibration diagnostics.</li>
+<li>Added <code><a href="../reference/reconstruct_gazepoint_binocular_pupil.html">reconstruct_gazepoint_binocular_pupil()</a></code> and <code><a href="../reference/construct_gazepoint_combined_pupil.html">construct_gazepoint_combined_pupil()</a></code> so model-based missing-eye predictions remain distinguishable from observed pupil measurements and final combination policy remains an explicit analytical decision.</li>
+<li>Added artificial-monocular-loss validation and stress testing with <code><a href="../reference/validate_gazepoint_binocular_reconstruction.html">validate_gazepoint_binocular_reconstruction()</a></code> and <code><a href="../reference/stress_test_gazepoint_binocular_reconstruction.html">stress_test_gazepoint_binocular_reconstruction()</a></code>.</li>
+<li>Added <code><a href="../reference/audit_gazepoint_binocular_reconstruction.html">audit_gazepoint_binocular_reconstruction()</a></code>, <code><a href="../reference/analyse_gazepoint_binocular_sensitivity.html">analyse_gazepoint_binocular_sensitivity()</a></code>, and <code><a href="../reference/summarise_gazepoint_binocular_reporting.html">summarise_gazepoint_binocular_reporting()</a></code> for reconstruction burden, group imbalance, policy sensitivity, and manuscript-ready provenance reporting.</li>
+<li>Added <code><a href="../reference/plot_gazepoint_binocular_diagnostics.html">plot_gazepoint_binocular_diagnostics()</a></code> for agreement, Bland-Altman-style differences, reconstruction validation, residuals, timelines, burden, sensitivity, gap-duration, and trace diagnostics without introducing a new plotting dependency.</li>
+<li>Added two executable articles covering auditable reconstruction and artificial-monocular-loss validation. Existing <code><a href="../reference/combine_gazepoint_eyes.html">combine_gazepoint_eyes()</a></code> and <code><a href="../reference/regress_gazepoint_pupils.html">regress_gazepoint_pupils()</a></code> behavior is unchanged.</li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="2.2.1" id="gp3tools-221">gp3tools 2.2.1<a class="anchor" aria-label="anchor" href="#gp3tools-221"></a></h2>
 <ul><li>Synchronizes CRAN-facing release metadata and documentation with the current 2.2.x source line.</li>
