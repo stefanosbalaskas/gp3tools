@@ -2,6 +2,8 @@
 
 ## gp3tools 2.3.0
 
+CRAN release: 2026-08-21
+
 ### Auditable binocular pupil reconstruction
 
 - Added
