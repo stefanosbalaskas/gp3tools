@@ -22,8 +22,8 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y libuv1-dev
-      - name: Install roxygen2
-        run: Rscript -e 'install.packages("roxygen2", repos="https://cloud.r-project.org")'
+      - name: Install roxygen2 and package imports
+        run: Rscript -e 'install.packages(c("roxygen2", "dplyr", "ggplot2", "readr", "stringr", "tibble", "tidyr"), repos="https://cloud.r-project.org")'
       - name: Regenerate NAMESPACE and Rd files
         run: Rscript -e 'roxygen2::roxygenise()'
       - name: Verify pupil-latency public API
