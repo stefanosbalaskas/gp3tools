@@ -49,7 +49,7 @@ small$summary
 #> 1        1       1000       1          1000  generate        1         1
 #> 2        2       5000       2          2500  generate        1         1
 #>   median_elapsed_s minimum_elapsed_s maximum_elapsed_s median_heap_delta_mb
-#> 1            0.003             0.003             0.003             1.949677
+#> 1            0.004             0.004             0.004             1.949677
 #> 2            0.007             0.007             0.007             3.578438
 #>   maximum_heap_delta_mb median_output_size_mb
 #> 1              1.949677             0.1873322
