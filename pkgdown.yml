@@ -11,6 +11,7 @@ articles:
   articles/binocular-pupil-processing: binocular-pupil-processing.html
   articles/cluster-permutation-workflow: cluster-permutation-workflow.html
   articles/ecosystem-exports: ecosystem-exports.html
+  ecosystem-update-2026-09: ecosystem-update-2026-09.html
   articles/end-to-end-workflow: end-to-end-workflow.html
   articles/event-detector-benchmarking: event-detector-benchmarking.html
   articles/event-detector-comparison: event-detector-comparison.html
@@ -48,7 +49,7 @@ articles:
   articles/statistical-extensions-plots: statistical-extensions-plots.html
   articles/stimulus-layout-qc: stimulus-layout-qc.html
   articles/validating-binocular-reconstruction: validating-binocular-reconstruction.html
-last_built: 2026-09-07T21:16Z
+last_built: 2026-09-15T08:48Z
 urls:
   reference: https://stefanosbalaskas.github.io/gp3tools/reference
   article: https://stefanosbalaskas.github.io/gp3tools/articles

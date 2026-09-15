@@ -189,6 +189,8 @@ validate, and summarise pupil data.
   : Audit Gazepoint pupil-response overlap risk
 - [`audit_gazepoint_pupil_reliability()`](https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_pupil_reliability.md)
   : Audit split-half reliability for Gazepoint pupil outcomes
+- [`audit_gp3_pupil_latency_resolution()`](https://stefanosbalaskas.github.io/gp3tools/reference/audit_gp3_pupil_latency_resolution.md)
+  : Audit GP3 pupil-latency estimator sensitivity
 - [`audit_gazepoint_stimulus_luminance()`](https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_stimulus_luminance.md)
   : Audit stimulus luminance and brightness for Gazepoint studies
 - [`summarise_gazepoint_pupil_windows()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarise_gazepoint_pupil_windows.md)

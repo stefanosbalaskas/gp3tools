@@ -1,0 +1,36 @@
+# Ecosystem update — September 2026
+
+## Related methodological addition
+
+Within the wider Gazepoint research-software ecosystem, the related
+Python package **gpbiometricspy** now includes a fully
+exact-main-certified crossed participant–item Gaussian hierarchical
+location–scale model with **one location random slope for each crossed
+factor**.
+
+The method models conditional-association heterogeneity across both
+participants and items/stimuli while retaining crossed residual-scale
+heterogeneity, explicit population-versus-conditional prediction
+semantics, fail-closed design checks, and deterministic reproducibility
+certificates. It is an additive Python-native method and does **not**
+change the API, release record, or scientific claims of `gp3tools`.
+
+Certification for gpbiometricspy PR \#129 is pinned to merge SHA
+`d078e0366ace49c3ebeb2f6800bad6394d70631e`: 14/14 exact-main push
+workflow families, 12/12 OS/Python matrix lanes, 782/782 tests,
+14,015/14,015 statements, and 6,757/6,776 raw branches (99.7196%). The
+remaining 19 branch arcs are the unchanged audited structural-debt set,
+with zero unexpected, stale, or unaudited debt.
+
+The frozen `gpbiometrics 2.0.0` R-parity surface in gpbiometricspy
+remains **406/406**; the new method sits outside that frozen contract.
+
+- [Crossed participant–item random-slope
+  guide](https://stefanosbalaskas.github.io/gpbiometricspy/methods/crossed-random-slopes-location-scale/)
+- [gpbiometricspy PR
+  \#129](https://github.com/stefanosbalaskas/gpbiometricspy/pull/129)
+
+For `gp3tools` users, this is a downstream modelling option after
+eye-tracking import, QC, pupil/gaze preparation, AOI construction, and
+other measurement workflows have been completed under an appropriate
+study design.

@@ -114,6 +114,8 @@
 
 - [Exporting to other
   ecosystems](https://stefanosbalaskas.github.io/gp3tools/articles/ecosystem-exports.md):
+- [Ecosystem update — September
+  2026](https://stefanosbalaskas.github.io/gp3tools/articles/ecosystem-update-2026-09.md):
 
 ### Signal preprocessing and feature engineering
 
