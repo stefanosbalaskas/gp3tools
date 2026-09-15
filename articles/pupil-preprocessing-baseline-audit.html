@@ -138,8 +138,9 @@
 
     
     
-<p>This article focuses on pupil preprocessing and baseline-readiness
-checks.</p>
+<p>This article focuses on pupil preprocessing, baseline-readiness
+checks, and the additional sampling/estimator checks needed when
+pupil-response latency is reported.</p>
 <div class="section level2">
 <h2 id="recommended-order">Recommended order<a class="anchor" aria-label="anchor" href="#recommended-order"></a>
 </h2>
@@ -149,39 +150,173 @@ checks.</p>
 <li>interpolate short gaps only when justified;</li>
 <li>audit baseline coverage;</li>
 <li>create baseline-corrected or change-score variables;</li>
-<li>document preprocessing choices.</li>
+<li>if latency is a target outcome, audit estimator sensitivity and
+sampling resolution;</li>
+<li>document preprocessing and timing choices.</li>
 </ol>
 </div>
 <div class="section level2">
-<h2 id="example-workflow">Example workflow<a class="anchor" aria-label="anchor" href="#example-workflow"></a>
+<h2 id="example-preprocessing-workflow">Example preprocessing workflow<a class="anchor" aria-label="anchor" href="#example-preprocessing-workflow"></a>
 </h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gap_qc</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/audit_gazepoint_pupil_gaps.html">audit_gazepoint_pupil_gaps</a></span><span class="op">(</span><span class="va">all_gaze</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">pupil_flagged</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/flag_gazepoint_pupil_hampel.html">flag_gazepoint_pupil_hampel</a></span><span class="op">(</span></span>
 <span>  <span class="va">all_gaze</span>,</span>
-<span>  pupil_col <span class="op">=</span> <span class="st">'pupil_diameter'</span></span>
-<span>  <span class="op">)</span></span>
+<span>  pupil_col <span class="op">=</span> <span class="st">"pupil_diameter"</span></span>
+<span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">pupil_interp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/interpolate_gazepoint_pupil_pchip.html">interpolate_gazepoint_pupil_pchip</a></span><span class="op">(</span></span>
 <span>  <span class="va">pupil_flagged</span>,</span>
-<span>  pupil_col <span class="op">=</span> <span class="st">'pupil_diameter'</span></span>
-<span>  <span class="op">)</span></span>
+<span>  pupil_col <span class="op">=</span> <span class="st">"pupil_diameter"</span></span>
+<span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">baseline_qc</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/audit_gazepoint_pupil_baseline.html">audit_gazepoint_pupil_baseline</a></span><span class="op">(</span></span>
 <span>  <span class="va">pupil_interp</span>,</span>
 <span>  baseline_start <span class="op">=</span> <span class="op">-</span><span class="fl">0.500</span>,</span>
 <span>  baseline_end <span class="op">=</span> <span class="fl">0</span></span>
-<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">reliability_qc</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/audit_gazepoint_pupil_reliability.html">audit_gazepoint_pupil_reliability</a></span><span class="op">(</span><span class="va">pupil_interp</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="when-latency-is-a-target-outcome">When latency is a target outcome<a class="anchor" aria-label="anchor" href="#when-latency-is-a-target-outcome"></a>
+</h2>
+<p>A latency estimate is partly a property of the sampling grid and the
+estimator, not only of the underlying physiological response.
+<code><a href="../reference/audit_gp3_pupil_latency_resolution.html">audit_gp3_pupil_latency_resolution()</a></code> therefore compares two
+onset estimators and reports their spread alongside the observed
+sampling rate, the implied temporal resolution, robust baseline noise,
+signal-to-noise ratio, and a compact latency-resolvability label.</p>
+<p>Use the diagnostic on a scientifically justified analysis trace after
+time alignment and preprocessing. Do not pool raw observations across
+independent participants or trials and treat the resulting latency as
+inferential evidence. The function is intended for QC and transparent
+reporting.</p>
+</div>
+<div class="section level2">
+<h2 id="deterministic-synthetic-example">Deterministic synthetic example<a class="anchor" aria-label="anchor" href="#deterministic-synthetic-example"></a>
+</h2>
+<p>The example below creates a 60 Hz trace with a known constriction
+beginning after the event. The audit is then run on the resulting pupil
+series.</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">time</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.5</span>, <span class="fl">2</span>, by <span class="op">=</span> <span class="fl">1</span> <span class="op">/</span> <span class="fl">60</span><span class="op">)</span></span>
+<span><span class="va">true_onset</span> <span class="op">&lt;-</span> <span class="fl">0.45</span></span>
+<span><span class="va">response</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span></span>
+<span>  <span class="va">time</span> <span class="op">&gt;</span> <span class="va">true_onset</span>,</span>
+<span>  <span class="op">-</span><span class="fl">0.35</span> <span class="op">*</span> <span class="op">(</span><span class="fl">1</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="op">-</span><span class="op">(</span><span class="va">time</span> <span class="op">-</span> <span class="va">true_onset</span><span class="op">)</span> <span class="op">/</span> <span class="fl">0.12</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  <span class="fl">0</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">pupil</span> <span class="op">&lt;-</span> <span class="fl">4.2</span> <span class="op">+</span> <span class="va">response</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">time</span><span class="op">)</span>, sd <span class="op">=</span> <span class="fl">0.006</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">latency_qc</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/audit_gp3_pupil_latency_resolution.html">audit_gp3_pupil_latency_resolution</a></span><span class="op">(</span></span>
+<span>  time <span class="op">=</span> <span class="va">time</span>,</span>
+<span>  pupil <span class="op">=</span> <span class="va">pupil</span>,</span>
+<span>  event_time <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  baseline_window <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.5</span>, <span class="fl">0</span><span class="op">)</span>,</span>
+<span>  search_window <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">2</span><span class="op">)</span>,</span>
+<span>  direction <span class="op">=</span> <span class="st">"constriction"</span>,</span>
+<span>  threshold_sigma <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>  sustain_ms <span class="op">=</span> <span class="fl">50</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">latency_qc</span><span class="op">$</span><span class="va">estimates_s</span></span>
+<span><span class="co">#&gt; sustained_threshold   max_slope_tangent </span></span>
+<span><span class="co">#&gt;           0.4666667           0.4502978</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">latency_qc</span><span class="op">$</span><span class="va">estimator_spread_ms</span>, <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 16.4</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">latency_qc</span><span class="op">$</span><span class="va">sampling_hz</span>, <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 60</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">latency_qc</span><span class="op">$</span><span class="va">sampling_resolution_ms</span>, <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 16.7</span></span>
+<span><span class="va">latency_qc</span><span class="op">$</span><span class="va">latency_resolvability</span></span>
+<span><span class="co">#&gt; [1] "high"</span></span></code></pre></div>
+<p>The two latency estimates should be read together. A small estimator
+spread is reassuring, but it does not remove the sampling-resolution
+limit or make the estimate hardware- and algorithm-independent.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span></span>
+<span>  <span class="va">time</span>,</span>
+<span>  <span class="va">pupil</span>,</span>
+<span>  type <span class="op">=</span> <span class="st">"l"</span>,</span>
+<span>  xlab <span class="op">=</span> <span class="st">"Time from event (s)"</span>,</span>
+<span>  ylab <span class="op">=</span> <span class="st">"Pupil diameter (a.u.)"</span>,</span>
+<span>  main <span class="op">=</span> <span class="st">"Synthetic pupil trace with latency estimates"</span></span>
+<span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>v <span class="op">=</span> <span class="fl">0</span>, lty <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="va">latency_lines</span> <span class="op">&lt;-</span> <span class="va">latency_qc</span><span class="op">$</span><span class="va">estimates_s</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/is.finite.html" class="external-link">is.finite</a></span><span class="op">(</span><span class="va">latency_qc</span><span class="op">$</span><span class="va">estimates_s</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">latency_lines</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>v <span class="op">=</span> <span class="va">latency_lines</span>, lty <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/legend.html" class="external-link">legend</a></span><span class="op">(</span></span>
+<span>  <span class="st">"bottomleft"</span>,</span>
+<span>  legend <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Pupil trace"</span>, <span class="st">"Event time"</span>, <span class="st">"Latency estimates"</span><span class="op">)</span>,</span>
+<span>  lty <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span>,</span>
+<span>  bty <span class="op">=</span> <span class="st">"n"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p><img src="pupil-preprocessing-baseline-audit_files/figure-html/latency-plot-1.png" class="r-plt" alt="Synthetic pupil trace with event time and two latency estimates" width="672"></p>
+</div>
+<div class="section level2">
+<h2 id="interpreting-the-audit">Interpreting the audit<a class="anchor" aria-label="anchor" href="#interpreting-the-audit"></a>
+</h2>
+<ul>
+<li>
+<code>estimates_s</code> contains the sustained-threshold and
+maximum-slope tangent estimates.</li>
+<li>
+<code>estimator_spread_ms</code> quantifies disagreement between
+finite estimators.</li>
+<li>
+<code>sampling_hz</code> and <code>sampling_resolution_ms</code>
+make the temporal sampling limit explicit.</li>
+<li>
+<code>noise_mad_sigma</code> and <code>signal_to_noise</code>
+describe baseline noise and response strength used by the
+diagnostic.</li>
+<li>
+<code>latency_resolvability</code> is a package QC heuristic
+(<code>high</code>, <code>moderate</code>, or <code>low</code>), not a
+physiological certainty grade.</li>
+</ul>
+<p>When one estimator is unavailable, report that fact rather than
+silently substituting the remaining estimate as if both methods
+agreed.</p>
+</div>
+<div class="section level2">
+<h2 id="sensitivity-checks">Sensitivity checks<a class="anchor" aria-label="anchor" href="#sensitivity-checks"></a>
+</h2>
+<p>Threshold and sustain settings should be chosen from methodological
+considerations rather than tuned post hoc to obtain a preferred onset.
+When timing is substantively important, rerun the audit under defensible
+alternatives and report whether the scientific conclusion changes.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">latency_qc_lower_threshold</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/audit_gp3_pupil_latency_resolution.html">audit_gp3_pupil_latency_resolution</a></span><span class="op">(</span></span>
+<span>  <span class="va">time</span>,</span>
+<span>  <span class="va">pupil</span>,</span>
+<span>  threshold_sigma <span class="op">=</span> <span class="fl">2.5</span>,</span>
+<span>  sustain_ms <span class="op">=</span> <span class="fl">50</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">latency_qc_longer_sustain</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/audit_gp3_pupil_latency_resolution.html">audit_gp3_pupil_latency_resolution</a></span><span class="op">(</span></span>
+<span>  <span class="va">time</span>,</span>
+<span>  <span class="va">pupil</span>,</span>
+<span>  threshold_sigma <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>  sustain_ms <span class="op">=</span> <span class="fl">100</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="reporting-note">Reporting note<a class="anchor" aria-label="anchor" href="#reporting-note"></a>
 </h2>
 <p>Baseline correction should be reported with the baseline window,
 minimum coverage rule, interpolation rule, excluded cases, and
-sensitivity checks.</p>
+sensitivity checks. If latency is reported, also state the sampling
+rate, estimator definition, threshold/sustain settings, estimator
+spread, and any cases in which latency was not resolvable. Treat latency
+as method-dependent timing evidence rather than an
+instrument-independent ground truth.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
