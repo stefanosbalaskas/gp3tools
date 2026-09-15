@@ -184,6 +184,7 @@ reference:
     - audit_gazepoint_pupil_imbalance
     - audit_gazepoint_pupil_overlap_risk
     - audit_gazepoint_pupil_reliability
+    - audit_gp3_pupil_latency_resolution
     - audit_gazepoint_stimulus_luminance
     - summarise_gazepoint_pupil_windows
     - summarise_gazepoint_pupil_trial_features
