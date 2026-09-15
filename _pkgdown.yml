@@ -74,6 +74,7 @@ articles:
     navbar: Ecosystem bridges
     contents:
     - articles/ecosystem-exports
+    - ecosystem-update-2026-09
   - title: Signal preprocessing and feature engineering
     navbar: Signal extensions
     contents:
