@@ -201,7 +201,7 @@ audit_gazepoint_aoi_uncertainty <- function(
 #' @param geometry_aoi_col Optional Gazepoint AOI identifier column.
 #' @param coordinate_unit Explicit source coordinate unit.
 #' @param perturbation_unit Perturbation unit: px or deg.
-#' @param dilations,erosions,translations_x,translations_y,jitters,anisotropic Perturbation values.
+#' @param dilations,erosions,translations_x,translations_y,translations_xy,jitters,anisotropic Perturbation values.
 #' @param screen_width_px,screen_height_px Display dimensions in pixels.
 #' @param viewing_distance Viewing distance for degree conversion.
 #' @param physical_screen_size Physical screen width and height.
@@ -219,7 +219,7 @@ run_gazepoint_aoi_sensitivity <- function(
     coordinate_unit = c("px", "normalized"),
     perturbation_unit = c("px", "deg"),
     dilations = NULL, erosions = NULL,
-    translations_x = NULL, translations_y = NULL,
+    translations_x = NULL, translations_y = NULL, translations_xy = NULL,
     jitters = NULL, anisotropic = NULL,
     screen_width_px = NULL, screen_height_px = NULL,
     viewing_distance = NULL, physical_screen_size = NULL,
@@ -250,6 +250,7 @@ run_gazepoint_aoi_sensitivity <- function(
     grid_args <- list(
       dilations = dilations, erosions = erosions,
       translations_x = translations_x, translations_y = translations_y,
+      translations_xy = translations_xy,
       jitters = jitters, anisotropic = anisotropic,
       unit = perturbation_unit, include_baseline = TRUE,
       seed = seed, boundary_policy = boundary_policy
