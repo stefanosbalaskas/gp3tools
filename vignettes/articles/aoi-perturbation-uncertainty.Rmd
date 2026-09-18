@@ -59,6 +59,7 @@ result <- run_gazepoint_aoi_sensitivity(
   coordinate_unit = "normalized", perturbation_unit = "deg",
   dilations = c(.25, .50, 1.00), erosions = .25,
   translations_x = .50, translations_y = .50,
+  translations_xy = list(c(.25, -.25)),
   screen_width_px = 1920, screen_height_px = 1080,
   viewing_distance = 60, physical_screen_size = c(53.1, 29.9),
   observation_id_col = "sample_id", participant_col = "participant",
@@ -68,7 +69,7 @@ result <- run_gazepoint_aoi_sensitivity(
 result$core_result$stability$overall
 ```
 
-The complete `eyeprocess` result remains unchanged inside `result$core_result`; the outer object records Gazepoint source columns and unit-conversion settings.
+`translations_xy` is forwarded unchanged to the vendor-neutral core; `gp3tools` does not implement a separate translation engine. The complete `eyeprocess` result remains unchanged inside `result$core_result`; the outer object records Gazepoint source columns and unit-conversion settings.
 
 ## Visual output
 
