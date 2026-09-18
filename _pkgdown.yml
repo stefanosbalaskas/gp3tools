@@ -74,6 +74,7 @@ articles:
     navbar: Ecosystem bridges
     contents:
     - articles/ecosystem-exports
+    - articles/gaze-survival-adapter
     - ecosystem-update-2026-09
   - title: Signal preprocessing and feature engineering
     navbar: Signal extensions
@@ -368,6 +369,11 @@ reference:
     - prepare_gazepoint_gpbiometrics_bridge
     - run_gazepoint_gpbiometrics_workflow
     - create_gazepoint_cross_package_report
+  - title: Censored gaze-latency survival adapters
+    desc: Thin Gazepoint convenience wrappers that delegate censoring, Cox/AFT modelling, diagnostics, sensitivity, and reporting to eyeprocess.
+    contents:
+    - prepare_gazepoint_survival_data
+    - run_gazepoint_latency_analysis
   - title: Naming and compatibility
     desc: User-facing spelling policy, API audits, and compatibility aliases.
     contents:
