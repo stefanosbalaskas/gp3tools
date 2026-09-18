@@ -29,6 +29,7 @@ It supports common Gazepoint workflows, including:
 * pupil-window confirmatory LMMs and model-family sensitivity checks;
 * AOI entries, AOI windows, AOI denominators, and AOI-window GLMMs;
 * AOI/fixation/transition feature extraction and time-varying transition matrices;
+* censored gaze-latency survival adapters that delegate right-censoring, repeated-participant Cox, and AFT analysis to the vendor-neutral `eyeprocess` engine;
 * fixation-, saccade-, and AOI-contingent alignment;
 * pupil GAMMs, AOI GAMMs, gaze-position/PFE sensitivity GAMMs, and Growth Curve Analysis;
 * cluster-based permutation tests and bootstrapped divergence-point estimation;
@@ -78,6 +79,8 @@ Use AOI-window GLMMs when the main hypothesis concerns predefined AOI time windo
 
 Use AOI-entry, fixation, and transition helpers when the analysis concerns looking episodes, fixation summaries, AOI sequences, transition matrices, or scanpath structure.
 
+Use `prepare_gazepoint_survival_data()` and `run_gazepoint_latency_analysis()` when the outcome is a time-to-event gaze latency and some valid trials end before the target event occurs. These are thin adapters to `eyeprocess`; never-inspected valid trials remain right-censored, while unusable/incomplete gaze remains a review state. The repeated-Cox structure and AFT family must be named explicitly.
+
 Use cluster-based permutation testing for time-course inference. Use `estimate_gazepoint_divergence_point()` as complementary onset/sensitivity evidence, not as a replacement for confirmatory model specification.
 
 Use model diagnostics, model summaries, estimated marginal means, nested model comparison, model-prediction plots, and leave-one-unit sensitivity checks before manuscript reporting.
@@ -105,6 +108,7 @@ Use `summarize_gazepoint_missingness()`, `segment_gazepoint_task_phases()`, `col
 | Summarise and model pupil outcomes | `summarise_gazepoint_pupil()`, `summarise_gazepoint_pupil_windows()`, `summarise_gazepoint_pupil_trial_features()`, `fit_gazepoint_pupil_window_lmm()`, `fit_gazepoint_pupil_gamm()` |
 | Summarise AOI behaviour | `summarise_gazepoint_aoi_windows()`, `summarise_gazepoint_aoi_entries()`, `summarise_gazepoint_aoi_trial_features()`, `summarise_gazepoint_fixation_trials()` |
 | Model AOI outcomes | `prepare_gazepoint_aoi_glmm_data()`, `fit_gazepoint_aoi_window_glmm()`, `fit_gazepoint_aoi_model_sensitivity()`, `prepare_gazepoint_aoi_gamm_data()`, `fit_gazepoint_aoi_gamm()` |
+| Analyse censored gaze latency | `prepare_gazepoint_survival_data()`, `run_gazepoint_latency_analysis()` |
 | Analyse sequences, transitions, and scanpaths | `prepare_gazepoint_aoi_sequences()`, `summarise_gazepoint_aoi_transitions()`, `compute_gazepoint_aoi_transition_matrix()`, `compute_gazepoint_time_varying_transition_matrix()`, `cluster_gazepoint_scanpaths()`, `select_gazepoint_scanpath_clusters()`, `extract_gazepoint_representative_scanpaths()`, `plot_gazepoint_scanpath_clusters()`, `bootstrap_gazepoint_scanpath_clusters()`, `summarise_gazepoint_scanpath_cluster_stability()`, `plot_gazepoint_scanpath_cluster_stability()` |
 | Run time-course and advanced sensitivity analyses | `fit_gazepoint_gca()`, `run_gazepoint_cluster_permutation()`, `estimate_gazepoint_divergence_point()`, `run_gazepoint_model_leave_one_out()` |
 | Prepare reporting and exclusion decisions | `check_gazepoint_real_data_readiness()`, `recommend_gazepoint_exclusions()`, `create_gazepoint_reporting_checklist()`, `create_gazepoint_analysis_decision_audit()` |
