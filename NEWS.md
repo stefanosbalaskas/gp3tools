@@ -1,5 +1,13 @@
 # gp3tools 2.3.0.9000
 
+## Standardized Gazepoint data quality
+
+- Added thin Gazepoint adapters for the vendor-neutral eyeprocess spatial-quality subsystem: `summarise_gazepoint_spatial_quality()`, `create_gazepoint_quality_report()`, `plot_gazepoint_quality_dashboard()`, and `report_gazepoint_quality()`.
+- Native BPOG/FPOG coordinates and TIME/MSTIMER timing units are resolved conservatively; generic coordinate columns require explicit units and numeric ranges are never used for unit guessing.
+- Complete GP3 screen/viewing geometry can be forwarded for explicit normalized/pixel-to-degree conversion; incomplete geometry is never silently completed.
+- Added dataset/sample/participant/session/trial/file grouping, review-only threshold propagation, formula-engine provenance, focused adapter tests, and a synthetic 9-point website workflow with sensitivity-analysis guidance.
+- No accuracy, precision, BCEA, sampling, jitter, or data-loss formula is duplicated in gp3tools.
+
 ## AOI perturbation uncertainty adapter
 
 - Added `audit_gazepoint_aoi_uncertainty()`, `run_gazepoint_aoi_sensitivity()`, and `plot_gazepoint_aoi_sensitivity()` as thin Gazepoint adapters to the vendor-neutral eyeprocess AOI perturbation framework.

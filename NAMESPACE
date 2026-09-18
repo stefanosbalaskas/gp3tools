@@ -291,3 +291,8 @@ importFrom(rlang,.data)
 export(audit_gazepoint_aoi_uncertainty)
 export(run_gazepoint_aoi_sensitivity)
 export(plot_gazepoint_aoi_sensitivity)
+
+export(summarise_gazepoint_spatial_quality)
+export(create_gazepoint_quality_report)
+export(plot_gazepoint_quality_dashboard)
+export(report_gazepoint_quality)

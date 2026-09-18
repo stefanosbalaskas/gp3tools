@@ -1,0 +1,317 @@
+---
+title: "Gazepoint data quality: accuracy, precision, sampling, and loss"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Gazepoint data quality: accuracy, precision, sampling, and loss}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  eval = requireNamespace("eyeprocess", quietly = TRUE)
+)
+```
+
+```{r}
+library(gp3tools)
+```
+
+## Why this workflow exists
+
+Gazepoint exports contain useful native validity and coordinate fields, but a
+vendor summary is not a substitute for a reproducible study-level quality
+analysis. The gp3tools wrappers in this article resolve Gazepoint columns and
+metadata and then delegate every scientific formula to the vendor-neutral
+eyeprocess core.
+
+The workflow keeps four questions separate:
+
+1. **Accuracy:** how far was gaze from a known target?
+2. **Precision:** how stable was gaze while the intended target was stable?
+3. **Sampling:** what timing stream was actually recorded?
+4. **Availability:** how much usable gaze was available and how was it lost?
+
+No wrapper automatically excludes a trial or participant.
+
+## Native GP3 coordinates and units
+
+Gazepoint BPOG/FPOG/LPOG/RPOG screen coordinates are treated as normalized
+coordinates. TIME is interpreted as seconds and MSTIMER as milliseconds. For a
+generic column such as gaze_x, the wrapper does not inspect the numeric range and
+guess a unit: set coordinate_unit explicitly.
+
+If you want angular results from normalized or pixel coordinates, provide
+physical display geometry and viewing distance and request output_unit =
+"degrees". Merely supplying geometry does not change units.
+
+## Reproducible 9-point example
+
+The following synthetic data mimic a validation/check-target stream with native
+BPOG coordinates. The four profiles deliberately separate calibration offset,
+spatial noise, irregular timing, and missingness.
+
+```{r synthetic}
+set.seed(20260918)
+
+targets <- expand.grid(
+  target_x = c(0.20, 0.50, 0.80),
+  target_y = c(0.20, 0.50, 0.80)
+)
+
+profiles <- data.frame(
+  profile = c(
+    "good",
+    "offset",
+    "noisy",
+    "irregular_missing"
+  ),
+  bias_x = c(0, 0.035, 0, 0),
+  bias_y = c(0, -0.025, 0, 0),
+  noise = c(0.003, 0.003, 0.018, 0.006)
+)
+
+rows <- list()
+k <- 0L
+
+for (p in seq_len(nrow(profiles))) {
+  for (target_id in seq_len(nrow(targets))) {
+    ms <- 0
+    for (sample_id in seq_len(12)) {
+      interval <- 1000 / 60
+      if (profiles$profile[p] == "irregular_missing" &&
+          sample_id %in% c(5, 10)) {
+        interval <- interval * 2.5
+      }
+      ms <- ms + interval
+
+      x <- targets$target_x[target_id] +
+        profiles$bias_x[p] +
+        rnorm(1, 0, profiles$noise[p])
+      y <- targets$target_y[target_id] +
+        profiles$bias_y[p] +
+        rnorm(1, 0, profiles$noise[p])
+
+      valid <- 1
+      reason <- NA_character_
+      if (profiles$profile[p] == "irregular_missing" &&
+          sample_id %in% c(6, 7)) {
+        x <- NA_real_
+        y <- NA_real_
+        valid <- 0
+        reason <- if (sample_id == 6) "blink" else "tracker_invalidity"
+      }
+
+      k <- k + 1L
+      rows[[k]] <- data.frame(
+        USER = "P001",
+        SESSION_ID = "S001",
+        MEDIA_ID = paste0(profiles$profile[p], "_", target_id),
+        profile = profiles$profile[p],
+        target_id = target_id,
+        MSTIMER = ms,
+        BPOGX = x,
+        BPOGY = y,
+        BPOGV = valid,
+        target_x = targets$target_x[target_id],
+        target_y = targets$target_y[target_id],
+        missing_reason = reason
+      )
+    }
+  }
+}
+
+gp_validation <- do.call(rbind, rows)
+```
+
+## Build the quality report
+
+For normalized coordinates, the report can stay normalized or be converted to
+degrees when geometry is available. This example uses a 24-inch-class
+1920-by-1080 display and an explicitly declared viewing distance.
+
+```{r report}
+geometry <- list(
+  screen_width_px = 1920,
+  screen_height_px = 1080,
+  screen_width_cm = 53.0,
+  screen_height_cm = 29.8,
+  viewing_distance_cm = 60
+)
+
+quality <- create_gazepoint_quality_report(
+  gp_validation,
+  missing_reason_col = "missing_reason",
+  level = "trial",
+  output_unit = "degrees",
+  geometry = geometry,
+  nominal_sampling_hz = 60,
+  bcea_probability = 0.68,
+  preprocessing_spec = "synthetic raw validation samples; no interpolation",
+  quality_rules = "descriptive QC with study-defined review flags"
+)
+
+quality[c(
+  ".gp3_quality_participant",
+  ".gp3_quality_trial",
+  "accuracy_mean",
+  "precision_rms_s2s",
+  "precision_sd",
+  "bcea",
+  "effective_sampling_hz",
+  "valid_sample_fraction",
+  "data_loss_fraction"
+)]
+```
+
+## Accuracy and precision are different
+
+The offset profile should show worse target-referenced accuracy while retaining
+relatively good short-term precision. The noisy profile is centered on the
+target on average but has poorer precision. This is why a single "calibration
+quality" label cannot replace explicit accuracy and precision metrics.
+
+```{r accuracy-precision}
+aggregate(
+  cbind(accuracy_mean, precision_rms_s2s, precision_sd) ~ profile,
+  transform(
+    quality,
+    profile = sub("_[0-9]+$", "", .gp3_quality_trial)
+  ),
+  mean,
+  na.rm = TRUE
+)
+```
+
+### Aggregation levels
+
+The convenience layer supports dataset, sample, participant, session, trial, and
+file grouping. Sample level uses a deterministic source-row identifier. It is
+useful for tracing validity and target error, but a single sample does not
+provide a meaningful stable-target estimate of RMS-S2S, SD precision, or BCEA.
+
+## Review thresholds are not exclusions
+
+Thresholds are study-specific and should normally be defined before inspecting
+outcomes. They create quality_flags and review_required only.
+
+```{r thresholds}
+reviewed <- create_gazepoint_quality_report(
+  gp_validation,
+  missing_reason_col = "missing_reason",
+  level = "trial",
+  output_unit = "degrees",
+  geometry = geometry,
+  nominal_sampling_hz = 60,
+  thresholds = list(
+    accuracy_mean = list(max = 1.0),
+    valid_sample_fraction = list(min = 0.80)
+  )
+)
+
+reviewed[c(
+  ".gp3_quality_trial",
+  "quality_flags",
+  "review_required"
+)]
+
+attr(reviewed, "gazepoint_quality_adapter")$automatic_exclusion
+```
+
+## Visual dashboard
+
+```{r dashboard, fig.width=9, fig.height=7}
+plot_gazepoint_quality_dashboard(quality)
+```
+
+The dashboard is descriptive. It should be paired with the row-level quality
+table and with the study's pre-specified review/exclusion logic.
+
+For timing diagnostics, distinguish `long_interval_count` from
+`dropped_interval_count`: the first counts unusually long observed intervals,
+whereas the second estimates how many nominal samples those long gaps represent.
+Neither should be described as a direct hardware-level packet-loss measurement.
+
+## A failure case worth keeping
+
+Generic standardized columns require an explicit unit. This deliberately fails:
+
+```{r generic-unit-failure, error=TRUE}
+generic <- data.frame(
+  timestamp_ms = c(0, 16.7, 33.4),
+  gaze_x = c(0.50, 0.51, 0.50),
+  gaze_y = c(0.50, 0.50, 0.50)
+)
+
+create_gazepoint_quality_report(generic)
+```
+
+The correct call declares the unit:
+
+```{r generic-unit-correct}
+create_gazepoint_quality_report(
+  generic,
+  coordinate_unit = "normalized",
+  target_x_col = NULL,
+  target_y_col = NULL,
+  nominal_sampling_hz = 60
+)
+```
+
+## Quality decisions as sensitivity analysis
+
+Keep the full Gazepoint quality report intact and separate the measurement
+diagnostic from the eventual inclusion decision.
+
+```{r sensitivity}
+keep <- reviewed[!reviewed$review_required, ]
+flagged <- reviewed[reviewed$review_required, ]
+```
+
+For downstream modeling, join the report back to the trial or participant key
+and compare the primary specification with one or more pre-specified sensitivity
+specifications. This can include a stricter exclusion rule or stratification by
+quality status. The wrapper never removes observations for you.
+
+## Reporting guideline
+
+For a manuscript, report the display/coordinate geometry needed to understand
+the unit, the validation/check-target procedure, the accuracy statistic, the
+precision definition, the BCEA probability when used, nominal and observed
+sampling behavior, the operational definition of data loss, and the actual
+review/exclusion rule.
+
+A compact starting point is:
+
+```{r reporting}
+report_gazepoint_quality(quality)
+```
+
+A manuscript-ready sentence can then add the acquisition context:
+
+> Gaze quality was evaluated from known validation targets using target-referenced
+> Euclidean accuracy, RMS sample-to-sample and spatial-SD precision, and 68% BCEA
+> after explicit conversion from normalized screen coordinates to degrees of
+> visual angle. The nominal 60-Hz device rate was supplemented by timestamp-based
+> effective sampling and interval diagnostics. Missing or invalid gaze was
+> summarized by loss fraction and loss-run duration. Pre-specified thresholds
+> generated manual-review flags rather than automatic exclusions.
+
+## Interpretation boundaries
+
+These measures characterize measurement quality. They do not establish
+attention, engagement, cognitive load, motivation, competence, or any clinical
+property. A review flag is an analysis-governance signal, not a diagnosis or a
+participant label.
+
+## API links
+
+- summarise_gazepoint_spatial_quality()
+- create_gazepoint_quality_report()
+- plot_gazepoint_quality_dashboard()
+- report_gazepoint_quality()
+
+The underlying formulas and scientific contracts are maintained in eyeprocess;
+gp3tools remains the Gazepoint-specific adapter layer.

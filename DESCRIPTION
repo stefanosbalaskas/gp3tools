@@ -33,7 +33,7 @@ Imports:
     tibble,
     tidyr
 Suggests:
-    eyeprocess,
+    eyeprocess (>= 0.11.1.9000),
     brms,
     cluster,
     DHARMa,
@@ -50,6 +50,8 @@ Suggests:
     shiny,
     testthat (>= 3.0.0),
     TraMineR
+Remotes:
+    stefanosbalaskas/eyeprocess
 VignetteBuilder: knitr
 Config/testthat/edition: 3
 Config/roxygen2/version: 8.0.0
