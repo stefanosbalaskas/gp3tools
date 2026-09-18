@@ -1,3 +1,13 @@
+# gp3tools 2.3.0.9000
+
+## Standardized Gazepoint data quality
+
+- Added thin Gazepoint adapters for the vendor-neutral eyeprocess spatial-quality subsystem: `summarise_gazepoint_spatial_quality()`, `create_gazepoint_quality_report()`, `plot_gazepoint_quality_dashboard()`, and `report_gazepoint_quality()`.
+- Native BPOG/FPOG coordinates and TIME/MSTIMER timing units are resolved conservatively; generic coordinate columns require explicit units and numeric ranges are never used for unit guessing.
+- Complete GP3 screen/viewing geometry can be forwarded for explicit pixel/normalized-to-degree conversion; incomplete geometry is not silently completed.
+- Added participant/session/trial/file aggregation adapters, review-only threshold propagation, formula-engine provenance, focused adapter tests, and a synthetic 9-point Gazepoint Data Quality website workflow.
+- No accuracy, precision, BCEA, sampling, jitter, or data-loss formula is duplicated in gp3tools.
+
 # gp3tools 2.3.0
 
 ## Auditable binocular pupil reconstruction
