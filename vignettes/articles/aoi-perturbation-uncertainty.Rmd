@@ -64,6 +64,7 @@ result <- run_gazepoint_aoi_sensitivity(
   viewing_distance = 60, physical_screen_size = c(53.1, 29.9),
   observation_id_col = "sample_id", participant_col = "participant",
   trial_col = "trial", duration_col = "duration",
+  observation_level = "sample",
   overlap_policy = "ambiguous", quality_rules = list(missing = "preserve")
 )
 result$core_result$stability$overall
