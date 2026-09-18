@@ -229,6 +229,11 @@ plot_gazepoint_quality_dashboard(quality)
 The dashboard is descriptive. It should be paired with the row-level quality
 table and with the study's pre-specified review/exclusion logic.
 
+For timing diagnostics, distinguish `long_interval_count` from
+`dropped_interval_count`: the first counts unusually long observed intervals,
+whereas the second estimates how many nominal samples those long gaps represent.
+Neither should be described as a direct hardware-level packet-loss measurement.
+
 ## A failure case worth keeping
 
 Generic standardized columns require an explicit unit. This deliberately fails:
