@@ -80,6 +80,43 @@ plot_gazepoint_aoi_sensitivity(result, "assignment")
 
 Other delegated plot families are `perturbations`, `coefficient`, and `surface`.
 
+## Gazepoint AOI pre-run checklist
+
+Before calling the adapter, confirm:
+
+1. the exact Gazepoint x/y source columns;
+2. whether coordinates are normalized or pixels;
+3. screen width/height for normalized-to-pixel conversion;
+4. physical screen size and viewing distance for degree-based perturbations;
+5. whether rows are samples or fixations;
+6. the perturbation grid, overlap policy, and boundary policy;
+7. the fixed downstream model specification in the delegated `eyeprocess` callback.
+
+The adapter never infers these scientific choices from the desired result.
+
+## Gazepoint AOI troubleshooting
+
+Use `audit_gazepoint_aoi_uncertainty()` first when units or source columns are uncertain. Once the adapter boundary is valid, troubleshoot the delegated core result in this order: geometry, assignments, feature denominators, then model callback.
+
+| Symptom | First check | Do not do |
+|---|---|---|
+| Normalized coordinates rejected | screen dimensions and `coordinate_unit` | Treat 0-1 values as pixels |
+| Geometry branch fails | `result$core_result$grid_result$audit` | Fall back silently to the older margin-sensitivity path |
+| Many ambiguous assignments | perturbed layout and core reassignment matrix | Resolve overlap by AOI order |
+| Sample count is zero | valid sample denominator | Recode missing gaze as zero |
+| Sample count is missing | missing source coordinates | Treat the trial as observed non-inspection |
+| Model callback fails/non-converges | core failures/models tables | Report it as a valid null effect |
+| Model `N` changes | core inference stability | Report only coefficient direction |
+
+A reporting sentence should identify the original Gazepoint columns and coordinate unit before describing AOI robustness, because otherwise the perturbation scale is not reproducible.
+
+### Adapter/core API links
+
+- `audit_gazepoint_aoi_uncertainty()` validates the Gazepoint-to-core boundary.
+- `run_gazepoint_aoi_sensitivity()` delegates the complete workflow to `eyeprocess`.
+- `plot_gazepoint_aoi_sensitivity()` delegates all four plot families.
+- Use the `eyeprocess` AOI troubleshooting guidance for geometry, denominator, convergence, and model-N interpretation.
+
 ## Gazepoint interpretation clinic
 
 Use the adapter only after source coordinates and screen geometry are explicit. For normalized Gazepoint samples, declare `observation_level = "sample"`; for fixation exports or fixation centroids, declare `"fixation"`.
