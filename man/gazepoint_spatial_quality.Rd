@@ -18,7 +18,7 @@ summarise_gazepoint_spatial_quality(
   coordinate_unit = c("auto", "normalized", "pixels", "degrees"),
   output_unit = NULL, geometry = NULL,
   time_unit = c("auto", "ms", "s", "us", "ns"),
-  level = c("dataset", "participant", "session", "trial", "file"),
+  level = c("dataset", "sample", "participant", "session", "trial", "file"),
   by = NULL, probability = 0.68, max_gap_ms = NULL
 )
 
@@ -30,7 +30,7 @@ create_gazepoint_quality_report(
   coordinate_unit = c("auto", "normalized", "pixels", "degrees"),
   output_unit = NULL, geometry = NULL,
   time_unit = c("auto", "ms", "s", "us", "ns"),
-  level = c("dataset", "participant", "session", "trial", "file"),
+  level = c("dataset", "sample", "participant", "session", "trial", "file"),
   by = NULL, nominal_sampling_hz = 60, bcea_probability = 0.68,
   max_gap_ms = NULL, thresholds = NULL, preprocessing_spec = NULL,
   event_detector = NULL, aoi_specification = NULL,
@@ -71,6 +71,8 @@ the unit explicitly unless an unambiguous coordinate_unit column is available.
 When complete screen pixel dimensions, physical dimensions, and viewing distance
 are available, they can be forwarded to eyeprocess for an explicitly requested
 coordinate conversion. Incomplete geometry is never silently completed.
+
+For sample-level grouping, gp3tools creates a deterministic source-row identifier. Single-sample rows can be useful for availability or target-error auditing, but single-sample SD/BCEA and successive-sample precision should not be interpreted as stable-target precision evidence.
 
 The wrappers require a compatible development version of eyeprocess. The
 scientific formulas remain implemented only in that vendor-neutral core.
