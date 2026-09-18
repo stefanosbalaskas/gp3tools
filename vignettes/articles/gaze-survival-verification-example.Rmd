@@ -1,0 +1,88 @@
+---
+title: "Gazepoint worked example: evidence verification latency"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Gazepoint worked example: evidence verification latency}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## Purpose
+
+This article shows the thin `gp3tools` route for **time to first source/evidence inspection**. It does not implement a second survival engine: all event/censor construction, model fitting, diagnostics, and reporting are delegated to `eyeprocess`.
+
+## Build the synthetic verification dataset
+
+```{r raw, eval=requireNamespace("eyeprocess", quietly=TRUE)}
+raw <- eyeprocess::simulate_gaze_survival_inputs(
+  "verification",
+  seed = 20260918,
+  n_participants = 36,
+  trials_per_participant = 3
+)
+```
+
+## Run the explicit adapter workflow
+
+```{r analysis, eval=requireNamespace("eyeprocess", quietly=TRUE)}
+verification <- run_gazepoint_latency_analysis(
+  raw$trials,
+  raw$events,
+  target_aoi = "source_evidence",
+  formula = "condition",
+  participant_col = "participant_id",
+  cox_structure = "cluster_robust",
+  aft_distribution = "weibull",
+  km_group = "condition",
+  event_type = "first_aoi_entry",
+  condition_col = "condition_id",
+  event_detector = "synthetic_truth",
+  aoi_specification = "fixed synthetic source/evidence AOI",
+  quality_rules = list(valid_fraction_min = .90)
+)
+
+verification$censoring
+verification$report$effects
+verification$ph_diagnostics
+```
+
+`cox_structure` and `aft_distribution` are required deliberately. `gp3tools` never chooses a repeated-participant estimator or AFT family for the analyst.
+
+## Visualize time to evidence inspection
+
+```{r plot, eval=requireNamespace("eyeprocess", quietly=TRUE), fig.cap="Kaplan-Meier curves for time to first source/evidence AOI entry."}
+eyeprocess::plot_gaze_survival_curve(
+  verification$data,
+  group = "condition"
+)
+```
+
+A lower survival curve indicates that a larger share of trials has already entered the source/evidence AOI by that time.
+
+## Interpretation
+
+The clustered Cox hazard ratio describes the relative instantaneous evidence-inspection rate among trials still at risk. It is not a mean-latency ratio. The delegated Weibull AFT output instead expresses a multiplicative event-time contrast under the named distribution.
+
+## Troubleshooting clinic
+
+Do not silently convert any of the following into ordinary right censoring:
+
+- an incomplete trial observation window;
+- missing or ambiguous trial/event identity;
+- gaze quality below the declared rule;
+- event time after the censoring limit.
+
+If event counts are sparse or censoring is extreme, report that limitation even if the backend converges. If the scientific model requires latent participant frailty, request `cox_structure = "frailty"` explicitly and report the corresponding marginal Cox PH diagnostic separately.
+
+## Reporting example
+
+> Gazepoint evidence-inspection latency was analysed through the vendor-neutral `eyeprocess` survival engine using `gp3tools`. Complete usable trials without a source/evidence entry were retained as right-censored observations; unresolved or poor-quality trials were not converted to censoring. We fitted a participant-clustered Cox model and a pre-specified Weibull AFT sensitivity model, reporting effect estimates with 95% confidence intervals together with censoring summaries and proportional-hazards diagnostics.
+
+Report both package versions, the target event/AOI, time origin, observation-window rule, quality criterion, Cox structure, AFT family, event/censor counts, diagnostics, and sensitivity branches.
+
+## API links
+
+- `prepare_gazepoint_survival_data()` — thin preparation adapter.
+- `run_gazepoint_latency_analysis()` — thin end-to-end adapter.
+- `eyeprocess::plot_gaze_survival_curve()` — vendor-neutral survival visualization.
+- `eyeprocess::report_gaze_survival_model()` — vendor-neutral reporting bundle.
