@@ -101,7 +101,7 @@ Use AOI-window GLMMs when the main hypothesis concerns predefined AOI time windo
 
 Use AOI-entry, fixation, and transition helpers when the analysis concerns looking episodes, fixation summaries, AOI sequences, transition matrices, or scanpath structure.
 
-Use `prepare_gazepoint_survival_data()` and `run_gazepoint_latency_analysis()` when the outcome is a time-to-event gaze latency and some valid trials end before the target event occurs. These are thin adapters to `eyeprocess`; never-inspected valid trials remain right-censored, while unusable/incomplete gaze remains a review state. The repeated-Cox structure and AFT family must be named explicitly.
+Use `prepare_gazepoint_survival_data()` and `run_gazepoint_latency_analysis()` when the outcome is a time-to-event gaze latency and some valid trials end before the target event occurs. These are thin adapters to `eyeprocess`; never-inspected valid trials remain right-censored, while unusable/incomplete gaze remains a review state. The repeated-Cox structure and AFT family must be named explicitly. See the [survival adapter article](https://stefanosbalaskas.github.io/gp3tools/articles/gaze-survival-adapter.html) and the [evidence-verification worked example](https://stefanosbalaskas.github.io/gp3tools/articles/gaze-survival-verification-example.html).
 
 Use cluster-based permutation testing for time-course inference. Use `estimate_gazepoint_divergence_point()` as complementary onset/sensitivity evidence, not as a replacement for confirmatory model specification.
 
