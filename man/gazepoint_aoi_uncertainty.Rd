@@ -100,6 +100,7 @@ result <- run_gazepoint_aoi_sensitivity(
   gaze_y_col = "FPOGY",
   coordinate_unit = "normalized",
   perturbation_unit = "deg",
+  observation_level = "sample",
   dilations = c(0.25, 0.5, 1),
   erosions = 0.25,
   translations_xy = list(c(0.25, -0.25)),
