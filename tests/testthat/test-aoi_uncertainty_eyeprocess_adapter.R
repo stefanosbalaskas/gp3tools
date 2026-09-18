@@ -90,6 +90,7 @@ test_that("run adapter delegates grid creation and analysis without scientific d
     perturbation_unit = "deg",
     dilations = c(.25, .5),
     translations_x = .25,
+    translations_xy = list(c(.25, -.25)),
     screen_width_px = 1000,
     screen_height_px = 800,
     viewing_distance = 60,
@@ -106,6 +107,7 @@ test_that("run adapter delegates grid creation and analysis without scientific d
   expect_equal(calls$aois$xmin, c(100, 600))
   expect_equal(calls$grid_args$unit, "deg")
   expect_equal(calls$grid_args$dilations, c(.25, .5))
+  expect_equal(calls$grid_args$translations_xy, list(c(.25, -.25)))
   expect_equal(calls$overlap_policy, "ambiguous")
   expect_equal(calls$event_detector, "native_fixations")
   expect_equal(result$adapter_settings$coordinate_unit, "normalized")
