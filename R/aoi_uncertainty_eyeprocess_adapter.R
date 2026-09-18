@@ -206,6 +206,7 @@ audit_gazepoint_aoi_uncertainty <- function(
 #' @param viewing_distance Viewing distance for degree conversion.
 #' @param physical_screen_size Physical screen width and height.
 #' @param observation_id_col,participant_col,trial_col,duration_col,time_col Optional analysis columns.
+#' @param observation_level Explicit input level: fixation or sample.
 #' @param overlap_policy Explicit overlap handling.
 #' @param model_callback Optional fixed model callback.
 #' @param preprocessing_specification,event_detector,quality_rules,model_specification Provenance fields.
@@ -225,6 +226,7 @@ run_gazepoint_aoi_sensitivity <- function(
     viewing_distance = NULL, physical_screen_size = NULL,
     observation_id_col = NULL, participant_col = NULL, trial_col = NULL,
     duration_col = NULL, time_col = NULL,
+    observation_level = c("fixation", "sample"),
     overlap_policy = c("ambiguous", "all", "error"),
     model_callback = NULL,
     preprocessing_specification = NULL, event_detector = NULL,
@@ -233,6 +235,7 @@ run_gazepoint_aoi_sensitivity <- function(
     boundary_policy = c("warn", "clip", "error", "allow")) {
   coordinate_unit <- match.arg(coordinate_unit)
   perturbation_unit <- match.arg(perturbation_unit)
+  observation_level <- match.arg(observation_level)
   overlap_policy <- match.arg(overlap_policy)
   boundary_policy <- match.arg(boundary_policy)
 
@@ -273,6 +276,7 @@ run_gazepoint_aoi_sensitivity <- function(
     trial_col = trial_col,
     duration_col = duration_col,
     time_col = time_col,
+    observation_level = observation_level,
     overlap_policy = overlap_policy,
     model_callback = model_callback,
     preprocessing_specification = preprocessing_specification,
@@ -293,6 +297,7 @@ run_gazepoint_aoi_sensitivity <- function(
       screen_height_px = screen_height_px,
       viewing_distance = viewing_distance,
       physical_screen_size = physical_screen_size,
+      observation_level = observation_level,
       overlap_policy = overlap_policy,
       boundary_policy = boundary_policy
     )
