@@ -260,6 +260,21 @@ create_gazepoint_quality_report(
 )
 ```
 
+## Quality decisions as sensitivity analysis
+
+Keep the full Gazepoint quality report intact and separate the measurement
+diagnostic from the eventual inclusion decision.
+
+```{r sensitivity}
+keep <- reviewed[!reviewed$review_required, ]
+flagged <- reviewed[reviewed$review_required, ]
+```
+
+For downstream modeling, join the report back to the trial or participant key
+and compare the primary specification with one or more pre-specified sensitivity
+specifications. This can include a stricter exclusion rule or stratification by
+quality status. The wrapper never removes observations for you.
+
 ## Reporting guideline
 
 For a manuscript, report the display/coordinate geometry needed to understand
