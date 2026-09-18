@@ -127,6 +127,17 @@ A Cox hazard ratio describes the instantaneous target-event rate among trials st
 
 For frailty Cox models, survival::cox.zph() is not applied to the coxme object. The wrapper therefore returns an explicit diagnostic-status row and directs the analyst to report the corresponding marginal Cox PH diagnostic separately.
 
+## Model-choice quick guide
+
+| Question | Adapter choice | Interpretation |
+|:--|:--|:--|
+| Describe when Gazepoint trials first inspect the target | Kaplan-Meier output | Remaining uninspected probability |
+| Estimate a marginal condition effect across repeated trials | `cox_structure = "cluster_robust"` | Marginal hazard ratio |
+| Estimate latent participant heterogeneity in R | `cox_structure = "frailty"` | Conditional hazard ratio with participant frailty |
+| Express multiplicative event-time differences | `aft_distribution = "weibull"` or `"lognormal"` | Time ratio |
+
+The adapter does not select among these estimands. The analyst must name the repeated-Cox structure and AFT family explicitly.
+
 ## Sensitivity guidance
 
 Rebuild the survival table and rerun the model under pre-specified alternatives that matter scientifically: AOI boundaries, fixation/event detector, trial start marker, minimum fixation duration, quality threshold, clustered versus frailty Cox, Weibull versus log-normal AFT, and transparent exclusion/review rules. Do not merely relabel the same prepared table as a new specification.
@@ -134,6 +145,12 @@ Rebuild the survival table and rerun the model under pre-specified alternatives 
 ## Reporting checklist
 
 Report participants and trials, observed events and censored trials, censoring percentage, review-required rows, target event and AOI, time origin and observation-window rule, event detector and fixation-duration rule, gaze-quality criterion, Cox repeated-observation structure, AFT family, effect estimate with 95% CI, PH diagnostic status, sensitivity branches, and the eyeprocess/gp3tools versions.
+
+### Copyable reporting template
+
+> Gazepoint gaze latency was analysed using the vendor-neutral `eyeprocess` survival engine through `gp3tools`. The target event was [EVENT] within [TARGET AOI], measured from [TIME ORIGIN]. Complete usable trials in which the event did not occur were retained as right-censored observations; unresolved or low-quality trials were not converted to censoring. We fitted [CLUSTER-ROBUST/FRAILTY] Cox and [WEIBULL/LOG-NORMAL] AFT specifications, reporting [HAZARD RATIOS/TIME RATIOS] with 95% confidence intervals. We documented censoring by condition, proportional-hazards diagnostics where applicable, and pre-specified sensitivity analyses across AOI, detector, quality, and model definitions.
+
+Report the `eyeprocess` and `gp3tools` versions together so the scientific engine and vendor-adapter layer are both reproducible.
 
 ## Failure cases
 
