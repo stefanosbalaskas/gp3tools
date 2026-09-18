@@ -25,7 +25,7 @@ run_gazepoint_aoi_sensitivity(
   perturbation_unit = c("px", "deg"),
   dilations = NULL, erosions = NULL,
   translations_x = NULL, translations_y = NULL,
-  jitters = NULL, anisotropic = NULL,
+  translations_xy = NULL, jitters = NULL, anisotropic = NULL,
   screen_width_px = NULL, screen_height_px = NULL,
   viewing_distance = NULL, physical_screen_size = NULL,
   observation_id_col = NULL, participant_col = NULL, trial_col = NULL,
@@ -52,7 +52,7 @@ plot_gazepoint_aoi_sensitivity(
 \item{geometry_aoi_col}{Optional AOI identifier column for Gazepoint geometry.}
 \item{coordinate_unit}{Explicit source coordinate unit, either pixels or normalized coordinates.}
 \item{perturbation_unit}{Unit used for perturbation values, either pixels or degrees of visual angle.}
-\item{dilations, erosions, translations_x, translations_y, jitters, anisotropic}{Perturbation values forwarded to eyeprocess when a grid is not supplied.}
+\item{dilations, erosions, translations_x, translations_y, translations_xy, jitters, anisotropic}{Perturbation values forwarded unchanged to eyeprocess when a grid is not supplied. `translations_xy` contains explicit horizontal/vertical translation pairs.}
 \item{screen_width_px, screen_height_px}{Display dimensions in pixels. Required for conversion of normalized coordinates.}
 \item{viewing_distance}{Viewing distance required for degree-based perturbations unless the supplied core grid already contains conversion metadata.}
 \item{physical_screen_size}{Physical screen width and height in the same unit as viewing distance.}
@@ -100,6 +100,7 @@ result <- run_gazepoint_aoi_sensitivity(
   perturbation_unit = "deg",
   dilations = c(0.25, 0.5, 1),
   erosions = 0.25,
+  translations_xy = list(c(0.25, -0.25)),
   screen_width_px = 1920,
   screen_height_px = 1080,
   viewing_distance = 60,
