@@ -1,0 +1,146 @@
+---
+title: "Gazepoint gaze-latency survival analysis"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Gazepoint gaze-latency survival analysis}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## Why this is an adapter, not another survival engine
+
+gp3tools does not duplicate survival-analysis science. prepare_gazepoint_survival_data() and run_gazepoint_latency_analysis() translate a Gazepoint-oriented workflow into the vendor-neutral eyeprocess survival API. Event/censor construction, validation, Cox/AFT fitting, diagnostics, provenance, and reporting remain in eyeprocess.
+
+Use this route only after Gazepoint exports have been represented as explicit trial observation windows and fixation/AOI-visit events. A missing Gazepoint field is not evidence of censoring. A target that is never inspected during a complete usable trial can be right-censored; incomplete or unusable gaze remains a review state.
+
+## When to use it
+
+Use censored latency when the scientific outcome is time to first target fixation, first AOI entry, first evidence inspection, first revisit, first transition into a target AOI, or a pre-defined disengagement event, and when some valid trials end before that event occurs.
+
+Do not use this workflow for ordinary fixation-duration summaries, for trials whose observation window cannot be established, or to turn missing/unusable gaze into an artificial never-inspected outcome.
+
+## Censoring decision table
+
+| Gazepoint trial state | Survival treatment |
+|:--|:--|
+| Target event observed in a complete usable window | Event |
+| Target absent when a complete usable window ends | Right censored |
+| Missing/incomplete observation window | Review required |
+| Gaze quality below the declared rule | Review/exclusion branch |
+| Ambiguous trial/event identity | Stop with an error |
+
+The adapter never guesses a censoring state from a missing value alone.
+
+## Explicit estimator choices
+
+The convenience workflow intentionally has no default model family:
+
+```r
+run_gazepoint_latency_analysis(
+  trials,
+  events,
+  target_aoi = "disclosure",
+  formula = "condition",
+  cox_structure = "cluster_robust",  # or "frailty"
+  aft_distribution = "weibull"      # or "lognormal"
+)
+```
+
+cox_structure = "cluster_robust" asks eyeprocess for a marginal Cox model with participant-clustered uncertainty. cox_structure = "frailty" asks for the distinct Gaussian participant-frailty model implemented by the specialist coxme backend. The wrapper never substitutes one for the other.
+
+## Fully runnable synthetic example
+
+```{r worked, eval=requireNamespace("eyeprocess", quietly=TRUE)}
+raw <- eyeprocess::simulate_gaze_survival_inputs(
+  "disclosure",
+  seed = 20260918,
+  n_participants = 36,
+  trials_per_participant = 3
+)
+
+result <- run_gazepoint_latency_analysis(
+  raw$trials,
+  raw$events,
+  target_aoi = "disclosure",
+  formula = "condition",
+  participant_col = "participant_id",
+  cox_structure = "cluster_robust",
+  aft_distribution = "weibull",
+  km_group = "condition",
+  event_type = "first_fixation",
+  condition_col = "condition_id",
+  event_detector = "synthetic_truth",
+  aoi_specification = "fixed synthetic disclosure AOI",
+  quality_rules = list(valid_fraction_min = .90)
+)
+
+result$censoring
+result$report$effects
+result$ph_diagnostics
+```
+
+## Visual check
+
+A Kaplan–Meier curve keeps every usable trial in the risk set until the target event occurs or the trial ends. The line style identifies the condition without relying on colour alone.
+
+```{r survival-plot, eval=requireNamespace("eyeprocess", quietly=TRUE), fig.cap="Kaplan–Meier curves for time to first disclosure fixation in the synthetic Gazepoint adapter example."}
+eyeprocess::plot_gaze_survival_curve(result$data, group = "condition")
+```
+
+The output retains never-inspected usable trials instead of deleting them. result$specification records the requested repeated-Cox structure and AFT family; result$data retains the eyeprocess provenance fields describing detector, AOI, preprocessing, quality rules, and software version.
+
+## Evidence-verification variant
+
+The same adapter can analyse time to first source/evidence inspection without introducing any Gazepoint-specific estimator logic:
+
+```{r verification-variant, eval=requireNamespace("eyeprocess", quietly=TRUE)}
+verify_raw <- eyeprocess::simulate_gaze_survival_inputs(
+  "verification",
+  seed = 20260918,
+  n_participants = 24,
+  trials_per_participant = 3
+)
+
+verification <- run_gazepoint_latency_analysis(
+  verify_raw$trials,
+  verify_raw$events,
+  target_aoi = "source_evidence",
+  formula = "condition",
+  participant_col = "participant_id",
+  cox_structure = "cluster_robust",
+  aft_distribution = "weibull",
+  km_group = "condition",
+  event_type = "first_aoi_entry",
+  condition_col = "condition_id",
+  event_detector = "synthetic_truth",
+  aoi_specification = "fixed synthetic source/evidence AOI"
+)
+
+verification$censoring
+```
+
+The scientific interpretation remains a censored time-to-event analysis: complete trials without an evidence entry remain in the risk set until their observation window ends.
+
+## Interpretation
+
+A Cox hazard ratio describes the instantaneous target-event rate among trials still at risk. It is not a ratio of mean TTFF. An AFT time ratio describes multiplicative event time under the named parametric family. Cox partial-likelihood and AFT full-likelihood AIC/BIC values are not automatically comparable; the eyeprocess comparison helper flags this boundary.
+
+For frailty Cox models, survival::cox.zph() is not applied to the coxme object. The wrapper therefore returns an explicit diagnostic-status row and directs the analyst to report the corresponding marginal Cox PH diagnostic separately.
+
+## Sensitivity guidance
+
+Rebuild the survival table and rerun the model under pre-specified alternatives that matter scientifically: AOI boundaries, fixation/event detector, trial start marker, minimum fixation duration, quality threshold, clustered versus frailty Cox, Weibull versus log-normal AFT, and transparent exclusion/review rules. Do not merely relabel the same prepared table as a new specification.
+
+## Reporting checklist
+
+Report participants and trials, observed events and censored trials, censoring percentage, review-required rows, target event and AOI, time origin and observation-window rule, event detector and fixation-duration rule, gaze-quality criterion, Cox repeated-observation structure, AFT family, effect estimate with 95% CI, PH diagnostic status, sensitivity branches, and the eyeprocess/gp3tools versions.
+
+## Failure cases
+
+The adapter should stop or preserve a review flag rather than silently proceed when trial identity is ambiguous, event time exceeds the observation window, the window is missing, gaze quality is unusable, estimator choice is omitted, or the required eyeprocess survival API is unavailable.
+
+## API links
+
+- prepare_gazepoint_survival_data() — thin preparation adapter.
+- run_gazepoint_latency_analysis() — thin end-to-end adapter requiring explicit model choices.
+- See the eyeprocess Survival Analysis for Gaze Latency article for the full vendor-neutral methodology and model APIs.
