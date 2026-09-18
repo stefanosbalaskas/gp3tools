@@ -1,5 +1,12 @@
 # gp3tools 2.3.0.9000
 
+## AOI perturbation uncertainty adapter
+
+- Added `audit_gazepoint_aoi_uncertainty()`, `run_gazepoint_aoi_sensitivity()`, and `plot_gazepoint_aoi_sensitivity()` as thin Gazepoint adapters to the vendor-neutral eyeprocess AOI perturbation framework.
+- Normalized Gazepoint coordinates require explicit screen dimensions before conversion; the adapter never silently treats normalized values as pixels.
+- Scientific perturbation, reassignment, feature recomputation, model propagation, stability summaries, and plotting remain implemented in eyeprocess rather than duplicated in gp3tools.
+- Added combined x/y translation passthrough, explicit fixation/sample observation level, delegation tests, API documentation, a synthetic sample-level workflow, interpretation/reporting guidance, and pkgdown navigation.
+
 ## Censored gaze-latency survival adapters
 
 - Added `prepare_gazepoint_survival_data()` as a thin Gazepoint convenience adapter to the vendor-neutral `eyeprocess` censoring contract.

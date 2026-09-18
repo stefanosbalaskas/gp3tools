@@ -55,6 +55,7 @@ articles:
     navbar: Advanced modelling
     contents:
     - articles/model-readiness-sensitivity
+    - articles/aoi-perturbation-uncertainty
     - articles/bayesian-planning-workflow
     - articles/experimental-bayesian-bridges
     - articles/metric-extraction-model-boundaries
@@ -148,6 +149,9 @@ reference:
     - audit_gazepoint_aoi_geometry
     - audit_gazepoint_aoi_overlap
     - audit_gazepoint_aoi_margin_sensitivity
+    - audit_gazepoint_aoi_uncertainty
+    - run_gazepoint_aoi_sensitivity
+    - plot_gazepoint_aoi_sensitivity
     - audit_gazepoint_aoi_screen_coverage
     - audit_gazepoint_aoi_coding_matrix
     - plot_gazepoint_aoi_verification
