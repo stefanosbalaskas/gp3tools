@@ -82,6 +82,9 @@ Other delegated plot families are `perturbations`, `coefficient`, and `surface`.
 
 ## Gazepoint AOI pre-run checklist
 
+For a fillable preregistration-style template that records source columns, coordinate conversion, perturbation choices, observation level, failure handling, and reporting fields, see the companion **Gazepoint AOI Sensitivity Analysis Plan** article.
+
+
 Before calling the adapter, confirm:
 
 1. the exact Gazepoint x/y source columns;
