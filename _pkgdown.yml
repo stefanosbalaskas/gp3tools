@@ -36,6 +36,7 @@ articles:
   - title: Quality control and reporting
     navbar: QC and reporting
     contents:
+    - articles/gazepoint-data-quality-workflow
     - articles/qc-dashboard-workflow
     - articles/missingness-coverage-reporting
     - articles/phase-segmentation-reporting
@@ -117,8 +118,12 @@ reference:
     - export_gazepoint_tables
     - save_gazepoint_plots
   - title: Sampling, tracking quality, and QC summaries
-    desc: Check sampling rate, tracking quality, screen bounds, coordinate coverage, missingness, and task-phase coverage.
+    desc: Check sampling rate, tracking quality, standardized accuracy/precision/BCEA, effective sampling, screen bounds, coordinate coverage, missingness, and task-phase coverage.
     contents:
+    - summarise_gazepoint_spatial_quality
+    - create_gazepoint_quality_report
+    - plot_gazepoint_quality_dashboard
+    - report_gazepoint_quality
     - check_sampling_rate
     - plot_sampling_rate
     - summarise_tracking_quality
