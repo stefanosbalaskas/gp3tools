@@ -185,6 +185,13 @@ aggregate(
 )
 ```
 
+### Aggregation levels
+
+The convenience layer supports dataset, sample, participant, session, trial, and
+file grouping. Sample level uses a deterministic source-row identifier. It is
+useful for tracing validity and target error, but a single sample does not
+provide a meaningful stable-target estimate of RMS-S2S, SD precision, or BCEA.
+
 ## Review thresholds are not exclusions
 
 Thresholds are study-specific and should normally be defined before inspecting
