@@ -60,6 +60,9 @@ test_that("aggregation levels preserve Gazepoint identifiers", {
     coordinate_unit = "normalized"
   )
   prepared <- gp3tools:::.gp3_quality_prepare(d)
+  sample_groups <- gp3tools:::.gp3_quality_by(prepared, "sample")
+  expect_true(".gp3_quality_sample" %in% sample_groups)
+
   groups <- gp3tools:::.gp3_quality_by(prepared, "trial")
   expect_equal(
     groups,
