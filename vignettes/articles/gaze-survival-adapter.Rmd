@@ -19,6 +19,18 @@ Use censored latency when the scientific outcome is time to first target fixatio
 
 Do not use this workflow for ordinary fixation-duration summaries, for trials whose observation window cannot be established, or to turn missing/unusable gaze into an artificial never-inspected outcome.
 
+## Censoring decision table
+
+| Gazepoint trial state | Survival treatment |
+|:--|:--|
+| Target event observed in a complete usable window | Event |
+| Target absent when a complete usable window ends | Right censored |
+| Missing/incomplete observation window | Review required |
+| Gaze quality below the declared rule | Review/exclusion branch |
+| Ambiguous trial/event identity | Stop with an error |
+
+The adapter never guesses a censoring state from a missing value alone.
+
 ## Explicit estimator choices
 
 The convenience workflow intentionally has no default model family:
@@ -76,6 +88,38 @@ eyeprocess::plot_gaze_survival_curve(result$data, group = "condition")
 ```
 
 The output retains never-inspected usable trials instead of deleting them. result$specification records the requested repeated-Cox structure and AFT family; result$data retains the eyeprocess provenance fields describing detector, AOI, preprocessing, quality rules, and software version.
+
+## Evidence-verification variant
+
+The same adapter can analyse time to first source/evidence inspection without introducing any Gazepoint-specific estimator logic:
+
+```{r verification-variant, eval=requireNamespace("eyeprocess", quietly=TRUE)}
+verify_raw <- eyeprocess::simulate_gaze_survival_inputs(
+  "verification",
+  seed = 20260918,
+  n_participants = 24,
+  trials_per_participant = 3
+)
+
+verification <- run_gazepoint_latency_analysis(
+  verify_raw$trials,
+  verify_raw$events,
+  target_aoi = "source_evidence",
+  formula = "condition",
+  participant_col = "participant_id",
+  cox_structure = "cluster_robust",
+  aft_distribution = "weibull",
+  km_group = "condition",
+  event_type = "first_aoi_entry",
+  condition_col = "condition_id",
+  event_detector = "synthetic_truth",
+  aoi_specification = "fixed synthetic source/evidence AOI"
+)
+
+verification$censoring
+```
+
+The scientific interpretation remains a censored time-to-event analysis: complete trials without an evidence entry remain in the risk set until their observation window ends.
 
 ## Interpretation
 
