@@ -60,4 +60,4 @@ URL: https://github.com/stefanosbalaskas/gp3tools,
     https://doi.org/10.5281/zenodo.21292384,
     https://doi.org/10.3390/jemr19040076
 BugReports: https://github.com/stefanosbalaskas/gp3tools/issues
-Config/Needs/website: rmarkdown
+Config/Needs/website: rmarkdown, eyeprocess
