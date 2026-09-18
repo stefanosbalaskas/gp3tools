@@ -81,7 +81,7 @@ Other delegated plot families are `perturbations`, `coefficient`, and `surface`.
 
 ## Interpretation and limitations
 
-A high unchanged-assignment proportion means the result is stable only with respect to the declared perturbations. It is not a probability that an AOI or scientific conclusion is true. Overlap remains explicit ambiguity by default; missing coordinates remain missing; failed branches and non-converged models remain in the core audit trail.
+A high unchanged-assignment proportion means the result is stable only with respect to the declared perturbations. It is not a probability that an AOI or scientific conclusion is true. Overlap remains explicit ambiguity by default; missing coordinates remain missing; failed branches and non-converged models remain in the core audit trail. When a model callback is supplied, the core also reports the range of model `N` across converged perturbations so case loss is not hidden.
 
 ## Reporting
 
