@@ -1,5 +1,13 @@
 # gp3tools 2.3.0
 
+## AOI perturbation uncertainty adapter
+
+- Added audit_gazepoint_aoi_uncertainty(), run_gazepoint_aoi_sensitivity(), and plot_gazepoint_aoi_sensitivity() as thin Gazepoint adapters to the vendor-neutral eyeprocess AOI perturbation framework.
+- Normalized Gazepoint coordinates require explicit screen dimensions before conversion; the adapter never silently treats normalized values as pixels.
+- Scientific perturbation, reassignment, feature recomputation, model propagation, stability summaries, and plotting remain implemented in eyeprocess rather than duplicated in gp3tools.
+- Added delegation tests, API documentation, a synthetic workflow article, and pkgdown navigation.
+
+
 ## Auditable binocular pupil reconstruction
 
 - Added `diagnose_gazepoint_binocular_pupil()` and `fit_gazepoint_binocular_calibration()` for explicit bilateral-availability, agreement, and bidirectional cross-eye calibration diagnostics.
