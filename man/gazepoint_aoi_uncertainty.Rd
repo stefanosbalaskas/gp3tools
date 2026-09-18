@@ -30,6 +30,7 @@ run_gazepoint_aoi_sensitivity(
   viewing_distance = NULL, physical_screen_size = NULL,
   observation_id_col = NULL, participant_col = NULL, trial_col = NULL,
   duration_col = NULL, time_col = NULL,
+  observation_level = c("fixation", "sample"),
   overlap_policy = c("ambiguous", "all", "error"),
   model_callback = NULL,
   preprocessing_specification = NULL, event_detector = NULL,
@@ -57,6 +58,7 @@ plot_gazepoint_aoi_sensitivity(
 \item{viewing_distance}{Viewing distance required for degree-based perturbations unless the supplied core grid already contains conversion metadata.}
 \item{physical_screen_size}{Physical screen width and height in the same unit as viewing distance.}
 \item{observation_id_col, participant_col, trial_col, duration_col, time_col}{Optional columns forwarded to the core sensitivity workflow.}
+\item{observation_level}{Explicit source level, fixation or sample, forwarded unchanged to eyeprocess.}
 \item{overlap_policy}{Explicit overlap handling. The default preserves ambiguity.}
 \item{model_callback}{Optional fixed statistical-model callback forwarded unchanged to eyeprocess.}
 \item{preprocessing_specification, event_detector, quality_rules, model_specification}{Provenance fields forwarded to eyeprocess.}
