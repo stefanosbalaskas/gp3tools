@@ -206,6 +206,7 @@
   resolved_time_unit <- .gp3_quality_time_unit(time_col, time_unit)
 
   out <- data
+  out$.gp3_quality_sample <- seq_len(nrow(data))
   out$.gp3_quality_x <- suppressWarnings(as.numeric(data[[x_col]]))
   out$.gp3_quality_y <- suppressWarnings(as.numeric(data[[y_col]]))
   out$.gp3_quality_time <- suppressWarnings(as.numeric(data[[time_col]]))
@@ -233,6 +234,7 @@
   list(
     data = out,
     columns = list(
+      sample = ".gp3_quality_sample",
       x = ".gp3_quality_x",
       y = ".gp3_quality_y",
       time = ".gp3_quality_time",
@@ -264,11 +266,12 @@
     }
     return(as.character(by))
   }
-  level <- match.arg(level, c("dataset", "participant", "session", "trial", "file"))
+  level <- match.arg(level, c("dataset", "sample", "participant", "session", "trial", "file"))
   cols <- prepared$columns
   required <- switch(
     level,
     dataset = NULL,
+    sample = cols$sample,
     participant = cols$participant,
     session = cols$session,
     trial = cols$trial,
@@ -284,6 +287,7 @@
   out <- switch(
     level,
     dataset = character(),
+    sample = c(cols$participant, cols$session, cols$trial, cols$sample),
     participant = cols$participant,
     session = c(cols$participant, cols$session),
     trial = c(cols$participant, cols$session, cols$trial),
@@ -324,7 +328,7 @@ summarise_gazepoint_spatial_quality <- function(
     output_unit = NULL,
     geometry = NULL,
     time_unit = c("auto", "ms", "s", "us", "ns"),
-    level = c("dataset", "participant", "session", "trial", "file"),
+    level = c("dataset", "sample", "participant", "session", "trial", "file"),
     by = NULL,
     probability = 0.68,
     max_gap_ms = NULL) {
@@ -412,7 +416,7 @@ create_gazepoint_quality_report <- function(
     output_unit = NULL,
     geometry = NULL,
     time_unit = c("auto", "ms", "s", "us", "ns"),
-    level = c("dataset", "participant", "session", "trial", "file"),
+    level = c("dataset", "sample", "participant", "session", "trial", "file"),
     by = NULL,
     nominal_sampling_hz = 60,
     bcea_probability = 0.68,
