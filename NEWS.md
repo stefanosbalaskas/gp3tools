@@ -4,9 +4,23 @@
 
 - Added thin Gazepoint adapters for the vendor-neutral eyeprocess spatial-quality subsystem: `summarise_gazepoint_spatial_quality()`, `create_gazepoint_quality_report()`, `plot_gazepoint_quality_dashboard()`, and `report_gazepoint_quality()`.
 - Native BPOG/FPOG coordinates and TIME/MSTIMER timing units are resolved conservatively; generic coordinate columns require explicit units and numeric ranges are never used for unit guessing.
-- Complete GP3 screen/viewing geometry can be forwarded for explicit pixel/normalized-to-degree conversion; incomplete geometry is not silently completed.
-- Added participant/session/trial/file aggregation adapters, review-only threshold propagation, formula-engine provenance, focused adapter tests, and a synthetic 9-point Gazepoint Data Quality website workflow.
+- Complete GP3 screen/viewing geometry can be forwarded for explicit normalized/pixel-to-degree conversion; incomplete geometry is never silently completed.
+- Added dataset/sample/participant/session/trial/file grouping, review-only threshold propagation, formula-engine provenance, focused adapter tests, and a synthetic 9-point website workflow with sensitivity-analysis guidance.
 - No accuracy, precision, BCEA, sampling, jitter, or data-loss formula is duplicated in gp3tools.
+
+## AOI perturbation uncertainty adapter
+
+- Added `audit_gazepoint_aoi_uncertainty()`, `run_gazepoint_aoi_sensitivity()`, and `plot_gazepoint_aoi_sensitivity()` as thin Gazepoint adapters to the vendor-neutral eyeprocess AOI perturbation framework.
+- Normalized Gazepoint coordinates require explicit screen dimensions before conversion; the adapter never silently treats normalized values as pixels.
+- Scientific perturbation, reassignment, feature recomputation, model propagation, stability summaries, and plotting remain implemented in eyeprocess rather than duplicated in gp3tools.
+- Added combined x/y translation passthrough, explicit fixation/sample observation level, delegation tests, API documentation, a synthetic sample-level workflow, interpretation/reporting guidance, and pkgdown navigation.
+
+## Censored gaze-latency survival adapters
+
+- Added `prepare_gazepoint_survival_data()` as a thin Gazepoint convenience adapter to the vendor-neutral `eyeprocess` censoring contract.
+- Added `run_gazepoint_latency_analysis()` for an explicit end-to-end Gazepoint entry point that delegates Kaplan-Meier, repeated-participant Cox, AFT, diagnostics, model comparison, provenance, and reporting to `eyeprocess`.
+- The adapter requires callers to name both the repeated-Cox structure (`cluster_robust` or `frailty`) and AFT family (`weibull` or `lognormal`); gp3tools never chooses either estimator silently.
+- Added focused adapter tests, a runnable synthetic example, generated reference documentation, and a methodological pkgdown article covering use/not-use decisions, censoring semantics, interpretation, sensitivity analysis, limitations, and reporting.
 
 # gp3tools 2.3.0
 
