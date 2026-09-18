@@ -33,10 +33,10 @@ Imports:
     tibble,
     tidyr
 Suggests:
+    eyeprocess (>= 0.11.1.9000),
     brms,
     cluster,
     DHARMa,
-    eyeprocess (>= 0.11.1.9000),
     emmeans,
     eyetools,
     glmmTMB,
@@ -60,4 +60,5 @@ URL: https://github.com/stefanosbalaskas/gp3tools,
     https://doi.org/10.5281/zenodo.21292384,
     https://doi.org/10.3390/jemr19040076
 BugReports: https://github.com/stefanosbalaskas/gp3tools/issues
-Config/Needs/website: rmarkdown, eyeprocess
+Config/Needs/check: stefanosbalaskas/eyeprocess@feature/standardized-spatial-quality
+Config/Needs/website: rmarkdown, stefanosbalaskas/eyeprocess@feature/standardized-spatial-quality
