@@ -80,12 +80,33 @@ plot_gazepoint_aoi_sensitivity(result, "assignment")
 
 Other delegated plot families are `perturbations`, `coefficient`, and `surface`.
 
+## Gazepoint interpretation clinic
+
+Use the adapter only after source coordinates and screen geometry are explicit. For normalized Gazepoint samples, declare `observation_level = "sample"`; for fixation exports or fixation centroids, declare `"fixation"`.
+
+| Pattern | Interpretation | Action |
+|---|---|---|
+| Assignments and model stable | Stable within the declared AOI envelope | Report both layers and the screen/viewing geometry |
+| Assignments unstable, model stable | Geometry changes mapping without materially changing the model result | Inspect reassignment matrices and AOI-level stability |
+| Model unstable | Substantive inference depends on geometry and/or branch-specific case loss | Inspect coefficient intervals, convergence, and model `N` |
+| Adapter/core failure | The branch is non-evaluable | Keep the failure visible; do not fall back to the older margin-sensitivity implementation |
+
+At sample level, a zero count means valid gaze samples existed but none landed in that AOI. If all coordinates for a participant/trial are missing, the count remains missing rather than becoming zero.
+
+### Reporting example
+
+> Gazepoint normalized coordinates were converted using the declared screen dimensions, and AOI sensitivity was evaluated in degrees of visual angle. Sample-level assignments were recomputed across the nominal and perturbed geometries using explicit ambiguity handling. We report assignment stability, coefficient ranges/intervals, convergence, and model-N variation; failed branches were retained in the audit trail.
+
 ## Interpretation and limitations
 
 A high unchanged-assignment proportion means the result is stable only with respect to the declared perturbations. It is not a probability that an AOI or scientific conclusion is true. Overlap remains explicit ambiguity by default; missing coordinates remain missing; failed branches and non-converged models remain in the core audit trail. When a model callback is supplied, the core also reports the range of model `N` across converged perturbations so case loss is not hidden.
 
 ## Reporting
 
-Report the original Gazepoint coordinate columns, source coordinate unit, screen dimensions used for normalized conversion, viewing geometry for degree-based margins, perturbation values, overlap/screen policies, recomputed features, fixed statistical model specification, and failed/non-converged branches.
+Report the original Gazepoint coordinate columns, source coordinate unit, observation level, screen dimensions used for normalized conversion, viewing geometry for degree-based margins, perturbation values, overlap/screen policies, zero-versus-missing denominator rules, recomputed features, fixed statistical model specification, coefficient/interval ranges, convergence, model-`N` variation, and failed/non-converged branches.
 
 If `eyeprocess` is unavailable, the adapter fails directly rather than silently falling back to the older gp3tools margin-sensitivity implementation.
+
+## Adapter API map
+
+Use `audit_gazepoint_aoi_uncertainty()` to validate the Gazepoint-to-core boundary, `run_gazepoint_aoi_sensitivity()` to delegate the full analysis to `eyeprocess`, and `plot_gazepoint_aoi_sensitivity()` for the delegated geometry, assignment, coefficient, and robustness-surface diagnostics.
