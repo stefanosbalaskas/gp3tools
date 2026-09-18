@@ -67,6 +67,14 @@ result$report$effects
 result$ph_diagnostics
 ```
 
+## Visual check
+
+A Kaplan–Meier curve keeps every usable trial in the risk set until the target event occurs or the trial ends. The line style identifies the condition without relying on colour alone.
+
+```{r survival-plot, eval=requireNamespace("eyeprocess", quietly=TRUE), fig.cap="Kaplan–Meier curves for time to first disclosure fixation in the synthetic Gazepoint adapter example."}
+eyeprocess::plot_gaze_survival_curve(result$data, group = "condition")
+```
+
 The output retains never-inspected usable trials instead of deleting them. result$specification records the requested repeated-Cox structure and AFT family; result$data retains the eyeprocess provenance fields describing detector, AOI, preprocessing, quality rules, and software version.
 
 ## Interpretation
