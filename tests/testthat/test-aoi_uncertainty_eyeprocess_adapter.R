@@ -56,6 +56,7 @@ test_that("run adapter delegates grid creation and analysis without scientific d
       calls$aois <- aois
       calls$x_col <- x_col
       calls$y_col <- y_col
+      calls$observation_level <- observation_level
       calls$overlap_policy <- overlap_policy
       calls$event_detector <- event_detector
       structure(
@@ -98,6 +99,7 @@ test_that("run adapter delegates grid creation and analysis without scientific d
     observation_id_col = "id",
     participant_col = "participant",
     duration_col = "duration",
+    observation_level = "sample",
     event_detector = "native_fixations"
   )
 
@@ -108,9 +110,11 @@ test_that("run adapter delegates grid creation and analysis without scientific d
   expect_equal(calls$grid_args$unit, "deg")
   expect_equal(calls$grid_args$dilations, c(.25, .5))
   expect_equal(calls$grid_args$translations_xy, list(c(.25, -.25)))
+  expect_equal(calls$observation_level, "sample")
   expect_equal(calls$overlap_policy, "ambiguous")
   expect_equal(calls$event_detector, "native_fixations")
   expect_equal(result$adapter_settings$coordinate_unit, "normalized")
+  expect_equal(result$adapter_settings$observation_level, "sample")
 })
 
 test_that("supplied core grid bypasses grid construction", {
