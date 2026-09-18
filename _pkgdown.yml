@@ -56,6 +56,7 @@ articles:
     navbar: Advanced modelling
     contents:
     - articles/model-readiness-sensitivity
+    - articles/aoi-perturbation-uncertainty
     - articles/bayesian-planning-workflow
     - articles/experimental-bayesian-bridges
     - articles/metric-extraction-model-boundaries
@@ -75,6 +76,7 @@ articles:
     navbar: Ecosystem bridges
     contents:
     - articles/ecosystem-exports
+    - articles/gaze-survival-adapter
     - ecosystem-update-2026-09
   - title: Signal preprocessing and feature engineering
     navbar: Signal extensions
@@ -152,6 +154,9 @@ reference:
     - audit_gazepoint_aoi_geometry
     - audit_gazepoint_aoi_overlap
     - audit_gazepoint_aoi_margin_sensitivity
+    - audit_gazepoint_aoi_uncertainty
+    - run_gazepoint_aoi_sensitivity
+    - plot_gazepoint_aoi_sensitivity
     - audit_gazepoint_aoi_screen_coverage
     - audit_gazepoint_aoi_coding_matrix
     - plot_gazepoint_aoi_verification
@@ -373,6 +378,11 @@ reference:
     - prepare_gazepoint_gpbiometrics_bridge
     - run_gazepoint_gpbiometrics_workflow
     - create_gazepoint_cross_package_report
+  - title: Censored gaze-latency survival adapters
+    desc: Thin Gazepoint convenience wrappers that delegate censoring, Cox/AFT modelling, diagnostics, sensitivity, and reporting to eyeprocess.
+    contents:
+    - prepare_gazepoint_survival_data
+    - run_gazepoint_latency_analysis
   - title: Naming and compatibility
     desc: User-facing spelling policy, API audits, and compatibility aliases.
     contents:
