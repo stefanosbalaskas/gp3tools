@@ -44,6 +44,27 @@ It supports common Gazepoint workflows, including:
 * optional external gazeR and eyetools cross-check workflows.
 * external facial-behaviour import, quality audit, synchronisation, window summaries, multimodal modelling, and reporting helpers for externally generated face-analysis outputs.
 
+## Standardized Gazepoint data quality
+
+The development branch adds a thin Gazepoint-facing layer over the vendor-neutral `eyeprocess` quality core. It covers target-referenced accuracy, RMS-S2S and spatial-SD precision, BCEA, empirical sampling behavior, and data loss without duplicating formulas inside `gp3tools`.
+
+```r
+quality <- create_gazepoint_quality_report(
+  validation_samples,
+  target_x_col = "target_x",
+  target_y_col = "target_y",
+  level = "trial",
+  nominal_sampling_hz = 60
+)
+
+report_gazepoint_quality(quality)
+plot_gazepoint_quality_dashboard(quality)
+```
+
+Native Gazepoint coordinates are handled conservatively: BPOG/FPOG coordinates are recognized as normalized, TIME and MSTIMER map to seconds and milliseconds respectively, while generic gaze columns must declare their unit explicitly. Quality thresholds produce review flags and never automatically remove data.
+
+See the [Gazepoint Data Quality workflow](https://stefanosbalaskas.github.io/gp3tools/articles/gazepoint-data-quality-workflow.html).
+
 ## Which workflow should I use?
 
 Use the workflow that matches the research question and the stage of analysis.
