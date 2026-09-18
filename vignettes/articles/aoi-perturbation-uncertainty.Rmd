@@ -1,0 +1,89 @@
+---
+title: "Gazepoint AOI Perturbation and Uncertainty"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Gazepoint AOI Perturbation and Uncertainty}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>", fig.width = 7, fig.height = 4.5)
+library(gp3tools)
+has_aoi_core <- is.function(tryCatch(getExportedValue("eyeprocess", "run_aoi_sensitivity_analysis"), error = function(e) NULL))
+```
+
+## Architecture
+
+This workflow is deliberately thin. `gp3tools` handles Gazepoint-specific column names and coordinate units; `eyeprocess` owns AOI perturbation, assignment stability, feature recomputation, statistical propagation, and visualization. The wrapper does not create a second scientific implementation.
+
+## When to use
+
+Use the adapter when Gazepoint samples or fixations must be tested against small, defensible AOI-boundary changes. Do not use it to search for a favorable AOI or to replace calibration, screen-coordinate, or tracking-quality checks.
+
+## Synthetic normalized Gazepoint-style data
+
+```{r synthetic}
+set.seed(20260918)
+aois <- data.frame(
+  aoi_id = c("headline", "image", "claim", "disclosure", "cta"),
+  xmin = c(.10, .30, .30, .30, .68), xmax = c(.40, .70, .70, .70, .92),
+  ymin = c(.08, .19, .36, .50, .60), ymax = c(.18, .34, .48, .59, .71)
+)
+gaze <- data.frame(
+  sample_id = 1:80, participant = rep(paste0("p", 1:8), each = 10),
+  trial = rep(rep(1:2, each = 5), 8),
+  FPOGX = pmin(1, pmax(0, runif(80, .08, .94))),
+  FPOGY = pmin(1, pmax(0, runif(80, .06, .74))),
+  duration = runif(80, .06, .18)
+)
+```
+
+## Audit the adapter boundary
+
+Normalized coordinates are not treated as pixels implicitly. Screen dimensions must be supplied before conversion.
+
+```{r audit, eval=has_aoi_core}
+audit <- audit_gazepoint_aoi_uncertainty(
+  gaze, aois, gaze_x_col = "FPOGX", gaze_y_col = "FPOGY",
+  coordinate_unit = "normalized", screen_width_px = 1920, screen_height_px = 1080
+)
+audit$overview
+```
+
+## Run the vendor-neutral sensitivity workflow
+
+```{r run, eval=has_aoi_core}
+result <- run_gazepoint_aoi_sensitivity(
+  gaze, aois, gaze_x_col = "FPOGX", gaze_y_col = "FPOGY",
+  coordinate_unit = "normalized", perturbation_unit = "deg",
+  dilations = c(.25, .50, 1.00), erosions = .25,
+  translations_x = .50, translations_y = .50,
+  screen_width_px = 1920, screen_height_px = 1080,
+  viewing_distance = 60, physical_screen_size = c(53.1, 29.9),
+  observation_id_col = "sample_id", participant_col = "participant",
+  trial_col = "trial", duration_col = "duration",
+  overlap_policy = "ambiguous", quality_rules = list(missing = "preserve")
+)
+result$core_result$stability$overall
+```
+
+The complete `eyeprocess` result remains unchanged inside `result$core_result`; the outer object records Gazepoint source columns and unit-conversion settings.
+
+## Visual output
+
+```{r plot, eval=has_aoi_core}
+plot_gazepoint_aoi_sensitivity(result, "assignment")
+```
+
+Other delegated plot families are `perturbations`, `coefficient`, and `surface`.
+
+## Interpretation and limitations
+
+A high unchanged-assignment proportion means the result is stable only with respect to the declared perturbations. It is not a probability that an AOI or scientific conclusion is true. Overlap remains explicit ambiguity by default; missing coordinates remain missing; failed branches and non-converged models remain in the core audit trail.
+
+## Reporting
+
+Report the original Gazepoint coordinate columns, source coordinate unit, screen dimensions used for normalized conversion, viewing geometry for degree-based margins, perturbation values, overlap/screen policies, recomputed features, fixed statistical model specification, and failed/non-converged branches.
+
+If `eyeprocess` is unavailable, the adapter fails directly rather than silently falling back to the older gp3tools margin-sensitivity implementation.
