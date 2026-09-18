@@ -10,15 +10,14 @@ on:
 
 name: pkgdown.yaml
 
-concurrency:
-  group: "pkgdown-${{ github.head_ref || github.ref_name }}"
-  cancel-in-progress: true
-
 permissions: read-all
 
 jobs:
   pkgdown:
     runs-on: ubuntu-latest
+    # Only restrict concurrency for non-PR jobs
+    concurrency:
+      group: pkgdown-${{ github.event_name != 'pull_request' || github.run_id }}
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
     permissions:
