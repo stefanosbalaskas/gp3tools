@@ -58,6 +58,7 @@ articles:
     - articles/model-readiness-sensitivity
     - articles/aoi-perturbation-uncertainty
     - articles/aoi-sensitivity-analysis-plan
+    - articles/aoi-reporting-bundle
     - articles/bayesian-planning-workflow
     - articles/experimental-bayesian-bridges
     - articles/metric-extraction-model-boundaries
