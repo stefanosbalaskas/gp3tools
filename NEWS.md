@@ -2,6 +2,9 @@
 
 ## Standardized Gazepoint data quality
 
+- Expands the website workflow with focused accuracy, RMS-S2S, BCEA, sampling-interval, and dashboard plots plus interpretation boundaries and reporting guidance.
+- Hardens the AOI uncertainty adapter across eyeprocess versions: legacy cores remain usable for fixation semantics, while sample-level requests fail explicitly instead of being silently mislabeled.
+
 - Added thin Gazepoint adapters for the vendor-neutral eyeprocess spatial-quality subsystem: `summarise_gazepoint_spatial_quality()`, `create_gazepoint_quality_report()`, `plot_gazepoint_quality_dashboard()`, and `report_gazepoint_quality()`.
 - Native BPOG/FPOG coordinates and TIME/MSTIMER timing units are resolved conservatively; generic coordinate columns require explicit units and numeric ranges are never used for unit guessing.
 - Complete GP3 screen/viewing geometry can be forwarded for explicit normalized/pixel-to-degree conversion; incomplete geometry is never silently completed.

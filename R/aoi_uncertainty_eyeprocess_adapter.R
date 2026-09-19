@@ -265,7 +265,19 @@ run_gazepoint_aoi_sensitivity <- function(
     grid <- do.call(create_grid, grid_args)
   }
 
-  core <- .gp3_aoi_uncertainty_core_fun("run_aoi_sensitivity_analysis")(
+  core_fun <- .gp3_aoi_uncertainty_core_fun("run_aoi_sensitivity_analysis")
+  core_formals <- names(formals(core_fun))
+  supports_observation_level <- "observation_level" %in% core_formals ||
+    "..." %in% core_formals
+  if (!supports_observation_level && observation_level != "fixation") {
+    stop(
+      "The installed eyeprocess AOI sensitivity core predates explicit sample-level ",
+      "observation semantics. Update eyeprocess before using observation_level = 'sample'; ",
+      "gp3tools will not silently relabel samples as fixations.",
+      call. = FALSE
+    )
+  }
+  core_args <- list(
     data = prepared_data$data,
     aois = prepared_geometry$geometry,
     grid = grid,
@@ -276,7 +288,6 @@ run_gazepoint_aoi_sensitivity <- function(
     trial_col = trial_col,
     duration_col = duration_col,
     time_col = time_col,
-    observation_level = observation_level,
     overlap_policy = overlap_policy,
     model_callback = model_callback,
     preprocessing_specification = preprocessing_specification,
@@ -284,6 +295,10 @@ run_gazepoint_aoi_sensitivity <- function(
     quality_rules = quality_rules,
     model_specification = model_specification
   )
+  if (supports_observation_level) {
+    core_args$observation_level <- observation_level
+  }
+  core <- do.call(core_fun, core_args)
 
   out <- list(
     core_result = core,
@@ -298,6 +313,7 @@ run_gazepoint_aoi_sensitivity <- function(
       viewing_distance = viewing_distance,
       physical_screen_size = physical_screen_size,
       observation_level = observation_level,
+      observation_level_forwarded = supports_observation_level,
       overlap_policy = overlap_policy,
       boundary_policy = boundary_policy
     )

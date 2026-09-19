@@ -49,9 +49,11 @@ test_that("run adapter delegates grid creation and analysis without scientific d
     run_aoi_sensitivity_analysis = function(
         data, aois, grid, x_col, y_col, observation_id_col = NULL,
         participant_col = NULL, trial_col = NULL, duration_col = NULL,
-        time_col = NULL, overlap_policy = "ambiguous", model_callback = NULL,
+        time_col = NULL, observation_level = c("fixation", "sample"),
+        overlap_policy = "ambiguous", model_callback = NULL,
         preprocessing_specification = NULL, event_detector = NULL,
         quality_rules = NULL, model_specification = NULL) {
+      observation_level <- match.arg(observation_level)
       calls$data <- data
       calls$aois <- aois
       calls$x_col <- x_col
@@ -115,6 +117,50 @@ test_that("run adapter delegates grid creation and analysis without scientific d
   expect_equal(calls$event_detector, "native_fixations")
   expect_equal(result$adapter_settings$coordinate_unit, "normalized")
   expect_equal(result$adapter_settings$observation_level, "sample")
+})
+
+test_that("legacy AOI core is supported only for fixation semantics", {
+  calls <- new.env(parent = emptyenv())
+  grid <- structure(list(specifications = list(), table = data.frame()),
+                    class = "eye_aoi_perturbation_grid")
+  legacy_core <- list(
+    run_aoi_sensitivity_analysis = function(
+        data, aois, grid, x_col, y_col, observation_id_col = NULL,
+        participant_col = NULL, trial_col = NULL, duration_col = NULL,
+        time_col = NULL, overlap_policy = "ambiguous", model_callback = NULL,
+        preprocessing_specification = NULL, event_detector = NULL,
+        quality_rules = NULL, model_specification = NULL) {
+      calls$ran <- TRUE
+      structure(
+        list(models = data.frame(), stability = list(overall = data.frame()), grid = grid),
+        class = "eye_aoi_sensitivity"
+      )
+    }
+  )
+  old <- options(gp3tools.eyeprocess_functions = legacy_core)
+  on.exit(options(old), add = TRUE)
+
+  data <- data.frame(x = c(10, 20), y = c(10, 20))
+  aois <- data.frame(aoi_id = "a", xmin = 0, xmax = 30, ymin = 0, ymax = 30)
+
+  result <- run_gazepoint_aoi_sensitivity(
+    data, aois, grid = grid,
+    gaze_x_col = "x", gaze_y_col = "y",
+    coordinate_unit = "px",
+    observation_level = "fixation"
+  )
+  expect_true(isTRUE(calls$ran))
+  expect_false(result$adapter_settings$observation_level_forwarded)
+
+  expect_error(
+    run_gazepoint_aoi_sensitivity(
+      data, aois, grid = grid,
+      gaze_x_col = "x", gaze_y_col = "y",
+      coordinate_unit = "px",
+      observation_level = "sample"
+    ),
+    "predates explicit sample-level"
+  )
 })
 
 test_that("supplied core grid bypasses grid construction", {

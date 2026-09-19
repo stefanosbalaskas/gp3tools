@@ -65,7 +65,7 @@ plot_gazepoint_quality_dashboard(quality)
 
 Native Gazepoint coordinates are handled conservatively: BPOG/FPOG coordinates are recognized as normalized, TIME and MSTIMER map to seconds and milliseconds respectively, while generic gaze columns must declare their unit explicitly. Quality thresholds produce review flags and never automatically remove data. Sample-level grouping is available for traceability but is not interpreted as stable-target precision evidence.
 
-See the [Gazepoint Data Quality workflow](https://stefanosbalaskas.github.io/gp3tools/articles/gazepoint-data-quality-workflow.html).
+See the [Gazepoint Data Quality workflow](https://stefanosbalaskas.github.io/gp3tools/articles/gazepoint-data-quality-workflow.html) for the 9-point example, focused accuracy, precision, BCEA, sampling-interval, and dashboard plots, review-rule sensitivity, limitations, and manuscript-reporting guidance.
 
 ## Gazepoint AOI robustness and reporting
 

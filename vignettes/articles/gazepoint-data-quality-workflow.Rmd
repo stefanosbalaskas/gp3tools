@@ -229,6 +229,61 @@ plot_gazepoint_quality_dashboard(quality)
 The dashboard is descriptive. It should be paired with the row-level quality
 table and with the study's pre-specified review/exclusion logic.
 
+## Focused plot gallery
+
+Use a single validation target for compact visual comparisons so spatial
+precision is not contaminated by intentional target-to-target gaze movement.
+
+```{r focused-plot-data}
+quality_center <- quality[grepl("_5$", quality$.gp3_quality_trial), ]
+```
+
+### Target-referenced accuracy
+
+```{r focused-accuracy, fig.width=8, fig.height=4.8}
+eyeprocess::plot_gaze_accuracy(quality_center)
+```
+
+Higher values mean larger error from the known target. A stable calibration
+offset can therefore be precise but inaccurate.
+
+### RMS sample-to-sample precision
+
+```{r focused-precision, fig.width=8, fig.height=4.8}
+eyeprocess::plot_gaze_precision(quality_center)
+```
+
+RMS-S2S describes short-term fluctuation during stable gaze. It is not a
+substitute for accuracy, and it should not be interpreted across target
+transitions or intended saccades.
+
+### BCEA
+
+```{r focused-bcea, fig.width=8, fig.height=4.8}
+eyeprocess::plot_bcea(quality_center)
+```
+
+BCEA is an area-based dispersion summary. Report its probability level and area
+unit; it is not target-referenced accuracy.
+
+### Sampling intervals
+
+```{r focused-sampling, fig.width=8, fig.height=4.8}
+irregular_center <- gp_validation[
+  gp_validation$profile == "irregular_missing" &
+    gp_validation$target_id == 5,
+]
+eyeprocess::plot_sampling_intervals(
+  irregular_center,
+  time = "MSTIMER",
+  time_unit = "ms"
+)
+```
+
+The focused plots are provided by the vendor-neutral core. gp3tools keeps the
+Gazepoint-specific convenience dashboard as a thin adapter rather than
+duplicating plotting/statistical logic.
+
 For timing diagnostics, distinguish `long_interval_count` from
 `dropped_interval_count`: the first counts unusually long observed intervals,
 whereas the second estimates how many nominal samples those long gaps represent.
