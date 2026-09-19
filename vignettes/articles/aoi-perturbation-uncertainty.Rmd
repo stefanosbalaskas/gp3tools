@@ -143,6 +143,9 @@ A high unchanged-assignment proportion means the result is stable only with resp
 
 ## Reporting
 
+For manuscript supplements, reviewer responses, or replication handoff, see the companion **Gazepoint AOI Robustness Reporting Bundle** article, which preserves both adapter settings and the delegated `eyeprocess` core evidence.
+
+
 Report the original Gazepoint coordinate columns, source coordinate unit, observation level, screen dimensions used for normalized conversion, viewing geometry for degree-based margins, perturbation values, overlap/screen policies, zero-versus-missing denominator rules, recomputed features, fixed statistical model specification, coefficient/interval ranges, convergence, model-`N` variation, and failed/non-converged branches.
 
 If `eyeprocess` is unavailable, the adapter fails directly rather than silently falling back to the older gp3tools margin-sensitivity implementation.
