@@ -22,6 +22,7 @@
 - The adapter requires callers to name both the repeated-Cox structure (`cluster_robust` or `frailty`) and AFT family (`weibull` or `lognormal`); gp3tools never chooses either estimator silently.
 - Added focused adapter tests, a runnable synthetic example, generated reference documentation, and a methodological pkgdown article covering use/not-use decisions, censoring semantics, interpretation, sensitivity analysis, limitations, and reporting.
 - Added a standalone evidence-verification adapter example for time to first source/evidence AOI entry, with troubleshooting guidance, model interpretation, reporting language, and explicit delegation to the merged `eyeprocess` survival engine.
+- Added a Gazepoint survival reproducibility checklist and a site-contract regression test that fails if the adapter articles, API entries, or required example files disappear from the source tree.
 
 # gp3tools 2.3.0
 
