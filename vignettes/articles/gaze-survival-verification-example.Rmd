@@ -59,6 +59,24 @@ eyeprocess::plot_gaze_survival_curve(
 
 A lower survival curve indicates that a larger share of trials has already entered the source/evidence AOI by that time.
 
+## Complementary verification plots
+
+```{r incidence, eval=requireNamespace("eyeprocess", quietly=TRUE), fig.cap="Single-event 1-KM view for evidence inspection."}
+eyeprocess::plot_gaze_cumulative_incidence(
+  verification$data,
+  group = "condition"
+)
+```
+
+```{r hazard, eval=requireNamespace("eyeprocess", quietly=TRUE), fig.cap="Empirical event/risk increments for evidence inspection."}
+eyeprocess::plot_gaze_hazard(
+  verification$data,
+  group = "condition"
+)
+```
+
+Use the 1-KM plot only for the single target event represented here. The hazard panel is an empirical event/risk diagnostic, not a smooth latent hazard estimate.
+
 ## Interpretation
 
 The clustered Cox hazard ratio describes the relative instantaneous evidence-inspection rate among trials still at risk. It is not a mean-latency ratio. The delegated Weibull AFT output instead expresses a multiplicative event-time contrast under the named distribution.
