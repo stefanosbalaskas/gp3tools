@@ -67,6 +67,18 @@ Native Gazepoint coordinates are handled conservatively: BPOG/FPOG coordinates a
 
 See the [Gazepoint Data Quality workflow](https://stefanosbalaskas.github.io/gp3tools/articles/gazepoint-data-quality-workflow.html).
 
+## Gazepoint AOI robustness and reporting
+
+The Gazepoint AOI adapter now exposes a complete vendor-specific entry point into the vendor-neutral `eyeprocess` uncertainty workflow. `gp3tools` records source columns, coordinate units, screen/viewing geometry, observation level, overlap policy, and boundary policy; all perturbation, reassignment, feature, model, stability, and plotting logic remains delegated to `eyeprocess`.
+
+Website workflow:
+
+- [Gazepoint AOI Perturbation and Uncertainty](https://stefanosbalaskas.github.io/gp3tools/articles/aoi-perturbation-uncertainty.html) — normalized/pixel conversion, delegated sensitivity analysis, plot families, troubleshooting, interpretation, limitations, and reporting.
+- [Gazepoint AOI Sensitivity Analysis Plan](https://stefanosbalaskas.github.io/gp3tools/articles/aoi-sensitivity-analysis-plan.html) — prespecify source columns, screen geometry, sample/fixation level, perturbation envelope, and failure handling.
+- [Gazepoint AOI Robustness Reporting Bundle](https://stefanosbalaskas.github.io/gp3tools/articles/aoi-reporting-bundle.html) — preserve adapter settings together with the untouched core branch audit, assignment/model evidence, failures, provenance, report, and figures.
+
+Use `audit_gazepoint_aoi_uncertainty()`, `run_gazepoint_aoi_sensitivity()`, and `plot_gazepoint_aoi_sensitivity()`. The adapter does not silently fall back to the older margin-sensitivity implementation when the `eyeprocess` core is unavailable.
+
 ## Which workflow should I use?
 
 Use the workflow that matches the research question and the stage of analysis.

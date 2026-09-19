@@ -80,6 +80,29 @@ plot_gazepoint_aoi_sensitivity(result, "assignment")
 
 Other delegated plot families are `perturbations`, `coefficient`, and `surface`.
 
+### Plot-to-question map
+
+| Adapter plot type | Delegated scientific question | Inspect together with |
+|---|---|---|
+| `"perturbations"` | Which observations cross a boundary when geometry changes? | adapter settings, perturbation ID, overlap policy |
+| `"assignment"` | How much of the Gazepoint-to-AOI mapping changes? | unchanged/new/lost/reassigned proportions |
+| `"coefficient"` | Does the same model change materially? | coefficient intervals, convergence, model `N` |
+| `"surface"` | Where does sensitivity concentrate across joint geometry changes? | the declared two-dimensional perturbation plan |
+
+The adapter passes plot arguments through to the corresponding `eyeprocess` function. A manuscript-ready workflow normally combines one geometry/reassignment figure, assignment stability, and coefficient stability; use the surface only when a two-dimensional perturbation grid was part of the declared analysis plan.
+
+```{r plot-examples, eval=FALSE}
+plot_gazepoint_aoi_sensitivity(
+  result, "perturbations",
+  perturbation_id = "dilate_0.5_deg",
+  data = result$core_result$assignments
+)
+plot_gazepoint_aoi_sensitivity(result, "assignment")
+plot_gazepoint_aoi_sensitivity(result, "coefficient", term = "condition")
+plot_gazepoint_aoi_sensitivity(surface_result, "surface")
+```
+
+
 ## Gazepoint AOI pre-run checklist
 
 For a fillable preregistration-style template that records source columns, coordinate conversion, perturbation choices, observation level, failure handling, and reporting fields, see the companion **Gazepoint AOI Sensitivity Analysis Plan** article.
@@ -133,7 +156,11 @@ Use the adapter only after source coordinates and screen geometry are explicit. 
 
 At sample level, a zero count means valid gaze samples existed but none landed in that AOI. If all coordinates for a participant/trial are missing, the count remains missing rather than becoming zero.
 
-### Reporting example
+#### Figure set for reviewer handoff
+
+For a compact reviewer/manuscript package, pair the Gazepoint adapter settings with: (1) a geometry/reassignment diagnostic, (2) assignment stability, and (3) coefficient stability. Add a robustness surface only for a prespecified joint perturbation grid. The visual layer should always be accompanied by the core perturbation audit, failures, convergence, and model-`N` summaries.
+
+## Reporting example
 
 > Gazepoint normalized coordinates were converted using the declared screen dimensions, and AOI sensitivity was evaluated in degrees of visual angle. Sample-level assignments were recomputed across the nominal and perturbed geometries using explicit ambiguity handling. We report assignment stability, coefficient ranges/intervals, convergence, and model-N variation; failed branches were retained in the audit trail.
 
