@@ -26,6 +26,7 @@
 - Added focused adapter tests, a runnable synthetic example, generated reference documentation, and a methodological pkgdown article covering use/not-use decisions, censoring semantics, interpretation, sensitivity analysis, limitations, and reporting.
 - Added a standalone evidence-verification adapter example for time to first source/evidence AOI entry, with troubleshooting guidance, model interpretation, reporting language, and explicit delegation to the merged `eyeprocess` survival engine.
 - Added a Gazepoint survival reproducibility checklist and a site-contract regression test that fails if the adapter articles, API entries, or required example files disappear from the source tree.
+- Expanded the plot-rich survival adapter guidance with delegated Kaplan-Meier, single-event 1-KM, and empirical hazard/risk-set views plus explicit interpretation boundaries.
 
 # gp3tools 2.3.0
 
