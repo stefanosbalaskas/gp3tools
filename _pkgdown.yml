@@ -79,6 +79,7 @@ articles:
     - articles/ecosystem-exports
     - articles/gaze-survival-adapter
     - articles/gaze-survival-verification-example
+    - articles/gaze-survival-reproducibility-checklist
     - ecosystem-update-2026-09
   - title: Signal preprocessing and feature engineering
     navbar: Signal extensions
