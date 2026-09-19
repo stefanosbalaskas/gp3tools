@@ -75,7 +75,7 @@ eyeprocess::plot_gaze_hazard(
 )
 ```
 
-Use the 1-KM plot only for the single target event represented here. The hazard panel is an empirical event/risk diagnostic, not a smooth latent hazard estimate.
+Use the 1-KM plot only for the single target event represented here. It is not a competing-risks cumulative-incidence estimator when mutually exclusive event types compete. The hazard panel is an empirical event/risk diagnostic, not a smooth latent hazard estimate.
 
 ## Interpretation
 
