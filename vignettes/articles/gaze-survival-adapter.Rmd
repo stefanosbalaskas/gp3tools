@@ -87,6 +87,24 @@ A Kaplan–Meier curve keeps every usable trial in the risk set until the target
 eyeprocess::plot_gaze_survival_curve(result$data, group = "condition")
 ```
 
+## Complementary survival views
+
+```{r survival-incidence-plot, eval=requireNamespace("eyeprocess", quietly=TRUE), fig.cap="Single-event 1-KM view of the synthetic disclosure-inspection process."}
+eyeprocess::plot_gaze_cumulative_incidence(
+  result$data,
+  group = "condition"
+)
+```
+
+```{r survival-hazard-plot, eval=requireNamespace("eyeprocess", quietly=TRUE), fig.cap="Empirical event/risk increments in the synthetic disclosure-inspection process."}
+eyeprocess::plot_gaze_hazard(
+  result$data,
+  group = "condition"
+)
+```
+
+The first plot is simply `1 - KM` for one target event; it is not a competing-risks cumulative-incidence estimator. The second is a descriptive event/risk increment view rather than a smoothed continuous hazard estimate.
+
 The output retains never-inspected usable trials instead of deleting them. result$specification records the requested repeated-Cox structure and AFT family; result$data retains the eyeprocess provenance fields describing detector, AOI, preprocessing, quality rules, and software version.
 
 ## Evidence-verification variant
