@@ -43,8 +43,23 @@ jobs:
           r-version: ${{ matrix.config.r }}
           use-public-rspm: true
 
+
+      # macOS CRAN binary for Brobdingnag has repeatedly arrived as an
+      # unreadable .tgz on the GitHub ARM64 runner. Install the same
+      # released version from source and avoid restoring the affected
+      # macOS package-library cache. This does not alter package checks.
+      - name: Install Brobdingnag from source on macOS
+        if: runner.os == 'macOS'
+        shell: Rscript {0}
+        run: |
+          install.packages(
+            "Brobdingnag",
+            repos = "https://cloud.r-project.org",
+            type = "source"
+          )
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
+          cache: ${{ runner.os != 'macOS' }}
           extra-packages: any::rcmdcheck
           needs: check
 
