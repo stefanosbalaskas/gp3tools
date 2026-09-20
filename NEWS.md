@@ -1,6 +1,7 @@
 # gp3tools 2.3.0.9000
 
-- Hardened the macOS GitHub Actions lane against a reproducible `pak`/binary-cache extraction failure for `Brobdingnag`: the macOS lane now installs that dependency from source and does not restore the package-library cache, while retaining the complete R CMD check.
+- Hardened the macOS GitHub Actions lane against reproducible `pak` failures that rejected multiple downloaded CRAN macOS binaries as unknown archive types. Linux and Windows retain the standard `setup-r-dependencies` path; macOS now installs the same declared dependencies through base R/remotes before running the unchanged R CMD check gate.
+
 
 - Removed the non-standard DESCRIPTION `Remotes` field; GitHub Actions dependency installation remains explicitly pinned through `Config/Needs/check` and `Config/Needs/website`, while `eyeprocess (>= 0.12.0)` remains an optional suggested scientific engine.
 

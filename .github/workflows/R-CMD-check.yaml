@@ -43,25 +43,58 @@ jobs:
           r-version: ${{ matrix.config.r }}
           use-public-rspm: true
 
+      # Standard r-lib/pak dependency installation remains unchanged on
+      # Linux and Windows, where it is passing reliably.
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        if: runner.os != 'macOS'
+        with:
+          extra-packages: any::rcmdcheck
+          needs: check
 
-      # macOS CRAN binary for Brobdingnag has repeatedly arrived as an
-      # unreadable .tgz on the GitHub ARM64 runner. Install the same
-      # released version from source and avoid restoring the affected
-      # macOS package-library cache. This does not alter package checks.
-      - name: Install Brobdingnag from source on macOS
+      # On GitHub's ARM64 macOS runner, pak repeatedly downloaded CRAN
+      # binaries that it then rejected as unknown archive types. Use
+      # base R/remotes for this lane only, retaining ordinary CRAN macOS
+      # binaries and the exact certified eyeprocess dependency.
+      - name: Install dependencies on macOS without pak
         if: runner.os == 'macOS'
         shell: Rscript {0}
         run: |
-          install.packages(
-            "Brobdingnag",
-            repos = "https://cloud.r-project.org",
-            type = "source"
+          options(
+            repos = c(CRAN = "https://cloud.r-project.org")
           )
-      - uses: r-lib/actions/setup-r-dependencies@v2
-        with:
-          cache: ${{ runner.os != 'macOS' }}
-          extra-packages: any::rcmdcheck
-          needs: check
+
+          install.packages(
+            c(
+              "remotes",
+              "rcmdcheck",
+              "sessioninfo"
+            )
+          )
+
+          remotes::install_github(
+            "stefanosbalaskas/eyeprocess@v0.12.0",
+            dependencies = FALSE,
+            upgrade = "never",
+            build_vignettes = FALSE
+          )
+
+          remotes::install_deps(
+            dependencies = c(
+              "Depends",
+              "Imports",
+              "LinkingTo",
+              "Suggests"
+            ),
+            upgrade = "never"
+          )
+
+          stopifnot(
+            requireNamespace("eyeprocess", quietly = TRUE),
+            utils::packageVersion("eyeprocess") >= package_version("0.12.0"),
+            requireNamespace("rcmdcheck", quietly = TRUE),
+            requireNamespace("testthat", quietly = TRUE),
+            requireNamespace("rmarkdown", quietly = TRUE)
+          )
 
       - uses: r-lib/actions/check-r-package@v2
         with:
