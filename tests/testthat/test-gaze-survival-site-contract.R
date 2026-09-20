@@ -1,5 +1,5 @@
 test_that("Gazepoint survival site contract remains discoverable", {
-  root <- normalizePath(file.path(testthat::test_path(), "..", ".."), mustWork = TRUE)
+  root <- gp3tools_require_source_contract_root()
   pkgdown <- file.path(root, "_pkgdown.yml")
 
   expect_true(file.exists(pkgdown))
@@ -13,7 +13,7 @@ test_that("Gazepoint survival site contract remains discoverable", {
 })
 
 test_that("Gazepoint survival adapter examples remain in the source tree", {
-  root <- normalizePath(file.path(testthat::test_path(), "..", ".."), mustWork = TRUE)
+  root <- gp3tools_require_source_contract_root()
   required <- c(
     "R/gaze-survival-adapter.R",
     "man/gaze-survival-adapter.Rd",

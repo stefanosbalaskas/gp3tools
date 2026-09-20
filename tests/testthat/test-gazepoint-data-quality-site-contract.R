@@ -1,5 +1,5 @@
 test_that("Gazepoint Data Quality website contract remains discoverable", {
-  root <- normalizePath(file.path(testthat::test_path(), "..", ".."), mustWork = TRUE)
+  root <- gp3tools_require_source_contract_root()
   article <- file.path(
     root, "vignettes", "articles", "gazepoint-data-quality-workflow.Rmd"
   )

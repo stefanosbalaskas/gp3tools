@@ -9,7 +9,7 @@ vignette: >
 
 ## Why this is an adapter, not another survival engine
 
-gp3tools does not duplicate survival-analysis science. prepare_gazepoint_survival_data() and run_gazepoint_latency_analysis() translate a Gazepoint-oriented workflow into the vendor-neutral eyeprocess survival API. Event/censor construction, validation, Cox/AFT fitting, diagnostics, provenance, and reporting remain in eyeprocess.
+gp3tools does not duplicate survival-analysis science. gp3tools::prepare_gazepoint_survival_data() and gp3tools::run_gazepoint_latency_analysis() translate a Gazepoint-oriented workflow into the vendor-neutral eyeprocess survival API. Event/censor construction, validation, Cox/AFT fitting, diagnostics, provenance, and reporting remain in eyeprocess.
 
 Use this route only after Gazepoint exports have been represented as explicit trial observation windows and fixation/AOI-visit events. A missing Gazepoint field is not evidence of censoring. A target that is never inspected during a complete usable trial can be right-censored; incomplete or unusable gaze remains a review state.
 
@@ -36,7 +36,7 @@ The adapter never guesses a censoring state from a missing value alone.
 The convenience workflow intentionally has no default model family:
 
 ```r
-run_gazepoint_latency_analysis(
+gp3tools::run_gazepoint_latency_analysis(
   trials,
   events,
   target_aoi = "disclosure",
@@ -58,7 +58,7 @@ raw <- eyeprocess::simulate_gaze_survival_inputs(
   trials_per_participant = 3
 )
 
-result <- run_gazepoint_latency_analysis(
+result <- gp3tools::run_gazepoint_latency_analysis(
   raw$trials,
   raw$events,
   target_aoi = "disclosure",
@@ -119,7 +119,7 @@ verify_raw <- eyeprocess::simulate_gaze_survival_inputs(
   trials_per_participant = 3
 )
 
-verification <- run_gazepoint_latency_analysis(
+verification <- gp3tools::run_gazepoint_latency_analysis(
   verify_raw$trials,
   verify_raw$events,
   target_aoi = "source_evidence",
@@ -176,6 +176,6 @@ The adapter should stop or preserve a review flag rather than silently proceed w
 
 ## API links
 
-- prepare_gazepoint_survival_data() — thin preparation adapter.
-- run_gazepoint_latency_analysis() — thin end-to-end adapter requiring explicit model choices.
+- gp3tools::prepare_gazepoint_survival_data() — thin preparation adapter.
+- gp3tools::run_gazepoint_latency_analysis() — thin end-to-end adapter requiring explicit model choices.
 - See the eyeprocess Survival Analysis for Gaze Latency article for the full vendor-neutral methodology and model APIs.

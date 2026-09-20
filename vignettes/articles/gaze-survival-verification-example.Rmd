@@ -25,7 +25,7 @@ raw <- eyeprocess::simulate_gaze_survival_inputs(
 ## Run the explicit adapter workflow
 
 ```{r analysis, eval=requireNamespace("eyeprocess", quietly=TRUE)}
-verification <- run_gazepoint_latency_analysis(
+verification <- gp3tools::run_gazepoint_latency_analysis(
   raw$trials,
   raw$events,
   target_aoi = "source_evidence",
@@ -100,7 +100,7 @@ Report both package versions, the target event/AOI, time origin, observation-win
 
 ## API links
 
-- `prepare_gazepoint_survival_data()` — thin preparation adapter.
-- `run_gazepoint_latency_analysis()` — thin end-to-end adapter.
+- `gp3tools::prepare_gazepoint_survival_data()` — thin preparation adapter.
+- `gp3tools::run_gazepoint_latency_analysis()` — thin end-to-end adapter.
 - `eyeprocess::plot_gaze_survival_curve()` — vendor-neutral survival visualization.
 - `eyeprocess::report_gaze_survival_model()` — vendor-neutral reporting bundle.

@@ -1,5 +1,13 @@
 # gp3tools 2.3.0.9000
 
+- Removed the non-standard DESCRIPTION `Remotes` field; GitHub Actions dependency installation remains explicitly pinned through `Config/Needs/check` and `Config/Needs/website`, while `eyeprocess (>= 0.12.0)` remains an optional suggested scientific engine.
+
+- Hardened release-readiness infrastructure: repository-level website contract tests now resolve the actual source checkout explicitly instead of assuming build-ignored pkgdown files are present inside an R CMD check tarball.
+
+- Pinned the delegated survival integration to the certified `eyeprocess` 0.12.0 API and qualified gp3tools survival-wrapper calls in executable website articles.
+
+- Added exact-tag R CMD check triggering, Ubuntu oldrel-1 coverage, and the current checkout action for release certification.
+
 ## Standardized Gazepoint data quality
 
 - Expands the website workflow with focused accuracy, RMS-S2S, BCEA, sampling-interval, and dashboard plots plus interpretation boundaries and reporting guidance.
