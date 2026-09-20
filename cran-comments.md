@@ -1,16 +1,21 @@
 ## R CMD check results
 
-0 errors | 0 warnings | 0 notes
+0 errors | 0 warnings | 1 note
+
+## Note
+
+- `eyeprocess` is an optional suggested scientific engine that is installed from its certified GitHub release in project CI. `gp3tools` remains installable without it; functionality that delegates to that engine handles its absence explicitly.
 
 ## Changes in this release
 
-- Updates gp3tools from the current CRAN release 2.0.1 to version 2.3.0.
-- Includes the validated 2.1.x and 2.2.x quality-control, preprocessing, modelling, sequence, reporting, interoperability, and audit extensions.
-- Adds an auditable binocular pupil-reconstruction workflow with explicit bilateral diagnostics, cross-eye calibration, reconstruction, combination policies, artificial-monocular-loss validation, stress testing, sensitivity analysis, reconstruction-burden auditing, reporting, and diagnostic plots.
-- Adds 10 binocular reconstruction and validation functions and two executable articles.
-- Existing binocular helpers remain available and their established behaviour is unchanged.
-- Adds no new mandatory system requirements or mandatory package dependencies.
-- Preserves established public interfaces.
+- Updates gp3tools from version 2.3.0 to version 2.4.0.
+- Adds standardized Gazepoint spatial-quality adapters for accuracy, precision, BCEA, sampling behavior, data loss, dashboards, and reporting while retaining scientific formula ownership in eyeprocess.
+- Adds Gazepoint AOI perturbation-uncertainty adapters with explicit coordinate, geometry, observation-level, boundary, overlap, provenance, sensitivity, and failure contracts.
+- Adds censored gaze-latency survival adapters for right-censoring, repeated-participant Cox and AFT analysis, diagnostics, reporting, and reproducibility workflows delegated to eyeprocess.
+- Expands methodological guidance, worked examples, plots, interpretation, limitations, reporting guidance, and website/API navigation.
+- Hardens repository/site contract testing and cross-platform release certification, including Ubuntu oldrel-1.
+- Adds no new mandatory package dependency.
+- Preserves established public interfaces and scientific package boundaries.
 
 ## Downstream dependencies
 
@@ -18,8 +23,6 @@ There are no known downstream CRAN dependencies.
 
 ## Test environments
 
-- Local Windows installation, R 4.6.1
-- GitHub Actions: Windows release
-- GitHub Actions: macOS release
-- GitHub Actions: Ubuntu release
-- GitHub Actions: Ubuntu R-devel
+- Local Windows 11, R 4.6.1.
+- GitHub Actions: Windows release, macOS release, Ubuntu release, Ubuntu oldrel-1, and Ubuntu R-devel.
+- The exact 2.4.0 release-preparation commit will be re-certified on the same five-lane GitHub Actions matrix before creation of the immutable v2.4.0 tag.

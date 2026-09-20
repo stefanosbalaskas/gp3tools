@@ -1,4 +1,4 @@
-# gp3tools 2.3.0.9000
+# gp3tools 2.4.0
 
 - Hardened the macOS GitHub Actions lane against reproducible `pak` failures that rejected multiple downloaded CRAN macOS binaries as unknown archive types. Linux and Windows retain the standard `setup-r-dependencies` path; macOS now installs the same declared dependencies through base R/remotes before running the unchanged R CMD check gate.
 
