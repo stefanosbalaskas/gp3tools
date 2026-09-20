@@ -1,0 +1,87 @@
+# Gazepoint AOI Sensitivity Analysis Plan
+
+\`\`\`{r setup, include=FALSE} knitr::opts_chunk\$set(collapse = TRUE,
+comment = “#\>”, eval = FALSE) library(gp3tools) \`\`\`
+
+## Purpose
+
+This template fixes the Gazepoint-to-core conversion and AOI sensitivity
+choices before branch-specific results are inspected. \`gp3tools\`
+remains a thin adapter: the scientific perturbation, assignment,
+feature, model, and reporting logic is delegated to \`eyeprocess\`.
+
+## Pre-analysis decisions
+
+Record:
+
+- the exact Gazepoint x/y source columns;
+- source coordinate unit (\`normalized\` or \`px\`);
+- screen width/height used for normalized-to-pixel conversion;
+- physical screen size and viewing distance for degree-based
+  perturbations;
+- sample versus fixation observation level;
+- nominal AOI source/version;
+- perturbation grid and units;
+- overlap and screen-boundary policies;
+- fixed downstream model callback;
+- failure/non-convergence handling;
+- planned assignment, coefficient, interval, convergence, and model-N
+  summaries.
+
+## Filled synthetic plan
+
+\`\`\`yaml analysis_id: gazepoint-disclosure-aoi-robustness
+source_columns: x: FPOGX y: FPOGY coordinate_unit: normalized screen:
+width_px: 1920 height_px: 1080 physical_width: 53.1 physical_height:
+29.9 viewing_distance: 60 observation_level: sample perturbations: unit:
+deg dilation: \[0.25, 0.50, 1.00\] erosion: \[0.25\] translation_x:
+\[0.50\] translation_y: \[0.50\] overlap_policy: ambiguous model:
+fixed_callback: true failure_handling: keep_geometry_failures: true
+keep_model_failures: true keep_nonconverged_rows: true \`\`\`
+
+## Adapter call
+
+\`\`\`{r planned-run} result \<- run_gazepoint_aoi_sensitivity( gaze,
+aois, gaze_x_col = “FPOGX”, gaze_y_col = “FPOGY”, coordinate_unit =
+“normalized”, perturbation_unit = “deg”, dilations = c(.25, .50, 1.00),
+erosions = .25, translations_x = .50, translations_y = .50,
+screen_width_px = 1920, screen_height_px = 1080, viewing_distance = 60,
+physical_screen_size = c(53.1, 29.9), observation_id_col = “sample_id”,
+participant_col = “participant”, trial_col = “trial”, duration_col =
+“duration”, observation_level = “sample”, overlap_policy = “ambiguous” )
+\`\`\`
+
+## Interpretation rule
+
+A high unchanged-assignment proportion or stable coefficient describes
+robustness only to the declared Gazepoint coordinate conversion and AOI
+perturbation plan. It does not establish that the nominal AOI boundaries
+are correct.
+
+At sample level, zero means valid gaze samples existed but none entered
+the AOI. Missing means there was no valid assignment opportunity. Do not
+convert one into the other.
+
+## Reporting example
+
+> Gazepoint normalized coordinates were converted using the prespecified
+> screen dimensions, and AOI sensitivity was evaluated at the sample
+> level using a fixed degree-based perturbation plan. We report
+> assignment stability, coefficient ranges and confidence intervals,
+> model convergence and N variation, and all failed geometry/model
+> branches. The adapter delegated scientific calculations to
+> \`eyeprocess\`.
+
+This is a synthetic reporting template, not an empirical finding.
+
+## API map
+
+- \`audit_gazepoint_aoi_uncertainty()\` — validate columns, units, and
+  adapter boundary;
+- \`run_gazepoint_aoi_sensitivity()\` — delegate the complete
+  sensitivity workflow;
+- \`plot_gazepoint_aoi_sensitivity()\` — delegated geometry, assignment,
+  coefficient, and surface diagnostics.
+
+Use the main **Gazepoint AOI Perturbation and Uncertainty** article for
+troubleshooting, interpretation, and limitations.

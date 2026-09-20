@@ -50,9 +50,15 @@ standard output tables.
 
 ## Sampling, tracking quality, and QC summaries
 
-Check sampling rate, tracking quality, screen bounds, coordinate
+Check sampling rate, tracking quality, standardized
+accuracy/precision/BCEA, effective sampling, screen bounds, coordinate
 coverage, missingness, and task-phase coverage.
 
+- [`summarise_gazepoint_spatial_quality()`](https://stefanosbalaskas.github.io/gp3tools/reference/gazepoint_spatial_quality.md)
+  [`create_gazepoint_quality_report()`](https://stefanosbalaskas.github.io/gp3tools/reference/gazepoint_spatial_quality.md)
+  [`plot_gazepoint_quality_dashboard()`](https://stefanosbalaskas.github.io/gp3tools/reference/gazepoint_spatial_quality.md)
+  [`report_gazepoint_quality()`](https://stefanosbalaskas.github.io/gp3tools/reference/gazepoint_spatial_quality.md)
+  : Gazepoint adapters for standardized eye-tracking data quality
 - [`check_sampling_rate()`](https://stefanosbalaskas.github.io/gp3tools/reference/check_sampling_rate.md)
   : Check sampling rate by group
 - [`plot_sampling_rate()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_sampling_rate.md)
@@ -112,6 +118,10 @@ stimulus-layout quality.
   : Audit AOI overlap
 - [`audit_gazepoint_aoi_margin_sensitivity()`](https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_aoi_margin_sensitivity.md)
   : Audit AOI margin sensitivity
+- [`audit_gazepoint_aoi_uncertainty()`](https://stefanosbalaskas.github.io/gp3tools/reference/gazepoint_aoi_uncertainty.md)
+  [`run_gazepoint_aoi_sensitivity()`](https://stefanosbalaskas.github.io/gp3tools/reference/gazepoint_aoi_uncertainty.md)
+  [`plot_gazepoint_aoi_sensitivity()`](https://stefanosbalaskas.github.io/gp3tools/reference/gazepoint_aoi_uncertainty.md)
+  : Gazepoint Adapters for AOI Perturbation and Uncertainty Analysis
 - [`audit_gazepoint_aoi_screen_coverage()`](https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_aoi_screen_coverage.md)
   : Audit AOI coverage against screen bounds
 - [`audit_gazepoint_aoi_coding_matrix()`](https://stefanosbalaskas.github.io/gp3tools/reference/audit_gazepoint_aoi_coding_matrix.md)
@@ -560,6 +570,15 @@ export ecosystems.
   : Run a tested gp3tools-to-gpbiometrics integration workflow
 - [`create_gazepoint_cross_package_report()`](https://stefanosbalaskas.github.io/gp3tools/reference/create_gazepoint_cross_package_report.md)
   : Create a combined gp3tools-gpbiometrics workflow report
+
+## Censored gaze-latency survival adapters
+
+Thin Gazepoint convenience wrappers that delegate censoring, Cox/AFT
+modelling, diagnostics, sensitivity, and reporting to eyeprocess.
+
+- [`prepare_gazepoint_survival_data()`](https://stefanosbalaskas.github.io/gp3tools/reference/gaze-survival-adapter.md)
+  [`run_gazepoint_latency_analysis()`](https://stefanosbalaskas.github.io/gp3tools/reference/gaze-survival-adapter.md)
+  : Gazepoint adapters for censored gaze-latency survival analysis
 
 ## Naming and compatibility
 

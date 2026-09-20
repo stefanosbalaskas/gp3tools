@@ -24,6 +24,8 @@
 
 ### Quality control and reporting
 
+- [Gazepoint data quality: accuracy, precision, sampling, and
+  loss](https://stefanosbalaskas.github.io/gp3tools/articles/gazepoint-data-quality-workflow.md):
 - [Quality-control dashboard
   workflow](https://stefanosbalaskas.github.io/gp3tools/articles/qc-dashboard-workflow.md):
 - [Missingness and data-coverage
@@ -71,6 +73,15 @@
 - [Model-readiness and sensitivity
   analysis](https://stefanosbalaskas.github.io/gp3tools/articles/model-readiness-sensitivity.md):
 
+- [Gazepoint AOI Perturbation and
+  Uncertainty](https://stefanosbalaskas.github.io/gp3tools/articles/aoi-perturbation-uncertainty.md):
+
+- [Gazepoint AOI Sensitivity Analysis
+  Plan](https://stefanosbalaskas.github.io/gp3tools/articles/aoi-sensitivity-analysis-plan.md):
+
+- [Gazepoint AOI Robustness Reporting
+  Bundle](https://stefanosbalaskas.github.io/gp3tools/articles/aoi-reporting-bundle.md):
+
 - [Bayesian planning
   workflow](https://stefanosbalaskas.github.io/gp3tools/articles/bayesian-planning-workflow.md):
 
@@ -114,6 +125,12 @@
 
 - [Exporting to other
   ecosystems](https://stefanosbalaskas.github.io/gp3tools/articles/ecosystem-exports.md):
+- [Gazepoint gaze-latency survival
+  analysis](https://stefanosbalaskas.github.io/gp3tools/articles/gaze-survival-adapter.md):
+- [Gazepoint worked example: evidence verification
+  latency](https://stefanosbalaskas.github.io/gp3tools/articles/gaze-survival-verification-example.md):
+- [Gazepoint survival-analysis reproducibility
+  checklist](https://stefanosbalaskas.github.io/gp3tools/articles/gaze-survival-reproducibility-checklist.md):
 - [Ecosystem update — September
   2026](https://stefanosbalaskas.github.io/gp3tools/articles/ecosystem-update-2026-09.md):
 

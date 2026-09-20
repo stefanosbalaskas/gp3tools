@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">gp3tools</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.3.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.3.0.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -38,6 +38,7 @@
     <li><a class="dropdown-item" href="../articles/fixations-transitions-scanpaths.html">Fixation, transitions, and scanpaths</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>QC and reporting</h6></li>
+    <li><a class="dropdown-item" href="../articles/gazepoint-data-quality-workflow.html">Gazepoint data quality: accuracy, precision, sampling, and loss</a></li>
     <li><a class="dropdown-item" href="../articles/qc-dashboard-workflow.html">Quality-control dashboard workflow</a></li>
     <li><a class="dropdown-item" href="../articles/missingness-coverage-reporting.html">Missingness and data-coverage reporting</a></li>
     <li><a class="dropdown-item" href="../articles/phase-segmentation-reporting.html">Task-phase segmentation and coverage reporting</a></li>
@@ -55,6 +56,9 @@
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Advanced modelling</h6></li>
     <li><a class="dropdown-item" href="../articles/model-readiness-sensitivity.html">Model-readiness and sensitivity analysis</a></li>
+    <li><a class="dropdown-item" href="../articles/aoi-perturbation-uncertainty.html">Gazepoint AOI Perturbation and Uncertainty</a></li>
+    <li><a class="dropdown-item" href="../articles/aoi-sensitivity-analysis-plan.html">Gazepoint AOI Sensitivity Analysis Plan</a></li>
+    <li><a class="dropdown-item" href="../articles/aoi-reporting-bundle.html">Gazepoint AOI Robustness Reporting Bundle</a></li>
     <li><a class="dropdown-item" href="../articles/bayesian-planning-workflow.html">Bayesian planning workflow</a></li>
     <li><a class="dropdown-item" href="../articles/experimental-bayesian-bridges.html">Experimental Bayesian bridge helpers</a></li>
     <li><a class="dropdown-item" href="../articles/metric-extraction-model-boundaries.html">Metric extraction and model-boundary guidance</a></li>
@@ -71,6 +75,9 @@
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Ecosystem bridges</h6></li>
     <li><a class="dropdown-item" href="../articles/ecosystem-exports.html">Exporting to other ecosystems</a></li>
+    <li><a class="dropdown-item" href="../articles/gaze-survival-adapter.html">Gazepoint gaze-latency survival analysis</a></li>
+    <li><a class="dropdown-item" href="../articles/gaze-survival-verification-example.html">Gazepoint worked example: evidence verification latency</a></li>
+    <li><a class="dropdown-item" href="../articles/gaze-survival-reproducibility-checklist.html">Gazepoint survival-analysis reproducibility checklist</a></li>
     <li><a class="dropdown-item" href="../articles/ecosystem-update-2026-09.html">Ecosystem update — September 2026</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Signal extensions</h6></li>
@@ -103,6 +110,40 @@
       <small>Source: <a href="https://github.com/stefanosbalaskas/gp3tools/blob/master/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="2.3.0.9000" id="gp3tools-2309000">gp3tools 2.3.0.9000<a class="anchor" aria-label="anchor" href="#gp3tools-2309000"></a></h2>
+<ul><li><p>Removed the non-standard DESCRIPTION <code>Remotes</code> field; GitHub Actions dependency installation remains explicitly pinned through <code>Config/Needs/check</code> and <code>Config/Needs/website</code>, while <code>eyeprocess (&gt;= 0.12.0)</code> remains an optional suggested scientific engine.</p></li>
+<li><p>Hardened release-readiness infrastructure: repository-level website contract tests now resolve the actual source checkout explicitly instead of assuming build-ignored pkgdown files are present inside an R CMD check tarball.</p></li>
+<li><p>Pinned the delegated survival integration to the certified <code>eyeprocess</code> 0.12.0 API and qualified gp3tools survival-wrapper calls in executable website articles.</p></li>
+<li><p>Added exact-tag R CMD check triggering, Ubuntu oldrel-1 coverage, and the current checkout action for release certification.</p></li>
+</ul><div class="section level3">
+<h3 id="standardized-gazepoint-data-quality-2-3-0-9000">Standardized Gazepoint data quality<a class="anchor" aria-label="anchor" href="#standardized-gazepoint-data-quality-2-3-0-9000"></a></h3>
+<ul><li><p>Expands the website workflow with focused accuracy, RMS-S2S, BCEA, sampling-interval, and dashboard plots plus interpretation boundaries and reporting guidance.</p></li>
+<li><p>Hardens the AOI uncertainty adapter across eyeprocess versions: legacy cores remain usable for fixation semantics, while sample-level requests fail explicitly instead of being silently mislabeled.</p></li>
+<li><p>Added thin Gazepoint adapters for the vendor-neutral eyeprocess spatial-quality subsystem: <code><a href="../reference/gazepoint_spatial_quality.html">summarise_gazepoint_spatial_quality()</a></code>, <code><a href="../reference/gazepoint_spatial_quality.html">create_gazepoint_quality_report()</a></code>, <code><a href="../reference/gazepoint_spatial_quality.html">plot_gazepoint_quality_dashboard()</a></code>, and <code><a href="../reference/gazepoint_spatial_quality.html">report_gazepoint_quality()</a></code>.</p></li>
+<li><p>Native BPOG/FPOG coordinates and TIME/MSTIMER timing units are resolved conservatively; generic coordinate columns require explicit units and numeric ranges are never used for unit guessing.</p></li>
+<li><p>Complete GP3 screen/viewing geometry can be forwarded for explicit normalized/pixel-to-degree conversion; incomplete geometry is never silently completed.</p></li>
+<li><p>Added dataset/sample/participant/session/trial/file grouping, review-only threshold propagation, formula-engine provenance, focused adapter tests, and a synthetic 9-point website workflow with sensitivity-analysis guidance.</p></li>
+<li><p>No accuracy, precision, BCEA, sampling, jitter, or data-loss formula is duplicated in gp3tools.</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="aoi-perturbation-uncertainty-adapter-2-3-0-9000">AOI perturbation uncertainty adapter<a class="anchor" aria-label="anchor" href="#aoi-perturbation-uncertainty-adapter-2-3-0-9000"></a></h3>
+<ul><li>Added <code><a href="../reference/gazepoint_aoi_uncertainty.html">audit_gazepoint_aoi_uncertainty()</a></code>, <code><a href="../reference/gazepoint_aoi_uncertainty.html">run_gazepoint_aoi_sensitivity()</a></code>, and <code><a href="../reference/gazepoint_aoi_uncertainty.html">plot_gazepoint_aoi_sensitivity()</a></code> as thin Gazepoint adapters to the vendor-neutral eyeprocess AOI perturbation framework.</li>
+<li>Normalized Gazepoint coordinates require explicit screen dimensions before conversion; the adapter never silently treats normalized values as pixels.</li>
+<li>Scientific perturbation, reassignment, feature recomputation, model propagation, stability summaries, and plotting remain implemented in eyeprocess rather than duplicated in gp3tools.</li>
+<li>Added combined x/y translation passthrough, explicit fixation/sample observation level, delegation tests, API documentation, a synthetic sample-level workflow, interpretation/reporting guidance, and pkgdown navigation.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="censored-gaze-latency-survival-adapters-2-3-0-9000">Censored gaze-latency survival adapters<a class="anchor" aria-label="anchor" href="#censored-gaze-latency-survival-adapters-2-3-0-9000"></a></h3>
+<ul><li>Added <code><a href="../reference/gaze-survival-adapter.html">prepare_gazepoint_survival_data()</a></code> as a thin Gazepoint convenience adapter to the vendor-neutral <code>eyeprocess</code> censoring contract.</li>
+<li>Added <code><a href="../reference/gaze-survival-adapter.html">run_gazepoint_latency_analysis()</a></code> for an explicit end-to-end Gazepoint entry point that delegates Kaplan-Meier, repeated-participant Cox, AFT, diagnostics, model comparison, provenance, and reporting to <code>eyeprocess</code>.</li>
+<li>The adapter requires callers to name both the repeated-Cox structure (<code>cluster_robust</code> or <code>frailty</code>) and AFT family (<code>weibull</code> or <code>lognormal</code>); gp3tools never chooses either estimator silently.</li>
+<li>Added focused adapter tests, a runnable synthetic example, generated reference documentation, and a methodological pkgdown article covering use/not-use decisions, censoring semantics, interpretation, sensitivity analysis, limitations, and reporting.</li>
+<li>Added a standalone evidence-verification adapter example for time to first source/evidence AOI entry, with troubleshooting guidance, model interpretation, reporting language, and explicit delegation to the merged <code>eyeprocess</code> survival engine.</li>
+<li>Added a Gazepoint survival reproducibility checklist and a site-contract regression test that fails if the adapter articles, API entries, or required example files disappear from the source tree.</li>
+<li>Expanded the plot-rich survival adapter guidance with delegated Kaplan-Meier, single-event 1-KM, and empirical hazard/risk-set views plus explicit interpretation boundaries.</li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="2.3.0" id="gp3tools-230">gp3tools 2.3.0<a class="anchor" aria-label="anchor" href="#gp3tools-230"></a></h2><p class="text-muted">CRAN release: 2026-08-21</p>
 <div class="section level3">

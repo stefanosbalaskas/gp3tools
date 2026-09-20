@@ -22,38 +22,40 @@ sample-level and fixation-level summary functions.
 
     #>                                plot_function
     #> 1                    plot_gazepoint_aoi_gamm
-    #> 2                plot_gazepoint_aoi_timeline
-    #> 3       plot_gazepoint_aoi_transition_matrix
-    #> 4            plot_gazepoint_aoi_verification
-    #> 5       plot_gazepoint_binocular_diagnostics
-    #> 6   plot_gazepoint_cluster_null_distribution
-    #> 7         plot_gazepoint_cluster_permutation
-    #> 8             plot_gazepoint_cluster_results
-    #> 9    plot_gazepoint_event_detector_agreement
-    #> 10   plot_gazepoint_event_detector_benchmark
-    #> 11               plot_gazepoint_face_quality
-    #> 12                        plot_gazepoint_gca
-    #> 13                    plot_gazepoint_heatmap
-    #> 14            plot_gazepoint_heatmap_overlay
-    #> 15        plot_gazepoint_missingness_profile
-    #> 16          plot_gazepoint_model_predictions
-    #> 17            plot_gazepoint_model_residuals
-    #> 18         plot_gazepoint_multiverse_results
-    #> 19             plot_gazepoint_phase_timeline
-    #> 20        plot_gazepoint_pupil_preprocessing
-    #> 21               plot_gazepoint_pupil_status
-    #> 22           plot_gazepoint_pupil_timecourse
-    #> 23                plot_gazepoint_qc_overview
-    #> 24                   plot_gazepoint_scanpath
-    #> 25 plot_gazepoint_scanpath_cluster_stability
-    #> 26          plot_gazepoint_scanpath_clusters
-    #> 27                  plot_gazepoint_scanpaths
-    #> 28         plot_gazepoint_stimulus_layout_qc
-    #> 29                plot_gazepoint_time_series
-    #> 30        plot_gazepoint_time_varying_effect
-    #> 31                        plot_sampling_rate
-    #> 32                     plot_tracking_quality
-    #> 33                   plot_transition_heatmap
+    #> 2             plot_gazepoint_aoi_sensitivity
+    #> 3                plot_gazepoint_aoi_timeline
+    #> 4       plot_gazepoint_aoi_transition_matrix
+    #> 5            plot_gazepoint_aoi_verification
+    #> 6       plot_gazepoint_binocular_diagnostics
+    #> 7   plot_gazepoint_cluster_null_distribution
+    #> 8         plot_gazepoint_cluster_permutation
+    #> 9             plot_gazepoint_cluster_results
+    #> 10   plot_gazepoint_event_detector_agreement
+    #> 11   plot_gazepoint_event_detector_benchmark
+    #> 12               plot_gazepoint_face_quality
+    #> 13                        plot_gazepoint_gca
+    #> 14                    plot_gazepoint_heatmap
+    #> 15            plot_gazepoint_heatmap_overlay
+    #> 16        plot_gazepoint_missingness_profile
+    #> 17          plot_gazepoint_model_predictions
+    #> 18            plot_gazepoint_model_residuals
+    #> 19         plot_gazepoint_multiverse_results
+    #> 20             plot_gazepoint_phase_timeline
+    #> 21        plot_gazepoint_pupil_preprocessing
+    #> 22               plot_gazepoint_pupil_status
+    #> 23           plot_gazepoint_pupil_timecourse
+    #> 24                plot_gazepoint_qc_overview
+    #> 25          plot_gazepoint_quality_dashboard
+    #> 26                   plot_gazepoint_scanpath
+    #> 27 plot_gazepoint_scanpath_cluster_stability
+    #> 28          plot_gazepoint_scanpath_clusters
+    #> 29                  plot_gazepoint_scanpaths
+    #> 30         plot_gazepoint_stimulus_layout_qc
+    #> 31                plot_gazepoint_time_series
+    #> 32        plot_gazepoint_time_varying_effect
+    #> 33                        plot_sampling_rate
+    #> 34                     plot_tracking_quality
+    #> 35                   plot_transition_heatmap
 
 ## Sampling rate
 

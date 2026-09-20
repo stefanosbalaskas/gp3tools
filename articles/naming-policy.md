@@ -28,7 +28,7 @@ naming_audit <- audit_gazepoint_naming_consistency()
 naming_audit
 #> gp3tools naming-consistency audit
 #>   Status: pass
-#>   Summary stems: 32
+#>   Summary stems: 33
 #>   Missing British aliases: 0
 naming_audit$pairs
 #>                                    stem
@@ -61,9 +61,10 @@ naming_audit$pairs
 #> 27                  gazepoint_qc_status
 #> 28 gazepoint_scanpath_cluster_stability
 #> 29                 gazepoint_semimarkov
-#> 30              gazepoint_time_clusters
-#> 31                   gazepoint_workflow
-#> 32                     tracking_quality
+#> 30            gazepoint_spatial_quality
+#> 31              gazepoint_time_clusters
+#> 32                   gazepoint_workflow
+#> 33                     tracking_quality
 #>                                      british_name
 #> 1                           summarise_aoi_samples
 #> 2                             summarise_fixations
@@ -94,9 +95,10 @@ naming_audit$pairs
 #> 27                  summarise_gazepoint_qc_status
 #> 28 summarise_gazepoint_scanpath_cluster_stability
 #> 29                 summarise_gazepoint_semimarkov
-#> 30              summarise_gazepoint_time_clusters
-#> 31                   summarise_gazepoint_workflow
-#> 32                     summarise_tracking_quality
+#> 30            summarise_gazepoint_spatial_quality
+#> 31              summarise_gazepoint_time_clusters
+#> 32                   summarise_gazepoint_workflow
+#> 33                     summarise_tracking_quality
 #>                                     american_name british_exported
 #> 1                           summarize_aoi_samples             TRUE
 #> 2                             summarize_fixations             TRUE
@@ -127,9 +129,10 @@ naming_audit$pairs
 #> 27                  summarize_gazepoint_qc_status             TRUE
 #> 28 summarize_gazepoint_scanpath_cluster_stability             TRUE
 #> 29                 summarize_gazepoint_semimarkov             TRUE
-#> 30              summarize_gazepoint_time_clusters             TRUE
-#> 31                   summarize_gazepoint_workflow             TRUE
-#> 32                     summarize_tracking_quality             TRUE
+#> 30            summarize_gazepoint_spatial_quality             TRUE
+#> 31              summarize_gazepoint_time_clusters             TRUE
+#> 32                   summarize_gazepoint_workflow             TRUE
+#> 33                     summarize_tracking_quality             TRUE
 #>    american_exported                                 canonical_name
 #> 1              FALSE                          summarise_aoi_samples
 #> 2              FALSE                            summarise_fixations
@@ -160,9 +163,10 @@ naming_audit$pairs
 #> 27              TRUE                  summarise_gazepoint_qc_status
 #> 28             FALSE summarise_gazepoint_scanpath_cluster_stability
 #> 29             FALSE                 summarise_gazepoint_semimarkov
-#> 30              TRUE              summarise_gazepoint_time_clusters
-#> 31             FALSE                   summarise_gazepoint_workflow
-#> 32             FALSE                     summarise_tracking_quality
+#> 30             FALSE            summarise_gazepoint_spatial_quality
+#> 31              TRUE              summarise_gazepoint_time_clusters
+#> 32             FALSE                   summarise_gazepoint_workflow
+#> 33             FALSE                     summarise_tracking_quality
 #>            status
 #> 1  canonical_only
 #> 2  canonical_only
@@ -193,9 +197,10 @@ naming_audit$pairs
 #> 27         paired
 #> 28 canonical_only
 #> 29 canonical_only
-#> 30         paired
-#> 31 canonical_only
+#> 30 canonical_only
+#> 31         paired
 #> 32 canonical_only
+#> 33 canonical_only
 ```
 
 The audit distinguishes:

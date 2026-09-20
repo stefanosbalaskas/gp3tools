@@ -29,6 +29,9 @@ It supports common Gazepoint workflows, including:
 
 - folder-level import and one-command workflow execution;
 - sampling-rate checks and tracking-quality summaries;
+- standardized gaze-quality reports covering accuracy, RMS-S2S/SD
+  precision, BCEA, realized sampling, and data loss via the
+  vendor-neutral `eyeprocess` engine;
 - sample-level master-table creation, auditing, and validation;
 - light and conservative pupil preprocessing;
 - pupil preprocessing audits, reliability checks, interpolation
@@ -39,6 +42,9 @@ It supports common Gazepoint workflows, including:
 - AOI entries, AOI windows, AOI denominators, and AOI-window GLMMs;
 - AOI/fixation/transition feature extraction and time-varying transition
   matrices;
+- censored gaze-latency survival adapters that delegate right-censoring,
+  repeated-participant Cox, and AFT analysis to the vendor-neutral
+  `eyeprocess` engine;
 - fixation-, saccade-, and AOI-contingent alignment;
 - pupil GAMMs, AOI GAMMs, gaze-position/PFE sensitivity GAMMs, and
   Growth Curve Analysis;
@@ -63,6 +69,74 @@ It supports common Gazepoint workflows, including:
 - external facial-behaviour import, quality audit, synchronisation,
   window summaries, multimodal modelling, and reporting helpers for
   externally generated face-analysis outputs.
+
+## Standardized Gazepoint data quality
+
+The development branch adds a thin Gazepoint-facing layer over the
+vendor-neutral `eyeprocess` quality core. It covers target-referenced
+accuracy, RMS-S2S and spatial-SD precision, BCEA, empirical sampling
+behavior, and data loss without duplicating formulas inside `gp3tools`.
+
+``` r
+
+quality <- create_gazepoint_quality_report(
+  validation_samples,
+  target_x_col = "target_x",
+  target_y_col = "target_y",
+  level = "trial",
+  nominal_sampling_hz = 60
+)
+
+report_gazepoint_quality(quality)
+plot_gazepoint_quality_dashboard(quality)
+```
+
+Native Gazepoint coordinates are handled conservatively: BPOG/FPOG
+coordinates are recognized as normalized, TIME and MSTIMER map to
+seconds and milliseconds respectively, while generic gaze columns must
+declare their unit explicitly. Quality thresholds produce review flags
+and never automatically remove data. Sample-level grouping is available
+for traceability but is not interpreted as stable-target precision
+evidence.
+
+See the [Gazepoint Data Quality
+workflow](https://stefanosbalaskas.github.io/gp3tools/articles/gazepoint-data-quality-workflow.html)
+for the 9-point example, focused accuracy, precision, BCEA,
+sampling-interval, and dashboard plots, review-rule sensitivity,
+limitations, and manuscript-reporting guidance.
+
+## Gazepoint AOI robustness and reporting
+
+The Gazepoint AOI adapter now exposes a complete vendor-specific entry
+point into the vendor-neutral `eyeprocess` uncertainty workflow.
+`gp3tools` records source columns, coordinate units, screen/viewing
+geometry, observation level, overlap policy, and boundary policy; all
+perturbation, reassignment, feature, model, stability, and plotting
+logic remains delegated to `eyeprocess`.
+
+Website workflow:
+
+- [Gazepoint AOI Perturbation and
+  Uncertainty](https://stefanosbalaskas.github.io/gp3tools/articles/aoi-perturbation-uncertainty.html)
+  — normalized/pixel conversion, delegated sensitivity analysis, plot
+  families, troubleshooting, interpretation, limitations, and reporting.
+- [Gazepoint AOI Sensitivity Analysis
+  Plan](https://stefanosbalaskas.github.io/gp3tools/articles/aoi-sensitivity-analysis-plan.html)
+  — prespecify source columns, screen geometry, sample/fixation level,
+  perturbation envelope, and failure handling.
+- [Gazepoint AOI Robustness Reporting
+  Bundle](https://stefanosbalaskas.github.io/gp3tools/articles/aoi-reporting-bundle.html)
+  — preserve adapter settings together with the untouched core branch
+  audit, assignment/model evidence, failures, provenance, report, and
+  figures.
+
+Use
+[`audit_gazepoint_aoi_uncertainty()`](https://stefanosbalaskas.github.io/gp3tools/reference/gazepoint_aoi_uncertainty.md),
+[`run_gazepoint_aoi_sensitivity()`](https://stefanosbalaskas.github.io/gp3tools/reference/gazepoint_aoi_uncertainty.md),
+and
+[`plot_gazepoint_aoi_sensitivity()`](https://stefanosbalaskas.github.io/gp3tools/reference/gazepoint_aoi_uncertainty.md).
+The adapter does not silently fall back to the older margin-sensitivity
+implementation when the `eyeprocess` core is unavailable.
 
 ## Which workflow should I use?
 
@@ -119,6 +193,22 @@ Use AOI-entry, fixation, and transition helpers when the analysis
 concerns looking episodes, fixation summaries, AOI sequences, transition
 matrices, or scanpath structure.
 
+Use
+[`prepare_gazepoint_survival_data()`](https://stefanosbalaskas.github.io/gp3tools/reference/gaze-survival-adapter.md)
+and
+[`run_gazepoint_latency_analysis()`](https://stefanosbalaskas.github.io/gp3tools/reference/gaze-survival-adapter.md)
+when the outcome is a time-to-event gaze latency and some valid trials
+end before the target event occurs. These are thin adapters to
+`eyeprocess`; never-inspected valid trials remain right-censored, while
+unusable/incomplete gaze remains a review state. The repeated-Cox
+structure and AFT family must be named explicitly. See the [survival
+adapter
+article](https://stefanosbalaskas.github.io/gp3tools/articles/gaze-survival-adapter.html),
+the [evidence-verification worked
+example](https://stefanosbalaskas.github.io/gp3tools/articles/gaze-survival-verification-example.html),
+and the [survival reproducibility
+checklist](https://stefanosbalaskas.github.io/gp3tools/articles/gaze-survival-reproducibility-checklist.html).
+
 Use cluster-based permutation testing for time-course inference. Use
 [`estimate_gazepoint_divergence_point()`](https://stefanosbalaskas.github.io/gp3tools/reference/estimate_gazepoint_divergence_point.md)
 as complementary onset/sensitivity evidence, not as a replacement for
@@ -161,6 +251,7 @@ when preparing transparent data-coverage and QC-reporting summaries.
 | Summarise and model pupil outcomes | [`summarise_gazepoint_pupil()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarise_gazepoint_pupil.md), [`summarise_gazepoint_pupil_windows()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarise_gazepoint_pupil_windows.md), [`summarise_gazepoint_pupil_trial_features()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarise_gazepoint_pupil_trial_features.md), [`fit_gazepoint_pupil_window_lmm()`](https://stefanosbalaskas.github.io/gp3tools/reference/fit_gazepoint_pupil_window_lmm.md), [`fit_gazepoint_pupil_gamm()`](https://stefanosbalaskas.github.io/gp3tools/reference/fit_gazepoint_pupil_gamm.md) |
 | Summarise AOI behaviour | [`summarise_gazepoint_aoi_windows()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarise_gazepoint_aoi_windows.md), [`summarise_gazepoint_aoi_entries()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarise_gazepoint_aoi_entries.md), [`summarise_gazepoint_aoi_trial_features()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarise_gazepoint_aoi_trial_features.md), [`summarise_gazepoint_fixation_trials()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarise_gazepoint_fixation_trials.md) |
 | Model AOI outcomes | [`prepare_gazepoint_aoi_glmm_data()`](https://stefanosbalaskas.github.io/gp3tools/reference/prepare_gazepoint_aoi_glmm_data.md), [`fit_gazepoint_aoi_window_glmm()`](https://stefanosbalaskas.github.io/gp3tools/reference/fit_gazepoint_aoi_window_glmm.md), [`fit_gazepoint_aoi_model_sensitivity()`](https://stefanosbalaskas.github.io/gp3tools/reference/fit_gazepoint_aoi_model_sensitivity.md), [`prepare_gazepoint_aoi_gamm_data()`](https://stefanosbalaskas.github.io/gp3tools/reference/prepare_gazepoint_aoi_gamm_data.md), [`fit_gazepoint_aoi_gamm()`](https://stefanosbalaskas.github.io/gp3tools/reference/fit_gazepoint_aoi_gamm.md) |
+| Analyse censored gaze latency | [`prepare_gazepoint_survival_data()`](https://stefanosbalaskas.github.io/gp3tools/reference/gaze-survival-adapter.md), [`run_gazepoint_latency_analysis()`](https://stefanosbalaskas.github.io/gp3tools/reference/gaze-survival-adapter.md) |
 | Analyse sequences, transitions, and scanpaths | [`prepare_gazepoint_aoi_sequences()`](https://stefanosbalaskas.github.io/gp3tools/reference/prepare_gazepoint_aoi_sequences.md), [`summarise_gazepoint_aoi_transitions()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarise_gazepoint_aoi_transitions.md), [`compute_gazepoint_aoi_transition_matrix()`](https://stefanosbalaskas.github.io/gp3tools/reference/compute_gazepoint_aoi_transition_matrix.md), [`compute_gazepoint_time_varying_transition_matrix()`](https://stefanosbalaskas.github.io/gp3tools/reference/compute_gazepoint_time_varying_transition_matrix.md), [`cluster_gazepoint_scanpaths()`](https://stefanosbalaskas.github.io/gp3tools/reference/cluster_gazepoint_scanpaths.md), [`select_gazepoint_scanpath_clusters()`](https://stefanosbalaskas.github.io/gp3tools/reference/select_gazepoint_scanpath_clusters.md), [`extract_gazepoint_representative_scanpaths()`](https://stefanosbalaskas.github.io/gp3tools/reference/extract_gazepoint_representative_scanpaths.md), [`plot_gazepoint_scanpath_clusters()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_scanpath_clusters.md), [`bootstrap_gazepoint_scanpath_clusters()`](https://stefanosbalaskas.github.io/gp3tools/reference/bootstrap_gazepoint_scanpath_clusters.md), [`summarise_gazepoint_scanpath_cluster_stability()`](https://stefanosbalaskas.github.io/gp3tools/reference/summarise_gazepoint_scanpath_cluster_stability.md), [`plot_gazepoint_scanpath_cluster_stability()`](https://stefanosbalaskas.github.io/gp3tools/reference/plot_gazepoint_scanpath_cluster_stability.md) |
 | Run time-course and advanced sensitivity analyses | [`fit_gazepoint_gca()`](https://stefanosbalaskas.github.io/gp3tools/reference/fit_gazepoint_gca.md), [`run_gazepoint_cluster_permutation()`](https://stefanosbalaskas.github.io/gp3tools/reference/run_gazepoint_cluster_permutation.md), [`estimate_gazepoint_divergence_point()`](https://stefanosbalaskas.github.io/gp3tools/reference/estimate_gazepoint_divergence_point.md), [`run_gazepoint_model_leave_one_out()`](https://stefanosbalaskas.github.io/gp3tools/reference/run_gazepoint_model_leave_one_out.md) |
 | Prepare reporting and exclusion decisions | [`check_gazepoint_real_data_readiness()`](https://stefanosbalaskas.github.io/gp3tools/reference/check_gazepoint_real_data_readiness.md), [`recommend_gazepoint_exclusions()`](https://stefanosbalaskas.github.io/gp3tools/reference/recommend_gazepoint_exclusions.md), [`create_gazepoint_reporting_checklist()`](https://stefanosbalaskas.github.io/gp3tools/reference/create_gazepoint_reporting_checklist.md), [`create_gazepoint_analysis_decision_audit()`](https://stefanosbalaskas.github.io/gp3tools/reference/create_gazepoint_analysis_decision_audit.md) |

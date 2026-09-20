@@ -5,6 +5,9 @@
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/NAMING_CONVENTIONS.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/advanced-aoi-assignment.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/aoi-modelling-workflow.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/aoi-perturbation-uncertainty.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/aoi-reporting-bundle.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/aoi-sensitivity-analysis-plan.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/aoi-window-feature-engineering.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/aoi_workflow.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/auditable-binocular-pupil-reconstruction.html</loc></url>
@@ -25,6 +28,10 @@
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/face-window-summaries.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/fixation-blink-preprocessing.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/fixations-transitions-scanpaths.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/gaze-survival-adapter.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/gaze-survival-reproducibility-checklist.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/gaze-survival-verification-example.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/gazepoint-data-quality-workflow.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/gp3tools-gpbiometrics-workflow.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/heatmap-spatial-visualisation.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/articles/index.html</loc></url>
@@ -177,11 +184,14 @@
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/flag_gazepoint_pupil_hampel.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/flag_gazepoint_sequence_anomalies.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/flag_tracking_quality.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/gaze-survival-adapter.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/gazepoint_aoi_uncertainty.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/gazepoint_example_aoi_geometry.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/gazepoint_example_aoi_windows.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/gazepoint_example_fixations.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/gazepoint_example_master.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/gazepoint_example_pupil_windows.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/gazepoint_spatial_quality.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/gp3tools_naming_policy.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/gp3tools_performance_limits.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3tools/reference/harmonize_gazepoint_screen_coordinates.html</loc></url>

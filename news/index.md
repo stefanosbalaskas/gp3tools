@@ -1,5 +1,108 @@
 # Changelog
 
+## gp3tools 2.3.0.9000
+
+- Removed the non-standard DESCRIPTION `Remotes` field; GitHub Actions
+  dependency installation remains explicitly pinned through
+  `Config/Needs/check` and `Config/Needs/website`, while
+  `eyeprocess (>= 0.12.0)` remains an optional suggested scientific
+  engine.
+
+- Hardened release-readiness infrastructure: repository-level website
+  contract tests now resolve the actual source checkout explicitly
+  instead of assuming build-ignored pkgdown files are present inside an
+  R CMD check tarball.
+
+- Pinned the delegated survival integration to the certified
+  `eyeprocess` 0.12.0 API and qualified gp3tools survival-wrapper calls
+  in executable website articles.
+
+- Added exact-tag R CMD check triggering, Ubuntu oldrel-1 coverage, and
+  the current checkout action for release certification.
+
+### Standardized Gazepoint data quality
+
+- Expands the website workflow with focused accuracy, RMS-S2S, BCEA,
+  sampling-interval, and dashboard plots plus interpretation boundaries
+  and reporting guidance.
+
+- Hardens the AOI uncertainty adapter across eyeprocess versions: legacy
+  cores remain usable for fixation semantics, while sample-level
+  requests fail explicitly instead of being silently mislabeled.
+
+- Added thin Gazepoint adapters for the vendor-neutral eyeprocess
+  spatial-quality subsystem:
+  [`summarise_gazepoint_spatial_quality()`](https://stefanosbalaskas.github.io/gp3tools/reference/gazepoint_spatial_quality.md),
+  [`create_gazepoint_quality_report()`](https://stefanosbalaskas.github.io/gp3tools/reference/gazepoint_spatial_quality.md),
+  [`plot_gazepoint_quality_dashboard()`](https://stefanosbalaskas.github.io/gp3tools/reference/gazepoint_spatial_quality.md),
+  and
+  [`report_gazepoint_quality()`](https://stefanosbalaskas.github.io/gp3tools/reference/gazepoint_spatial_quality.md).
+
+- Native BPOG/FPOG coordinates and TIME/MSTIMER timing units are
+  resolved conservatively; generic coordinate columns require explicit
+  units and numeric ranges are never used for unit guessing.
+
+- Complete GP3 screen/viewing geometry can be forwarded for explicit
+  normalized/pixel-to-degree conversion; incomplete geometry is never
+  silently completed.
+
+- Added dataset/sample/participant/session/trial/file grouping,
+  review-only threshold propagation, formula-engine provenance, focused
+  adapter tests, and a synthetic 9-point website workflow with
+  sensitivity-analysis guidance.
+
+- No accuracy, precision, BCEA, sampling, jitter, or data-loss formula
+  is duplicated in gp3tools.
+
+### AOI perturbation uncertainty adapter
+
+- Added
+  [`audit_gazepoint_aoi_uncertainty()`](https://stefanosbalaskas.github.io/gp3tools/reference/gazepoint_aoi_uncertainty.md),
+  [`run_gazepoint_aoi_sensitivity()`](https://stefanosbalaskas.github.io/gp3tools/reference/gazepoint_aoi_uncertainty.md),
+  and
+  [`plot_gazepoint_aoi_sensitivity()`](https://stefanosbalaskas.github.io/gp3tools/reference/gazepoint_aoi_uncertainty.md)
+  as thin Gazepoint adapters to the vendor-neutral eyeprocess AOI
+  perturbation framework.
+- Normalized Gazepoint coordinates require explicit screen dimensions
+  before conversion; the adapter never silently treats normalized values
+  as pixels.
+- Scientific perturbation, reassignment, feature recomputation, model
+  propagation, stability summaries, and plotting remain implemented in
+  eyeprocess rather than duplicated in gp3tools.
+- Added combined x/y translation passthrough, explicit fixation/sample
+  observation level, delegation tests, API documentation, a synthetic
+  sample-level workflow, interpretation/reporting guidance, and pkgdown
+  navigation.
+
+### Censored gaze-latency survival adapters
+
+- Added
+  [`prepare_gazepoint_survival_data()`](https://stefanosbalaskas.github.io/gp3tools/reference/gaze-survival-adapter.md)
+  as a thin Gazepoint convenience adapter to the vendor-neutral
+  `eyeprocess` censoring contract.
+- Added
+  [`run_gazepoint_latency_analysis()`](https://stefanosbalaskas.github.io/gp3tools/reference/gaze-survival-adapter.md)
+  for an explicit end-to-end Gazepoint entry point that delegates
+  Kaplan-Meier, repeated-participant Cox, AFT, diagnostics, model
+  comparison, provenance, and reporting to `eyeprocess`.
+- The adapter requires callers to name both the repeated-Cox structure
+  (`cluster_robust` or `frailty`) and AFT family (`weibull` or
+  `lognormal`); gp3tools never chooses either estimator silently.
+- Added focused adapter tests, a runnable synthetic example, generated
+  reference documentation, and a methodological pkgdown article covering
+  use/not-use decisions, censoring semantics, interpretation,
+  sensitivity analysis, limitations, and reporting.
+- Added a standalone evidence-verification adapter example for time to
+  first source/evidence AOI entry, with troubleshooting guidance, model
+  interpretation, reporting language, and explicit delegation to the
+  merged `eyeprocess` survival engine.
+- Added a Gazepoint survival reproducibility checklist and a
+  site-contract regression test that fails if the adapter articles, API
+  entries, or required example files disappear from the source tree.
+- Expanded the plot-rich survival adapter guidance with delegated
+  Kaplan-Meier, single-event 1-KM, and empirical hazard/risk-set views
+  plus explicit interpretation boundaries.
+
 ## gp3tools 2.3.0
 
 CRAN release: 2026-08-21

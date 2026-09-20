@@ -35,7 +35,7 @@
 
     <a class="navbar-brand me-2" href="index.html">gp3tools</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.3.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.3.0.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -62,6 +62,7 @@
     <li><a class="dropdown-item" href="articles/fixations-transitions-scanpaths.html">Fixation, transitions, and scanpaths</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>QC and reporting</h6></li>
+    <li><a class="dropdown-item" href="articles/gazepoint-data-quality-workflow.html">Gazepoint data quality: accuracy, precision, sampling, and loss</a></li>
     <li><a class="dropdown-item" href="articles/qc-dashboard-workflow.html">Quality-control dashboard workflow</a></li>
     <li><a class="dropdown-item" href="articles/missingness-coverage-reporting.html">Missingness and data-coverage reporting</a></li>
     <li><a class="dropdown-item" href="articles/phase-segmentation-reporting.html">Task-phase segmentation and coverage reporting</a></li>
@@ -79,6 +80,9 @@
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Advanced modelling</h6></li>
     <li><a class="dropdown-item" href="articles/model-readiness-sensitivity.html">Model-readiness and sensitivity analysis</a></li>
+    <li><a class="dropdown-item" href="articles/aoi-perturbation-uncertainty.html">Gazepoint AOI Perturbation and Uncertainty</a></li>
+    <li><a class="dropdown-item" href="articles/aoi-sensitivity-analysis-plan.html">Gazepoint AOI Sensitivity Analysis Plan</a></li>
+    <li><a class="dropdown-item" href="articles/aoi-reporting-bundle.html">Gazepoint AOI Robustness Reporting Bundle</a></li>
     <li><a class="dropdown-item" href="articles/bayesian-planning-workflow.html">Bayesian planning workflow</a></li>
     <li><a class="dropdown-item" href="articles/experimental-bayesian-bridges.html">Experimental Bayesian bridge helpers</a></li>
     <li><a class="dropdown-item" href="articles/metric-extraction-model-boundaries.html">Metric extraction and model-boundary guidance</a></li>
@@ -95,6 +99,9 @@
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Ecosystem bridges</h6></li>
     <li><a class="dropdown-item" href="articles/ecosystem-exports.html">Exporting to other ecosystems</a></li>
+    <li><a class="dropdown-item" href="articles/gaze-survival-adapter.html">Gazepoint gaze-latency survival analysis</a></li>
+    <li><a class="dropdown-item" href="articles/gaze-survival-verification-example.html">Gazepoint worked example: evidence verification latency</a></li>
+    <li><a class="dropdown-item" href="articles/gaze-survival-reproducibility-checklist.html">Gazepoint survival-analysis reproducibility checklist</a></li>
     <li><a class="dropdown-item" href="articles/ecosystem-update-2026-09.html">Ecosystem update — September 2026</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Signal extensions</h6></li>
@@ -145,6 +152,7 @@
 <ul>
 <li>folder-level import and one-command workflow execution;</li>
 <li>sampling-rate checks and tracking-quality summaries;</li>
+<li>standardized gaze-quality reports covering accuracy, RMS-S2S/SD precision, BCEA, realized sampling, and data loss via the vendor-neutral <code>eyeprocess</code> engine;</li>
 <li>sample-level master-table creation, auditing, and validation;</li>
 <li>light and conservative pupil preprocessing;</li>
 <li>pupil preprocessing audits, reliability checks, interpolation sensitivity, and stimulus-luminance auditing;</li>
@@ -152,6 +160,7 @@
 <li>pupil-window confirmatory LMMs and model-family sensitivity checks;</li>
 <li>AOI entries, AOI windows, AOI denominators, and AOI-window GLMMs;</li>
 <li>AOI/fixation/transition feature extraction and time-varying transition matrices;</li>
+<li>censored gaze-latency survival adapters that delegate right-censoring, repeated-participant Cox, and AFT analysis to the vendor-neutral <code>eyeprocess</code> engine;</li>
 <li>fixation-, saccade-, and AOI-contingent alignment;</li>
 <li>pupil GAMMs, AOI GAMMs, gaze-position/PFE sensitivity GAMMs, and Growth Curve Analysis;</li>
 <li>cluster-based permutation tests and bootstrapped divergence-point estimation;</li>
@@ -168,20 +177,53 @@
 <li>external facial-behaviour import, quality audit, synchronisation, window summaries, multimodal modelling, and reporting helpers for externally generated face-analysis outputs.</li>
 </ul>
 <div class="section level2">
+<h2 id="standardized-gazepoint-data-quality">Standardized Gazepoint data quality<a class="anchor" aria-label="anchor" href="#standardized-gazepoint-data-quality"></a>
+</h2>
+<p>The development branch adds a thin Gazepoint-facing layer over the vendor-neutral <code>eyeprocess</code> quality core. It covers target-referenced accuracy, RMS-S2S and spatial-SD precision, BCEA, empirical sampling behavior, and data loss without duplicating formulas inside <code>gp3tools</code>.</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">quality</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/gazepoint_spatial_quality.html">create_gazepoint_quality_report</a></span><span class="op">(</span></span>
+<span>  <span class="va">validation_samples</span>,</span>
+<span>  target_x_col <span class="op">=</span> <span class="st">"target_x"</span>,</span>
+<span>  target_y_col <span class="op">=</span> <span class="st">"target_y"</span>,</span>
+<span>  level <span class="op">=</span> <span class="st">"trial"</span>,</span>
+<span>  nominal_sampling_hz <span class="op">=</span> <span class="fl">60</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="reference/gazepoint_spatial_quality.html">report_gazepoint_quality</a></span><span class="op">(</span><span class="va">quality</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/gazepoint_spatial_quality.html">plot_gazepoint_quality_dashboard</a></span><span class="op">(</span><span class="va">quality</span><span class="op">)</span></span></code></pre></div>
+<p>Native Gazepoint coordinates are handled conservatively: BPOG/FPOG coordinates are recognized as normalized, TIME and MSTIMER map to seconds and milliseconds respectively, while generic gaze columns must declare their unit explicitly. Quality thresholds produce review flags and never automatically remove data. Sample-level grouping is available for traceability but is not interpreted as stable-target precision evidence.</p>
+<p>See the <a href="https://stefanosbalaskas.github.io/gp3tools/articles/gazepoint-data-quality-workflow.html">Gazepoint Data Quality workflow</a> for the 9-point example, focused accuracy, precision, BCEA, sampling-interval, and dashboard plots, review-rule sensitivity, limitations, and manuscript-reporting guidance.</p>
+</div>
+<div class="section level2">
+<h2 id="gazepoint-aoi-robustness-and-reporting">Gazepoint AOI robustness and reporting<a class="anchor" aria-label="anchor" href="#gazepoint-aoi-robustness-and-reporting"></a>
+</h2>
+<p>The Gazepoint AOI adapter now exposes a complete vendor-specific entry point into the vendor-neutral <code>eyeprocess</code> uncertainty workflow. <code>gp3tools</code> records source columns, coordinate units, screen/viewing geometry, observation level, overlap policy, and boundary policy; all perturbation, reassignment, feature, model, stability, and plotting logic remains delegated to <code>eyeprocess</code>.</p>
+<p>Website workflow:</p>
+<ul>
+<li>
+<a href="https://stefanosbalaskas.github.io/gp3tools/articles/aoi-perturbation-uncertainty.html">Gazepoint AOI Perturbation and Uncertainty</a> — normalized/pixel conversion, delegated sensitivity analysis, plot families, troubleshooting, interpretation, limitations, and reporting.</li>
+<li>
+<a href="https://stefanosbalaskas.github.io/gp3tools/articles/aoi-sensitivity-analysis-plan.html">Gazepoint AOI Sensitivity Analysis Plan</a> — prespecify source columns, screen geometry, sample/fixation level, perturbation envelope, and failure handling.</li>
+<li>
+<a href="https://stefanosbalaskas.github.io/gp3tools/articles/aoi-reporting-bundle.html">Gazepoint AOI Robustness Reporting Bundle</a> — preserve adapter settings together with the untouched core branch audit, assignment/model evidence, failures, provenance, report, and figures.</li>
+</ul>
+<p>Use <code><a href="reference/gazepoint_aoi_uncertainty.html">audit_gazepoint_aoi_uncertainty()</a></code>, <code><a href="reference/gazepoint_aoi_uncertainty.html">run_gazepoint_aoi_sensitivity()</a></code>, and <code><a href="reference/gazepoint_aoi_uncertainty.html">plot_gazepoint_aoi_sensitivity()</a></code>. The adapter does not silently fall back to the older margin-sensitivity implementation when the <code>eyeprocess</code> core is unavailable.</p>
+</div>
+<div class="section level2">
 <h2 id="which-workflow-should-i-use">Which workflow should I use?<a class="anchor" aria-label="anchor" href="#which-workflow-should-i-use"></a>
 </h2>
 <p>Use the workflow that matches the research question and the stage of analysis.</p>
 <p>For a quick first pass through exported Gazepoint files, use <code><a href="reference/run_gazepoint_workflow.html">run_gazepoint_workflow()</a></code>. This imports a folder, checks file pairing, summarises sampling and tracking quality, creates AOI summaries, writes CSV outputs, and optionally saves diagnostic plots and an HTML report.</p>
 <p>For analysis-ready sample-level data, create a master table with <code><a href="reference/create_gazepoint_master.html">create_gazepoint_master()</a></code>, audit it with <code><a href="reference/audit_gazepoint_master.html">audit_gazepoint_master()</a></code>, and validate it with <code><a href="reference/validate_gazepoint_master.html">validate_gazepoint_master()</a></code>.</p>
 <p>For pupil preprocessing, use the light branch when you need a transparent minimal pipeline:</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/flag_gazepoint_pupil.html">flag_gazepoint_pupil</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/interpolate_gazepoint_pupil.html">interpolate_gazepoint_pupil</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/baseline_correct_gazepoint_pupil.html">baseline_correct_gazepoint_pupil</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/smooth_gazepoint_pupil.html">smooth_gazepoint_pupil</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/summarise_gazepoint_pupil_windows.html">summarise_gazepoint_pupil_windows</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>Use the conservative artifact-cleaned branch when blink/trackloss padding, pupil-speed artifacts, binocular disagreement, or stricter preprocessing decisions are important:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/create_gazepoint_preprocessing_registry.html">create_gazepoint_preprocessing_registry</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/flag_gazepoint_pupil_artifacts.html">flag_gazepoint_pupil_artifacts</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/interpolate_gazepoint_pupil.html">interpolate_gazepoint_pupil</a></span><span class="op">(</span><span class="op">)</span></span>
@@ -190,6 +232,7 @@
 <p>Use pupil-window LMMs when the main hypothesis concerns predefined pupil windows. Use pupil GAMMs, PFE-GAMMs, and GCA when the research question concerns time-course shape.</p>
 <p>Use AOI-window GLMMs when the main hypothesis concerns predefined AOI time windows. Use AOI GAMMs when the research question concerns smooth target-looking trajectories over time.</p>
 <p>Use AOI-entry, fixation, and transition helpers when the analysis concerns looking episodes, fixation summaries, AOI sequences, transition matrices, or scanpath structure.</p>
+<p>Use <code><a href="reference/gaze-survival-adapter.html">prepare_gazepoint_survival_data()</a></code> and <code><a href="reference/gaze-survival-adapter.html">run_gazepoint_latency_analysis()</a></code> when the outcome is a time-to-event gaze latency and some valid trials end before the target event occurs. These are thin adapters to <code>eyeprocess</code>; never-inspected valid trials remain right-censored, while unusable/incomplete gaze remains a review state. The repeated-Cox structure and AFT family must be named explicitly. See the <a href="https://stefanosbalaskas.github.io/gp3tools/articles/gaze-survival-adapter.html">survival adapter article</a>, the <a href="https://stefanosbalaskas.github.io/gp3tools/articles/gaze-survival-verification-example.html">evidence-verification worked example</a>, and the <a href="https://stefanosbalaskas.github.io/gp3tools/articles/gaze-survival-reproducibility-checklist.html">survival reproducibility checklist</a>.</p>
 <p>Use cluster-based permutation testing for time-course inference. Use <code><a href="reference/estimate_gazepoint_divergence_point.html">estimate_gazepoint_divergence_point()</a></code> as complementary onset/sensitivity evidence, not as a replacement for confirmatory model specification.</p>
 <p>Use model diagnostics, model summaries, estimated marginal means, nested model comparison, model-prediction plots, and leave-one-unit sensitivity checks before manuscript reporting.</p>
 <p>Use <code><a href="reference/check_gazepoint_real_data_readiness.html">check_gazepoint_real_data_readiness()</a></code>, <code><a href="reference/recommend_gazepoint_exclusions.html">recommend_gazepoint_exclusions()</a></code>, and <code><a href="reference/create_gazepoint_reporting_checklist.html">create_gazepoint_reporting_checklist()</a></code> before final interpretation. Use <code><a href="reference/summarize_gazepoint_missingness.html">summarize_gazepoint_missingness()</a></code>, <code><a href="reference/segment_gazepoint_task_phases.html">segment_gazepoint_task_phases()</a></code>, <code><a href="reference/collect_gazepoint_qc_summaries.html">collect_gazepoint_qc_summaries()</a></code>, and <code><a href="reference/report_gazepoint_qc_overview.html">report_gazepoint_qc_overview()</a></code> when preparing transparent data-coverage and QC-reporting summaries.</p>
@@ -293,6 +336,12 @@
 </td>
 </tr>
 <tr>
+<td>Analyse censored gaze latency</td>
+<td>
+<code><a href="reference/gaze-survival-adapter.html">prepare_gazepoint_survival_data()</a></code>, <code><a href="reference/gaze-survival-adapter.html">run_gazepoint_latency_analysis()</a></code>
+</td>
+</tr>
+<tr>
 <td>Analyse sequences, transitions, and scanpaths</td>
 <td>
 <code><a href="reference/prepare_gazepoint_aoi_sequences.html">prepare_gazepoint_aoi_sequences()</a></code>, <code><a href="reference/summarise_gazepoint_aoi_transitions.html">summarise_gazepoint_aoi_transitions()</a></code>, <code><a href="reference/compute_gazepoint_aoi_transition_matrix.html">compute_gazepoint_aoi_transition_matrix()</a></code>, <code><a href="reference/compute_gazepoint_time_varying_transition_matrix.html">compute_gazepoint_time_varying_transition_matrix()</a></code>, <code><a href="reference/cluster_gazepoint_scanpaths.html">cluster_gazepoint_scanpaths()</a></code>, <code><a href="reference/select_gazepoint_scanpath_clusters.html">select_gazepoint_scanpath_clusters()</a></code>, <code><a href="reference/extract_gazepoint_representative_scanpaths.html">extract_gazepoint_representative_scanpaths()</a></code>, <code><a href="reference/plot_gazepoint_scanpath_clusters.html">plot_gazepoint_scanpath_clusters()</a></code>, <code><a href="reference/bootstrap_gazepoint_scanpath_clusters.html">bootstrap_gazepoint_scanpath_clusters()</a></code>, <code><a href="reference/summarise_gazepoint_scanpath_cluster_stability.html">summarise_gazepoint_scanpath_cluster_stability()</a></code>, <code><a href="reference/plot_gazepoint_scanpath_cluster_stability.html">plot_gazepoint_scanpath_cluster_stability()</a></code>
@@ -368,7 +417,7 @@
 <p>Balaskas, S. (2026). <code>gp3tools</code>: Import, Inspect, Analyse, and Report Gazepoint GP3 Exports. R package version 2.3.0. <a href="https://github.com/stefanosbalaskas/gp3tools" class="external-link uri">https://github.com/stefanosbalaskas/gp3tools</a></p>
 </blockquote>
 <p>The complete citation entries are available directly from R:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/citation.html" class="external-link">citation</a></span><span class="op">(</span><span class="st">"gp3tools"</span><span class="op">)</span></span></code></pre></div>
 <p>The previously released 2.0.0 software archive remains available at <a href="https://doi.org/10.5281/zenodo.21292384" class="external-link uri">https://doi.org/10.5281/zenodo.21292384</a>. A version-specific archive DOI for 2.3.0 can be added after the corresponding GitHub/Zenodo release is created.</p>
 </div>
@@ -377,13 +426,13 @@
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
 <p>During development, install the package locally from the package project folder:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install</span><span class="op">(</span>reload <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <p>Then restart RStudio and load the package:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/stefanosbalaskas/gp3tools" class="external-link">gp3tools</a></span><span class="op">)</span></span></code></pre></div>
 <p>Check that the package loads correctly:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/packageDescription.html" class="external-link">packageVersion</a></span><span class="op">(</span><span class="st">"gp3tools"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
@@ -391,15 +440,15 @@
 </h2>
 <p>Use this workflow when you want a quick reproducible pass from a folder of Gazepoint exports to quality summaries, AOI summaries, exported CSV files, diagnostic plots, and an optional HTML report.</p>
 <p>The workflow expects exported Gazepoint files such as:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>User <span class="dv">1</span>_all_gaze.csv</span>
-<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>User <span class="dv">1</span>_fixations.csv</span>
-<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>Data_Summary_export_<span class="sc">*</span>.csv</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>User <span class="dv">1</span>_all_gaze.csv</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>User <span class="dv">1</span>_fixations.csv</span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>Data_Summary_export_<span class="sc">*</span>.csv</span></code></pre></div>
 <p>Set the folder containing the Gazepoint exports and an output folder for results:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">export_dir</span> <span class="op">&lt;-</span> <span class="st">"C:/Users/YourName/Desktop/gp3_test_exports"</span></span>
 <span><span class="va">output_dir</span> <span class="op">&lt;-</span> <span class="st">"C:/Users/YourName/Desktop/gp3_outputs"</span></span></code></pre></div>
 <p>Run the complete folder workflow:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/stefanosbalaskas/gp3tools" class="external-link">gp3tools</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/run_gazepoint_workflow.html">run_gazepoint_workflow</a></span><span class="op">(</span></span>
@@ -410,7 +459,7 @@
 <span>  create_report <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>The returned object is a named list containing imported files, quality summaries, AOI summaries, exported file paths, saved plot paths, and optional report path:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">results</span><span class="op">$</span><span class="va">all_gaze</span></span>
@@ -423,12 +472,12 @@
 <span><span class="va">results</span><span class="op">$</span><span class="va">written_plots</span></span>
 <span><span class="va">results</span><span class="op">$</span><span class="va">report_file</span></span></code></pre></div>
 <p>Create a compact one-row summary of the workflow:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">workflow_summary</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/summarise_gazepoint_workflow.html">summarise_gazepoint_workflow</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">workflow_summary</span>, width <span class="op">=</span> <span class="cn">Inf</span><span class="op">)</span></span></code></pre></div>
 <p>The workflow summary is useful for quickly checking:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">workflow_summary</span><span class="op">$</span><span class="va">n_all_gaze_rows</span></span>
 <span><span class="va">workflow_summary</span><span class="op">$</span><span class="va">n_all_fix_rows</span></span>
 <span><span class="va">workflow_summary</span><span class="op">$</span><span class="va">n_sampling_rows</span></span>
@@ -439,13 +488,13 @@
 <span><span class="va">workflow_summary</span><span class="op">$</span><span class="va">n_written_plots</span></span>
 <span><span class="va">workflow_summary</span><span class="op">$</span><span class="va">report_created</span></span></code></pre></div>
 <p>When <code>output_dir</code> is provided, the workflow writes standard CSV files such as:</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">study1_sampling.csv</span></span>
 <span><span class="va">study1_quality.csv</span></span>
 <span><span class="va">study1_flagged_quality.csv</span></span>
 <span><span class="va">study1_aoi_table.csv</span></span></code></pre></div>
 <p>When <code>save_plots = TRUE</code>, the workflow also saves diagnostic plots such as:</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">study1_tracking_quality_plot.png</span></span>
 <span><span class="va">study1_sampling_rate_plot.png</span></span></code></pre></div>
 <p>When <code>create_report = TRUE</code>, the workflow creates a lightweight HTML report.</p>
@@ -454,7 +503,7 @@
 </h3>
 <p>The same workflow can be run step by step when you want more control.</p>
 <p>Read all all-gaze files:</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">all_gaze</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_gazepoint_folder.html">read_gazepoint_folder</a></span><span class="op">(</span></span>
 <span>  <span class="va">export_dir</span>,</span>
 <span>  pattern <span class="op">=</span> <span class="st">"_all_gaze\\.csv$"</span></span>
@@ -462,7 +511,7 @@
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">all_gaze</span><span class="op">)</span></span></code></pre></div>
 <p>Read all fixation files:</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">all_fix</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_gazepoint_folder.html">read_gazepoint_folder</a></span><span class="op">(</span></span>
 <span>  <span class="va">export_dir</span>,</span>
 <span>  pattern <span class="op">=</span> <span class="st">"_fixations\\.csv$"</span></span>
@@ -470,12 +519,12 @@
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">all_fix</span><span class="op">)</span></span></code></pre></div>
 <p>Check that all-gaze and fixation exports are correctly paired:</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">file_pairs</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/check_gazepoint_file_pairs.html">check_gazepoint_file_pairs</a></span><span class="op">(</span><span class="va">export_dir</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">file_pairs</span></span></code></pre></div>
 <p>Estimate sampling rate by participant and stimulus:</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sampling</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/check_sampling_rate.html">check_sampling_rate</a></span><span class="op">(</span></span>
 <span>  <span class="va">all_gaze</span>,</span>
 <span>  group_cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"USER_FILE"</span>, <span class="st">"MEDIA_ID"</span><span class="op">)</span></span>
@@ -484,7 +533,7 @@
 <span><span class="va">sampling</span></span></code></pre></div>
 <p>For Gazepoint GP3 60 Hz exports, the estimated frequency should usually be close to 60 Hz.</p>
 <p>Summarise tracking quality:</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">quality</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/summarise_tracking_quality.html">summarise_tracking_quality</a></span><span class="op">(</span></span>
 <span>  <span class="va">all_gaze</span>,</span>
 <span>  group_cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"USER_FILE"</span>, <span class="st">"MEDIA_ID"</span><span class="op">)</span></span>
@@ -492,7 +541,7 @@
 <span></span>
 <span><span class="va">quality</span></span></code></pre></div>
 <p>Flag recordings requiring review:</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">flagged_quality</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/flag_tracking_quality.html">flag_tracking_quality</a></span><span class="op">(</span></span>
 <span>  quality <span class="op">=</span> <span class="va">quality</span>,</span>
 <span>  sampling <span class="op">=</span> <span class="va">sampling</span>,</span>
@@ -504,10 +553,10 @@
 <span></span>
 <span><span class="va">flagged_quality</span></span></code></pre></div>
 <p>Show only recordings that require review:</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">flagged_quality</span>, <span class="va">review_required</span><span class="op">)</span></span></code></pre></div>
 <p>Create a basic AOI summary from all-gaze and fixation exports:</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">aoi_table</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/summarise_gazepoint_aoi.html">summarise_gazepoint_aoi</a></span><span class="op">(</span></span>
 <span>  gaze_data <span class="op">=</span> <span class="va">all_gaze</span>,</span>
 <span>  fixation_data <span class="op">=</span> <span class="va">all_fix</span></span>
@@ -525,7 +574,7 @@
 <li>fixation-based time to first fixation.</li>
 </ul>
 <p>Write standard output tables:</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">written_files</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/write_gazepoint_outputs.html">write_gazepoint_outputs</a></span><span class="op">(</span></span>
 <span>  sampling <span class="op">=</span> <span class="va">sampling</span>,</span>
 <span>  quality <span class="op">=</span> <span class="va">quality</span>,</span>
@@ -537,12 +586,12 @@
 <span></span>
 <span><span class="va">written_files</span></span></code></pre></div>
 <p>Create standard diagnostic plots:</p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/plot_tracking_quality.html">plot_tracking_quality</a></span><span class="op">(</span><span class="va">flagged_quality</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="reference/plot_sampling_rate.html">plot_sampling_rate</a></span><span class="op">(</span><span class="va">sampling</span><span class="op">)</span></span></code></pre></div>
 <p>Save standard diagnostic plots:</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">written_plots</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/save_gazepoint_plots.html">save_gazepoint_plots</a></span><span class="op">(</span></span>
 <span>  flagged_quality <span class="op">=</span> <span class="va">flagged_quality</span>,</span>
 <span>  sampling <span class="op">=</span> <span class="va">sampling</span>,</span>
@@ -559,10 +608,10 @@
 </h2>
 <p>For advanced preprocessing, AOI modelling, pupil modelling, time-course analysis, and reporting, first convert the imported Gazepoint all-gaze export into a standard sample-level master table.</p>
 <p>Start from the all-gaze data imported by <code><a href="reference/run_gazepoint_workflow.html">run_gazepoint_workflow()</a></code> or <code><a href="reference/read_gazepoint_folder.html">read_gazepoint_folder()</a></code>:</p>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">all_gaze</span> <span class="op">&lt;-</span> <span class="va">results</span><span class="op">$</span><span class="va">all_gaze</span></span></code></pre></div>
 <p>Create the master table:</p>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">master</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/create_gazepoint_master.html">create_gazepoint_master</a></span><span class="op">(</span><span class="va">all_gaze</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">master</span><span class="op">)</span></span></code></pre></div>
@@ -582,7 +631,7 @@
 <li>screen and metadata fields.</li>
 </ul>
 <p>Inspect the main columns:</p>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">master</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span></span>
@@ -602,7 +651,7 @@
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>Audit the master table:</p>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">master_audit</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/audit_gazepoint_master.html">audit_gazepoint_master</a></span><span class="op">(</span><span class="va">master</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">master_audit</span><span class="op">$</span><span class="va">overview</span></span>
@@ -613,14 +662,14 @@
 <span><span class="va">master_audit</span><span class="op">$</span><span class="va">coordinate_summary</span></span></code></pre></div>
 <p>Use the audit to check whether the imported data contain the expected participants, stimuli, AOI states, pupil values, and gaze-coordinate availability.</p>
 <p>Validate the master table before preprocessing or modelling:</p>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">validation</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/validate_gazepoint_master.html">validate_gazepoint_master</a></span><span class="op">(</span><span class="va">master</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">validation</span><span class="op">$</span><span class="va">summary</span></span>
 <span><span class="va">validation</span><span class="op">$</span><span class="va">checks</span></span></code></pre></div>
 <p>Validation is a formal gate. Use it before pupil preprocessing, AOI modelling, time-course analysis, or final reporting.</p>
 <p>Export the master table and audit outputs:</p>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">master_outputs</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/export_gazepoint_master_audit.html">export_gazepoint_master_audit</a></span><span class="op">(</span></span>
 <span>  <span class="va">master</span>,</span>
 <span>  output_dir <span class="op">=</span> <span class="va">output_dir</span>,</span>
@@ -633,7 +682,7 @@
 <h3 id="reading-official-gazepoint-analysis-summary-exports">Reading official Gazepoint Analysis summary exports<a class="anchor" aria-label="anchor" href="#reading-official-gazepoint-analysis-summary-exports"></a>
 </h3>
 <p>Official Gazepoint Analysis summary exports can be read separately:</p>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">summary_file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span></span>
 <span>  <span class="va">export_dir</span>,</span>
 <span>  <span class="st">"Data_Summary_export_06-11-26-23.50.26.csv"</span></span>
@@ -653,14 +702,14 @@
 </h2>
 <p>Use the light branch when you need a transparent, minimal pupil preprocessing pipeline. This branch is appropriate for early inspection, teaching examples, or studies where conservative artifact padding is not required.</p>
 <p>First summarise pupil availability:</p>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pupil_summary</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/summarise_gazepoint_pupil.html">summarise_gazepoint_pupil</a></span><span class="op">(</span><span class="va">master</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">pupil_summary</span><span class="op">$</span><span class="va">overall</span></span>
 <span><span class="va">pupil_summary</span><span class="op">$</span><span class="va">subject_summary</span></span>
 <span><span class="va">pupil_summary</span><span class="op">$</span><span class="va">media_summary</span></span></code></pre></div>
 <p>Flag missing, non-finite, implausible, and IQR-outlying pupil samples:</p>
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">flagged_pupil</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/flag_gazepoint_pupil.html">flag_gazepoint_pupil</a></span><span class="op">(</span></span>
 <span>  <span class="va">master</span>,</span>
 <span>  pupil_col <span class="op">=</span> <span class="st">"pupil"</span></span>
@@ -668,7 +717,7 @@
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">flagged_pupil</span>, <span class="st">"gp3_pupil_flag_overview"</span><span class="op">)</span></span></code></pre></div>
 <p>Interpolate short internal pupil gaps:</p>
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">interpolated_pupil</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/interpolate_gazepoint_pupil.html">interpolate_gazepoint_pupil</a></span><span class="op">(</span></span>
 <span>  <span class="va">flagged_pupil</span>,</span>
 <span>  pupil_col <span class="op">=</span> <span class="st">"pupil_for_preprocessing"</span>,</span>
@@ -678,7 +727,7 @@
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">interpolated_pupil</span>, <span class="st">"gp3_pupil_interpolation_overview"</span><span class="op">)</span></span></code></pre></div>
 <p>Apply baseline correction:</p>
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">baseline_corrected</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/baseline_correct_gazepoint_pupil.html">baseline_correct_gazepoint_pupil</a></span><span class="op">(</span></span>
 <span>  <span class="va">interpolated_pupil</span>,</span>
 <span>  pupil_col <span class="op">=</span> <span class="st">"pupil_interpolated"</span>,</span>
@@ -690,7 +739,7 @@
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">baseline_corrected</span>, <span class="st">"gp3_pupil_baseline_overview"</span><span class="op">)</span></span></code></pre></div>
 <p>Smooth the baseline-corrected pupil signal:</p>
-<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">smoothed_pupil</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/smooth_gazepoint_pupil.html">smooth_gazepoint_pupil</a></span><span class="op">(</span></span>
 <span>  <span class="va">baseline_corrected</span>,</span>
 <span>  pupil_col <span class="op">=</span> <span class="st">"pupil_baseline_corrected"</span>,</span>
@@ -704,7 +753,7 @@
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">smoothed_pupil</span>, <span class="st">"gp3_pupil_smoothing_overview"</span><span class="op">)</span></span></code></pre></div>
 <p>Summarise the processed pupil signal into analysis windows:</p>
-<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pupil_windows</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/summarise_gazepoint_pupil_windows.html">summarise_gazepoint_pupil_windows</a></span><span class="op">(</span></span>
 <span>  <span class="va">smoothed_pupil</span>,</span>
 <span>  pupil_col <span class="op">=</span> <span class="st">"pupil_smoothed"</span>,</span>
@@ -722,7 +771,7 @@
 </h2>
 <p>Use the conservative branch when blink/trackloss padding, pupil-speed artifacts, binocular disagreement, or stricter preprocessing decisions are important.</p>
 <p>Create a reusable preprocessing registry:</p>
-<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">registry</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/create_gazepoint_preprocessing_registry.html">create_gazepoint_preprocessing_registry</a></span><span class="op">(</span></span>
 <span>  blink_padding_ms <span class="op">=</span> <span class="fl">50</span>,</span>
 <span>  interpolation_max_gap_ms <span class="op">=</span> <span class="fl">150</span>,</span>
@@ -732,7 +781,7 @@
 <span></span>
 <span><span class="va">registry</span></span></code></pre></div>
 <p>Apply conservative artifact flagging:</p>
-<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">artifact_pupil</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/flag_gazepoint_pupil_artifacts.html">flag_gazepoint_pupil_artifacts</a></span><span class="op">(</span></span>
 <span>  <span class="va">master</span>,</span>
 <span>  registry <span class="op">=</span> <span class="va">registry</span>,</span>
@@ -743,7 +792,7 @@
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">artifact_pupil</span>, <span class="st">"gp3_pupil_artifact_overview"</span><span class="op">)</span></span></code></pre></div>
 <p>Interpolate short internal gaps after artifact removal:</p>
-<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">interpolated_artifact_pupil</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/interpolate_gazepoint_pupil.html">interpolate_gazepoint_pupil</a></span><span class="op">(</span></span>
 <span>  <span class="va">artifact_pupil</span>,</span>
 <span>  pupil_col <span class="op">=</span> <span class="st">"pupil_clean"</span>,</span>
@@ -751,7 +800,7 @@
 <span>  group_cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"subject"</span>, <span class="st">"MEDIA_ID"</span>, <span class="st">"trial_global"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>Apply baseline correction:</p>
-<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">baseline_artifact_pupil</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/baseline_correct_gazepoint_pupil.html">baseline_correct_gazepoint_pupil</a></span><span class="op">(</span></span>
 <span>  <span class="va">interpolated_artifact_pupil</span>,</span>
 <span>  pupil_col <span class="op">=</span> <span class="st">"pupil_interpolated"</span>,</span>
@@ -761,7 +810,7 @@
 <span>  min_baseline_samples <span class="op">=</span> <span class="fl">1</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>Smooth the processed pupil signal:</p>
-<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">smoothed_artifact_pupil</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/smooth_gazepoint_pupil.html">smooth_gazepoint_pupil</a></span><span class="op">(</span></span>
 <span>  <span class="va">baseline_artifact_pupil</span>,</span>
 <span>  pupil_col <span class="op">=</span> <span class="st">"pupil_baseline_corrected"</span>,</span>
@@ -773,7 +822,7 @@
 <span>  min_points <span class="op">=</span> <span class="fl">2</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>Create pupil-window summaries from the conservative branch:</p>
-<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pupil_windows_conservative</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/summarise_gazepoint_pupil_windows.html">summarise_gazepoint_pupil_windows</a></span><span class="op">(</span></span>
 <span>  <span class="va">smoothed_artifact_pupil</span>,</span>
 <span>  pupil_col <span class="op">=</span> <span class="st">"pupil_smoothed"</span>,</span>
@@ -791,7 +840,7 @@
 </h2>
 <p>After preprocessing, run pupil audits to document missingness, interpolation, baseline quality, imbalance, drift, event-response overlap, reliability, and sensitivity to preprocessing decisions.</p>
 <p>Audit interpolation gaps:</p>
-<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gap_audit</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/audit_gazepoint_pupil_gaps.html">audit_gazepoint_pupil_gaps</a></span><span class="op">(</span></span>
 <span>  <span class="va">interpolated_artifact_pupil</span>,</span>
 <span>  group_cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"subject"</span>, <span class="st">"MEDIA_ID"</span>, <span class="st">"trial_global"</span><span class="op">)</span></span>
@@ -800,7 +849,7 @@
 <span><span class="va">gap_audit</span><span class="op">$</span><span class="va">overview</span></span>
 <span><span class="va">gap_audit</span><span class="op">$</span><span class="va">gap_summary</span></span></code></pre></div>
 <p>Audit baseline quality:</p>
-<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">baseline_audit</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/audit_gazepoint_pupil_baseline.html">audit_gazepoint_pupil_baseline</a></span><span class="op">(</span></span>
 <span>  <span class="va">baseline_artifact_pupil</span>,</span>
 <span>  group_cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"subject"</span>, <span class="st">"MEDIA_ID"</span>, <span class="st">"trial_global"</span><span class="op">)</span></span>
@@ -809,7 +858,7 @@
 <span><span class="va">baseline_audit</span><span class="op">$</span><span class="va">overview</span></span>
 <span><span class="va">baseline_audit</span><span class="op">$</span><span class="va">baseline_summary</span></span></code></pre></div>
 <p>Audit preprocessing imbalance across conditions:</p>
-<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">imbalance_audit</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/audit_gazepoint_pupil_imbalance.html">audit_gazepoint_pupil_imbalance</a></span><span class="op">(</span></span>
 <span>  <span class="va">smoothed_artifact_pupil</span>,</span>
 <span>  group_cols <span class="op">=</span> <span class="st">"condition"</span></span>
@@ -818,7 +867,7 @@
 <span><span class="va">imbalance_audit</span><span class="op">$</span><span class="va">overview</span></span>
 <span><span class="va">imbalance_audit</span><span class="op">$</span><span class="va">imbalance_summary</span></span></code></pre></div>
 <p>Audit tonic pupil drift over time:</p>
-<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">drift_audit</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/audit_gazepoint_pupil_drift.html">audit_gazepoint_pupil_drift</a></span><span class="op">(</span></span>
 <span>  <span class="va">smoothed_artifact_pupil</span>,</span>
 <span>  pupil_col <span class="op">=</span> <span class="st">"pupil_smoothed"</span>,</span>
@@ -829,7 +878,7 @@
 <span><span class="va">drift_audit</span><span class="op">$</span><span class="va">overview</span></span>
 <span><span class="va">drift_audit</span><span class="op">$</span><span class="va">drift_summary</span></span></code></pre></div>
 <p>Audit possible event-response overlap risk:</p>
-<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">overlap_audit</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/audit_gazepoint_pupil_overlap_risk.html">audit_gazepoint_pupil_overlap_risk</a></span><span class="op">(</span></span>
 <span>  <span class="va">master</span>,</span>
 <span>  time_col <span class="op">=</span> <span class="st">"time"</span>,</span>
@@ -840,7 +889,7 @@
 <span><span class="va">overlap_audit</span><span class="op">$</span><span class="va">overview</span></span>
 <span><span class="va">overlap_audit</span><span class="op">$</span><span class="va">risk_summary</span></span></code></pre></div>
 <p>Check pupil reliability:</p>
-<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pupil_reliability</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/audit_gazepoint_pupil_reliability.html">audit_gazepoint_pupil_reliability</a></span><span class="op">(</span></span>
 <span>  <span class="va">pupil_windows_conservative</span>,</span>
 <span>  subject_col <span class="op">=</span> <span class="st">"subject"</span>,</span>
@@ -851,7 +900,7 @@
 <span><span class="va">pupil_reliability</span><span class="op">$</span><span class="va">overview</span></span>
 <span><span class="va">pupil_reliability</span><span class="op">$</span><span class="va">reliability_summary</span></span></code></pre></div>
 <p>Run PCHIP interpolation sensitivity when method sensitivity is needed:</p>
-<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pchip_pupil</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/interpolate_gazepoint_pupil_pchip.html">interpolate_gazepoint_pupil_pchip</a></span><span class="op">(</span></span>
 <span>  <span class="va">artifact_pupil</span>,</span>
 <span>  pupil_col <span class="op">=</span> <span class="st">"pupil_clean"</span>,</span>
@@ -861,7 +910,7 @@
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">pchip_pupil</span>, <span class="st">"gp3_pchip_overview"</span><span class="op">)</span></span></code></pre></div>
 <p>Audit stimulus luminance when image stimuli are used:</p>
-<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">luminance_audit</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/audit_gazepoint_stimulus_luminance.html">audit_gazepoint_stimulus_luminance</a></span><span class="op">(</span></span>
 <span>  <span class="va">stimulus_data</span>,</span>
 <span>  stimulus_col <span class="op">=</span> <span class="st">"stimulus_file"</span>,</span>
@@ -872,7 +921,7 @@
 <span><span class="va">luminance_audit</span><span class="op">$</span><span class="va">stimulus_summary</span></span>
 <span><span class="va">luminance_audit</span><span class="op">$</span><span class="va">condition_summary</span></span></code></pre></div>
 <p>Apply an optional Hampel filter to pupil data:</p>
-<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">hampel_pupil</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/flag_gazepoint_pupil_hampel.html">flag_gazepoint_pupil_hampel</a></span><span class="op">(</span></span>
 <span>  <span class="va">smoothed_artifact_pupil</span>,</span>
 <span>  pupil_col <span class="op">=</span> <span class="st">"pupil_smoothed"</span>,</span>
@@ -887,7 +936,7 @@
 <span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">hampel_pupil</span>, <span class="st">"gp3_hampel_overview"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">hampel_pupil</span>, <span class="st">"gp3_hampel_status_summary"</span><span class="op">)</span></span></code></pre></div>
 <p>Define and run a preprocessing multiverse when conclusions need sensitivity checks across reasonable preprocessing decisions:</p>
-<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">preprocessing_mv</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/create_gazepoint_preprocessing_multiverse.html">create_gazepoint_preprocessing_multiverse</a></span><span class="op">(</span></span>
 <span>  pupil_max_gap_ms <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">75</span>, <span class="fl">150</span>, <span class="fl">250</span><span class="op">)</span>,</span>
 <span>  pupil_smoothing_window_samples <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">5</span>, <span class="fl">7</span><span class="op">)</span>,</span>
@@ -921,10 +970,10 @@
 </h2>
 <p>Use pupil-window LMMs when the primary hypothesis concerns predefined pupil windows.</p>
 <p>Start from pupil-window summaries:</p>
-<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pupil_windows</span> <span class="op">&lt;-</span> <span class="va">pupil_windows_conservative</span></span></code></pre></div>
 <p>Prepare window-level model data:</p>
-<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pupil_window_model_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/prepare_gazepoint_pupil_window_model_data.html">prepare_gazepoint_pupil_window_model_data</a></span><span class="op">(</span></span>
 <span>  <span class="va">pupil_windows</span>,</span>
 <span>  outcome_col <span class="op">=</span> <span class="st">"mean_pupil"</span>,</span>
@@ -946,7 +995,7 @@
 <span>  <span class="va">pupil_window_model_status</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>Fit the confirmatory pupil-window LMM:</p>
-<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pupil_window_lmm</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/fit_gazepoint_pupil_window_lmm.html">fit_gazepoint_pupil_window_lmm</a></span><span class="op">(</span></span>
 <span>  <span class="va">pupil_window_model_data</span>,</span>
 <span>  random_window_slopes <span class="op">=</span> <span class="cn">FALSE</span>,</span>
@@ -959,7 +1008,7 @@
 <span><span class="va">pupil_window_lmm</span><span class="op">$</span><span class="va">comparison</span></span>
 <span><span class="va">pupil_window_lmm</span><span class="op">$</span><span class="va">fixed_effects</span></span></code></pre></div>
 <p>Run model-family sensitivity checks:</p>
-<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pupil_window_sensitivity</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/fit_gazepoint_pupil_window_sensitivity.html">fit_gazepoint_pupil_window_sensitivity</a></span><span class="op">(</span></span>
 <span>  <span class="va">pupil_window_model_data</span>,</span>
 <span>  model_types <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
@@ -977,7 +1026,7 @@
 <span><span class="va">pupil_window_sensitivity</span><span class="op">$</span><span class="va">fixed_effects</span></span>
 <span><span class="va">pupil_window_sensitivity</span><span class="op">$</span><span class="va">formulas</span></span></code></pre></div>
 <p>Compare nested models when needed:</p>
-<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">nested_pupil_models</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/compare_gazepoint_nested_models.html">compare_gazepoint_nested_models</a></span><span class="op">(</span></span>
 <span>  models <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>    null <span class="op">=</span> <span class="va">pupil_m0</span>,</span>
@@ -992,7 +1041,7 @@
 <span><span class="va">nested_pupil_models</span><span class="op">$</span><span class="va">lrt_table</span></span>
 <span><span class="va">nested_pupil_models</span><span class="op">$</span><span class="va">ranking_table</span></span></code></pre></div>
 <p>Run leave-one-participant sensitivity if the main effect may be driven by a single participant:</p>
-<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pupil_loo</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/run_gazepoint_model_leave_one_out.html">run_gazepoint_model_leave_one_out</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">pupil_window_model_data</span>,</span>
 <span>  unit_col <span class="op">=</span> <span class="st">"pupil_window_subject"</span>,</span>
@@ -1005,7 +1054,7 @@
 <span><span class="va">pupil_loo</span><span class="op">$</span><span class="va">overview</span></span>
 <span><span class="va">pupil_loo</span><span class="op">$</span><span class="va">effect_summary</span></span></code></pre></div>
 <p>Plot model-implied predictions when <code><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict()</a></code> is available:</p>
-<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pupil_prediction_plot</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/plot_gazepoint_model_predictions.html">plot_gazepoint_model_predictions</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">pupil_window_model_data</span>,</span>
 <span>  model <span class="op">=</span> <span class="va">pupil_window_lmm</span><span class="op">$</span><span class="va">model</span>,</span>
@@ -1016,7 +1065,7 @@
 <span></span>
 <span><span class="va">pupil_prediction_plot</span></span></code></pre></div>
 <p>For most confirmatory pupil-window analyses, the recommended sequence is:</p>
-<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pupil_window_model_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/prepare_gazepoint_pupil_window_model_data.html">prepare_gazepoint_pupil_window_model_data</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span>
 <span><span class="va">pupil_window_lmm</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/fit_gazepoint_pupil_window_lmm.html">fit_gazepoint_pupil_window_lmm</a></span><span class="op">(</span><span class="va">pupil_window_model_data</span><span class="op">)</span></span>
 <span><span class="va">pupil_window_sensitivity</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/fit_gazepoint_pupil_window_sensitivity.html">fit_gazepoint_pupil_window_sensitivity</a></span><span class="op">(</span><span class="va">pupil_window_model_data</span><span class="op">)</span></span>
@@ -1028,12 +1077,12 @@
 </h2>
 <p>Use AOI-window GLMMs when the primary hypothesis concerns predefined AOI time windows.</p>
 <p>Start from a validated master table with sample-level AOI states:</p>
-<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">validation</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/validate_gazepoint_master.html">validate_gazepoint_master</a></span><span class="op">(</span><span class="va">master</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">validation</span><span class="op">$</span><span class="va">summary</span></span></code></pre></div>
 <p>Create ordered AOI-entry episodes:</p>
-<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">aoi_entries</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/summarise_gazepoint_aoi_entries.html">summarise_gazepoint_aoi_entries</a></span><span class="op">(</span></span>
 <span>  <span class="va">master</span>,</span>
 <span>  time_col <span class="op">=</span> <span class="st">"time"</span>,</span>
@@ -1043,7 +1092,7 @@
 <span></span>
 <span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">aoi_entries</span><span class="op">)</span></span></code></pre></div>
 <p>Create AOI-window summaries:</p>
-<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">aoi_windows</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/summarise_gazepoint_aoi_windows.html">summarise_gazepoint_aoi_windows</a></span><span class="op">(</span></span>
 <span>  <span class="va">master</span>,</span>
 <span>  windows <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">500</span>, <span class="fl">1000</span>, <span class="fl">2000</span>, <span class="fl">5000</span>, <span class="fl">10000</span><span class="op">)</span>,</span>
@@ -1058,7 +1107,7 @@
 <span></span>
 <span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">aoi_windows</span><span class="op">)</span></span></code></pre></div>
 <p>Inspect target-looking proportions:</p>
-<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span></span>
 <span>  <span class="va">aoi_windows</span>,</span>
 <span>  <span class="va">subject</span>,</span>
@@ -1074,7 +1123,7 @@
 <span>  <span class="va">aoi_window_status</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>Audit denominator adequacy before fitting binomial models:</p>
-<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">aoi_window_denominator_audit</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/audit_gazepoint_aoi_window_denominators.html">audit_gazepoint_aoi_window_denominators</a></span><span class="op">(</span></span>
 <span>  <span class="va">aoi_windows</span>,</span>
 <span>  min_denominator_samples <span class="op">=</span> <span class="fl">5</span>,</span>
@@ -1093,7 +1142,7 @@
 <span>  <span class="va">denominator_audit_status</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>Prepare binomial success/failure data for mixed-effects logistic regression:</p>
-<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">aoi_glmm_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/prepare_gazepoint_aoi_glmm_data.html">prepare_gazepoint_aoi_glmm_data</a></span><span class="op">(</span></span>
 <span>  <span class="va">aoi_windows</span>,</span>
 <span>  success_col <span class="op">=</span> <span class="st">"n_target_samples"</span>,</span>
@@ -1116,7 +1165,7 @@
 <span>  <span class="va">aoi_glmm_status</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>Fit the main AOI-window binomial GLMM:</p>
-<div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">aoi_glmm_fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/fit_gazepoint_aoi_window_glmm.html">fit_gazepoint_aoi_window_glmm</a></span><span class="op">(</span></span>
 <span>  <span class="va">aoi_glmm_data</span>,</span>
 <span>  random_window_slopes <span class="op">=</span> <span class="cn">FALSE</span></span>
@@ -1131,7 +1180,7 @@
 <span>  <span class="fu">lme4</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/nlme/man/fixed.effects.html" class="external-link">fixef</a></span><span class="op">(</span><span class="va">aoi_glmm_fit</span><span class="op">$</span><span class="va">model</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
 <p>Transform AOI proportions into empirical logits for sensitivity models:</p>
-<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb71"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">aoi_emp_logit</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/transform_gazepoint_aoi_empirical_logit.html">transform_gazepoint_aoi_empirical_logit</a></span><span class="op">(</span></span>
 <span>  <span class="va">aoi_glmm_data</span>,</span>
 <span>  numerator_col <span class="op">=</span> <span class="st">"aoi_glmm_success"</span>,</span>
@@ -1142,7 +1191,7 @@
 <span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">aoi_emp_logit</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">aoi_emp_logit</span>, <span class="st">"gp3_empirical_logit_overview"</span><span class="op">)</span></span></code></pre></div>
 <p>Run AOI model-family sensitivity checks:</p>
-<div class="sourceCode" id="cb71"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb72"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">aoi_sensitivity</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/fit_gazepoint_aoi_model_sensitivity.html">fit_gazepoint_aoi_model_sensitivity</a></span><span class="op">(</span></span>
 <span>  <span class="va">aoi_glmm_data</span>,</span>
 <span>  model_types <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
@@ -1161,7 +1210,7 @@
 <span><span class="va">aoi_sensitivity</span><span class="op">$</span><span class="va">fixed_effects</span></span>
 <span><span class="va">aoi_sensitivity</span><span class="op">$</span><span class="va">formulas</span></span></code></pre></div>
 <p>For most confirmatory AOI-window analyses, the recommended sequence is:</p>
-<div class="sourceCode" id="cb72"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb73"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">aoi_windows</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/summarise_gazepoint_aoi_windows.html">summarise_gazepoint_aoi_windows</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span>
 <span><span class="va">aoi_window_denominator_audit</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/audit_gazepoint_aoi_window_denominators.html">audit_gazepoint_aoi_window_denominators</a></span><span class="op">(</span><span class="va">aoi_windows</span><span class="op">)</span></span>
 <span><span class="va">aoi_glmm_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/prepare_gazepoint_aoi_glmm_data.html">prepare_gazepoint_aoi_glmm_data</a></span><span class="op">(</span><span class="va">aoi_windows</span><span class="op">)</span></span>
@@ -1173,7 +1222,7 @@
 </h2>
 <p>Use this workflow when the research question concerns looking episodes, fixation summaries, AOI sequences, transition matrices, scanpath structure, or event-contingent alignment.</p>
 <p>Create transition-ready AOI sequences:</p>
-<div class="sourceCode" id="cb73"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb74"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">aoi_sequences</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/prepare_gazepoint_aoi_sequences.html">prepare_gazepoint_aoi_sequences</a></span><span class="op">(</span></span>
 <span>  <span class="va">master</span>,</span>
 <span>  time_col <span class="op">=</span> <span class="st">"time"</span>,</span>
@@ -1183,7 +1232,7 @@
 <span></span>
 <span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">aoi_sequences</span><span class="op">)</span></span></code></pre></div>
 <p>Summarise AOI transitions at the trial level:</p>
-<div class="sourceCode" id="cb74"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb75"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">aoi_transition_summary</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/summarise_gazepoint_aoi_transitions.html">summarise_gazepoint_aoi_transitions</a></span><span class="op">(</span></span>
 <span>  <span class="va">master</span>,</span>
 <span>  time_col <span class="op">=</span> <span class="st">"time"</span>,</span>
@@ -1195,7 +1244,7 @@
 <span></span>
 <span><span class="va">aoi_transition_summary</span></span></code></pre></div>
 <p>Create AOI transition matrices:</p>
-<div class="sourceCode" id="cb75"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb76"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">aoi_transition_matrix</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/compute_gazepoint_aoi_transition_matrix.html">compute_gazepoint_aoi_transition_matrix</a></span><span class="op">(</span></span>
 <span>  <span class="va">master</span>,</span>
 <span>  time_col <span class="op">=</span> <span class="st">"time"</span>,</span>
@@ -1209,7 +1258,7 @@
 <span><span class="va">aoi_transition_matrix</span><span class="op">$</span><span class="va">probability_matrix</span></span>
 <span><span class="va">aoi_transition_matrix</span><span class="op">$</span><span class="va">long_table</span></span></code></pre></div>
 <p>Plot the transition matrix:</p>
-<div class="sourceCode" id="cb76"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb77"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/plot_gazepoint_aoi_transition_matrix.html">plot_gazepoint_aoi_transition_matrix</a></span><span class="op">(</span></span>
 <span>  <span class="va">aoi_transition_matrix</span>,</span>
 <span>  value <span class="op">=</span> <span class="st">"prob"</span>,</span>
@@ -1217,7 +1266,7 @@
 <span>  title <span class="op">=</span> <span class="st">"AOI transition probabilities"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>Create time-varying AOI transition matrices:</p>
-<div class="sourceCode" id="cb77"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">time_varying_transition_matrix</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/compute_gazepoint_time_varying_transition_matrix.html">compute_gazepoint_time_varying_transition_matrix</a></span><span class="op">(</span></span>
 <span>  <span class="va">master</span>,</span>
 <span>  time_col <span class="op">=</span> <span class="st">"time"</span>,</span>
@@ -1229,7 +1278,7 @@
 <span><span class="va">time_varying_transition_matrix</span><span class="op">$</span><span class="va">overview</span></span>
 <span><span class="va">time_varying_transition_matrix</span><span class="op">$</span><span class="va">transition_summary</span></span></code></pre></div>
 <p>Create trial-level AOI features:</p>
-<div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb79"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">aoi_trial_features</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/summarise_gazepoint_aoi_trial_features.html">summarise_gazepoint_aoi_trial_features</a></span><span class="op">(</span></span>
 <span>  <span class="va">master</span>,</span>
 <span>  time_col <span class="op">=</span> <span class="st">"time"</span>,</span>
@@ -1241,7 +1290,7 @@
 <span></span>
 <span><span class="va">aoi_trial_features</span></span></code></pre></div>
 <p>Create trial-level fixation features from Gazepoint fixation exports:</p>
-<div class="sourceCode" id="cb79"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb80"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fixation_trial_features</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/summarise_gazepoint_fixation_trials.html">summarise_gazepoint_fixation_trials</a></span><span class="op">(</span></span>
 <span>  <span class="va">all_fix</span>,</span>
 <span>  target_aoi_values <span class="op">=</span> <span class="st">"AOI 2"</span>,</span>
@@ -1250,7 +1299,7 @@
 <span></span>
 <span><span class="va">fixation_trial_features</span></span></code></pre></div>
 <p>Create fixation-, saccade-, or AOI-contingent aligned data:</p>
-<div class="sourceCode" id="cb80"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb81"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fixation_aligned</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/prepare_gazepoint_fixation_aligned_data.html">prepare_gazepoint_fixation_aligned_data</a></span><span class="op">(</span></span>
 <span>  <span class="va">master</span>,</span>
 <span>  time_col <span class="op">=</span> <span class="st">"time"</span>,</span>
@@ -1268,7 +1317,7 @@
 <span><span class="va">fixation_aligned</span><span class="op">$</span><span class="va">event_table</span></span>
 <span><span class="va">fixation_aligned</span><span class="op">$</span><span class="va">trial_summary</span></span></code></pre></div>
 <p>Prepare dependency-free advanced sequence-model objects:</p>
-<div class="sourceCode" id="cb81"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb82"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">markov_obj</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/create_gazepoint_markovchain_object.html">create_gazepoint_markovchain_object</a></span><span class="op">(</span></span>
 <span>  <span class="va">aoi_sequences</span>,</span>
 <span>  state_col <span class="op">=</span> <span class="st">"aoi"</span></span>
@@ -1299,7 +1348,7 @@
 <h3 id="pupil-gamm">Pupil GAMM<a class="anchor" aria-label="anchor" href="#pupil-gamm"></a>
 </h3>
 <p>Prepare binned pupil time-course data:</p>
-<div class="sourceCode" id="cb82"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb83"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pupil_gamm_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/prepare_gazepoint_pupil_gamm_data.html">prepare_gazepoint_pupil_gamm_data</a></span><span class="op">(</span></span>
 <span>  <span class="va">smoothed_artifact_pupil</span>,</span>
 <span>  pupil_col <span class="op">=</span> <span class="st">"pupil_smoothed"</span>,</span>
@@ -1320,7 +1369,7 @@
 <span>  <span class="va">gamm_data_status</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>Fit the main pupil GAMM:</p>
-<div class="sourceCode" id="cb83"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb84"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pupil_gamm_fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/fit_gazepoint_pupil_gamm.html">fit_gazepoint_pupil_gamm</a></span><span class="op">(</span></span>
 <span>  <span class="va">pupil_gamm_data</span>,</span>
 <span>  n_time_basis <span class="op">=</span> <span class="fl">10</span>,</span>
@@ -1337,7 +1386,7 @@
 <h3 id="gaze-position--pfe-sensitivity-gamm">Gaze-position / PFE sensitivity GAMM<a class="anchor" aria-label="anchor" href="#gaze-position--pfe-sensitivity-gamm"></a>
 </h3>
 <p>Fit a gaze-position-adjusted PFE sensitivity model:</p>
-<div class="sourceCode" id="cb84"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb85"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pupil_pfe_fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/fit_gazepoint_pupil_pfe_gamm.html">fit_gazepoint_pupil_pfe_gamm</a></span><span class="op">(</span></span>
 <span>  <span class="va">pupil_gamm_data</span>,</span>
 <span>  n_time_basis <span class="op">=</span> <span class="fl">10</span>,</span>
@@ -1350,14 +1399,14 @@
 <span><span class="va">pupil_pfe_fit</span><span class="op">$</span><span class="va">pfe_formula</span></span>
 <span><span class="va">pupil_pfe_fit</span><span class="op">$</span><span class="va">comparison</span></span></code></pre></div>
 <p>The PFE model should be treated as a sensitivity analysis rather than as the default pupil correction. It tests whether gaze position explains additional pupil variance through a two-dimensional smooth term over gaze coordinates:</p>
-<div class="sourceCode" id="cb85"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb86"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">te</span><span class="op">(</span><span class="va">mean_x</span>, <span class="va">mean_y</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="growth-curve-analysis">Growth Curve Analysis<a class="anchor" aria-label="anchor" href="#growth-curve-analysis"></a>
 </h3>
 <p>Prepare binned pupil data for Growth Curve Analysis:</p>
-<div class="sourceCode" id="cb86"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb87"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pupil_gca_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/prepare_gazepoint_gca_data.html">prepare_gazepoint_gca_data</a></span><span class="op">(</span></span>
 <span>  <span class="va">pupil_gamm_data</span>,</span>
 <span>  pupil_col <span class="op">=</span> <span class="st">"mean_pupil"</span>,</span>
@@ -1379,7 +1428,7 @@
 <span>  <span class="va">gca_data_status</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>Fit a GCA mixed model:</p>
-<div class="sourceCode" id="cb87"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb88"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pupil_gca_fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/fit_gazepoint_gca.html">fit_gazepoint_gca</a></span><span class="op">(</span></span>
 <span>  <span class="va">pupil_gca_data</span>,</span>
 <span>  REML <span class="op">=</span> <span class="cn">FALSE</span></span>
@@ -1391,17 +1440,17 @@
 <span><span class="va">pupil_gca_fit</span><span class="op">$</span><span class="va">singular_fit</span></span>
 <span><span class="va">pupil_gca_fit</span><span class="op">$</span><span class="va">comparison</span></span></code></pre></div>
 <p>For quick inspection, avoid printing the full model summary unless needed. Use:</p>
-<div class="sourceCode" id="cb88"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb89"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">lme4</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/nlme/man/fixed.effects.html" class="external-link">fixef</a></span><span class="op">(</span><span class="va">pupil_gca_fit</span><span class="op">$</span><span class="va">model</span><span class="op">)</span></span>
 <span><span class="fu">lme4</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/nlme/man/VarCorr.html" class="external-link">VarCorr</a></span><span class="op">(</span><span class="va">pupil_gca_fit</span><span class="op">$</span><span class="va">model</span><span class="op">)</span></span></code></pre></div>
 <p>Plot observed and fitted GCA trajectories:</p>
-<div class="sourceCode" id="cb89"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb90"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/plot_gazepoint_gca.html">plot_gazepoint_gca</a></span><span class="op">(</span></span>
 <span>  <span class="va">pupil_gca_fit</span>,</span>
 <span>  title <span class="op">=</span> <span class="st">"Observed and fitted GCA trajectory"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>Subject-level observed trajectories can also be shown:</p>
-<div class="sourceCode" id="cb90"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb91"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/plot_gazepoint_gca.html">plot_gazepoint_gca</a></span><span class="op">(</span></span>
 <span>  <span class="va">pupil_gca_fit</span>,</span>
 <span>  show_subjects <span class="op">=</span> <span class="cn">TRUE</span>,</span>
@@ -1412,7 +1461,7 @@
 <h3 id="aoi-time-course-gamm">AOI time-course GAMM<a class="anchor" aria-label="anchor" href="#aoi-time-course-gamm"></a>
 </h3>
 <p>Prepare AOI-GAMM data from an AOI-state column:</p>
-<div class="sourceCode" id="cb91"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb92"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">aoi_gamm_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/prepare_gazepoint_aoi_gamm_data.html">prepare_gazepoint_aoi_gamm_data</a></span><span class="op">(</span></span>
 <span>  <span class="va">master</span>,</span>
 <span>  aoi_col <span class="op">=</span> <span class="st">"aoi_current"</span>,</span>
@@ -1437,7 +1486,7 @@
 <span>  <span class="va">.gp3_aoi_gamm_status</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>Alternatively, create a logical target-AOI indicator first:</p>
-<div class="sourceCode" id="cb92"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb93"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">master_for_aoi_gamm</span> <span class="op">&lt;-</span> <span class="va">master</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>target_aoi <span class="op">=</span> <span class="va">aoi_current</span> <span class="op">==</span> <span class="st">"AOI 2"</span><span class="op">)</span></span>
 <span></span>
@@ -1454,7 +1503,7 @@
 <span>  outcome_label <span class="op">=</span> <span class="st">"target_aoi"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>Fit the AOI time-course GAMM:</p>
-<div class="sourceCode" id="cb93"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb94"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">aoi_gamm_fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/fit_gazepoint_aoi_gamm.html">fit_gazepoint_aoi_gamm</a></span><span class="op">(</span></span>
 <span>  <span class="va">aoi_gamm_data</span>,</span>
 <span>  include_condition <span class="op">=</span> <span class="cn">TRUE</span>,</span>
@@ -1470,7 +1519,7 @@
 <span><span class="va">aoi_gamm_fit</span><span class="op">$</span><span class="va">diagnostics</span></span>
 <span><span class="va">aoi_gamm_fit</span><span class="op">$</span><span class="va">smooth_table</span></span></code></pre></div>
 <p>Plot observed AOI proportions and fitted GAMM trajectories:</p>
-<div class="sourceCode" id="cb94"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb95"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">aoi_gamm_plot</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/plot_gazepoint_aoi_gamm.html">plot_gazepoint_aoi_gamm</a></span><span class="op">(</span></span>
 <span>  <span class="va">aoi_gamm_fit</span>,</span>
 <span>  n_time_points <span class="op">=</span> <span class="fl">100</span>,</span>
@@ -1488,7 +1537,7 @@
 </h2>
 <p>Use cluster-based permutation testing for time-course inference. Use divergence-point estimation as complementary onset/sensitivity evidence.</p>
 <p>Prepare time-course data for cluster-based permutation testing:</p>
-<div class="sourceCode" id="cb95"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb96"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cluster_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/prepare_gazepoint_cluster_data.html">prepare_gazepoint_cluster_data</a></span><span class="op">(</span></span>
 <span>  <span class="va">pupil_gamm_data</span>,</span>
 <span>  outcome_col <span class="op">=</span> <span class="st">"mean_pupil"</span>,</span>
@@ -1499,7 +1548,7 @@
 <span></span>
 <span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">cluster_data</span><span class="op">)</span></span></code></pre></div>
 <p>Run the cluster-based permutation test:</p>
-<div class="sourceCode" id="cb96"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb97"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cluster_results</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/run_gazepoint_cluster_permutation.html">run_gazepoint_cluster_permutation</a></span><span class="op">(</span></span>
 <span>  <span class="va">cluster_data</span>,</span>
 <span>  condition_levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"control"</span>, <span class="st">"treatment"</span><span class="op">)</span>,</span>
@@ -1510,7 +1559,7 @@
 <span><span class="va">cluster_results</span><span class="op">$</span><span class="va">overview</span></span>
 <span><span class="va">cluster_results</span><span class="op">$</span><span class="va">clusters</span></span></code></pre></div>
 <p>Summarise cluster results:</p>
-<div class="sourceCode" id="cb97"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb98"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cluster_summary</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/summarise_gazepoint_clusters.html">summarise_gazepoint_clusters</a></span><span class="op">(</span><span class="va">cluster_results</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">cluster_summary</span><span class="op">$</span><span class="va">overview</span></span>
@@ -1518,7 +1567,7 @@
 <span><span class="va">cluster_summary</span><span class="op">$</span><span class="va">significant_clusters</span></span>
 <span><span class="va">cluster_summary</span><span class="op">$</span><span class="va">circularity_warning</span></span></code></pre></div>
 <p>Plot cluster results:</p>
-<div class="sourceCode" id="cb98"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb99"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/plot_gazepoint_cluster_results.html">plot_gazepoint_cluster_results</a></span><span class="op">(</span></span>
 <span>  <span class="va">cluster_results</span>,</span>
 <span>  plot <span class="op">=</span> <span class="st">"difference"</span></span>
@@ -1529,7 +1578,7 @@
 <span>  plot <span class="op">=</span> <span class="st">"statistic"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>Estimate the earliest reliable divergence point:</p>
-<div class="sourceCode" id="cb99"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb100"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">divergence</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/estimate_gazepoint_divergence_point.html">estimate_gazepoint_divergence_point</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">timecourse_data</span>,</span>
 <span>  outcome_col <span class="op">=</span> <span class="st">"mean_pupil"</span>,</span>
@@ -1554,14 +1603,14 @@
 </h2>
 <p>Use model diagnostics and reporting helpers after fitting confirmatory models and sensitivity models.</p>
 <p>Check convergence, singularity, and overdispersion separately:</p>
-<div class="sourceCode" id="cb100"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb101"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/check_gazepoint_model_convergence.html">check_gazepoint_model_convergence</a></span><span class="op">(</span><span class="va">aoi_glmm_fit</span><span class="op">$</span><span class="va">model</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="reference/check_gazepoint_model_singularity.html">check_gazepoint_model_singularity</a></span><span class="op">(</span><span class="va">aoi_glmm_fit</span><span class="op">$</span><span class="va">model</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="reference/check_gazepoint_model_overdispersion.html">check_gazepoint_model_overdispersion</a></span><span class="op">(</span><span class="va">aoi_glmm_fit</span><span class="op">$</span><span class="va">model</span><span class="op">)</span></span></code></pre></div>
 <p>Run a combined diagnostics bundle for GLMM, LMM, or GLM models:</p>
-<div class="sourceCode" id="cb101"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb102"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">glmm_diagnostics</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/diagnose_gazepoint_glmm.html">diagnose_gazepoint_glmm</a></span><span class="op">(</span></span>
 <span>  <span class="va">aoi_glmm_fit</span>,</span>
 <span>  model_name <span class="op">=</span> <span class="st">"aoi_window_glmm"</span>,</span>
@@ -1574,7 +1623,7 @@
 <span><span class="va">glmm_diagnostics</span><span class="op">$</span><span class="va">overdispersion</span></span>
 <span><span class="va">glmm_diagnostics</span><span class="op">$</span><span class="va">dharma</span></span></code></pre></div>
 <p>Run a combined diagnostics bundle for <code><a href="https://rdrr.io/pkg/mgcv/man/gam.html" class="external-link">mgcv::gam()</a></code> or <code><a href="https://rdrr.io/pkg/mgcv/man/bam.html" class="external-link">mgcv::bam()</a></code> models:</p>
-<div class="sourceCode" id="cb102"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb103"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gamm_diagnostics</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/diagnose_gazepoint_gamm.html">diagnose_gazepoint_gamm</a></span><span class="op">(</span></span>
 <span>  <span class="va">aoi_gamm_fit</span>,</span>
 <span>  model_name <span class="op">=</span> <span class="st">"aoi_timecourse_gamm"</span>,</span>
@@ -1587,7 +1636,7 @@
 <span><span class="va">gamm_diagnostics</span><span class="op">$</span><span class="va">overdispersion</span></span>
 <span><span class="va">gamm_diagnostics</span><span class="op">$</span><span class="va">dharma</span></span></code></pre></div>
 <p>Optional DHARMa diagnostics can be requested when <code>DHARMa</code> is installed:</p>
-<div class="sourceCode" id="cb103"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb104"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">glmm_diagnostics_dharma</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/diagnose_gazepoint_glmm.html">diagnose_gazepoint_glmm</a></span><span class="op">(</span></span>
 <span>  <span class="va">aoi_glmm_fit</span>,</span>
 <span>  use_dharma <span class="op">=</span> <span class="cn">TRUE</span>,</span>
@@ -1598,7 +1647,7 @@
 <span><span class="va">glmm_diagnostics_dharma</span><span class="op">$</span><span class="va">dharma</span></span></code></pre></div>
 <p>If <code>DHARMa</code> is not installed, diagnostics return <code>skipped_missing_package</code> rather than failing. <code>DHARMa</code> is an optional suggested dependency, not a required import.</p>
 <p>Compare nested model sequences:</p>
-<div class="sourceCode" id="cb104"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb105"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">nested_models</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/compare_gazepoint_nested_models.html">compare_gazepoint_nested_models</a></span><span class="op">(</span></span>
 <span>  models <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>    null <span class="op">=</span> <span class="va">m0</span>,</span>
@@ -1614,7 +1663,7 @@
 <span><span class="va">nested_models</span><span class="op">$</span><span class="va">lrt_table</span></span>
 <span><span class="va">nested_models</span><span class="op">$</span><span class="va">ranking_table</span></span></code></pre></div>
 <p>Plot observed summaries together with model-implied prediction trajectories:</p>
-<div class="sourceCode" id="cb105"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb106"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">prediction_plot</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/plot_gazepoint_model_predictions.html">plot_gazepoint_model_predictions</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">model_data</span>,</span>
 <span>  model <span class="op">=</span> <span class="va">fitted_model</span>,</span>
@@ -1628,7 +1677,7 @@
 <span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">prediction_plot</span>, <span class="st">"gp3_model_prediction_overview"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">prediction_plot</span>, <span class="st">"gp3_model_prediction_prediction_summary"</span><span class="op">)</span></span></code></pre></div>
 <p>Run leave-one-unit sensitivity checks for fitted models:</p>
-<div class="sourceCode" id="cb106"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb107"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">loo_sensitivity</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/run_gazepoint_model_leave_one_out.html">run_gazepoint_model_leave_one_out</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">model_data</span>,</span>
 <span>  unit_col <span class="op">=</span> <span class="st">"subject"</span>,</span>
@@ -1642,7 +1691,7 @@
 <span><span class="va">loo_sensitivity</span><span class="op">$</span><span class="va">effect_summary</span></span>
 <span><span class="va">loo_sensitivity</span><span class="op">$</span><span class="va">leave_one_effects</span></span></code></pre></div>
 <p>Create a fixed-effect summary table:</p>
-<div class="sourceCode" id="cb107"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb108"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fixed_effects</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/summarise_gazepoint_fixed_effects.html">summarise_gazepoint_fixed_effects</a></span><span class="op">(</span></span>
 <span>  <span class="va">aoi_glmm_fit</span>,</span>
 <span>  model_name <span class="op">=</span> <span class="st">"aoi_window_glmm"</span>,</span>
@@ -1652,7 +1701,7 @@
 <span><span class="va">fixed_effects</span></span></code></pre></div>
 <p>Use <code>exponentiate = TRUE</code> for logistic, Poisson, or other log/link models when odds ratios, rate ratios, or exponentiated coefficients are preferred.</p>
 <p>Create a complete tidy model-summary object:</p>
-<div class="sourceCode" id="cb108"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb109"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">model_summary</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/tidy_gazepoint_model_summary.html">tidy_gazepoint_model_summary</a></span><span class="op">(</span></span>
 <span>  <span class="va">aoi_glmm_fit</span>,</span>
 <span>  model_name <span class="op">=</span> <span class="st">"aoi_window_glmm"</span>,</span>
@@ -1665,7 +1714,7 @@
 <span><span class="va">model_summary</span><span class="op">$</span><span class="va">fixed_effects</span></span>
 <span><span class="va">model_summary</span><span class="op">$</span><span class="va">diagnostics</span><span class="op">$</span><span class="va">overview</span></span></code></pre></div>
 <p>Estimate marginal means and pairwise contrasts when <code>emmeans</code> is installed:</p>
-<div class="sourceCode" id="cb109"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb110"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">emm_summary</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/summarise_gazepoint_emmeans.html">summarise_gazepoint_emmeans</a></span><span class="op">(</span></span>
 <span>  <span class="va">aoi_glmm_fit</span>,</span>
 <span>  specs <span class="op">=</span> <span class="st">"aoi_glmm_condition"</span>,</span>
@@ -1678,7 +1727,7 @@
 <span><span class="va">emm_summary</span><span class="op">$</span><span class="va">emmeans</span></span>
 <span><span class="va">emm_summary</span><span class="op">$</span><span class="va">contrasts</span></span></code></pre></div>
 <p>For condition-by-window models, estimated marginal means can also be requested within windows:</p>
-<div class="sourceCode" id="cb110"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb111"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">emm_by_window</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/summarise_gazepoint_emmeans.html">summarise_gazepoint_emmeans</a></span><span class="op">(</span></span>
 <span>  <span class="va">aoi_glmm_fit</span>,</span>
 <span>  specs <span class="op">=</span> <span class="st">"aoi_glmm_condition"</span>,</span>
@@ -1690,7 +1739,7 @@
 <span><span class="va">emm_by_window</span><span class="op">$</span><span class="va">emmeans</span></span>
 <span><span class="va">emm_by_window</span><span class="op">$</span><span class="va">contrasts</span></span></code></pre></div>
 <p>Export manuscript-ready model tables to CSV:</p>
-<div class="sourceCode" id="cb111"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb112"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">model_table_files</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/export_gazepoint_model_tables.html">export_gazepoint_model_tables</a></span><span class="op">(</span></span>
 <span>  model_summary <span class="op">=</span> <span class="va">model_summary</span>,</span>
 <span>  emmeans_summary <span class="op">=</span> <span class="va">emm_summary</span>,</span>
@@ -1700,7 +1749,7 @@
 <span></span>
 <span><span class="va">model_table_files</span></span></code></pre></div>
 <p>This writes an export index plus available tables such as:</p>
-<div class="sourceCode" id="cb112"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb113"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">aoi_window_glmm_model_overview.csv</span></span>
 <span><span class="va">aoi_window_glmm_model_info.csv</span></span>
 <span><span class="va">aoi_window_glmm_fixed_effects.csv</span></span>
@@ -1718,7 +1767,7 @@
 </h2>
 <p>Use this final-stage workflow before interpreting real study results or preparing a manuscript.</p>
 <p>Run the real-data readiness gate:</p>
-<div class="sourceCode" id="cb113"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb114"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">readiness</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/check_gazepoint_real_data_readiness.html">check_gazepoint_real_data_readiness</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">master</span>,</span>
 <span>  analysis_type <span class="op">=</span> <span class="st">"combined"</span>,</span>
@@ -1736,7 +1785,7 @@
 <span><span class="va">readiness</span><span class="op">$</span><span class="va">data_summary</span></span>
 <span><span class="va">readiness</span><span class="op">$</span><span class="va">condition_summary</span></span></code></pre></div>
 <p>Create explicit trial-level and participant-level exclusion recommendations:</p>
-<div class="sourceCode" id="cb114"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb115"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">exclusion_recommendations</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/recommend_gazepoint_exclusions.html">recommend_gazepoint_exclusions</a></span><span class="op">(</span></span>
 <span>  <span class="va">master</span>,</span>
 <span>  participant_col <span class="op">=</span> <span class="st">"subject"</span>,</span>
@@ -1760,7 +1809,7 @@
 <span><span class="va">exclusion_recommendations</span><span class="op">$</span><span class="va">exclusion_table</span></span></code></pre></div>
 <p><code><a href="reference/recommend_gazepoint_exclusions.html">recommend_gazepoint_exclusions()</a></code> recommends exclusions only. It does not remove participants, trials, or samples automatically.</p>
 <p>Apply offline gaze recalibration only when known target/check-target coordinates are available:</p>
-<div class="sourceCode" id="cb115"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb116"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">recalibrated_gaze</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/recalibrate_gazepoint_gaze.html">recalibrate_gazepoint_gaze</a></span><span class="op">(</span></span>
 <span>  <span class="va">master</span>,</span>
 <span>  x_col <span class="op">=</span> <span class="st">"x"</span>,</span>
@@ -1779,7 +1828,7 @@
 <span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">recalibrated_gaze</span>, <span class="st">"gp3_gaze_recalibration_group_summary"</span><span class="op">)</span></span></code></pre></div>
 <p>This helper estimates group-level horizontal and vertical gaze shifts and applies them to gaze coordinates. It is useful only when the study contains known target/check-target coordinates. It should not be used as a generic correction when no target reference is available.</p>
 <p>Create a reporting checklist:</p>
-<div class="sourceCode" id="cb116"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb117"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">reporting</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/create_gazepoint_reporting_checklist.html">create_gazepoint_reporting_checklist</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">master</span>,</span>
 <span>  objects <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
@@ -1798,7 +1847,7 @@
 <span><span class="va">reporting</span><span class="op">$</span><span class="va">section_summary</span></span>
 <span><span class="va">reporting</span><span class="op">$</span><span class="va">object_summary</span></span></code></pre></div>
 <p>Create a final analysis-decision audit after confirmatory models, sensitivity checks, exploratory time-course analyses, diagnostics, and manuscript-ready tables have been created:</p>
-<div class="sourceCode" id="cb117"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb118"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">branch_roles</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span>
 <span>  branch_name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
 <span>    <span class="st">"aoi_glmm"</span>,</span>
@@ -1837,7 +1886,7 @@
 <span><span class="va">decision_audit</span><span class="op">$</span><span class="va">interpretation_cautions</span></span>
 <span><span class="va">decision_audit</span><span class="op">$</span><span class="va">readiness</span></span></code></pre></div>
 <p>Possible readiness outcomes include:</p>
-<div class="sourceCode" id="cb118"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb119"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="st">"ready"</span></span>
 <span><span class="st">"ready_with_cautions"</span></span>
 <span><span class="st">"not_ready"</span></span></code></pre></div>
@@ -1846,7 +1895,7 @@
 <h3 id="optional-external-cross-checks">Optional external cross-checks<a class="anchor" aria-label="anchor" href="#optional-external-cross-checks"></a>
 </h3>
 <p>Optional external cross-checks can be run when the relevant packages are available:</p>
-<div class="sourceCode" id="cb119"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb120"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gazer_crosscheck</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/run_gazepoint_gazer_crosscheck.html">run_gazepoint_gazer_crosscheck</a></span><span class="op">(</span><span class="va">master</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">eyetools_detection</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/run_gazepoint_eyetools_fixation_detection.html">run_gazepoint_eyetools_fixation_detection</a></span><span class="op">(</span></span>
@@ -1859,7 +1908,7 @@
 <h3 id="package-adapter-exports">Package-adapter exports<a class="anchor" aria-label="anchor" href="#package-adapter-exports"></a>
 </h3>
 <p><code>gp3tools</code> includes dependency-free adapter helpers for preparing Gazepoint master/sample tables for use in other R eye-tracking workflows.</p>
-<div class="sourceCode" id="cb120"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb121"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">eyetrackingr_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/prepare_gazepoint_eyetrackingr_data.html">prepare_gazepoint_eyetrackingr_data</a></span><span class="op">(</span><span class="va">master</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">pupillometryr_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/prepare_gazepoint_pupillometryr_data.html">prepare_gazepoint_pupillometryr_data</a></span><span class="op">(</span><span class="va">master</span><span class="op">)</span></span>
@@ -1875,7 +1924,7 @@
 </h2>
 <p>Version 2.3.0 includes the core Gazepoint import, quality-control, pupil, AOI, fixation/transition, time-course, model-diagnostics, reporting, ecosystem-adapter, external face-data, and workflow-documentation layers.</p>
 <p>Release validation for version 2.3.0 should end with:</p>
-<div class="sourceCode" id="cb121"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb122"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">check</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co"># 0 errors | 0 warnings | 0 notes</span></span></code></pre></div>
 <p>Focused tests for the recent external face-data, multimodal, reporting, and workflow-documentation branches have also passed with <code>FAIL 0</code>, <code>WARN 0</code>, and <code>SKIP 0</code>.</p>
@@ -1888,14 +1937,14 @@
 <h2 id="example-datasets">Example datasets<a class="anchor" aria-label="anchor" href="#example-datasets"></a>
 </h2>
 <p><code>gp3tools</code> includes lightweight synthetic example datasets so examples, vignettes, tests, and user workflows can be run without private Gazepoint files.</p>
-<div class="sourceCode" id="cb123"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb124"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"gazepoint_example_master"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"gazepoint_example_fixations"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"gazepoint_example_aoi_geometry"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"gazepoint_example_aoi_windows"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"gazepoint_example_pupil_windows"</span><span class="op">)</span></span></code></pre></div>
 <p>The example datasets are artificial and are not from a real participant study. They are intended to show expected column names and runnable workflow structure.</p>
-<div class="sourceCode" id="cb124"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb125"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">gazepoint_example_master</span><span class="op">)</span></span>
 <span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">gazepoint_example_fixations</span><span class="op">)</span></span>
 <span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">gazepoint_example_aoi_windows</span><span class="op">)</span></span>
@@ -1911,7 +1960,7 @@
 <h2 id="large-export-performance-benchmarking">Large-export performance benchmarking<a class="anchor" aria-label="anchor" href="#large-export-performance-benchmarking"></a>
 </h2>
 <p><code>gp3tools</code> includes an auditable framework for measuring selected operations across synthetic export sizes and file counts.</p>
-<div class="sourceCode" id="cb125"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb126"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">performance</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/benchmark_gazepoint_export_performance.html">benchmark_gazepoint_export_performance</a></span><span class="op">(</span></span>
 <span>  scales <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
 <span>    total_rows <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10000L</span>, <span class="fl">50000L</span><span class="op">)</span>,</span>
@@ -1929,7 +1978,7 @@
 <h2 id="gpbiometrics-integration">gpbiometrics integration<a class="anchor" aria-label="anchor" href="#gpbiometrics-integration"></a>
 </h2>
 <p><code>gp3tools</code> includes a dependency-free synchronization layer for combining standardized gaze samples with time-aligned biometric signal tables.</p>
-<div class="sourceCode" id="cb126"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb127"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">workflow</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/run_gazepoint_gpbiometrics_workflow.html">run_gazepoint_gpbiometrics_workflow</a></span><span class="op">(</span></span>
 <span>  gaze_data <span class="op">=</span> <span class="va">gaze_data</span>,</span>
 <span>  biometrics_data <span class="op">=</span> <span class="va">biometrics_data</span>,</span>
@@ -1945,7 +1994,7 @@
 <h2 id="user-facing-naming-policy">User-facing naming policy<a class="anchor" aria-label="anchor" href="#user-facing-naming-policy"></a>
 </h2>
 <p><code>gp3tools</code> uses British English <code>summarise_*</code> names as the canonical spelling for new user-facing summary helpers. Existing American English <code>summarize_*</code> exports remain available for backward compatibility.</p>
-<div class="sourceCode" id="cb127"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb128"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">policy</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/gp3tools_naming_policy.html">gp3tools_naming_policy</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">audit</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/audit_gazepoint_naming_consistency.html">audit_gazepoint_naming_consistency</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>

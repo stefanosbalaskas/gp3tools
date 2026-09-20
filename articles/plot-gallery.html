@@ -35,7 +35,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">gp3tools</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.3.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.3.0.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -62,6 +62,7 @@
     <li><a class="dropdown-item" href="../articles/fixations-transitions-scanpaths.html">Fixation, transitions, and scanpaths</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>QC and reporting</h6></li>
+    <li><a class="dropdown-item" href="../articles/gazepoint-data-quality-workflow.html">Gazepoint data quality: accuracy, precision, sampling, and loss</a></li>
     <li><a class="dropdown-item" href="../articles/qc-dashboard-workflow.html">Quality-control dashboard workflow</a></li>
     <li><a class="dropdown-item" href="../articles/missingness-coverage-reporting.html">Missingness and data-coverage reporting</a></li>
     <li><a class="dropdown-item" href="../articles/phase-segmentation-reporting.html">Task-phase segmentation and coverage reporting</a></li>
@@ -79,6 +80,9 @@
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Advanced modelling</h6></li>
     <li><a class="dropdown-item" href="../articles/model-readiness-sensitivity.html">Model-readiness and sensitivity analysis</a></li>
+    <li><a class="dropdown-item" href="../articles/aoi-perturbation-uncertainty.html">Gazepoint AOI Perturbation and Uncertainty</a></li>
+    <li><a class="dropdown-item" href="../articles/aoi-sensitivity-analysis-plan.html">Gazepoint AOI Sensitivity Analysis Plan</a></li>
+    <li><a class="dropdown-item" href="../articles/aoi-reporting-bundle.html">Gazepoint AOI Robustness Reporting Bundle</a></li>
     <li><a class="dropdown-item" href="../articles/bayesian-planning-workflow.html">Bayesian planning workflow</a></li>
     <li><a class="dropdown-item" href="../articles/experimental-bayesian-bridges.html">Experimental Bayesian bridge helpers</a></li>
     <li><a class="dropdown-item" href="../articles/metric-extraction-model-boundaries.html">Metric extraction and model-boundary guidance</a></li>
@@ -95,6 +99,9 @@
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Ecosystem bridges</h6></li>
     <li><a class="dropdown-item" href="../articles/ecosystem-exports.html">Exporting to other ecosystems</a></li>
+    <li><a class="dropdown-item" href="../articles/gaze-survival-adapter.html">Gazepoint gaze-latency survival analysis</a></li>
+    <li><a class="dropdown-item" href="../articles/gaze-survival-verification-example.html">Gazepoint worked example: evidence verification latency</a></li>
+    <li><a class="dropdown-item" href="../articles/gaze-survival-reproducibility-checklist.html">Gazepoint survival-analysis reproducibility checklist</a></li>
     <li><a class="dropdown-item" href="../articles/ecosystem-update-2026-09.html">Ecosystem update — September 2026</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Signal extensions</h6></li>
@@ -163,38 +170,40 @@ summary functions.</p>
 </h2>
 <pre><code><span><span class="co">#&gt;                                plot_function</span></span>
 <span><span class="co">#&gt; 1                    plot_gazepoint_aoi_gamm</span></span>
-<span><span class="co">#&gt; 2                plot_gazepoint_aoi_timeline</span></span>
-<span><span class="co">#&gt; 3       plot_gazepoint_aoi_transition_matrix</span></span>
-<span><span class="co">#&gt; 4            plot_gazepoint_aoi_verification</span></span>
-<span><span class="co">#&gt; 5       plot_gazepoint_binocular_diagnostics</span></span>
-<span><span class="co">#&gt; 6   plot_gazepoint_cluster_null_distribution</span></span>
-<span><span class="co">#&gt; 7         plot_gazepoint_cluster_permutation</span></span>
-<span><span class="co">#&gt; 8             plot_gazepoint_cluster_results</span></span>
-<span><span class="co">#&gt; 9    plot_gazepoint_event_detector_agreement</span></span>
-<span><span class="co">#&gt; 10   plot_gazepoint_event_detector_benchmark</span></span>
-<span><span class="co">#&gt; 11               plot_gazepoint_face_quality</span></span>
-<span><span class="co">#&gt; 12                        plot_gazepoint_gca</span></span>
-<span><span class="co">#&gt; 13                    plot_gazepoint_heatmap</span></span>
-<span><span class="co">#&gt; 14            plot_gazepoint_heatmap_overlay</span></span>
-<span><span class="co">#&gt; 15        plot_gazepoint_missingness_profile</span></span>
-<span><span class="co">#&gt; 16          plot_gazepoint_model_predictions</span></span>
-<span><span class="co">#&gt; 17            plot_gazepoint_model_residuals</span></span>
-<span><span class="co">#&gt; 18         plot_gazepoint_multiverse_results</span></span>
-<span><span class="co">#&gt; 19             plot_gazepoint_phase_timeline</span></span>
-<span><span class="co">#&gt; 20        plot_gazepoint_pupil_preprocessing</span></span>
-<span><span class="co">#&gt; 21               plot_gazepoint_pupil_status</span></span>
-<span><span class="co">#&gt; 22           plot_gazepoint_pupil_timecourse</span></span>
-<span><span class="co">#&gt; 23                plot_gazepoint_qc_overview</span></span>
-<span><span class="co">#&gt; 24                   plot_gazepoint_scanpath</span></span>
-<span><span class="co">#&gt; 25 plot_gazepoint_scanpath_cluster_stability</span></span>
-<span><span class="co">#&gt; 26          plot_gazepoint_scanpath_clusters</span></span>
-<span><span class="co">#&gt; 27                  plot_gazepoint_scanpaths</span></span>
-<span><span class="co">#&gt; 28         plot_gazepoint_stimulus_layout_qc</span></span>
-<span><span class="co">#&gt; 29                plot_gazepoint_time_series</span></span>
-<span><span class="co">#&gt; 30        plot_gazepoint_time_varying_effect</span></span>
-<span><span class="co">#&gt; 31                        plot_sampling_rate</span></span>
-<span><span class="co">#&gt; 32                     plot_tracking_quality</span></span>
-<span><span class="co">#&gt; 33                   plot_transition_heatmap</span></span></code></pre>
+<span><span class="co">#&gt; 2             plot_gazepoint_aoi_sensitivity</span></span>
+<span><span class="co">#&gt; 3                plot_gazepoint_aoi_timeline</span></span>
+<span><span class="co">#&gt; 4       plot_gazepoint_aoi_transition_matrix</span></span>
+<span><span class="co">#&gt; 5            plot_gazepoint_aoi_verification</span></span>
+<span><span class="co">#&gt; 6       plot_gazepoint_binocular_diagnostics</span></span>
+<span><span class="co">#&gt; 7   plot_gazepoint_cluster_null_distribution</span></span>
+<span><span class="co">#&gt; 8         plot_gazepoint_cluster_permutation</span></span>
+<span><span class="co">#&gt; 9             plot_gazepoint_cluster_results</span></span>
+<span><span class="co">#&gt; 10   plot_gazepoint_event_detector_agreement</span></span>
+<span><span class="co">#&gt; 11   plot_gazepoint_event_detector_benchmark</span></span>
+<span><span class="co">#&gt; 12               plot_gazepoint_face_quality</span></span>
+<span><span class="co">#&gt; 13                        plot_gazepoint_gca</span></span>
+<span><span class="co">#&gt; 14                    plot_gazepoint_heatmap</span></span>
+<span><span class="co">#&gt; 15            plot_gazepoint_heatmap_overlay</span></span>
+<span><span class="co">#&gt; 16        plot_gazepoint_missingness_profile</span></span>
+<span><span class="co">#&gt; 17          plot_gazepoint_model_predictions</span></span>
+<span><span class="co">#&gt; 18            plot_gazepoint_model_residuals</span></span>
+<span><span class="co">#&gt; 19         plot_gazepoint_multiverse_results</span></span>
+<span><span class="co">#&gt; 20             plot_gazepoint_phase_timeline</span></span>
+<span><span class="co">#&gt; 21        plot_gazepoint_pupil_preprocessing</span></span>
+<span><span class="co">#&gt; 22               plot_gazepoint_pupil_status</span></span>
+<span><span class="co">#&gt; 23           plot_gazepoint_pupil_timecourse</span></span>
+<span><span class="co">#&gt; 24                plot_gazepoint_qc_overview</span></span>
+<span><span class="co">#&gt; 25          plot_gazepoint_quality_dashboard</span></span>
+<span><span class="co">#&gt; 26                   plot_gazepoint_scanpath</span></span>
+<span><span class="co">#&gt; 27 plot_gazepoint_scanpath_cluster_stability</span></span>
+<span><span class="co">#&gt; 28          plot_gazepoint_scanpath_clusters</span></span>
+<span><span class="co">#&gt; 29                  plot_gazepoint_scanpaths</span></span>
+<span><span class="co">#&gt; 30         plot_gazepoint_stimulus_layout_qc</span></span>
+<span><span class="co">#&gt; 31                plot_gazepoint_time_series</span></span>
+<span><span class="co">#&gt; 32        plot_gazepoint_time_varying_effect</span></span>
+<span><span class="co">#&gt; 33                        plot_sampling_rate</span></span>
+<span><span class="co">#&gt; 34                     plot_tracking_quality</span></span>
+<span><span class="co">#&gt; 35                   plot_transition_heatmap</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="sampling-rate">Sampling rate<a class="anchor" aria-label="anchor" href="#sampling-rate"></a>

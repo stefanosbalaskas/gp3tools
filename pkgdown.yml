@@ -5,6 +5,9 @@ articles:
   articles/advanced-aoi-assignment: advanced-aoi-assignment.html
   aoi_workflow: aoi_workflow.html
   articles/aoi-modelling-workflow: aoi-modelling-workflow.html
+  articles/aoi-perturbation-uncertainty: aoi-perturbation-uncertainty.html
+  articles/aoi-reporting-bundle: aoi-reporting-bundle.html
+  articles/aoi-sensitivity-analysis-plan: aoi-sensitivity-analysis-plan.html
   articles/aoi-window-feature-engineering: aoi-window-feature-engineering.html
   articles/auditable-binocular-pupil-reconstruction: auditable-binocular-pupil-reconstruction.html
   articles/bayesian-planning-workflow: bayesian-planning-workflow.html
@@ -24,6 +27,10 @@ articles:
   articles/face-window-summaries: face-window-summaries.html
   articles/fixation-blink-preprocessing: fixation-blink-preprocessing.html
   articles/fixations-transitions-scanpaths: fixations-transitions-scanpaths.html
+  articles/gaze-survival-adapter: gaze-survival-adapter.html
+  articles/gaze-survival-reproducibility-checklist: gaze-survival-reproducibility-checklist.html
+  articles/gaze-survival-verification-example: gaze-survival-verification-example.html
+  articles/gazepoint-data-quality-workflow: gazepoint-data-quality-workflow.html
   articles/gp3tools-gpbiometrics-workflow: gp3tools-gpbiometrics-workflow.html
   articles/heatmap-spatial-visualisation: heatmap-spatial-visualisation.html
   articles/large-export-performance: large-export-performance.html
@@ -49,7 +56,7 @@ articles:
   articles/statistical-extensions-plots: statistical-extensions-plots.html
   articles/stimulus-layout-qc: stimulus-layout-qc.html
   articles/validating-binocular-reconstruction: validating-binocular-reconstruction.html
-last_built: 2026-09-15T09:31Z
+last_built: 2026-09-20T07:27Z
 urls:
   reference: https://stefanosbalaskas.github.io/gp3tools/reference
   article: https://stefanosbalaskas.github.io/gp3tools/articles
