@@ -72,10 +72,10 @@ It supports common Gazepoint workflows, including:
 
 ## Standardized Gazepoint data quality
 
-The development branch adds a thin Gazepoint-facing layer over the
-vendor-neutral `eyeprocess` quality core. It covers target-referenced
-accuracy, RMS-S2S and spatial-SD precision, BCEA, empirical sampling
-behavior, and data loss without duplicating formulas inside `gp3tools`.
+Version 2.4.0 adds a thin Gazepoint-facing layer over the vendor-neutral
+`eyeprocess` quality core. It covers target-referenced accuracy, RMS-S2S
+and spatial-SD precision, BCEA, empirical sampling behavior, and data
+loss without duplicating formulas inside `gp3tools`.
 
 ``` r
 
@@ -325,7 +325,7 @@ paper and report the package version used in the analysis.
 ### R package
 
 > Balaskas, S. (2026). `gp3tools`: Import, Inspect, Analyse, and Report
-> Gazepoint GP3 Exports. R package version 2.3.0.
+> Gazepoint GP3 Exports. R package version 2.4.0.
 > <https://github.com/stefanosbalaskas/gp3tools>
 
 The complete citation entries are available directly from R:
@@ -337,7 +337,7 @@ citation("gp3tools")
 
 The previously released 2.0.0 software archive remains available at
 <https://doi.org/10.5281/zenodo.21292384>. A version-specific archive
-DOI for 2.3.0 can be added after the corresponding GitHub/Zenodo release
+DOI for 2.4.0 can be added after the corresponding GitHub/Zenodo release
 is created.
 
 ## Installation
@@ -2394,12 +2394,14 @@ status fields, and metadata attributes.
 
 ## Current package status
 
-Version 2.3.0 includes the core Gazepoint import, quality-control,
+Version 2.4.0 includes the core Gazepoint import, quality-control,
 pupil, AOI, fixation/transition, time-course, model-diagnostics,
 reporting, ecosystem-adapter, external face-data, and
-workflow-documentation layers.
+workflow-documentation layers, together with standardized spatial
+quality, AOI perturbation-uncertainty, and censored gaze-latency
+survival adapters delegated to `eyeprocess`.
 
-Release validation for version 2.3.0 should end with:
+Release validation for version 2.4.0 should end with:
 
 ``` r
 
