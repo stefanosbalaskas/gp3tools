@@ -52,6 +52,9 @@
 - [Expanded plot
   gallery](https://stefanosbalaskas.github.io/gp3tools/articles/plot-gallery-expanded.md):
 
+- [DABEST-style estimation graphics for Gazepoint
+  studies](https://stefanosbalaskas.github.io/gp3tools/articles/dabest-estimation-designs.md):
+
 - [AOI sequence and reliability
   diagnostics](https://stefanosbalaskas.github.io/gp3tools/articles/sequence-reliability.md):
 

@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>External face-data complete workflow • gp3tools</title>
+<title>DABEST-style estimation graphics for Gazepoint studies • gp3tools</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="../favicon-96x96.png">
 <link rel="icon" type="”image/svg+xml”" href="../favicon.svg">
 <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
@@ -15,7 +15,7 @@
 <link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="External face-data complete workflow">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="DABEST-style estimation graphics for Gazepoint studies">
 <!-- Google tag (gtag.js) --><script async src="https://www.googletagmanager.com/gtag/js?id=G-7151LKSRMN"></script><script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -137,82 +137,52 @@
 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="../logo.png" class="logo" alt=""><h1>External face-data complete workflow</h1>
+      <img src="../logo.png" class="logo" alt=""><h1>DABEST-style estimation graphics for Gazepoint studies</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/stefanosbalaskas/gp3tools/blob/master/vignettes/articles/external-face-complete-workflow.Rmd" class="external-link"><code>vignettes/articles/external-face-complete-workflow.Rmd</code></a></small>
-      <div class="d-none name"><code>external-face-complete-workflow.Rmd</code></div>
+      <small class="dont-index">Source: <a href="https://github.com/stefanosbalaskas/gp3tools/blob/master/vignettes/dabest-estimation-designs.Rmd" class="external-link"><code>vignettes/dabest-estimation-designs.Rmd</code></a></small>
+      <div class="d-none name"><code>dabest-estimation-designs.Rmd</code></div>
     </div>
 
     
     
-<p>This article combines the external face-data helpers into one
-complete workflow.</p>
-<p>These helpers work with externally generated face-analysis CSV files.
-They do not infer facial expressions from Gazepoint CSV files and do not
-treat facial behaviour as direct evidence of emotion.</p>
 <div class="section level2">
-<h2 id="complete-workflow">Complete workflow<a class="anchor" aria-label="anchor" href="#complete-workflow"></a>
+<h2 id="raw-observations-contrast-estimation-and-scientific-independence">Raw observations, contrast estimation and scientific
+independence<a class="anchor" aria-label="anchor" href="#raw-observations-contrast-estimation-and-scientific-independence"></a>
 </h2>
+<p>The <a href="https://acclab.github.io/DABEST-python/" class="external-link">DABEST
+Python</a> and <a href="https://acclab.github.io/dabestr/" class="external-link">official R
+dabestr implementation</a> provide Gardner–Altman and Cumming estimation
+plots: raw measurements, paired slopegraphs when warranted, bootstrap
+effect-size distributions, and confidence intervals.</p>
+<p><strong>Use the actual R dabestr package</strong> when you want its
+validated plotting API or BCa confidence intervals rather than copying
+Python internals. A narrower original, participant-level ggplot
+implementation is in the development branch of <a href="https://github.com/stefanosbalaskas/gpbiometrics" class="external-link">gpbiometrics</a>,
+<code>plot_gazepoint_estimation()</code>. For a strict GP3 analysis,
+first aggregate fixation/AOI/pupil measures to the estimand’s
+participant/trial unit.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">face_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_gazepoint_face_export.html">read_gazepoint_face_export</a></span><span class="op">(</span></span>
-<span>  file <span class="op">=</span> <span class="st">'external_face_export.csv'</span>,</span>
-<span>  source <span class="op">=</span> <span class="st">'openface'</span></span>
+<code class="sourceCode R"><span><span class="co"># Conceptual example of a participant-level comparison, not real study data:</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ACCLAB/dabestr" class="external-link">dabestr</a></span><span class="op">)</span></span>
+<span><span class="va">dabest_obj</span> <span class="op">&lt;-</span> <span class="fu">dabestr</span><span class="fu">::</span><span class="fu">load</span><span class="op">(</span></span>
+<span>  <span class="va">summary_by_participant</span>, x <span class="op">=</span> <span class="va">Condition</span>, y <span class="op">=</span> <span class="va">MeanDwell</span>,</span>
+<span>  idx <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Control"</span>, <span class="st">"Treatment"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">face_std</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/standardize_gazepoint_face_columns.html">standardize_gazepoint_face_columns</a></span><span class="op">(</span><span class="va">face_raw</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">face_quality</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/audit_gazepoint_face_quality.html">audit_gazepoint_face_quality</a></span><span class="op">(</span><span class="va">face_std</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">face_synced</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sync_gazepoint_face_data.html">sync_gazepoint_face_data</a></span><span class="op">(</span></span>
-<span>  gazepoint_data <span class="op">=</span> <span class="va">all_gaze</span>,</span>
-<span>  face_data <span class="op">=</span> <span class="va">face_std</span>,</span>
-<span>  by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>participant_id <span class="op">=</span> <span class="st">'participant_id'</span><span class="op">)</span>,</span>
-<span>  gaze_time_col <span class="op">=</span> <span class="st">'time_sec'</span>,</span>
-<span>  tolerance_sec <span class="op">=</span> <span class="fl">0.050</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">face_sync_qc</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/audit_gazepoint_face_sync.html">audit_gazepoint_face_sync</a></span><span class="op">(</span><span class="va">face_synced</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">face_windows</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/summarize_gazepoint_face_windows.html">summarize_gazepoint_face_windows</a></span><span class="op">(</span></span>
-<span>  <span class="va">face_std</span>,</span>
-<span>  windows <span class="op">=</span> <span class="va">windows</span>,</span>
-<span>  group_cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'participant_id'</span>, <span class="st">'trial_id'</span><span class="op">)</span>,</span>
-<span>  window_label_col <span class="op">=</span> <span class="st">'window'</span>,</span>
-<span>  measure_cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'AU04_r'</span>, <span class="st">'AU12_r'</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">face_reactivity</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/summarize_gazepoint_face_reactivity.html">summarize_gazepoint_face_reactivity</a></span><span class="op">(</span></span>
-<span>  <span class="va">face_windows</span>,</span>
-<span>  baseline_window <span class="op">=</span> <span class="st">'baseline'</span>,</span>
-<span>  response_window <span class="op">=</span> <span class="st">'response'</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">face_model</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fit_gazepoint_face_window_lmm.html">fit_gazepoint_face_window_lmm</a></span><span class="op">(</span></span>
-<span>  <span class="va">face_windows</span>,</span>
-<span>  outcome <span class="op">=</span> <span class="st">'rating'</span>,</span>
-<span>  predictors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'AU04_r_mean'</span>, <span class="st">'AU12_r_mean'</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">face_report</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/report_gazepoint_face_qc.html">report_gazepoint_face_qc</a></span><span class="op">(</span></span>
-<span>  face_data <span class="op">=</span> <span class="va">face_std</span>,</span>
-<span>  quality_audit <span class="op">=</span> <span class="va">face_quality</span>,</span>
-<span>  sync_audit <span class="op">=</span> <span class="va">face_sync_qc</span>,</span>
-<span>  window_summary <span class="op">=</span> <span class="va">face_windows</span>,</span>
-<span>  reactivity_summary <span class="op">=</span> <span class="va">face_reactivity</span>,</span>
-<span>  multimodal_model <span class="op">=</span> <span class="va">face_model</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">dabestr</span><span class="fu">::</span><span class="fu">dabest_plot</span><span class="op">(</span><span class="fu">dabestr</span><span class="fu">::</span><span class="fu">mean_diff</span><span class="op">(</span><span class="va">dabest_obj</span><span class="op">)</span>, float_contrast <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<p>Do <strong>not</strong> treat raw 60-Hz gaze samples as independent
+participants. For repeated-participant conditions supply a unique
+subject ID to dabestr’s paired loading mode, or use
+<code>gpbiometrics::plot_gazepoint_estimation</code> with
+<code>paired=TRUE</code> on matched participant-level rows.</p>
+<p>For model-adjusted contrasts or random-effects GLMM estimates, raw
+mean difference plots are descriptive and should be accompanied by a
+separate model-based effect/uncertainty visualization, not substituted
+for the hierarchical inferential estimand.</p>
+<p>This is an educational integration note and adds <strong>no duplicate
+estimator</strong> to gp3tools. No release has been triggered.</p>
 </div>
-<div class="section level2">
-<h2 id="reporting-note">Reporting note<a class="anchor" aria-label="anchor" href="#reporting-note"></a>
-</h2>
-<p>Report the external tool, version, exported variables,
-confidence/validity fields, synchronisation tolerance, window
-definitions, and model specification. Avoid unsupported claims of true
-emotion detection or hidden affect.</p>
-</div>
-  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
-    </nav></aside>
+  </main>
 </div>
 
 
