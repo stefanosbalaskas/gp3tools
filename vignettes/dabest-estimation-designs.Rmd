@@ -44,3 +44,51 @@ hierarchical inferential estimand.
 
 This is an educational integration note and adds **no duplicate estimator**
 to gp3tools. No release has been triggered.
+
+
+## Rendered paired estimation demonstration (synthetic)
+
+The plots below are computed during website construction using only base R.
+They illustrate the **visual grammar** of paired estimation, rather than
+claiming to be DABEST output or its BCa bootstrap estimator.
+
+```{r gp3tools-paired-figure, fig.width=7.5, fig.height=4.5}
+set.seed(20261009)
+n <- 32L
+baseline <- stats::rnorm(n, mean = .48, sd = .11)
+treatment <- baseline + stats::rnorm(n, mean = .09, sd = .07)
+graphics::plot(
+  NA, xlim = c(.8, 2.2),
+  ylim = range(baseline, treatment) + c(-.03, .03),
+  xaxt = "n", xlab = "", ylab = "Synthetic participant dwell fraction",
+  main = "Matched participants, not individual gaze samples"
+)
+graphics::axis(1, at = 1:2, labels = c("Control", "Treatment"))
+graphics::segments(
+  1, baseline, 2, treatment,
+  col = grDevices::adjustcolor("#608B9A", alpha.f = .45)
+)
+graphics::points(rep(1, n), baseline, pch = 19, col = "#387C88")
+graphics::points(rep(2, n), treatment, pch = 19, col = "#9265AA")
+```
+
+```{r gp3tools-bootstrap-figure, fig.width=7.5, fig.height=4.5}
+difference <- treatment - baseline
+resampled <- replicate(
+  2000L, mean(sample(difference, size = length(difference), replace = TRUE))
+)
+bounds <- stats::quantile(resampled, c(.025, .975))
+graphics::hist(
+  resampled, breaks = 25, col = "#8EB9C1", border = "white",
+  xlab = "Treatment minus control (participant mean difference)",
+  main = "Participant bootstrap distribution: percentile interval"
+)
+graphics::abline(v = mean(difference), col = "#245E69", lwd = 2)
+graphics::abline(v = bounds, col = "#B57D61", lty = 2, lwd = 2)
+```
+
+These are **synthetic practice figures**, not empirical evidence.
+Bootstrap resamples entire participant differences; the result is a percentile
+interval, **not** the BCa interval of the maintained R `dabestr`
+implementation. The full fitted-model uncertainty remains necessary
+for clustered generalized or multilevel estimands.
