@@ -170,7 +170,7 @@ face_fit <- fit_gazepoint_face_window_lmm(
 
 face_fit$formula
 #> rating ~ AU04_r_mean_z + AU12_r_mean_z
-#> <environment: 0x56319aff0830>
+#> <environment: 0x5618b4a762f0>
 ```
 
 ``` r
@@ -224,7 +224,7 @@ multi_fit <- fit_gazepoint_multimodal_response_model(
 multi_fit$formula
 #> rating ~ AU04_r_mean_z + AU12_r_mean_z + claim_dwell_time_z + 
 #>     pupil_mean_z
-#> <environment: 0x56319b7b0cd0>
+#> <environment: 0x5618b5236c80>
 ```
 
 ``` r
@@ -269,7 +269,7 @@ choice_fit <- fit_gazepoint_multimodal_response_model(
 
 choice_fit$formula
 #> choice ~ AU12_r_mean_z + claim_dwell_time_z
-#> <environment: 0x56319615f660>
+#> <environment: 0x5618afbe38a8>
 ```
 
 ``` r

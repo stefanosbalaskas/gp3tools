@@ -181,8 +181,56 @@ separate model-based effect/uncertainty visualization, not substituted
 for the hierarchical inferential estimand.</p>
 <p>This is an educational integration note and adds <strong>no duplicate
 estimator</strong> to gp3tools. No release has been triggered.</p>
+<div class="section level3">
+<h3 id="rendered-paired-estimation-demonstration-synthetic">Rendered paired estimation demonstration (synthetic)<a class="anchor" aria-label="anchor" href="#rendered-paired-estimation-demonstration-synthetic"></a>
+</h3>
+<p>The plots below are computed during website construction using only
+base R. They illustrate the <strong>visual grammar</strong> of paired
+estimation, rather than claiming to be DABEST output or its BCa
+bootstrap estimator.</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">20261009</span><span class="op">)</span></span>
+<span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">32L</span></span>
+<span><span class="va">baseline</span> <span class="op">&lt;-</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">n</span>, mean <span class="op">=</span> <span class="fl">.48</span>, sd <span class="op">=</span> <span class="fl">.11</span><span class="op">)</span></span>
+<span><span class="va">treatment</span> <span class="op">&lt;-</span> <span class="va">baseline</span> <span class="op">+</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">n</span>, mean <span class="op">=</span> <span class="fl">.09</span>, sd <span class="op">=</span> <span class="fl">.07</span><span class="op">)</span></span>
+<span><span class="fu">graphics</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span></span>
+<span>  <span class="cn">NA</span>, xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">.8</span>, <span class="fl">2.2</span><span class="op">)</span>,</span>
+<span>  ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/range.html" class="external-link">range</a></span><span class="op">(</span><span class="va">baseline</span>, <span class="va">treatment</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">.03</span>, <span class="fl">.03</span><span class="op">)</span>,</span>
+<span>  xaxt <span class="op">=</span> <span class="st">"n"</span>, xlab <span class="op">=</span> <span class="st">""</span>, ylab <span class="op">=</span> <span class="st">"Synthetic participant dwell fraction"</span>,</span>
+<span>  main <span class="op">=</span> <span class="st">"Matched participants, not individual gaze samples"</span></span>
+<span><span class="op">)</span></span>
+<span><span class="fu">graphics</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/graphics/axis.html" class="external-link">axis</a></span><span class="op">(</span><span class="fl">1</span>, at <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Control"</span>, <span class="st">"Treatment"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu">graphics</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/graphics/segments.html" class="external-link">segments</a></span><span class="op">(</span></span>
+<span>  <span class="fl">1</span>, <span class="va">baseline</span>, <span class="fl">2</span>, <span class="va">treatment</span>,</span>
+<span>  col <span class="op">=</span> <span class="fu">grDevices</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grDevices/adjustcolor.html" class="external-link">adjustcolor</a></span><span class="op">(</span><span class="st">"#608B9A"</span>, alpha.f <span class="op">=</span> <span class="fl">.45</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="fu">graphics</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span>, <span class="va">n</span><span class="op">)</span>, <span class="va">baseline</span>, pch <span class="op">=</span> <span class="fl">19</span>, col <span class="op">=</span> <span class="st">"#387C88"</span><span class="op">)</span></span>
+<span><span class="fu">graphics</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">2</span>, <span class="va">n</span><span class="op">)</span>, <span class="va">treatment</span>, pch <span class="op">=</span> <span class="fl">19</span>, col <span class="op">=</span> <span class="st">"#9265AA"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="dabest-estimation-designs_files/figure-html/gp3tools-paired-figure-1.png" class="r-plt" alt="" width="720"></p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">difference</span> <span class="op">&lt;-</span> <span class="va">treatment</span> <span class="op">-</span> <span class="va">baseline</span></span>
+<span><span class="va">resampled</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">replicate</a></span><span class="op">(</span></span>
+<span>  <span class="fl">2000L</span>, <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="va">difference</span>, size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">difference</span><span class="op">)</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">bounds</span> <span class="op">&lt;-</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/quantile.html" class="external-link">quantile</a></span><span class="op">(</span><span class="va">resampled</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">.025</span>, <span class="fl">.975</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu">graphics</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html" class="external-link">hist</a></span><span class="op">(</span></span>
+<span>  <span class="va">resampled</span>, breaks <span class="op">=</span> <span class="fl">25</span>, col <span class="op">=</span> <span class="st">"#8EB9C1"</span>, border <span class="op">=</span> <span class="st">"white"</span>,</span>
+<span>  xlab <span class="op">=</span> <span class="st">"Treatment minus control (participant mean difference)"</span>,</span>
+<span>  main <span class="op">=</span> <span class="st">"Participant bootstrap distribution: percentile interval"</span></span>
+<span><span class="op">)</span></span>
+<span><span class="fu">graphics</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>v <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">difference</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"#245E69"</span>, lwd <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="fu">graphics</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>v <span class="op">=</span> <span class="va">bounds</span>, col <span class="op">=</span> <span class="st">"#B57D61"</span>, lty <span class="op">=</span> <span class="fl">2</span>, lwd <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
+<p><img src="dabest-estimation-designs_files/figure-html/gp3tools-bootstrap-figure-1.png" class="r-plt" alt="" width="720"></p>
+<p>These are <strong>synthetic practice figures</strong>, not empirical
+evidence. Bootstrap resamples entire participant differences; the result
+is a percentile interval, <strong>not</strong> the BCa interval of the
+maintained R <code>dabestr</code> implementation. The full fitted-model
+uncertainty remains necessary for clustered generalized or multilevel
+estimands.</p>
 </div>
-  </main>
+</div>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 
