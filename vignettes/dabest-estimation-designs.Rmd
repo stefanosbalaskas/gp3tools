@@ -19,10 +19,10 @@ and confidence intervals.
 API or BCa confidence intervals rather than copying Python internals. A
 narrower original, participant-level ggplot implementation is in the
 development branch of [gpbiometrics](https://github.com/stefanosbalaskas/gpbiometrics),
-\`plot_gazepoint_estimation()\`. For a strict GP3 analysis, first aggregate
+`plot_gazepoint_estimation()`. For a strict GP3 analysis, first aggregate
 fixation/AOI/pupil measures to the estimand's participant/trial unit.
 
-\`\`\`{r example, eval=FALSE}
+```{r example, eval=FALSE}
 # Conceptual example of a participant-level comparison, not real study data:
 library(dabestr)
 dabest_obj <- dabestr::load(
@@ -30,12 +30,12 @@ dabest_obj <- dabestr::load(
   idx = c("Control", "Treatment")
 )
 dabestr::dabest_plot(dabestr::mean_diff(dabest_obj), float_contrast = FALSE)
-\`\`\`
+```
 
 Do **not** treat raw 60-Hz gaze samples as independent participants.
 For repeated-participant conditions supply a unique subject ID to
-dabestr's paired loading mode, or use \`gpbiometrics::plot_gazepoint_estimation\`
-with \`paired=TRUE\` on matched participant-level rows.
+dabestr's paired loading mode, or use `gpbiometrics::plot_gazepoint_estimation`
+with `paired=TRUE` on matched participant-level rows.
 
 For model-adjusted contrasts or random-effects GLMM estimates, raw mean
 difference plots are descriptive and should be accompanied by a separate
