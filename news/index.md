@@ -1,5 +1,19 @@
 # Changelog
 
+## gp3tools 2.4.1 — release candidate (not published)
+
+### October 2026 documentation and reproducibility
+
+- Adds an installed non-exported AOI boundary-perturbation research
+  audit, invariant tests, and a reproducible vignette with two synthetic
+  plots. No exported API or device-calibration claim.
+- Release gate: complete exact-source R CMD check –as-cran, review
+  installed source tarball and cross-platform tests, audit publication
+  metadata, then publish an immutable GitHub tag and submit to CRAN with
+  maintainer confirmation.
+- Current CRAN baseline at candidate preparation: 2.3.0. The candidate
+  has **not** been submitted to CRAN or published as a GitHub Release.
+
 ## gp3tools 2.4.0
 
 - Hardened the macOS GitHub Actions lane against reproducible `pak`
