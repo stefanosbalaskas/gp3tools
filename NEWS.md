@@ -1,10 +1,17 @@
-# gp3tools 2.4.1 — release candidate (not published)
+# gp3tools 2.4.2 — CRAN Debian compatibility correction
+
+* Corrects CRAN Debian pretest failure for `2.4.1` caused by an older installed `eyeprocess` that lacks newer survival/spatial-quality exports. Runtime adapters now check the public namespace and fail informatively before calling unavailable optional functionality.
+* Survival integration tests run only when the complete optional API, including the synthetic data generator, is exported. A regression test verifies the informative fallback on older CRAN `eyeprocess`.
+* Supports optional `eyeprocess >= 0.11.1` for core package installation; advanced optional adapters still require the corresponding newer exported API. The normal GitHub check lane uses `eyeprocess v0.12.1`, and an extra regression lane exercises the older CRAN version.
+* No mathematical changes, no silent fallback analysis, and no new scientific claims. Resubmission requires fresh source-archive CRAN pretests; do not re-upload rejected `2.4.1`.
+
+# gp3tools 2.4.1 — GitHub release (22 October 2026; CRAN pretest rejected)
 
 ## October 2026 documentation and reproducibility
 
 * Adds an installed non-exported AOI boundary-perturbation research audit, invariant tests, and a reproducible vignette with two synthetic plots. No exported API or device-calibration claim.
-* Release gate: complete exact-source R CMD check --as-cran, review installed source tarball and cross-platform tests, audit publication metadata, then publish an immutable GitHub tag and submit to CRAN with maintainer confirmation.
-* Current CRAN baseline at candidate preparation: 2.3.0. The candidate has **not** been submitted to CRAN or published as a GitHub Release.
+* GitHub v2.4.1 was published following the source-check gate. Its CRAN submission was subsequently rejected on Debian because of older eyeprocess namespace availability.
+* Current CRAN baseline at submission: 2.3.0. CRAN pretests for 2.4.1 found 1 ERROR and 1 WARNING on Debian, prompting the subsequent 2.4.2 compatibility fix.
 
 # gp3tools 2.4.0
 
