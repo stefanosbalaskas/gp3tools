@@ -1,0 +1,47 @@
+name: Publish validated gp3tools v2.4.1
+
+'on':
+  push:
+    branches: [master]
+    paths: ['.github/workflows/publish-v2-4-1.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  github-release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: r-lib/actions/setup-pandoc@v2
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          use-public-rspm: true
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: any::rcmdcheck
+          needs: check
+      - name: Confirm immutable release version
+        shell: bash
+        run: |
+          Rscript -e 'stopifnot(read.dcf("DESCRIPTION")[1, "Version"] == "2.4.1")'
+          test ! -f gp3tools_2.4.1.tar.gz
+      - name: Build and check exact CRAN source archive
+        shell: bash
+        run: |
+          R CMD build --no-manual .
+          test -s gp3tools_2.4.1.tar.gz
+          R CMD check --as-cran --no-manual gp3tools_2.4.1.tar.gz
+      - name: Publish GitHub Release once
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh release view v2.4.1 >/dev/null 2>&1; then
+            echo 'Release v2.4.1 already exists; do not overwrite.'
+            exit 0
+          fi
+          gh release create v2.4.1 gp3tools_2.4.1.tar.gz --target "$GITHUB_SHA" --title 'gp3tools v2.4.1' --generate-notes
