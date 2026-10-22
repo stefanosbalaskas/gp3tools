@@ -416,19 +416,25 @@
 <h3 id="r-package">R package<a class="anchor" aria-label="anchor" href="#r-package"></a>
 </h3>
 <blockquote>
-<p>Balaskas, S. (2026). <code>gp3tools</code>: Import, Inspect, Analyse, and Report Gazepoint GP3 Exports. R package version 2.4.0. <a href="https://github.com/stefanosbalaskas/gp3tools" class="external-link uri">https://github.com/stefanosbalaskas/gp3tools</a></p>
+<p>Balaskas, S. (2026). <code>gp3tools</code>: Import, Inspect, Analyse, and Report Gazepoint GP3 Exports. R package version 2.4.2. <a href="https://github.com/stefanosbalaskas/gp3tools" class="external-link uri">https://github.com/stefanosbalaskas/gp3tools</a></p>
 </blockquote>
 <p>The complete citation entries are available directly from R:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/citation.html" class="external-link">citation</a></span><span class="op">(</span><span class="st">"gp3tools"</span><span class="op">)</span></span></code></pre></div>
-<p>The previously released 2.0.0 software archive remains available at <a href="https://doi.org/10.5281/zenodo.21292384" class="external-link uri">https://doi.org/10.5281/zenodo.21292384</a>. GitHub <code>v2.4.1</code> was published on 22 October 2026 with a source archive; do not assume a Zenodo version DOI exists until verified. CRAN remains at 2.3.0.</p>
+<p>The previously released 2.0.0 software archive remains available at <a href="https://doi.org/10.5281/zenodo.21292384" class="external-link uri">https://doi.org/10.5281/zenodo.21292384</a>. GitHub <code>v2.4.2</code> was published on 22 October 2026 with a validated source archive after resolving Debian CRAN incoming-pretest failures in <code>v2.4.1</code>. The latter remains an immutable historical release, not the archive to submit. Do not assume a Zenodo version DOI exists until verified. The previously confirmed CRAN baseline was 2.3.0.</p>
 </div>
 </div>
 <div class="section level2">
 <h2 id="october-2026-illustrated-research">October 2026 illustrated research<a class="anchor" aria-label="anchor" href="#october-2026-illustrated-research"></a>
 </h2>
 <p>The <a href="https://stefanosbalaskas.github.io/gp3tools/articles/aoi-boundary-stability-october-2026.html">AOI boundary stability article</a> includes original R-generated sensitivity plots and deterministic invariance tests. These demonstrations are synthetic and are not empirical device-calibration, causal, or clinical evidence.</p>
-<p><strong>Channels:</strong> GitHub <strong>2.4.1</strong> (22 October 2026); CRAN <strong>2.3.0</strong> (latest independently checked). The GitHub and CRAN source versions are not interchangeable.</p>
+<p><strong>Channels:</strong> GitHub <strong>2.4.2</strong> (22 October 2026); CRAN <strong>2.3.0</strong> (last confirmed at submission preparation, until CRAN publishes the new version). The GitHub and CRAN source versions are not interchangeable.</p>
+</div>
+<div class="section level2">
+<h2 id="cran-242-resubmission-after-debian-pretest-rejection">CRAN 2.4.2 resubmission after Debian pretest rejection<a class="anchor" aria-label="anchor" href="#cran-242-resubmission-after-debian-pretest-rejection"></a>
+</h2>
+<p>The <a href="https://github.com/stefanosbalaskas/gp3tools/releases/download/v2.4.2/gp3tools_2.4.2.tar.gz" class="external-link">GitHub v2.4.2 source archive</a> supersedes the rejected <code>2.4.1</code> <em>CRAN submission</em> without changing its immutable GitHub release. CRAN’s Debian r-devel checks found newer <code>eyeprocess</code> API exports unavailable in its installed version, plus a survival test that called a missing simulator. Version 2.4.2 detects public optional exports explicitly and only runs integration tests when those APIs are available. There is no silent replacement of scientific calculations.</p>
+<p>The exact-head GitHub CI passed six R-check jobs, including a dedicated CRAN <code>eyeprocess 0.11.1</code> compatibility lane. The GitHub publication workflow separately passed an exact-source <code>R CMD check --as-cran</code>. <strong>CRAN resubmission and acceptance remain separate maintainer actions.</strong> Do not submit the old <code>gp3tools_2.4.1.tar.gz</code> archive.</p>
 </div>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
