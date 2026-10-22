@@ -165,7 +165,7 @@ face_model <- fit_gazepoint_face_window_lmm(
 
 face_model$formula
 #> rating ~ AU12_r_mean
-#> <environment: 0x562d641f6528>
+#> <environment: 0x55cde9ccdd00>
 ```
 
 ## Reporting checklist

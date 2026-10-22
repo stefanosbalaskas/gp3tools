@@ -82,6 +82,9 @@
 - [Gazepoint AOI Sensitivity Analysis
   Plan](https://stefanosbalaskas.github.io/gp3tools/articles/aoi-sensitivity-analysis-plan.md):
 
+- [AOI edge perturbation: which assignments remain
+  stable?](https://stefanosbalaskas.github.io/gp3tools/articles/aoi-boundary-stability-october-2026.md):
+
 - [Gazepoint AOI Robustness Reporting
   Bundle](https://stefanosbalaskas.github.io/gp3tools/articles/aoi-reporting-bundle.md):
 
