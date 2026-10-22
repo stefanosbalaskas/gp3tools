@@ -336,9 +336,21 @@ citation("gp3tools")
 ```
 
 The previously released 2.0.0 software archive remains available at
-<https://doi.org/10.5281/zenodo.21292384>. A version-specific archive
-DOI for 2.4.0 can be added after the corresponding GitHub/Zenodo release
-is created.
+<https://doi.org/10.5281/zenodo.21292384>. GitHub `v2.4.1` was published
+on 22 October 2026 with a source archive; do not assume a Zenodo version
+DOI exists until verified. CRAN remains at 2.3.0.
+
+## October 2026 illustrated research
+
+The [AOI boundary stability
+article](https://stefanosbalaskas.github.io/gp3tools/articles/aoi-boundary-stability-october-2026.html)
+includes original R-generated sensitivity plots and deterministic
+invariance tests. These demonstrations are synthetic and are not
+empirical device-calibration, causal, or clinical evidence.
+
+**Channels:** GitHub **2.4.1** (22 October 2026); CRAN **2.3.0** (latest
+independently checked). The GitHub and CRAN source versions are not
+interchangeable.
 
 ## Installation
 
