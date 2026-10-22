@@ -36,6 +36,18 @@ test_that("survival adapter requires explicit estimator choices", {
 
 test_that("Gazepoint preparation delegates to eyeprocess and retains censoring", {
   skip_if_not_installed("eyeprocess")
+  # Installed does not imply this optional API is exported; CRAN may have
+  # eyeprocess 0.11.1 while the newer GitHub scientific API is available.
+  required <- c(
+    "simulate_gaze_survival_inputs",
+    "prepare_gaze_survival_data", "validate_gaze_survival_data",
+    "summarise_gaze_censoring", "estimate_gaze_survival",
+    "fit_gaze_mixed_cox_model", "fit_gaze_aft_model",
+    "check_gaze_proportional_hazards", "compare_gaze_survival_models",
+    "report_gaze_survival_model"
+  )
+  skip_if(!all(required %in% getNamespaceExports("eyeprocess")),
+          "The installed eyeprocess lacks the optional gaze-survival API")
   raw <- eyeprocess::simulate_gaze_survival_inputs(
     "disclosure",
     seed = 20260918,
@@ -63,6 +75,18 @@ test_that("Gazepoint preparation delegates to eyeprocess and retains censoring",
 
 test_that("workflow delegates models and preserves explicit specification", {
   skip_if_not_installed("eyeprocess")
+  # Installed does not imply this optional API is exported; CRAN may have
+  # eyeprocess 0.11.1 while the newer GitHub scientific API is available.
+  required <- c(
+    "simulate_gaze_survival_inputs",
+    "prepare_gaze_survival_data", "validate_gaze_survival_data",
+    "summarise_gaze_censoring", "estimate_gaze_survival",
+    "fit_gaze_mixed_cox_model", "fit_gaze_aft_model",
+    "check_gaze_proportional_hazards", "compare_gaze_survival_models",
+    "report_gaze_survival_model"
+  )
+  skip_if(!all(required %in% getNamespaceExports("eyeprocess")),
+          "The installed eyeprocess lacks the optional gaze-survival API")
   skip_if_not_installed("survival")
   raw <- eyeprocess::simulate_gaze_survival_inputs(
     "disclosure",
@@ -98,4 +122,21 @@ test_that("workflow delegates models and preserves explicit specification", {
   expect_equal(out$aft$model_family, "aft_weibull")
   expect_true(nrow(out$kaplan_meier) > 0)
   expect_true(nrow(out$ph_diagnostics) > 0)
+})
+
+test_that("missing optional gaze-survival API fails with actionable explanation", {
+  skip_if_not_installed("eyeprocess")
+  needed <- c(
+    "prepare_gaze_survival_data", "validate_gaze_survival_data",
+    "summarise_gaze_censoring", "estimate_gaze_survival",
+    "fit_gaze_mixed_cox_model", "fit_gaze_aft_model",
+    "check_gaze_proportional_hazards", "compare_gaze_survival_models",
+    "report_gaze_survival_model"
+  )
+  skip_if(all(needed %in% getNamespaceExports("eyeprocess")),
+          "The newer eyeprocess survival API is installed")
+  expect_error(
+    prepare_gazepoint_survival_data(data.frame(), data.frame()),
+    "does not provide the required gaze-survival API"
+  )
 })
