@@ -174,7 +174,7 @@ When `gp3tools` supports a publication, cite the peer-reviewed software paper an
 
 ### R package
 
-> Balaskas, S. (2026). `gp3tools`: Import, Inspect, Analyse, and Report Gazepoint GP3 Exports. R package version 2.4.0. https://github.com/stefanosbalaskas/gp3tools
+> Balaskas, S. (2026). `gp3tools`: Import, Inspect, Analyse, and Report Gazepoint GP3 Exports. R package version 2.4.2. https://github.com/stefanosbalaskas/gp3tools
 
 The complete citation entries are available directly from R:
 
@@ -182,14 +182,20 @@ The complete citation entries are available directly from R:
 citation("gp3tools")
 ```
 
-The previously released 2.0.0 software archive remains available at <https://doi.org/10.5281/zenodo.21292384>. GitHub `v2.4.1` was published on 22 October 2026 with a source archive; do not assume a Zenodo version DOI exists until verified. CRAN remains at 2.3.0.
+The previously released 2.0.0 software archive remains available at <https://doi.org/10.5281/zenodo.21292384>. GitHub `v2.4.2` was published on 22 October 2026 with a validated source archive after resolving Debian CRAN incoming-pretest failures in `v2.4.1`. The latter remains an immutable historical release, not the archive to submit. Do not assume a Zenodo version DOI exists until verified. The previously confirmed CRAN baseline was 2.3.0.
 
 
 ## October 2026 illustrated research
 
 The [AOI boundary stability article](https://stefanosbalaskas.github.io/gp3tools/articles/aoi-boundary-stability-october-2026.html) includes original R-generated sensitivity plots and deterministic invariance tests. These demonstrations are synthetic and are not empirical device-calibration, causal, or clinical evidence.
 
-**Channels:** GitHub **2.4.1** (22 October 2026); CRAN **2.3.0** (latest independently checked). The GitHub and CRAN source versions are not interchangeable.
+**Channels:** GitHub **2.4.2** (22 October 2026); CRAN **2.3.0** (last confirmed at submission preparation, until CRAN publishes the new version). The GitHub and CRAN source versions are not interchangeable.
+
+## CRAN 2.4.2 resubmission after Debian pretest rejection
+
+The [GitHub v2.4.2 source archive](https://github.com/stefanosbalaskas/gp3tools/releases/download/v2.4.2/gp3tools_2.4.2.tar.gz) supersedes the rejected `2.4.1` *CRAN submission* without changing its immutable GitHub release. CRAN's Debian r-devel checks found newer `eyeprocess` API exports unavailable in its installed version, plus a survival test that called a missing simulator. Version 2.4.2 detects public optional exports explicitly and only runs integration tests when those APIs are available. There is no silent replacement of scientific calculations.
+
+The exact-head GitHub CI passed six R-check jobs, including a dedicated CRAN `eyeprocess 0.11.1` compatibility lane. The GitHub publication workflow separately passed an exact-source `R CMD check --as-cran`. **CRAN resubmission and acceptance remain separate maintainer actions.** Do not submit the old `gp3tools_2.4.1.tar.gz` archive.
 
 ## Installation
 
