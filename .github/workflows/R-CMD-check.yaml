@@ -72,7 +72,7 @@ jobs:
           )
 
           remotes::install_github(
-            "stefanosbalaskas/eyeprocess@v0.12.0",
+            "stefanosbalaskas/eyeprocess@v0.12.1",
             dependencies = FALSE,
             upgrade = "never",
             build_vignettes = FALSE
@@ -96,6 +96,47 @@ jobs:
             requireNamespace("rmarkdown", quietly = TRUE)
           )
 
+      - uses: r-lib/actions/check-r-package@v2
+        with:
+          upload-snapshots: true
+          args: 'c("--no-manual", "--as-cran")'
+
+  cran-legacy-eyeprocess:
+    name: CRAN eyeprocess 0.11.1 (Ubuntu release)
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      R_KEEP_PKG_SOURCE: yes
+      _R_CHECK_FORCE_SUGGESTS_: true
+    steps:
+      - uses: actions/checkout@v6
+      - uses: r-lib/actions/setup-pandoc@v2
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: release
+          use-public-rspm: true
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: |
+            any::rcmdcheck
+            any::remotes
+          needs: check
+      - name: Force the older CRAN eyeprocess engine
+        shell: Rscript {0}
+        run: |
+          options(repos = c(CRAN = "https://cloud.r-project.org"))
+          remotes::install_version(
+            "eyeprocess",
+            version = "0.11.1",
+            dependencies = FALSE,
+            upgrade = "never"
+          )
+          stopifnot(
+            requireNamespace("eyeprocess", quietly = TRUE),
+            utils::packageVersion("eyeprocess") == package_version("0.11.1"),
+            !("simulate_gaze_survival_inputs" %in%
+              getNamespaceExports("eyeprocess"))
+          )
       - uses: r-lib/actions/check-r-package@v2
         with:
           upload-snapshots: true
