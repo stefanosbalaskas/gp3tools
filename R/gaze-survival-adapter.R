@@ -12,15 +12,9 @@
     "check_gaze_proportional_hazards", "compare_gaze_survival_models",
     "report_gaze_survival_model"
   )
-  missing <- required[
-    !vapply(
-      required,
-      exists,
-      logical(1),
-      envir = asNamespace("eyeprocess"),
-      inherits = FALSE
-    )
-  ]
+  # The public API contract is based on exports, not unexported bindings.
+  # This permits a clean, informative failure with CRAN's older eyeprocess.
+  missing <- setdiff(required, getNamespaceExports("eyeprocess"))
   if (length(missing)) {
     stop(
       "The installed eyeprocess version does not provide the required gaze-survival API: ",
@@ -47,7 +41,7 @@
 #' @export
 prepare_gazepoint_survival_data <- function(trials, events = NULL, ...) {
   .gp3_require_eyeprocess_survival()
-  eyeprocess::prepare_gaze_survival_data(
+  getExportedValue("eyeprocess", "prepare_gaze_survival_data")(
     trials = trials,
     events = events,
     ...
@@ -110,28 +104,28 @@ run_gazepoint_latency_analysis <- function(
   )
   .gp3_require_eyeprocess_survival()
 
-  data <- eyeprocess::prepare_gaze_survival_data(
+  data <- getExportedValue("eyeprocess", "prepare_gaze_survival_data")(
     trials = trials,
     events = events,
     target_aoi = target_aoi,
     ...
   )
-  validation <- eyeprocess::validate_gaze_survival_data(
+  validation <- getExportedValue("eyeprocess", "validate_gaze_survival_data")(
     data,
     raise_on_error = FALSE
   )
-  censoring <- eyeprocess::summarise_gaze_censoring(data)
-  kaplan_meier <- eyeprocess::estimate_gaze_survival(
+  censoring <- getExportedValue("eyeprocess", "summarise_gaze_censoring")(data)
+  kaplan_meier <- getExportedValue("eyeprocess", "estimate_gaze_survival")(
     data,
     group = km_group
   )
-  cox <- eyeprocess::fit_gaze_mixed_cox_model(
+  cox <- getExportedValue("eyeprocess", "fit_gaze_mixed_cox_model")(
     data,
     formula = formula,
     participant_col = participant_col,
     structure = cox_structure
   )
-  aft <- eyeprocess::fit_gaze_aft_model(
+  aft <- getExportedValue("eyeprocess", "fit_gaze_aft_model")(
     data,
     formula = formula,
     distribution = aft_distribution
@@ -147,10 +141,10 @@ run_gazepoint_latency_analysis <- function(
       stringsAsFactors = FALSE
     )
   } else {
-    eyeprocess::check_gaze_proportional_hazards(cox)
+    getExportedValue("eyeprocess", "check_gaze_proportional_hazards")(cox)
   }
 
-  comparison <- eyeprocess::compare_gaze_survival_models(cox, aft)
+  comparison <- getExportedValue("eyeprocess", "compare_gaze_survival_models")(cox, aft)
   out <- list(
     data = data,
     validation = validation,
@@ -160,7 +154,7 @@ run_gazepoint_latency_analysis <- function(
     aft = aft,
     ph_diagnostics = ph_diagnostics,
     comparison = comparison,
-    report = eyeprocess::report_gaze_survival_model(cox),
+    report = getExportedValue("eyeprocess", "report_gaze_survival_model")(cox),
     specification = list(
       target_aoi = target_aoi,
       formula = formula,

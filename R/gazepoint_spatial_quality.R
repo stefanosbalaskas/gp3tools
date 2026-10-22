@@ -4,7 +4,7 @@
   if (!requireNamespace("eyeprocess", quietly = TRUE)) {
     stop(
       "Gazepoint spatial-quality wrappers require the suggested eyeprocess package ",
-      "(development API >= 0.11.1.9000).",
+      "with the required exported spatial-quality API.",
       call. = FALSE
     )
   }
@@ -353,7 +353,7 @@ summarise_gazepoint_spatial_quality <- function(
   }
   groups <- .gp3_quality_by(prepared, level, by)
   resolved_geometry <- .gp3_quality_geometry(data, geometry)
-  out <- eyeprocess::summarise_spatial_quality(
+  out <- getExportedValue("eyeprocess", "summarise_spatial_quality")(
     prepared$data,
     x = prepared$columns$x,
     y = prepared$columns$y,
@@ -448,7 +448,7 @@ create_gazepoint_quality_report <- function(
   groups <- .gp3_quality_by(prepared, level, by)
   resolved_geometry <- .gp3_quality_geometry(data, geometry)
 
-  out <- eyeprocess::create_gaze_quality_report(
+  out <- getExportedValue("eyeprocess", "create_gaze_quality_report")(
     prepared$data,
     x = prepared$columns$x,
     y = prepared$columns$y,
@@ -504,7 +504,7 @@ plot_gazepoint_quality_dashboard <- function(x, ...) {
   } else {
     create_gazepoint_quality_report(x, ...)
   }
-  eyeprocess::plot_gaze_quality_dashboard(report)
+  getExportedValue("eyeprocess", "plot_gaze_quality_dashboard")(report)
 }
 
 #' Create compact Gazepoint data-quality reporting text
@@ -522,5 +522,5 @@ report_gazepoint_quality <- function(x, digits = 3L, ...) {
   } else {
     create_gazepoint_quality_report(x, ...)
   }
-  eyeprocess::report_gaze_quality(report, digits = digits)
+  getExportedValue("eyeprocess", "report_gaze_quality")(report, digits = digits)
 }

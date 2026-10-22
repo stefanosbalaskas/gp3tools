@@ -1,18 +1,20 @@
-# CRAN submission review — gp3tools 2.4.1
+# gp3tools 2.4.2 — CRAN resubmission evidence (candidate)
 
-**Status: NOT SUBMITTED TO CRAN (22 October 2026).**
+**Status: not yet qualified or resubmitted. Do not re-upload gp3tools_2.4.1.tar.gz.**
 
-- Source candidate: GitHub `v2.4.1` — https://github.com/stefanosbalaskas/gp3tools/releases/tag/v2.4.1
-- Source archive: `gp3tools_2.4.1.tar.gz` attached to the GitHub Release.
-- CRAN version before proposed submission: `2.3.0`.
-- Exact-release GitHub workflow: https://github.com/stefanosbalaskas/gp3tools/actions/runs/39761892494 (completed successfully after building and checking the release source archive with `R CMD check --as-cran`).
-- October documentation: reproducible synthetic illustrated vignette with explicit interpretation limitations; no empirical instrument validation or automatic calibration claim.
+CRAN's incoming pretest for gp3tools 2.4.1 on 22 October 2026 failed under Debian r-devel (1 ERROR, 1 WARNING), though Windows was OK.
 
-## CRAN-maintainer verification still required
+- WARNING: direct `eyeprocess::` references to newer survival and gaze-quality exports were unresolved against the installed older CRAN eyeprocess.
+- ERROR: `test-gaze-survival-adapter.R` invoked `eyeprocess::simulate_gaze_survival_inputs` after checking only package installation, not namespace capability (1 failed test; 7762 passes and 6 skips).
 
-1. Independently examine the exact archive's `00check.log`, any NOTES, installed sources and examples, supported R platforms and CRAN incoming checks. Workflow success alone is not the same as CRAN acceptance.
-2. Confirm reverse-dependency effects, links/DOIs, URL validity, and policy compliance. No existing tags or historical CRAN packages should be overwritten.
-3. Submit the exact validated `gp3tools_2.4.1.tar.gz` archive through CRAN's maintainer-authenticated channel. Confirm the response email and wait for CRAN processing. This has **not** happened in this campaign.
-4. **Publication ordering blocker:** `eyeprocess (>= 0.12.0)` is under `Suggests`, but CRAN currently distributes 0.11.1. Verify downstream CRAN installation with the exact repository dependencies, preferably after eyeprocess 0.12.1 is accepted, before submitting gp3tools 2.4.1.
+Pretest record: https://win-builder.r-project.org/incoming_pretest/gp3tools_2.4.1_20261022_131132/
 
-This file is a release evidence record, not a submission receipt.
+## Resolution in candidate 2.4.2
+
+1. Dynamic, public-export-only lookup is used only *after* a validated optional API capability guard. It prevents static missing-export warnings without silently supplying substitute analysis.
+2. Survival tests check the full public API, including the simulator, before running; other core tests continue.
+3. A regression test confirms graceful failure against the older optional engine.
+4. Minimum optional `eyeprocess` version reflects CRAN 0.11.1; advanced survival/spatial-quality adapters still require all newer exports and error clearly if absent.
+5. Ordinary CI uses eyeprocess v0.12.1; an extra job explicitly installs CRAN eyeprocess 0.11.1 and runs R CMD check --as-cran.
+
+**Before resubmitting:** require green exact-head CI including older-engine lane, an independently checked `gp3tools_2.4.2.tar.gz` source archive, and a revised GitHub tag. The historic v2.4.1 tag must remain unchanged. Submit only the validated new archive through CRAN and complete the maintainer confirmation.

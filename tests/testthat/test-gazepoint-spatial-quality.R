@@ -134,3 +134,19 @@ test_that("Gazepoint quality wrappers delegate to eyeprocess when available", {
   text <- report_gazepoint_quality(q)
   expect_match(text, "Review required", fixed = TRUE)
 })
+
+
+test_that("older CRAN eyeprocess fails clearly for newer spatial-quality API", {
+  skip_if_not_installed("eyeprocess")
+  required <- c(
+    "create_gaze_quality_report", "summarise_spatial_quality",
+    "plot_gaze_quality_dashboard", "report_gaze_quality"
+  )
+  skip_if(all(required %in% getNamespaceExports("eyeprocess")),
+          "The newer spatial-quality API is available")
+
+  expect_error(
+    summarise_gazepoint_spatial_quality(data.frame()),
+    "too old for Gazepoint spatial-quality wrappers"
+  )
+})
